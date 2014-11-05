@@ -1,4 +1,4 @@
-package vn.com.vexe.utils;
+package com.vexeonline.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
