@@ -35,7 +35,7 @@ public class GiaVe implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date ngaybatDau;
+	private Date ngayBatDau;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
@@ -67,7 +67,7 @@ public class GiaVe implements Serializable {
 		super();
 		this.idGiaVe = idGiaVe;
 		this.lichTuyen = lichTuyen;
-		this.ngaybatDau = ngaybatDau;
+		this.ngayBatDau = ngaybatDau;
 		this.ngayKetThuc = ngayKetThuc;
 		this.giaVe = giaVe;
 	}
@@ -88,12 +88,12 @@ public class GiaVe implements Serializable {
 		this.lichTuyen = lichTuyen;
 	}
 
-	public Date getNgaybatDau() {
-		return ngaybatDau;
+	public Date getNgayBatDau() {
+		return ngayBatDau;
 	}
 
-	public void setNgaybatDau(Date ngaybatDau) {
-		this.ngaybatDau = ngaybatDau;
+	public void setNgayBatDau(Date ngaybatDau) {
+		this.ngayBatDau = ngaybatDau;
 	}
 
 	public Date getNgayKetThuc() {

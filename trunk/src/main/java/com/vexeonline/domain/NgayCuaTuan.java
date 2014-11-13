@@ -8,5 +8,5 @@ package com.vexeonline.domain;
  *
  */
 public enum NgayCuaTuan {
-    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATUREDAY, SUNDAY
+	SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATUREDAY
 }

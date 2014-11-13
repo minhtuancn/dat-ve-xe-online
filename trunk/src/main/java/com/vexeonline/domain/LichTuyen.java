@@ -5,6 +5,7 @@ package com.vexeonline.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -52,6 +54,9 @@ public class LichTuyen implements Serializable {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Xe xe;
+
+	@OneToMany(mappedBy = "lichTuyen")
+	private Set<GiaVe> giaVes;
 
 	/**
 	 * @author Tung
@@ -126,6 +131,14 @@ public class LichTuyen implements Serializable {
 
 	public void setXe(Xe xe) {
 		this.xe = xe;
+	}
+
+	public Set<GiaVe> getGiaVes() {
+		return giaVes;
+	}
+
+	public void setGiaVes(Set<GiaVe> giaVes) {
+		this.giaVes = giaVes;
 	}
 
 }

@@ -16,20 +16,20 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class NhaXe implements Serializable{
+public class NhaXe implements Serializable {
 	private static final long serialVersionUID = 3123590361926427900L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, unique = true)
 	private Integer idNhaXe;
-	
+
 	@Column(nullable = false, unique = true, length = 100)
 	private String tenNhaXe;
-	
+
 	@Column(length = 500)
 	private String moTa;
-	
+
 	@Column(length = 50)
 	private String hinhAnh;
 	
