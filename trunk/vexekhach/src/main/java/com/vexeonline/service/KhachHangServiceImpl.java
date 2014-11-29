@@ -1,6 +1,7 @@
 package com.vexeonline.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,26 +10,35 @@ import org.hibernate.Transaction;
 
 import com.vexeonline.dao.TuyenXeDAO;
 import com.vexeonline.dao.TuyenXeDAOImpl;
+import com.vexeonline.dao.UserDAO;
+import com.vexeonline.dao.UserDAOImpl;
+import com.vexeonline.dao.VeXeDAO;
+import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.TuyenXe;
+import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 
 public class KhachHangServiceImpl implements KhachHangService {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	private TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl();
+	private static TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl(); 
+	private static UserDAO userDAO = new UserDAOImpl();
+	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
 
 	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi) {
-		List<TuyenXe> listTuyenXe = null;
+		List<TuyenXe> listTuyenXe = new ArrayList<TuyenXe>(0);
 		if (tinhDi == null || tinhDen == null || ngayDi == null) {
 			throw new IllegalArgumentException("ArgumentException");
 		}
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = null;
 		Transaction tx = null;
 		try {
+			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -83,10 +93,58 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return day;
 	}
 
-	@Override
-	public VeXe kiemTraVe(String SDT, String maSoVe) {
-		// TODO Auto-generated method stub
-		return null;
+	public VeXe kiemTraVe(String SDT, int maSoVe) {
+		VeXe veXe = null;
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			
+			veXe = veXeDAO.getInfoVeXe(maSoVe);
+			if (veXe == null || !veXe.getHanhKhach().getSdt().equals(SDT)) {
+				return null;
+			}
+			
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+		} finally {
+			session.close();
+		}
+		return veXe;
 	}
 
+	public boolean login(String userName, String password) {
+		password = EncodeMD5.encodeMD5(password);
+		boolean flag = true;
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			
+			User user = userDAO.getUserByUserName(userName);
+			if (user == null || !user.getPassword().equals(password)) {
+				flag = false;
+			}
+
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			flag = false;
+			logger.error("Error", ex);
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
+	
 }

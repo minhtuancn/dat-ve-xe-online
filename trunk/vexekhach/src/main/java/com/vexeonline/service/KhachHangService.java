@@ -27,8 +27,16 @@ public interface KhachHangService {
 	 * 
 	 * @param SDT
 	 * @param maSoVe
+	 * @return VeXe null if maSoVe not exist or SDT hanhKhach not same
+	 */
+	public VeXe kiemTraVe(String SDT, int maSoVe);
+	
+	/**
+	 * 
+	 * @param userName
+	 * @param password
 	 * @return
 	 */
-	public VeXe kiemTraVe(String SDT, String maSoVe);
+	public boolean login(String userName, String password);
 
 }

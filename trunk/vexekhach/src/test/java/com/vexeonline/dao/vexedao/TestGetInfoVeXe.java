@@ -1,8 +1,9 @@
-package com.vexeonline.service.khachhangtimchuyen;
+package com.vexeonline.dao.vexedao;
+
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,21 +11,25 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.vexeonline.dao.VeXeDAO;
+import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.BenXe;
+import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DiaChi;
 import com.vexeonline.domain.GiaVe;
+import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
+import com.vexeonline.domain.VeXe;
 import com.vexeonline.domain.Xe;
-import com.vexeonline.service.KhachHangService;
-import com.vexeonline.service.KhachHangServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
-public class TestGetListChuyenXe {
+public class TestGetInfoVeXe {
 	private static SessionFactory sessionFactory;
-	private KhachHangService khachHang = new KhachHangServiceImpl();
+	private VeXeDAO veXeDao = new VeXeDAOImpl();
 
 	@BeforeClass
 	public static void beforeTest() {
@@ -39,8 +44,16 @@ public class TestGetListChuyenXe {
 	@Test
 	public void test1() {
 		addData();
-		List<TuyenXe> list = khachHang.getListChuyenXe("Gia Lai", "HCM", Date.valueOf("2014-11-24"));
-		org.junit.Assert.assertTrue(list.size() == 1);
+
+		Session session = sessionFactory.openSession();
+		sessionFactory.getCurrentSession().beginTransaction();
+
+		VeXe veXe = veXeDao.getInfoVeXe(1);
+
+		assertTrue(veXe != null);
+
+		sessionFactory.getCurrentSession().getTransaction().commit();
+		session.close();
 	}
 
 	private void addData() {
@@ -81,7 +94,7 @@ public class TestGetListChuyenXe {
 
 		LichTuyen lichTuyen = new LichTuyen();
 		lichTuyen.setThu(NgayCuaTuan.MONDAY);
-		lichTuyen.setGioDi(Time.valueOf("17:30:00"));
+		lichTuyen.setGioDi(Time.valueOf("18:00:00"));
 		lichTuyen.setTongThoiGian(12.5);
 		lichTuyen.setXe(xe);
 		lichTuyen.setTuyenXe(tuyenXe);
@@ -99,6 +112,24 @@ public class TestGetListChuyenXe {
 
 		//
 		lichTuyen.getGiaVes().add(giaVe);
+		
+		ChuyenXe chuyenXe = new ChuyenXe();
+		chuyenXe.setNgayDi(Date.valueOf("2014-11-24"));
+		chuyenXe.setLichTuyen(lichTuyen);
+		chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
+		session.save(chuyenXe);
+		
+		HanhKhach hanhKhach = new HanhKhach();
+		hanhKhach.setEmail("tungnt620@gmail.com");
+		hanhKhach.setSdt("01696899620");
+		hanhKhach.setTenHanhKhach("tung");
+		session.save(hanhKhach);
+		
+		VeXe veXe = new VeXe();
+		veXe.setChuyenXe(chuyenXe);
+		veXe.setChoNgoi(1);
+		veXe.setHanhKhach(hanhKhach);
+		session.save(veXe);
 
 		session.flush();
 		session.close();

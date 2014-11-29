@@ -15,7 +15,10 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, unique = true)
+	private int idUser;
+	
 	@Column(unique = true, nullable = false, length = 30)
 	private String userName;
 

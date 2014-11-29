@@ -49,7 +49,7 @@ public class ChuyenXe implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private LichTuyen lichChuyen;
+	private LichTuyen lichTuyen;
 
 	@OneToMany(mappedBy = "chuyenXe")
 	private Set<VeXe> veXes = new HashSet<VeXe>(0);
@@ -99,12 +99,12 @@ public class ChuyenXe implements Serializable {
 	}
 
 	//@RequiredFieldValidator(key = "require.lichTuyen")
-	public LichTuyen getLichChuyen() {
-		return lichChuyen;
+	public LichTuyen getLichTuyen() {
+		return lichTuyen;
 	}
 
-	public void setLichChuyen(LichTuyen lichChuyen) {
-		this.lichChuyen = lichChuyen;
+	public void setLichTuyen(LichTuyen lichTuyen) {
+		this.lichTuyen = lichTuyen;
 	}
 
 	public Set<VeXe> getVeXes() {
