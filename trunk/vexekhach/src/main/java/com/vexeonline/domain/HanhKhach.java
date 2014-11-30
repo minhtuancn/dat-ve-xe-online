@@ -23,7 +23,7 @@ public class HanhKhach {
 	@Column(nullable = false, length = 11)
 	private String sdt;
 	
-	@Column(nullable = false, unique = true, length = 50)
+	@Column(nullable = false, length = 50)
 	private String email;
 
 	public int getIdHanhKhach() {

@@ -55,6 +55,9 @@ public class LichTuyen implements Serializable {
 	@Column(nullable = false, precision = 2)
 	private double tongThoiGian;
 
+	@OneToMany(mappedBy = "lichTuyen")
+	private Set<ChuyenXe> chuyenXes = new HashSet<ChuyenXe>(0);
+
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Xe xe;
@@ -66,7 +69,7 @@ public class LichTuyen implements Serializable {
 	 * @author Tung
 	 */
 	public LichTuyen() {
-		
+
 	}
 
 	public Integer getIdLichTuyen() {
@@ -94,6 +97,7 @@ public class LichTuyen implements Serializable {
 	public void setGioDi(Time gioDi) {
 		this.gioDi = gioDi;
 	}
+
 	@RequiredFieldValidator(key = "require.tongThoiGian")
 	@DoubleRangeFieldValidator(key = "double.tongThoiGian", minExclusive = "0.0")
 	public double getTongThoiGian() {
@@ -126,6 +130,14 @@ public class LichTuyen implements Serializable {
 
 	public void setGiaVes(Set<GiaVe> giaVes) {
 		this.giaVes = giaVes;
+	}
+
+	public Set<ChuyenXe> getChuyenXes() {
+		return chuyenXes;
+	}
+
+	public void setChuyenXes(Set<ChuyenXe> chuyenXes) {
+		this.chuyenXes = chuyenXes;
 	}
 
 }

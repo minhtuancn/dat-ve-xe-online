@@ -9,4 +9,8 @@ public interface VeXeDAO {
 	 * @return
 	 */
     public VeXe getInfoVeXe(int maVeXe);
+    
+    public int save(VeXe veXe);
+    
+    public void delete(VeXe veXe);
 }

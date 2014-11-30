@@ -17,7 +17,7 @@ public class VeXe {
 	@Column(unique = true, nullable = false)
 	private int idVeXe;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private int choNgoi;
 
 	private boolean isThanhToan;

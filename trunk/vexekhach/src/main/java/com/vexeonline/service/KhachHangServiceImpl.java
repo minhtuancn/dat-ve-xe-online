@@ -8,12 +8,21 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.vexeonline.dao.ChuyenXeDAO;
+import com.vexeonline.dao.ChuyenXeDAOImpl;
+import com.vexeonline.dao.DanhGiaDAO;
+import com.vexeonline.dao.DanhGiaDAOImpl;
+import com.vexeonline.dao.HanhKhachDAO;
+import com.vexeonline.dao.HanhKhachDAOImpl;
 import com.vexeonline.dao.TuyenXeDAO;
 import com.vexeonline.dao.TuyenXeDAOImpl;
 import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
+import com.vexeonline.domain.ChuyenXe;
+import com.vexeonline.domain.DanhGia;
+import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
@@ -24,9 +33,12 @@ import com.vexeonline.utils.HibernateUtil;
 public class KhachHangServiceImpl implements KhachHangService {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	private static TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl(); 
+	private static TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
+	private static ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
+	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
+	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 
 	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi) {
@@ -56,6 +68,150 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 
 		return listTuyenXe;
+	}
+
+	public VeXe kiemTraVe(String SDT, int maSoVe) {
+		VeXe veXe = null;
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			veXe = veXeDAO.getInfoVeXe(maSoVe);
+			if (veXe == null || !veXe.getHanhKhach().getSdt().equals(SDT)) {
+				return null;
+			}
+
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+		} finally {
+			session.close();
+		}
+		return veXe;
+	}
+
+	public boolean login(String userName, String password) {
+		password = EncodeMD5.encodeMD5(password);
+		boolean flag = true;
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			User user = userDAO.getUserByUserName(userName);
+			if (user == null || !user.getPassword().equals(password)) {
+				flag = false;
+			}
+
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			flag = false;
+			logger.error("Error", ex);
+		} finally {
+			session.close();
+		}
+		return flag;
+	}
+
+	public boolean datVe(int soCho, int idChuyenXe, HanhKhach hanhKhach) {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			hanhKhachDAO.save(hanhKhach);
+
+			ChuyenXe chuyenXe = chuyenXeDAO.getById(idChuyenXe);
+
+			VeXe veXe = new VeXe();
+			veXe.setChoNgoi(soCho);
+			veXe.setChuyenXe(chuyenXe);
+			veXe.setHanhKhach(hanhKhach);
+			veXeDAO.save(veXe);
+
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	public boolean danhGiaChuyenXe(int maVe, int maLichTuyen, String noiDung, float diem) throws Exception {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			VeXe veXe = veXeDAO.getInfoVeXe(maVe);
+			if (veXe == null || veXe.getChuyenXe().getLichTuyen().getIdLichTuyen() == maLichTuyen) {
+				return false;
+			}
+			DanhGia danhGia = new DanhGia();
+			danhGia.setChuyenXe(veXe.getChuyenXe());
+			danhGia.setDiem(diem);
+			danhGia.setHanhKhach(veXe.getHanhKhach());
+			danhGia.setNoiDung(noiDung);
+			danhGiaDAO.save(danhGia);
+			
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+			throw new Exception("Error");
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public boolean huyVe(int maVe) throws Exception {
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			VeXe veXe = veXeDAO.getInfoVeXe(maVe);
+			if (veXe == null) {
+				return false;
+			}
+			veXeDAO.delete(veXe);
+			
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+			throw new Exception("Error");
+		} finally {
+			session.close();
+		}
+		return true;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -93,58 +249,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return day;
 	}
 
-	public VeXe kiemTraVe(String SDT, int maSoVe) {
-		VeXe veXe = null;
-		Session session = null;
-		Transaction tx = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			
-			veXe = veXeDAO.getInfoVeXe(maSoVe);
-			if (veXe == null || !veXe.getHanhKhach().getSdt().equals(SDT)) {
-				return null;
-			}
-			
-			tx.commit();
-		} catch (Exception ex) {
-			if (tx != null) {
-				tx.rollback();
-			}
-			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
-		return veXe;
-	}
-
-	public boolean login(String userName, String password) {
-		password = EncodeMD5.encodeMD5(password);
-		boolean flag = true;
-		Session session = null;
-		Transaction tx = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			
-			User user = userDAO.getUserByUserName(userName);
-			if (user == null || !user.getPassword().equals(password)) {
-				flag = false;
-			}
-
-			tx.commit();
-		} catch (Exception ex) {
-			if (tx != null) {
-				tx.rollback();
-			}
-			flag = false;
-			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
-		return flag;
-	}
 	
+
 }
