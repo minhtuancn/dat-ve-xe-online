@@ -1,5 +1,7 @@
 package com.vexeonline.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 import com.vexeonline.domain.User;
@@ -15,6 +17,19 @@ public class UserDAOImpl implements UserDAO {
 				.uniqueResult();
 		
 		return user;
+	}
+
+	public int save(User user) {
+		return (int) HibernateUtil.getSessionFactory().getCurrentSession().save(user);
+	}
+
+	public void update(User user) {
+		HibernateUtil.getSessionFactory().getCurrentSession().update(user);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<User> list() {
+		return HibernateUtil.getSessionFactory().getCurrentSession().createQuery("from User").list();
 	}
 
 }
