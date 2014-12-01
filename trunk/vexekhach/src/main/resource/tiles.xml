@@ -90,5 +90,8 @@
 		<put-attribute name="title" value="Thêm lịch chuyến" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/scheduleDetailContent.jsp" />
 	</definition>
-	
+	<definition name="coach.book" extends="admin.home">
+		<put-attribute name="title" value="Đặt vé" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/bookContent.jsp" />
+	</definition>
 </tiles-definitions>

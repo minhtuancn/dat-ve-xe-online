@@ -1,5 +1,8 @@
 package com.vexeonline.action;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -13,6 +16,16 @@ public class CoachAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L; 
 	
+	private List<Boolean> seats = new ArrayList<Boolean>();
+	
+	public List<Boolean> getSeats() {
+		return seats;
+	}
+
+	public void setSeats(List<Boolean> seats) {
+		this.seats = seats;
+	}
+
 	@Action(value = "home", results = @Result(name = "success", location="coach.home", type = "tiles"))
 	public String showAdminHomePage() {
 		return SUCCESS;
@@ -35,6 +48,18 @@ public class CoachAction extends ActionSupport {
 	
 	@Action(value = "newSchedule", results = @Result(name = "success", location="coach.newSchedule", type = "tiles"))
 	public String showNewSchedulePage() {
+		return SUCCESS;
+	}
+	
+	@Action(value = "book", results = @Result(name = "success", location="coach.book", type = "tiles"))
+	public String showTicketBookingPage() {
+		for (int i=0; i<40; i++) {
+			if (i % 3 == 0) {
+				seats.add(true);
+			} else {
+				seats.add(false);
+			}
+		}
 		return SUCCESS;
 	}
 }

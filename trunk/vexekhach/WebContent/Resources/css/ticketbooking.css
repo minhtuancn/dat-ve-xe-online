@@ -71,6 +71,10 @@ form .input-group label {
 	float: left;
 }
 
+.fl-n {
+	clear: both;
+}
+
 .fl-r {
 	float: right;
 }
