@@ -37,4 +37,14 @@ public class AdminAction extends ActionSupport {
 	public String showNewRoutePage() {
 		return SUCCESS;
 	}
+	
+	@Action(value = "coachs", results = @Result(name = "success", location="admin.coachs", type = "tiles"))
+	public String showCoachsPage() {
+		return SUCCESS;
+	}
+	
+	@Action(value = "newCoach", results = @Result(name = "success", location="admin.newCoach", type = "tiles"))
+	public String showNewCoachPage() {
+		return SUCCESS;
+	}
 }

@@ -42,4 +42,9 @@ public class GuestAction extends ActionSupport {
 	public String showContactPage() {
 		return SUCCESS;
 	}
+	
+	@Action(value = "trips", results = @Result(name = "success", location="trips", type = "tiles"))
+	public String showTripsPage() {
+		return SUCCESS;
+	}
 }
