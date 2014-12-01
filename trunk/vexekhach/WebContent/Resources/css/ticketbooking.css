@@ -242,3 +242,14 @@ form .input-group label {
 	background-color: white;
 	width: 1024px;
 }
+
+#coachForm {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	border: 1px dashed blue;
+	padding: 20px;
+	background-color: white;
+	width: 1024px;
+}
