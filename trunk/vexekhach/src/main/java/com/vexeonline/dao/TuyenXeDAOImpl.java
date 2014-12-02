@@ -58,6 +58,7 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 		String sql = "from TuyenXe as t "
 				+ "left join fetch t.lichTuyens as l "
 				+ "left join fetch l.giaVes as g "
+				+ "left join fetch l.xe.tienIchs "
 				+ "where t.benDi.diaChi.tinh like :tinhDi "
 				+ "and t.benDen.diaChi.tinh like :tinhDen "
 				+ "and  :ngayDatVe between g.ngayBatDau and g.ngayKetThuc "
