@@ -36,3 +36,5 @@
 .benefit-blanket {
 	background-position: 0px -48px;
 }
+
+.datepicker {z-index: 1151 !important;}
