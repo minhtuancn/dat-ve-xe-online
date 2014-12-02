@@ -19,10 +19,11 @@ public interface KhachHangService {
 	 * @param tinhDi
 	 * @param tinhDen
 	 * @param ngayDi
+	 * @param soCho
 	 * @return List<TuyenXe>
 	 */
 	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
-			Date ngayDi);
+			Date ngayDi, int soCho);
 
 	/**
 	 * 

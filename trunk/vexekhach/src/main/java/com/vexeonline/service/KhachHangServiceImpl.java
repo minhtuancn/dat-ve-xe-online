@@ -1,6 +1,7 @@
 package com.vexeonline.service;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +21,21 @@ import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
+import com.vexeonline.domain.BenXe;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
+import com.vexeonline.domain.DiaChi;
+import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.HanhKhach;
+import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
+import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.TienIch;
+import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.domain.Xe;
 import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -41,7 +50,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 
 	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
-			Date ngayDi) {
+			Date ngayDi, int soCho) {
 		List<TuyenXe> listTuyenXe = new ArrayList<TuyenXe>(0);
 		if (tinhDi == null || tinhDen == null || ngayDi == null) {
 			throw new IllegalArgumentException("ArgumentException");
@@ -70,6 +79,102 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return listTuyenXe;
 	}
 
+	static {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		DiaChi diaChi1 = new DiaChi();
+		diaChi1.setTinh("Gia Lai");
+		session.save(diaChi1);
+
+		DiaChi diaChi2 = new DiaChi();
+		diaChi2.setTinh("HCM");
+		session.save(diaChi2);
+
+		BenXe benXe1 = new BenXe();
+		benXe1.setTenBenXe("BX.AnKhe");
+		benXe1.setDiaChi(diaChi1);
+		session.save(benXe1);
+
+		BenXe benXe2 = new BenXe();
+		benXe2.setTenBenXe("BX.MienDong");
+		benXe2.setDiaChi(diaChi2);
+		session.save(benXe2);
+
+		TuyenXe tuyenXe = new TuyenXe();
+		tuyenXe.setDoDai(100);
+		tuyenXe.setBenDen(benXe2);
+		tuyenXe.setBenDi(benXe1);
+		session.save(tuyenXe);
+
+		NhaXe nhaXe = new NhaXe();
+		nhaXe.setTenNhaXe("VietTanPhat");
+		session.save(nhaXe);
+
+		Xe xe = new Xe();
+		xe.setBienSoXe("81-12345");
+		xe.setLoaiXe("Ghe Ngoi");
+		xe.setSoCho(45);
+		xe.setNhaXe(nhaXe);
+		session.save(xe);
+
+		LichTuyen lichTuyen = new LichTuyen();
+		lichTuyen.setThu(NgayCuaTuan.MONDAY);
+		lichTuyen.setGioDi(Time.valueOf("18:00:00"));
+		lichTuyen.setTongThoiGian(12.5);
+		lichTuyen.setXe(xe);
+		lichTuyen.setTuyenXe(tuyenXe);
+		session.save(lichTuyen);
+
+		//
+		tuyenXe.getLichTuyens().add(lichTuyen);
+
+		GiaVe giaVe = new GiaVe();
+		giaVe.setGiaVe(300000);
+		giaVe.setLichTuyen(lichTuyen);
+		giaVe.setNgayBatDau(Date.valueOf("2014-10-10"));
+		giaVe.setNgayKetThuc(Date.valueOf("2014-12-10"));
+		session.save(giaVe);
+
+		//
+		lichTuyen.getGiaVes().add(giaVe);
+		
+		ChuyenXe chuyenXe = new ChuyenXe();
+		chuyenXe.setNgayDi(Date.valueOf("2014-11-24"));
+		chuyenXe.setLichTuyen(lichTuyen);
+		chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
+		session.save(chuyenXe);
+		
+		HanhKhach hanhKhach = new HanhKhach();
+		hanhKhach.setEmail("tungnt620@gmail.com");
+		hanhKhach.setSdt("01696899620");
+		hanhKhach.setTenHanhKhach("tung");
+		session.save(hanhKhach);
+		
+		VeXe veXe = new VeXe();
+		veXe.setChuyenXe(chuyenXe);
+		veXe.setChoNgoi(1);
+		veXe.setHanhKhach(hanhKhach);
+		session.save(veXe);
+		
+		TienIch tienIch = new TienIch();
+		tienIch.setTenTienIch("DRINK");
+		tienIch.getXes().add(xe);
+		session.save(tienIch);
+		
+		xe.getTienIchs().add(tienIch);
+		
+		
+		DanhGia danhGia = new DanhGia();
+		danhGia.setChuyenXe(chuyenXe);
+		danhGia.setDiem(4.2f);
+		danhGia.setHanhKhach(hanhKhach);
+		danhGia.setNoiDung("12321");
+		session.save(danhGia);
+
+		session.flush();
+		session.close();
+
+	}
+	
 	public VeXe kiemTraVe(String SDT, int maSoVe) {
 		VeXe veXe = null;
 		Session session = null;
@@ -155,7 +260,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return true;
 	}
 
-	public boolean danhGiaChuyenXe(int maVe, int maLichTuyen, String noiDung, float diem) throws Exception {
+	public boolean danhGiaChuyenXe(int maVe, int maLichTuyen, String noiDung,
+			float diem) throws Exception {
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -164,7 +270,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 					.beginTransaction();
 
 			VeXe veXe = veXeDAO.getInfoVeXe(maVe);
-			if (veXe == null || veXe.getChuyenXe().getLichTuyen().getIdLichTuyen() == maLichTuyen) {
+			if (veXe == null
+					|| veXe.getChuyenXe().getLichTuyen().getIdLichTuyen() == maLichTuyen) {
 				return false;
 			}
 			DanhGia danhGia = new DanhGia();
@@ -173,7 +280,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			danhGia.setHanhKhach(veXe.getHanhKhach());
 			danhGia.setNoiDung(noiDung);
 			danhGiaDAO.save(danhGia);
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
@@ -186,7 +293,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return true;
 	}
-	
+
 	public boolean huyVe(int maVe) throws Exception {
 		Session session = null;
 		Transaction tx = null;
@@ -200,7 +307,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				return false;
 			}
 			veXeDAO.delete(veXe);
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
@@ -248,7 +355,5 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return day;
 	}
-
-	
 
 }
