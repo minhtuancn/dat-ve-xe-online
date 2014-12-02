@@ -65,7 +65,14 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 			listTuyenXe = tuyenXeDAO.getListTuyenXe(tinhDi, tinhDen,
 					ngayDi.toString(), dayOfWeek(ngayDi));
-
+			for (TuyenXe tuyenXe : listTuyenXe) {
+				for (LichTuyen lichTuyen : tuyenXe.getLichTuyens()) {
+					for (ChuyenXe chuyenXe : lichTuyen.getChuyenXes()) {
+						chuyenXe.setSoChoConLai(lichTuyen.getXe().getSoCho() - chuyenXe.getVeXes().size());
+					}
+				}
+			}
+			
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
