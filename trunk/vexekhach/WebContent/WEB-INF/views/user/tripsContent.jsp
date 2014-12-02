@@ -44,8 +44,9 @@ $(document).ready(function() {
 	
 	<tbody>
 	<s:iterator value="list" var="tuyenXe" >
-		<s:iterator value="#tuyenXe.lichTuyens" var="lichTuyen" >
-		   <s:iterator value="#lichTuyen.giaVes" var="giaVe">
+	  <s:iterator value="#tuyenXe.lichTuyens" var="lichTuyen" >
+		<s:iterator value="#lichTuyen.giaVes" var="giaVe">
+		  <s:iterator value="#lichTuyen.chuyenXes" var="chuyenXe"> 
 			<tr>
 				<td><s:property value="#lichTuyen.xe.nhaXe.tenNhaXe" /> </td>
 				<td>
@@ -71,12 +72,6 @@ $(document).ready(function() {
 										<span class="benefit benefit-blanket fl-l"></span>
 									</s:elseif>
 								</s:iterator>
-							<%-- <span class="benefit benefit-drink fl-l"></span>
-							<span class="benefit benefit-tissue fl-l"></span>
-							<span class="benefit benefit-toilet fl-l"></span>
-							<span class="benefit benefit-dvd fl-l"></span>
-							<span class="benefit benefit-aircon fl-l"></span>
-							<span class="benefit benefit-blanket fl-l"></span> --%>
 						</div>
 						<div style="clear: both;"><s:property value="#lichTuyen.xe.loaiXe"/>&nbsp;<s:property value="#lichTuyen.xe.soCho"/>&nbsp;chỗ</div>
 					</div>
@@ -93,10 +88,16 @@ $(document).ready(function() {
 						<div>Tồng thời gian: <s:property value="#lichTuyen.tongThoiGian"/>h</div>
 					</div>
 				</td>
-				<td>10</td>
+				<td><s:if test="%{#lichTuyen.chuyenXes.size() == 0}">
+						<s:property value="#lichTuyen.xe.soCho" />
+					</s:if>
+					<s:else>
+						<s:property value="#chuyenXe.soChoConLai" />
+					</s:else>
+				</td>
 				<td>
 					<div>
-						<div class="rate" data-average='2'></div>
+						<div class="rate" data-average='<s:property value="#lichTuyen.xe.nhaXe.rate" /> '></div>
 					</div>
 				</td>
 				<td>
@@ -106,9 +107,10 @@ $(document).ready(function() {
 					</div>
 				</td>
 			</tr>
-			</s:iterator>
-		  </s:iterator>
+		  </s:iterator>	
 		</s:iterator>
+	  </s:iterator>
+	</s:iterator>
 		<%-- <s:iterator var="trip" value="trips">
 			<tr>
 				<td>${trip.coach}</td>
