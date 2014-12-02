@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class Xe implements Serializable {
 	@JoinColumn(nullable = false)
 	private NhaXe nhaXe;
 
-	@ManyToMany(mappedBy = "xes")
+	@ManyToMany(mappedBy = "xes", fetch = FetchType.EAGER)
 	private Set<TienIch> tienIchs = new HashSet<TienIch>(0);
 
 	/**
