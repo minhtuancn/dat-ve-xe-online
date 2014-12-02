@@ -79,7 +79,7 @@ $(document).ready(function() {
 				<td>
 					<div>
 						<div><s:property value="#tuyenXe.benDi.tenBenXe"/></div>
-						<div>Khởi hành: <s:property value="#lichTuyen.gioDi"/></div>
+						<div>Khởi hành: <s:property value="#lichTuyen.gioDi.getHours()"/>Giờ <s:property value="#lichTuyen.gioDi.getMinutes()"/>Phút</div>
 					</div>
 				</td>
 				<td>
@@ -88,11 +88,12 @@ $(document).ready(function() {
 						<div>Tồng thời gian: <s:property value="#lichTuyen.tongThoiGian"/>h</div>
 					</div>
 				</td>
-				<td><s:if test="%{#lichTuyen.chuyenXes.size() == 0}">
+				<td>
+					<s:if test="%{#lichTuyen.chuyenXes.size() == 0}">
 						<s:property value="#lichTuyen.xe.soCho" />
 					</s:if>
 					<s:else>
-						<s:property value="#chuyenXe.soChoConLai" />
+						<s:property value="#lichTuyen.xe.soCho - #chuyenXe.veXes.size()" />
 					</s:else>
 				</td>
 				<td>

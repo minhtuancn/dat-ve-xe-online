@@ -33,9 +33,9 @@
 						<div class="select"><input type="checkbox" name="seat" value="#stat.count" /></div>
 					</td>
 				</s:else>
-				<s:if test="#stat.count % 4 == 0">
+				<s:if test="#stat.count % 4 == 0"> 
 					</tr><tr>	
-				</s:if>		
+				</s:if>
 			</s:iterator>
 			</tr>
 		</table>
