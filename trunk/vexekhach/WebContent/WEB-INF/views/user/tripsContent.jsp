@@ -8,81 +8,108 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.css" />
 <script type="text/javascript">
-<!--
+
 $(document).ready(function() {
     $('#trips').DataTable();
     $(".rate").jRating({
     	isDisabled : true,
-    	rateMax: 100
+    	rateMax: 5
   	});
 } );
-//-->
+
 </script>
 <table id="trips">
 	<thead>
 		<tr>
-			<td>Hãng xe</td>
-			<td>Tiện ích</td>
-			<td>Nơi xuất phát</td>
-			<td>Nơi đến</td>
-			<td>Số ghế trống</td>
-			<td>Đánh giá</td>
-			<td>Giá vé</td>
+			<th>Hãng xe</th>
+			<th>Tiện ích</th>
+			<th>Nơi xuất phát</th>
+			<th>Nơi đến</th>
+			<th>Số ghế trống</th>
+			<th>Đánh giá</th>
+			<th>Giá vé</th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<td>Hãng xe</td>
-			<td>Tiện ích</td>
-			<td>Nơi xuất phát</td>
-			<td>Nơi đến</td>
-			<td>Số ghế trống</td>
-			<td>Đánh giá</td>
-			<td>Giá vé</td>
+			<th>Hãng xe</th>
+			<th>Tiện ích</th>
+			<th>Nơi xuất phát</th>
+			<th>Nơi đến</th>
+			<th>Số ghế trống</th>
+			<th>Đánh giá</th>
+			<th>Giá vé</th>
 		</tr>
 	</tfoot>
+	
 	<tbody>
-		<tr>
-			<td>Mai Linh</td>
-			<td>
-				<div>
+	<s:iterator value="list" var="tuyenXe" >
+		<s:iterator value="#tuyenXe.lichTuyens" var="lichTuyen" >
+		   <s:iterator value="#lichTuyen.giaVes" var="giaVe">
+			<tr>
+				<td><s:property value="#lichTuyen.xe.nhaXe.tenNhaXe" /> </td>
+				<td>
 					<div>
-						<span class="benefit benefit-drink fl-l"></span>
-						<span class="benefit benefit-tissue fl-l"></span>
-						<span class="benefit benefit-toilet fl-l"></span>
-						<span class="benefit benefit-dvd fl-l"></span>
-						<span class="benefit benefit-aircon fl-l"></span>
-						<span class="benefit benefit-blanket fl-l"></span>
+						<div>
+							<s:iterator var="item" value="lichTuyen.xe.tienIchs">
+									<s:if test="%{#item.tenTienIch == 'DRINK'}">
+										<span class="benefit benefit-drink fl-l"></span>
+									</s:if>
+									<s:elseif test="%{#item.tenTienIch == 'TISSUE'}">
+										<span class="benefit benefit-tissue fl-l"></span>	
+									</s:elseif>
+									<s:elseif test="%{#item.tenTienIch == 'TOILET'}">
+										<span class="benefit benefit-toilet fl-l"></span>
+									</s:elseif>
+									<s:elseif test="%{#item.tenTienIch == 'DVD'}">
+										<span class="benefit benefit-dvd fl-l"></span>
+									</s:elseif>
+									<s:elseif test="%{#item.tenTienIch == 'AIRCON'}">
+										<span class="benefit benefit-aircon fl-l"></span>
+									</s:elseif>
+									<s:elseif test="%{#item.tenTienIch == 'BLANKET'}">
+										<span class="benefit benefit-blanket fl-l"></span>
+									</s:elseif>
+								</s:iterator>
+							<%-- <span class="benefit benefit-drink fl-l"></span>
+							<span class="benefit benefit-tissue fl-l"></span>
+							<span class="benefit benefit-toilet fl-l"></span>
+							<span class="benefit benefit-dvd fl-l"></span>
+							<span class="benefit benefit-aircon fl-l"></span>
+							<span class="benefit benefit-blanket fl-l"></span> --%>
+						</div>
+						<div style="clear: both;"><s:property value="#lichTuyen.xe.loaiXe"/>&nbsp;<s:property value="#lichTuyen.xe.soCho"/>&nbsp;chỗ</div>
 					</div>
-					<div style="clear: both;">Giường nằm 40 chỗ</div>
-				</div>
-			</td>
-			<td>
-				<div>
-					<div>Bến xe miền đông</div>
-					<div>Khởi hành: 11h00</div>
-				</div>
-			</td>
-			<td>
-				<div>
-					<div>Bến xe Đà Nẵng</div>
-					<div>Tồng thời gian: 21h</div>
-				</div>
-			</td>
-			<td>10</td>
-			<td>
-				<div>
-					<div class="rate" data-average="75" data-id="3"></div>
-				</div>
-			</td>
-			<td>
-				<div>
-					<div>430000 VNĐ</div>
-					<div><button>Đặt vé</button></div>
-				</div>
-			</td>
-		</tr>
-		<s:iterator var="trip" value="trips">
+				</td>
+				<td>
+					<div>
+						<div><s:property value="#tuyenXe.benDi.tenBenXe"/></div>
+						<div>Khởi hành: <s:property value="#lichTuyen.gioDi"/></div>
+					</div>
+				</td>
+				<td>
+					<div>
+						<div><s:property value="#tuyenXe.benDen.tenBenXe"/></div>
+						<div>Tồng thời gian: <s:property value="#lichTuyen.tongThoiGian"/>h</div>
+					</div>
+				</td>
+				<td>10</td>
+				<td>
+					<div>
+						<div class="rate" data-average='2'></div>
+					</div>
+				</td>
+				<td>
+					<div>
+						<div><s:property value="#giaVe.giaVe"/> VNĐ</div>
+						<div><button class="btn btn-info">Đặt vé</button></div>
+					</div>
+				</td>
+			</tr>
+			</s:iterator>
+		  </s:iterator>
+		</s:iterator>
+		<%-- <s:iterator var="trip" value="trips">
 			<tr>
 				<td>${trip.coach}</td>
 				<td>
@@ -131,6 +158,7 @@ $(document).ready(function() {
 					<div><button>Đặt vé</button></div>
 				</td>
 			</tr>
-		</s:iterator>
+		</s:iterator> --%>
 	</tbody>
+	
 </table>
