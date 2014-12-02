@@ -15,8 +15,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-import com.vexeonline.domain.LichTuyen;
-import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.service.KhachHangServiceImpl;
 
@@ -24,7 +22,7 @@ import com.vexeonline.service.KhachHangServiceImpl;
 @ParentPackage(value = "default")
 @InterceptorRef(value = "defaultStack", params = { "validation.excludeMethods",
 		"execute" })
-@Results({ @Result(name = "input", location = "home", type ="tiles"  ) })
+@Results({ @Result(name = "input", location = "home", type = "tiles") })
 public class TimChuyen extends ActionSupport {
 	private static final long serialVersionUID = -1959057596225194512L;
 	private static Logger logger = Logger.getLogger(TimChuyen.class);
@@ -37,22 +35,9 @@ public class TimChuyen extends ActionSupport {
 	@Action(value = "timchuyenxe", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String getListChuyenXe() {
 		try {
-
-			System.out.println(soCho + " " + tinhDi + " " + tinhDen + " "
-					+ ngayDi);
-
 			list = new KhachHangServiceImpl().getListChuyenXe("Gia Lai", "HCM",
 					ngayDi, soCho);
-			
-			for (LichTuyen lichTuyen : list.get(0).getLichTuyens()) {
-				System.out.println("lichTUyen");
-				for (TienIch tienIch : lichTuyen.getXe().getTienIchs()) {
-					System.out.println(tienIch.getTenTienIch());
-				}
-			}
-			
-			System.out.println(list.size());
-			
+
 		} catch (Exception e) {
 			logger.error("Error", e);
 			return ERROR;

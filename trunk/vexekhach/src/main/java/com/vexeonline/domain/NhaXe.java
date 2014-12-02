@@ -38,6 +38,8 @@ public class NhaXe implements Serializable {
 	@Column(length = 50)
 	private String hinhAnh;
 
+	private int rate;
+
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<VanPhong> vanPhongs = new HashSet<VanPhong>(0);
 	private boolean isActive;
@@ -96,6 +98,14 @@ public class NhaXe implements Serializable {
 
 	public void setVanPhongs(Set<VanPhong> vanPhongs) {
 		this.vanPhongs = vanPhongs;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
 	}
 
 }

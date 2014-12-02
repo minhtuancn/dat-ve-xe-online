@@ -98,7 +98,6 @@ public class ChuyenXe implements Serializable {
 		this.trangThai = trangThai;
 	}
 
-	//@RequiredFieldValidator(key = "require.lichTuyen")
 	public LichTuyen getLichTuyen() {
 		return lichTuyen;
 	}

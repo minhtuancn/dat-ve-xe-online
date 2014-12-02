@@ -59,8 +59,11 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 				+ "left join fetch t.lichTuyens as l "
 				+ "left join fetch l.giaVes as g "
 				+ "left join fetch l.xe.tienIchs "
+				+ "left join fetch l.chuyenXes as c "
+				+ "left join fetch c.veXes "
 				+ "where t.benDi.diaChi.tinh like :tinhDi "
 				+ "and t.benDen.diaChi.tinh like :tinhDen "
+				+ "and c.ngayDi = :ngayDatVe "
 				+ "and  :ngayDatVe between g.ngayBatDau and g.ngayKetThuc "
 				+ "and l.thu like :thu";
 
