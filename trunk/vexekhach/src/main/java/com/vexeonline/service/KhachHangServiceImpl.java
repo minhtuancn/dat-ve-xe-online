@@ -65,7 +65,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 			listTuyenXe = tuyenXeDAO.getListTuyenXe(tinhDi, tinhDen,
 					ngayDi.toString(), dayOfWeek(ngayDi));
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
@@ -136,33 +136,32 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 		//
 		lichTuyen.getGiaVes().add(giaVe);
-		
+
 		ChuyenXe chuyenXe = new ChuyenXe();
 		chuyenXe.setNgayDi(Date.valueOf("2014-11-24"));
 		chuyenXe.setLichTuyen(lichTuyen);
 		chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
 		session.save(chuyenXe);
-		
+
 		HanhKhach hanhKhach = new HanhKhach();
 		hanhKhach.setEmail("tungnt620@gmail.com");
 		hanhKhach.setSdt("01696899620");
 		hanhKhach.setTenHanhKhach("tung");
 		session.save(hanhKhach);
-		
+
 		VeXe veXe = new VeXe();
 		veXe.setChuyenXe(chuyenXe);
 		veXe.setChoNgoi(1);
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
-		
+
 		TienIch tienIch = new TienIch();
 		tienIch.setTenTienIch("DRINK");
 		tienIch.getXes().add(xe);
 		session.save(tienIch);
-		
+
 		xe.getTienIchs().add(tienIch);
-		
-		
+
 		DanhGia danhGia = new DanhGia();
 		danhGia.setChuyenXe(chuyenXe);
 		danhGia.setDiem(4.2f);
@@ -174,7 +173,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		session.close();
 
 	}
-	
+
 	public VeXe kiemTraVe(String SDT, int maSoVe) {
 		VeXe veXe = null;
 		Session session = null;

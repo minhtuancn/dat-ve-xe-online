@@ -35,6 +35,8 @@ public class TimChuyen extends ActionSupport {
 	@Action(value = "timchuyenxe", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String getListChuyenXe() {
 		try {
+			System.out.println(tinhDi);
+			
 			list = new KhachHangServiceImpl().getListChuyenXe("Gia Lai", "HCM",
 					ngayDi, soCho);
 
@@ -54,7 +56,7 @@ public class TimChuyen extends ActionSupport {
 		this.list = list;
 	}
 
-	@IntRangeFieldValidator(message = "Số ghế phải lớn hơn 0", min = "0", max = "45")
+	@IntRangeFieldValidator(message = "Số ghế phải lớn hơn 0", min = "1", max = "40")
 	public int getSoCho() {
 		return soCho;
 	}
