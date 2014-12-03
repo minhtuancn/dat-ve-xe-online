@@ -20,10 +20,10 @@ public class HanhKhach {
 	@Column(nullable = false, length = 100)
 	private String tenHanhKhach;
 	
-	@Column(nullable = false, length = 11)
+	@Column(nullable = false, length = 11, unique = true)
 	private String sdt;
 	
-	@Column(nullable = false, length = 50)
+	@Column(length = 50)
 	private String email;
 
 	public int getIdHanhKhach() {
@@ -53,7 +53,6 @@ public class HanhKhach {
 		this.sdt = sdt;
 	}
 
-	@RequiredStringValidator(key = "require.email", trim = true)
 	@EmailValidator(key = "validate.email")
 	public String getEmail() {
 		return email;
