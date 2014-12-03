@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -32,6 +33,7 @@ public class HanhKhach implements Serializable {
 	@Column(length = 50)
 	private String email;
 
+	@OneToMany(mappedBy = "hanhKhach")
 	private Set<VeXe> veXes = new HashSet<VeXe>(0);
 
 	public int getIdHanhKhach() {
