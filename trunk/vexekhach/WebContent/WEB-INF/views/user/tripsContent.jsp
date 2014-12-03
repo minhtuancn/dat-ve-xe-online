@@ -18,17 +18,16 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
-//When the document is ready
-$(document).ready(function () {
-    $('#ngayDi').datepicker({
-        format: "dd/mm/yyyy",
-        todayHighlight: true,
-        language: 'vi',
-        autoclose: true
-    });  
-});
-</script>
-<script type="text/javascript">
+	//When the document is ready
+	$(document).ready(function () {
+	    $('#ngayDi').datepicker({
+	        format: "dd/mm/yyyy",
+	        todayHighlight: true,
+	        language: 'vi',
+	        autoclose: true
+	    });  
+	});
+	
 	$(document).ready(function() {
 		$('#trips').DataTable();
 		
@@ -165,10 +164,11 @@ $(document).ready(function () {
 							<td>
 								<div>
 									<div class="rate" data-average='<s:property value="#lichTuyen.xe.nhaXe.rate" />'></div>
-									<br />
+									<a href="" style="font-size: small; text-decoration: underline; color: orange;" 
+									data-toggle="modal" data-target="#myModal_listDanhGia">Xem đánh giá</a>
+									<br/>
 									<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#myModal">Viết đánh
-										giá</button>
+										data-toggle="modal" data-target="#myModal">Viết đánh giá</button>
 								</div>
 							</td>
 							<td>
@@ -233,6 +233,25 @@ $(document).ready(function () {
 					<button type="submit" class="btn btn-primary">Gửi đánh giá</button>
 					
 				</form>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div id="myModal_listDanhGia" class="modal fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h3 class="modal-title">Danh sách đánh giá</h3>
+			</div>
+			<div class="modal-body">
+				
 			</div>
 		</div>
 		<!-- /.modal-content -->

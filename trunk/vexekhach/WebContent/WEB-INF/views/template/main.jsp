@@ -12,8 +12,8 @@ $(document).ready(function () {
         format: "dd/mm/yyyy",
         todayHighlight: true,
         language: 'vi',
-        autoclose: true,
-        startDate : getCurrentDate()
+        autoclose: true/* ,
+        startDate : getCurrentDate() */
     });  
 });
 
