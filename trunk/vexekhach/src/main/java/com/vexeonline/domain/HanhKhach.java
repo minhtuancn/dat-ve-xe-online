@@ -1,5 +1,9 @@
 package com.vexeonline.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,20 +15,24 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
-public class HanhKhach {
+public class HanhKhach implements Serializable {
+	private static final long serialVersionUID = 5530134202517358350L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private int idHanhKhach;
-	
+
 	@Column(nullable = false, length = 100)
 	private String tenHanhKhach;
-	
+
 	@Column(nullable = false, length = 11, unique = true)
 	private String sdt;
-	
+
 	@Column(length = 50)
 	private String email;
+
+	private Set<VeXe> veXes = new HashSet<VeXe>(0);
 
 	public int getIdHanhKhach() {
 		return idHanhKhach;
@@ -60,6 +68,14 @@ public class HanhKhach {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<VeXe> getVeXes() {
+		return veXes;
+	}
+
+	public void setVeXes(Set<VeXe> veXes) {
+		this.veXes = veXes;
 	}
 
 }
