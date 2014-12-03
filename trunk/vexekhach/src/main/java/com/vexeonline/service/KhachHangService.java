@@ -60,8 +60,8 @@ public interface KhachHangService {
 	 * @throws Exception
 	 *             if exception
 	 */
-	public boolean danhGiaChuyenXe(int maVe, int maLichTuyen, String noiDung,
-			float diem) throws Exception;
+	public boolean danhGiaChuyenXe(Date ngayDi, String sdt, String noiDung,
+			float diem) ;
 	
 	/**
 	 * 

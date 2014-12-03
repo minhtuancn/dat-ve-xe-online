@@ -1,7 +1,6 @@
 package com.vexeonline.service;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +20,13 @@ import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
-import com.vexeonline.domain.BenXe;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
-import com.vexeonline.domain.DiaChi;
-import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
-import com.vexeonline.domain.NhaXe;
-import com.vexeonline.domain.TienIch;
-import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
-import com.vexeonline.domain.Xe;
 import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -78,7 +69,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 		return listTuyenXe;
 	}
-
+/*
 	static {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		DiaChi diaChi1 = new DiaChi();
@@ -173,7 +164,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		session.close();
 
 	}
-
+*/
 	public VeXe kiemTraVe(String SDT, int maSoVe) {
 		VeXe veXe = null;
 		Session session = null;
@@ -259,34 +250,41 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return true;
 	}
 
-	public boolean danhGiaChuyenXe(int maVe, int maLichTuyen, String noiDung,
-			float diem) throws Exception {
+	public boolean danhGiaChuyenXe(Date ngayDi, String sdt, String noiDung,
+			float diem){
+		
 		Session session = null;
 		Transaction tx = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-
-			VeXe veXe = veXeDAO.getInfoVeXe(maVe);
-			if (veXe == null
-					|| veXe.getChuyenXe().getLichTuyen().getIdLichTuyen() == maLichTuyen) {
-				return false;
+			boolean flag = false;
+			ChuyenXe chuyenXe = null;
+			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
+			for (VeXe veXe : hanhKhach.getVeXes()) {
+				if (veXe.getChuyenXe().getNgayDi().toString().equals(ngayDi.toString())) {
+					flag = true;
+					chuyenXe = veXe.getChuyenXe();
+					break;
+				}
 			}
-			DanhGia danhGia = new DanhGia();
-			danhGia.setChuyenXe(veXe.getChuyenXe());
-			danhGia.setDiem(diem);
-			danhGia.setHanhKhach(veXe.getHanhKhach());
-			danhGia.setNoiDung(noiDung);
-			danhGiaDAO.save(danhGia);
-
+			
+			if (flag == true) {
+				DanhGia danhGia = new DanhGia();
+				danhGia.setChuyenXe(chuyenXe);
+				danhGia.setDiem(diem);
+				danhGia.setHanhKhach(hanhKhach);
+				danhGia.setNoiDung(noiDung);
+				danhGiaDAO.save(danhGia);
+			}
+			
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-			throw new Exception("Error");
 		} finally {
 			session.close();
 		}
