@@ -81,7 +81,7 @@ public class DanhGia implements Serializable{
 		this.chuyenXe = chuyenXe;
 	}
 
-	public boolean isTrangThai() {
+	public boolean getTrangThai() {
 		return trangThai;
 	}
 
@@ -89,5 +89,4 @@ public class DanhGia implements Serializable{
 		this.trangThai = trangThai;
 	}
 	
-
 }
