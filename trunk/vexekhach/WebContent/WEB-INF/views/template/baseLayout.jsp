@@ -11,11 +11,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/ticketbooking.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/menu.css" />
 </head>
 <body>
-	<div id="header">
-		<div id="banner"><tiles:insertAttribute name="banner" /></div>
-		<div id="menu"><tiles:insertAttribute name="menu" /></div>
+	<div id="header_wrapper">
+		<div id="banner_wrapper"><tiles:insertAttribute name="banner" /></div>
+		<div id="menu_wrapper"><tiles:insertAttribute name="menu" /></div>
 	</div>
 	<div id="main"><tiles:insertAttribute name="main" /></div>
 	<div id="footer"><tiles:insertAttribute name="footer" /></div>
