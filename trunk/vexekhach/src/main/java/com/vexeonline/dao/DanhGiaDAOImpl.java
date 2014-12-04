@@ -31,7 +31,7 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 	public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe) {
 		return HibernateUtil.getSessionFactory().getCurrentSession()
 			.createQuery("from DanhGia as d "
-					+ "where d.chuyeXe.lichTuyen.xe.nhaXe.idNhaXe = :idNhaXe")
+					+ "where d.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe = :idNhaXe")
 					.setInteger("idNhaXe", idNhaXe)
 					.list();
 	}
