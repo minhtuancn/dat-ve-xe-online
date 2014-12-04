@@ -15,6 +15,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
 public class DanhGia implements Serializable{
+
 	private static final long serialVersionUID = -2657494317065945255L;
 
 	@Id
@@ -88,4 +89,5 @@ public class DanhGia implements Serializable{
 		this.trangThai = trangThai;
 	}
 	
+
 }
