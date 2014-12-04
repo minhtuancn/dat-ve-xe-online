@@ -88,5 +88,4 @@ public class DanhGia implements Serializable{
 		this.trangThai = trangThai;
 	}
 	
-
 }
