@@ -38,7 +38,7 @@ public class NhaXe implements Serializable {
 	@Column(length = 50)
 	private String hinhAnh;
 
-	private int rate;
+	private float rate;
 
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<VanPhong> vanPhongs = new HashSet<VanPhong>(0);
@@ -100,11 +100,11 @@ public class NhaXe implements Serializable {
 		this.vanPhongs = vanPhongs;
 	}
 
-	public int getRate() {
+	public float getRate() {
 		return rate;
 	}
 
-	public void setRate(int rate) {
+	public void setRate(float rate) {
 		this.rate = rate;
 	}
 

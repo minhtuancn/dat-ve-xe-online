@@ -45,6 +45,7 @@ public class Xe implements Serializable {
 
 	@Column(length = 50)
 	private String hinhAnh;
+	
 	private boolean isActive;
 
 	@ManyToOne

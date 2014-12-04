@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -27,8 +29,8 @@ public class TienIch {
 
 	@ManyToMany
 	/*@JoinTable(name="Xe_TienIch", 
-    	joinColumns={@JoinColumn(name="IdTienIch")}, 
-    	inverseJoinColumns={@JoinColumn(name="MEETING_ID")})*/
+    	joinColumns={@JoinColumn(name="idTienIch")}, 
+    	inverseJoinColumns={@JoinColumn(name="idXe")})*/
 	private Set<Xe> xes = new HashSet<Xe>(0);
 
 	public int getIdTienIch() {
