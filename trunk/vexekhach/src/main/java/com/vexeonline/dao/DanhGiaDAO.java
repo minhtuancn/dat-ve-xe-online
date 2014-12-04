@@ -9,4 +9,5 @@ public interface DanhGiaDAO {
     public List<DanhGia> list();
     public void delete(DanhGia danhGia);
     public DanhGia getById(int idDanhGia);
+    public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe);
 }
