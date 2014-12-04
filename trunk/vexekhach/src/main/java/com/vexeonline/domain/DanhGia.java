@@ -1,5 +1,7 @@
 package com.vexeonline.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,9 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
-public class DanhGia {
+public class DanhGia implements Serializable{
+	private static final long serialVersionUID = -2657494317065945255L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
@@ -24,6 +28,8 @@ public class DanhGia {
 	@Column(nullable = false)
 	private float diem;
 
+	private boolean trangThai;
+	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private HanhKhach hanhKhach;
@@ -73,5 +79,14 @@ public class DanhGia {
 	public void setChuyenXe(ChuyenXe chuyenXe) {
 		this.chuyenXe = chuyenXe;
 	}
+
+	public boolean isTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(boolean trangThai) {
+		this.trangThai = trangThai;
+	}
+	
 
 }
