@@ -61,5 +61,19 @@ public class QuanLyDanhGiaServiceImpl implements QuanLyDanhGiaService{
 			session.close();
 		}
 	}
+	
+	public float tinhNewRate(DanhGia danhGia) {
+		if (danhGia == null || !danhGia.getTrangThai()) {
+			throw new IllegalArgumentException();
+		}
+		float sumRate = danhGia.getDiem();
+		List<DanhGia> listDanhGia = danhGiaDAO.getListDanhGiaByIdNhaXe(
+				danhGia.getChuyenXe().getLichTuyen().getXe().getNhaXe().getIdNhaXe());
+		for (DanhGia dg : listDanhGia) {
+			sumRate += dg.getDiem();
+		}
+		
+		return sumRate / (listDanhGia.size() + 1);
+	}
 
 }
