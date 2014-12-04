@@ -1,6 +1,7 @@
 package com.vexeonline.service;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +15,30 @@ import com.vexeonline.dao.DanhGiaDAO;
 import com.vexeonline.dao.DanhGiaDAOImpl;
 import com.vexeonline.dao.HanhKhachDAO;
 import com.vexeonline.dao.HanhKhachDAOImpl;
+import com.vexeonline.dao.NhaXeDAOImpl;
 import com.vexeonline.dao.TuyenXeDAO;
 import com.vexeonline.dao.TuyenXeDAOImpl;
 import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
+import com.vexeonline.domain.BenXe;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
+import com.vexeonline.domain.DiaChi;
+import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.HanhKhach;
+import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
+import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.TienIch;
+import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.domain.Xe;
+import com.vexeonline.domain.json.ThongTinDanhGia;
+import com.vexeonline.service.admin.QuanLyDanhGiaServiceImpl;
 import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -69,7 +81,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 		return listTuyenXe;
 	}
-/*
+
 	static {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		DiaChi diaChi1 = new DiaChi();
@@ -164,7 +176,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		session.close();
 
 	}
-*/
+
 	public VeXe kiemTraVe(String SDT, int maSoVe) {
 		VeXe veXe = null;
 		Session session = null;
@@ -262,6 +274,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 			boolean flag = false;
 			ChuyenXe chuyenXe = null;
 			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
+			if (hanhKhach == null) {
+				return false;
+			}
 			for (VeXe veXe : hanhKhach.getVeXes()) {
 				if (veXe.getChuyenXe().getNgayDi().toString().equals(ngayDi.toString())) {
 					flag = true;
@@ -276,7 +291,14 @@ public class KhachHangServiceImpl implements KhachHangService {
 				danhGia.setDiem(diem);
 				danhGia.setHanhKhach(hanhKhach);
 				danhGia.setNoiDung(noiDung);
+				//
+				danhGia.setTrangThai(true);
 				danhGiaDAO.save(danhGia);
+				//demo 
+				float rate = new QuanLyDanhGiaServiceImpl().tinhNewRate(danhGia);
+				NhaXe nhaXe = chuyenXe.getLichTuyen().getXe().getNhaXe();
+				nhaXe.setRate(rate);
+				new NhaXeDAOImpl().update(nhaXe);
 			}
 			
 			tx.commit();
@@ -318,6 +340,42 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return true;
 	}
 
+	public List<ThongTinDanhGia> getListInfoDanhGiaByNhaXe(int idNhaXe) {
+		List<ThongTinDanhGia> listThongTinDanhGia = new ArrayList<ThongTinDanhGia>(0);
+		Session session = null;
+		Transaction tx = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+
+			List<Object[]> listData = danhGiaDAO.getListInfoDanhGiaByIdNhaXe(idNhaXe);
+			
+			if (listData == null) {
+				return null;
+			}
+			ThongTinDanhGia thongTin;
+			for (Object[] row : listData) {
+			    thongTin = new ThongTinDanhGia();
+			    thongTin.setDiem((float) row[0]);
+			    thongTin.setTenNguoiDanhGia((String)row[1]);
+			    thongTin.setNgayDi((Date)row[2]);
+			    thongTin.setNoiDung((String)row[3]);
+			    listThongTinDanhGia.add(thongTin);
+			}
+
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+		} finally {
+			session.close();
+		}
+		return listThongTinDanhGia;
+	}
+	
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
 		int a = (14 - date.getMonth()) / 12;
@@ -352,5 +410,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return day;
 	}
+
+
 
 }

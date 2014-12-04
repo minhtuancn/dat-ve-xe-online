@@ -6,6 +6,7 @@ import java.util.List;
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.domain.json.ThongTinDanhGia;
 
 /**
  * 
@@ -70,4 +71,6 @@ public interface KhachHangService {
 	 * @throws Exception 
 	 */
 	public boolean huyVe(int maVe) throws Exception;
+	
+	public List<ThongTinDanhGia> getListInfoDanhGiaByNhaXe(int idNhaXe);
 }

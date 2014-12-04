@@ -10,4 +10,5 @@ public interface DanhGiaDAO {
     public void delete(DanhGia danhGia);
     public DanhGia getById(int idDanhGia);
     public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe);
+    public List<Object[]> getListInfoDanhGiaByIdNhaXe(int idNhaXe);
 }

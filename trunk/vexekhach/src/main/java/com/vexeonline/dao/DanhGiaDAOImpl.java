@@ -36,4 +36,14 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 					.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getListInfoDanhGiaByIdNhaXe(int idNhaXe) {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("select d.diem, d.hanhKhach.tenHanhKhach, d.chuyenXe.ngayDi, d.noiDung "
+						+ " from DanhGia as d "
+						+ "where d.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe = :idNhaXe")
+						.setInteger("idNhaXe", idNhaXe)
+						.list();
+	}
+
 }
