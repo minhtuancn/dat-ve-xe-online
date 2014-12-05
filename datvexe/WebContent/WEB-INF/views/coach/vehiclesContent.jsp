@@ -24,7 +24,8 @@ $(document).ready(function() {
 				<td>Biển số xe</td>
 				<td>Loại xe</td>
 				<td>Số chỗ</td>
-				<td>Hoạt động</td>
+				<td>Tình trạng</td>
+				<td></td>
 			</tr>
 		</thead>
 		<tfoot>
@@ -33,17 +34,19 @@ $(document).ready(function() {
 				<td>Biển số xe</td>
 				<td>Loại xe</td>
 				<td>Số chỗ</td>
-				<td>Hoạt động</td>
+				<td>Tình trạng</td>
+				<td></td>
 			</tr>
 		</tfoot>
 		<tbody>
-			<s:iterator value="dsXe">
+			<s:iterator value="xes">
 				<tr>
-					<td><s:property value="idXe"/></td>
+					<td><s:property value="id"/></td>
 					<td><s:property value="bienSoXe"/></td>
 					<td><s:property value="loaiXe"/></td>
 					<td><s:property value="soCho"/></td>
-					<td><s:property value="isActive"/></td>
+					<td><s:property value="tinhTrang"/></td>
+					<td><a class="btn btn-primary" href="${pageContext.request.contextPath}/coachcp/vehicleDetail?id=${id}">Chi tiết</a></td>
 				</tr>
 			</s:iterator>
 		</tbody>

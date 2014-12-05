@@ -4,21 +4,21 @@
 	<ul>
 		<li><a href="${pageContext.request.contextPath}/coachcp/home">Trang chủ</a></li>
 		<li>
-			Quản lý xe
+			<a>Quản lý xe</a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/coachcp/vehicles">Danh sách xe</a></li>
 				<li><a href="${pageContext.request.contextPath}/coachcp/newVehicle">Thêm xe</a></li>
 			</ul>
 		</li>
 		<li>
-			Lịch chuyến
+			<a>Lịch chuyến</a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/coachcp/schedules">Danh sách lịch chuyến</a></li>
 				<li><a href="${pageContext.request.contextPath}/coachcp/newSchedule">Thêm lịch chuyến</a></li>
 			</ul>
 		</li>
 		<li>
-			Văn phòng
+			<a>Văn phòng</a>
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/coachcp/offices">Danh sách văn phòng</a></li>
 				<li><a href="${pageContext.request.contextPath}/coachcp/newOffice">Thêm văn phòng</a></li>

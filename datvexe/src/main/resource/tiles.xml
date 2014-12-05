@@ -70,16 +70,20 @@
 	
 	<!-- Coach -->
 	<definition name="coach.home" extends="baseLayout">
-		<put-attribute name="title" value="coach Control Panel" />
+		<put-attribute name="title" value="Coach Control Panel" />
 		<put-attribute name="menu" value="/WEB-INF/views/coach/homeMenu.jsp" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/homeContent.jsp" />
 	</definition>
 	<definition name="coach.vehicles" extends="coach.home">
-		<put-attribute name="title" value="Danh sach xe" />
+		<put-attribute name="title" value="Danh sách xe" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/vehiclesContent.jsp" />
 	</definition>
 	<definition name="coach.newVehicle" extends="coach.home">
-		<put-attribute name="title" value="Them moi xe" />
+		<put-attribute name="title" value="Thêm mới xe" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/vehicleDetailContent.jsp" />
+	</definition>
+	<definition name="coach.vehicleDetail" extends="coach.home">
+		<put-attribute name="title" value="Thông tin xe" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/vehicleDetailContent.jsp" />
 	</definition>
 	<definition name="coach.schedules" extends="coach.home">
@@ -88,6 +92,10 @@
 	</definition>
 	<definition name="coach.newSchedule" extends="coach.home">
 		<put-attribute name="title" value="Thêm lịch chuyến" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/scheduleDetailContent.jsp" />
+	</definition>
+	<definition name="coach.scheduleDetail" extends="coach.home">
+		<put-attribute name="title" value="Thông tin lịch chuyến" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/scheduleDetailContent.jsp" />
 	</definition>
 	<definition name="coach.book" extends="coach.home">
@@ -105,6 +113,10 @@
 	<definition name="coach.offices" extends="coach.home">
 		<put-attribute name="title" value="Danh sách văn phòng" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/officesContent.jsp" />
+	</definition>
+	<definition name="coach.newOffice" extends="coach.home">
+		<put-attribute name="title" value="Tạo mới văn phòng" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/officeDetailContent.jsp" />
 	</definition>
 	<definition name="coach.officeDetail" extends="coach.home">
 		<put-attribute name="title" value="Thông tin văn phòng" />
