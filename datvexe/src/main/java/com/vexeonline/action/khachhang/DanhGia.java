@@ -1,4 +1,4 @@
-package com.vexeonline.action.khachhang;
+﻿package com.vexeonline.action.khachhang;
 
 import java.sql.Date;
 import java.util.List;
@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.validator.annotations.DoubleRangeFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
-import com.vexeonline.dto.ThongTinDanhGia;
+import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.service.KhachHangService;
 import com.vexeonline.service.KhachHangServiceImpl;
 
@@ -31,7 +31,7 @@ public class DanhGia extends ActionSupport {
 	private String noiDung;
 	private float diem;
 	private int idNhaXe;
-	private List<ThongTinDanhGia> list;
+	private List<ThongTinDanhGiaDTO> list;
 
 	@Action(value = "danhgia")
 	public void getListChuyenXe() {
@@ -42,16 +42,17 @@ public class DanhGia extends ActionSupport {
 		}
 	}
 
-	@Action(value = "listdanhgia", results = @Result(type = "json", name = SUCCESS, params = {"root", "list" }))
+	@Action(value = "listdanhgia", results = @Result(type = "json", name = SUCCESS, params = {
+			"root", "list" }))
 	public String getListInfoDanhGia() {
 		try {
-			System.out.println(idNhaXe); 
+
 			list = khachHangService.getListInfoDanhGiaByNhaXe(idNhaXe);
-			
+
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -64,7 +65,7 @@ public class DanhGia extends ActionSupport {
 		this.ngayDi = ngayDi;
 	}
 
-	@StringLengthFieldValidator(message = "SĐT phải có độ dài 10 hoặc 11 số", minLength = "10", maxLength = "11", trim = true)
+	@StringLengthFieldValidator(message = "Số điện thoại có 10 hoặc 11 kí tự!", minLength = "10", maxLength = "11", trim = true)
 	public String getSdt() {
 		return sdt;
 	}
@@ -73,7 +74,7 @@ public class DanhGia extends ActionSupport {
 		this.sdt = sdt;
 	}
 
-	@RequiredStringValidator(message = "Nội dung đánh giá là cần thiết", trim = true)
+	@RequiredStringValidator(message = "Nội dung không được để trống!", trim = true)
 	public String getNoiDung() {
 		return noiDung;
 	}
@@ -82,7 +83,7 @@ public class DanhGia extends ActionSupport {
 		this.noiDung = noiDung;
 	}
 
-	@DoubleRangeFieldValidator(message = "Điểm phải có giá trị từ 0.0 đến 5.0", minInclusive = "0.0", maxInclusive = "5.0")
+	@DoubleRangeFieldValidator(message = "Điểm phải từ 0.0 đến 5.0", minInclusive = "0.0", maxInclusive = "5.0")
 	public float getDiem() {
 		return diem;
 	}
@@ -99,11 +100,11 @@ public class DanhGia extends ActionSupport {
 		this.idNhaXe = idNhaXe;
 	}
 
-	public List<ThongTinDanhGia> getList() {
+	public List<ThongTinDanhGiaDTO> getList() {
 		return list;
 	}
 
-	public void setList(List<ThongTinDanhGia> list) {
+	public void setList(List<ThongTinDanhGiaDTO> list) {
 		this.list = list;
 	}
 

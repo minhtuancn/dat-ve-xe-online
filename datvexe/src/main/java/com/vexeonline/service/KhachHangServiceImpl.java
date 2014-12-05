@@ -39,8 +39,8 @@ import com.vexeonline.domain.User;
 import com.vexeonline.domain.VanPhong;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.domain.Xe;
-import com.vexeonline.dto.SDTNhaXe;
-import com.vexeonline.dto.ThongTinDanhGia;
+import com.vexeonline.dto.SDTNhaXeDTO;
+import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.service.admin.QuanLyDanhGiaServiceImpl;
 import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
@@ -356,8 +356,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return true;
 	}
 
-	public List<ThongTinDanhGia> getListInfoDanhGiaByNhaXe(int idNhaXe) {
-		List<ThongTinDanhGia> listThongTinDanhGia = new ArrayList<ThongTinDanhGia>(0);
+	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe) {
+		List<ThongTinDanhGiaDTO> listThongTinDanhGia = new ArrayList<ThongTinDanhGiaDTO>(0);
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -370,9 +370,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 			if (listData == null) {
 				return null;
 			}
-			ThongTinDanhGia thongTin;
+			ThongTinDanhGiaDTO thongTin;
 			for (Object[] row : listData) {
-			    thongTin = new ThongTinDanhGia();
+			    thongTin = new ThongTinDanhGiaDTO();
 			    thongTin.setDiem((float) row[0]);
 			    thongTin.setTenNguoiDanhGia((String)row[1]);
 			    thongTin.setNgayDi((Date)row[2]);
@@ -392,8 +392,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return listThongTinDanhGia;
 	}
 	
-	public List<SDTNhaXe> getListSDTNhaXe(int idNhaXe) {
-		List<SDTNhaXe> listSDTNhaXe = new ArrayList<SDTNhaXe>(0);
+	public List<SDTNhaXeDTO> getListSDTNhaXe(int idNhaXe) {
+		List<SDTNhaXeDTO> listSDTNhaXe = new ArrayList<SDTNhaXeDTO>(0);
 		Session session = null;
 		Transaction tx = null;
 		try {
@@ -406,9 +406,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 			if (listData == null) {
 				return null;
 			}
-			SDTNhaXe thongTin;
+			SDTNhaXeDTO thongTin;
 			for (Object[] row : listData) {
-			    thongTin = new SDTNhaXe();
+			    thongTin = new SDTNhaXeDTO();
 			    thongTin.setTenVanPhong((String) row[0]);
 			    thongTin.setSdt((String)row[1]);
 			    listSDTNhaXe.add(thongTin);

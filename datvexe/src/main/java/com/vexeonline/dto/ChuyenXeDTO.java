@@ -1,7 +1,9 @@
 package com.vexeonline.dto;
 
-public class ChuyenXeDTO {
-	
+import java.io.Serializable;
+
+public class ChuyenXeDTO implements Serializable{
+	private static final long serialVersionUID = -5895438306191748301L;
 	private Integer id;
 	private String ngayDi;
 	private String gioKhoiHanh;

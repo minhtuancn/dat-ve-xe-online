@@ -1,6 +1,9 @@
 package com.vexeonline.dto;
 
-public class SDTNhaXe {
+import java.io.Serializable;
+
+public class SDTNhaXeDTO implements Serializable{
+	private static final long serialVersionUID = 2029609948642249581L;
 	private String tenVanPhong;
 	private String sdt;
 

@@ -56,7 +56,7 @@ public class TimChuyen extends ActionSupport {
 		this.list = list;
 	}
 
-	@IntRangeFieldValidator(message = "Số ghế phải lớn hơn 0", min = "1", max = "40")
+	@IntRangeFieldValidator(message = "Số chỗ phải lớn hơn 0", min = "1", max = "40")
 	public int getSoCho() {
 		return soCho;
 	}
@@ -65,7 +65,7 @@ public class TimChuyen extends ActionSupport {
 		this.soCho = soCho;
 	}
 
-	@RequiredStringValidator(trim = true, message = "Hãy chọn tỉnh bạn sẽ đi!")
+	@RequiredStringValidator(trim = true, message = "Tỉnh đi không được rỗng!")
 	public String getTinhDi() {
 		return tinhDi;
 	}
@@ -74,7 +74,7 @@ public class TimChuyen extends ActionSupport {
 		this.tinhDi = tinhDi;
 	}
 
-	@RequiredStringValidator(trim = true, message = "Hãy chọn tỉnh bạn cần đến!")
+	@RequiredStringValidator(trim = true, message = "Tỉnh đến không được rỗng!")
 	public String getTinhDen() {
 		return tinhDen;
 	}
@@ -83,7 +83,7 @@ public class TimChuyen extends ActionSupport {
 		this.tinhDen = tinhDen;
 	}
 
-	@RequiredFieldValidator(message = "Nhập ngày đi không hợp lệ!")
+	@RequiredFieldValidator(message = "Ngày đi không hợp lệ!")
 	public Date getNgayDi() {
 		return ngayDi;
 	}
