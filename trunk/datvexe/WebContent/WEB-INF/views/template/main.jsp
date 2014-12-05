@@ -64,6 +64,7 @@ function getCurrentDate() {
 			<div class="input-group">
 				<button type="submit" class="btn btn-default">Tìm</button>
 			</div>
+			<s:fielderror />
 		</fieldset>
 	</form>
 </div>
