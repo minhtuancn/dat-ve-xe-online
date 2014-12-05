@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+		<property name="hibernate.connection.url">jdbc:hsqldb:mem:vexeonline</property>
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password"></property>
+
+		<property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+
+		<property name="hibernate.hbm2ddl.auto">create</property>
+
+		<property name="transaction.factory_class">
+			org.hibernate.transaction.JDBCTransactionFactory
+		</property>
+
+		<property name="hibernate.current_session_context_class">thread</property>
+
+		<property name="show_sql">true</property>
+
+		<property name="format_sql">true</property>
+
+		<mapping class="com.vexeonline.domain.BenXe" />
+		<mapping class="com.vexeonline.domain.ChuyenXe" />
+		<mapping class="com.vexeonline.domain.DiaChi" />
+		<mapping class="com.vexeonline.domain.GiaVe" />
+		<mapping class="com.vexeonline.domain.LichTuyen" />
+		<mapping class="com.vexeonline.domain.NhaXe" />
+		<mapping class="com.vexeonline.domain.TuyenXe" />
+		<mapping class="com.vexeonline.domain.Xe" />
+		<mapping class="com.vexeonline.domain.TienIch" />
+		<mapping class="com.vexeonline.domain.DanhGia" />
+		<mapping class="com.vexeonline.domain.HanhKhach" />
+		<mapping class="com.vexeonline.domain.User" />
+		<mapping class="com.vexeonline.domain.VanPhong" />
+		<mapping class="com.vexeonline.domain.VeXe" />
+		<mapping class="com.vexeonline.domain.SDTVanPhong" />
+	</session-factory>
+</hibernate-configuration>
