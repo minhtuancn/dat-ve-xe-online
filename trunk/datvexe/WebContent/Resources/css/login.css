@@ -1,0 +1,26 @@
+#loginForm {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	border: 1px dashed blue;
+	padding: 20px;
+	background-color: white;
+	width: 1024px;
+}
+
+#loginForm .input-group {
+	margin-top: 10px;
+}
+
+#loginForm .input-group .textbox {
+	width: 230px;
+}
+
+#loginForm .input-group .button {
+	width: 230px;
+}
+
+#loginForm .input-group label {
+	width: 150px;
+}

@@ -1,0 +1,40 @@
+#trips_wrapper {
+	margin: auto;
+	width: 1096px;
+	padding-top: 50px;
+}
+
+.benefit {
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin-right: 4px;
+	background-image: url("../images/benefit-icons.png");
+}
+
+.benefit-drink {
+	width: 15px;
+	background-position: -5px 0px;
+}
+
+.benefit-tissue {
+	background-position: 0px -261px;
+}
+
+.benefit-toilet {
+	background-position: 0px -285px;
+}
+
+.benefit-dvd {
+	background-position: 0px -24px;
+}
+
+.benefit-aircon {
+	background-position: 0px -118px;
+}
+
+.benefit-blanket {
+	background-position: 0px -48px;
+}
+
+.datepicker {z-index: 1151 !important;}
