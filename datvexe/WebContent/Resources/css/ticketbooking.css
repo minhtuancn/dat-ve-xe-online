@@ -87,15 +87,6 @@ form .input-group label {
 	-webkit-box-shadow: 0px 0px 20px #7bc1f7;
 }
 
-#main #banner #ticketSearch #search-tt {
-	padding-left: 20px;
-}
-
-#main #banner #ticketSearch input[type="submit"] {
-	margin-top: 15px;
-	width: 190px;
-}
-
 .textbox { 
     border: 1px solid #c4c4c4; 
     font-size: 13px; 
@@ -135,14 +126,43 @@ form .input-group label {
 
 /* Guest */
 
+#ticketSearch #search-tt {
+	padding-left: 20px;
+}
+
+#ticketSearch input[type="submit"] {
+	margin-top: 15px;
+	width: auto;
+}
+
 #ticketSearch .input-group {
 	margin-bottom: 10px;
 	width: 190px;
 	position: relative;
 }
 
+#ticketSearch .input-group .errorMessage {
+	display: none;
+	visibility: hidden;
+}
+
+#ticketSearch .errorMessage {
+	padding: 5px;
+	list-style-type: none;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;	
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
 #ticketSearch .input-group .textbox {
 	width: 190px;
+}
+
+#ticketSearch .input-group label {
+	display: block;
 }
 
 #ticketInfo {
@@ -161,11 +181,11 @@ form .input-group label {
 }
 
 #ticketInfo .input-group .textbox {
-	width: 230px;
+	width: 350px;
 }
 
 #ticketInfo .input-group .button {
-	width: 230px;
+	width: 350px;
 }
 
 #ticketInfo .input-group label {
