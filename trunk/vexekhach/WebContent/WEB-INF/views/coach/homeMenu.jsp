@@ -17,5 +17,13 @@
 				<li><a href="${pageContext.request.contextPath}/coachcp/newSchedule">Thêm lịch chuyến</a></li>
 			</ul>
 		</li>
+		<li>
+			Văn phòng
+			<ul>
+				<li><a href="${pageContext.request.contextPath}/coachcp/offices">Danh sách văn phòng</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/newOffice">Thêm văn phòng</a></li>
+			</ul>
+		</li>
+		<li><a href="${pageContext.request.contextPath}/coachcp/trips">Chuyến xe</a></li>
 	</ul>
 </div>

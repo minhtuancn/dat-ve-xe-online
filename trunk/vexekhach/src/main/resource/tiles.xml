@@ -90,8 +90,24 @@
 		<put-attribute name="title" value="Thêm lịch chuyến" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/scheduleDetailContent.jsp" />
 	</definition>
-	<definition name="coach.book" extends="admin.home">
+	<definition name="coach.book" extends="coach.home">
 		<put-attribute name="title" value="Đặt vé" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/bookContent.jsp" />
+	</definition>
+	<definition name="coach.trips" extends="coach.home">
+		<put-attribute name="title" value="Danh sách chuyến xe" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/tripsContent.jsp" />
+	</definition>
+	<definition name="coach.tripDetail" extends="coach.home">
+		<put-attribute name="title" value="Chi tiết chuyến xe" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/tripDetailContent.jsp" />
+	</definition>
+	<definition name="coach.offices" extends="coach.home">
+		<put-attribute name="title" value="Danh sách văn phòng" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/officesContent.jsp" />
+	</definition>
+	<definition name="coach.officeDetail" extends="coach.home">
+		<put-attribute name="title" value="Thông tin văn phòng" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/officeDetailContent.jsp" />
 	</definition>
 </tiles-definitions>
