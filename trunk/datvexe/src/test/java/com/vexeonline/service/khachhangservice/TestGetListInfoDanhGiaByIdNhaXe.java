@@ -24,7 +24,7 @@ import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.domain.Xe;
-import com.vexeonline.dto.ThongTinDanhGia;
+import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.service.KhachHangService;
 import com.vexeonline.service.KhachHangServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
@@ -46,7 +46,7 @@ public class TestGetListInfoDanhGiaByIdNhaXe {
 	@Test
 	public void test1() {
 		addData();	
-		List<ThongTinDanhGia> list = khachHangService.getListInfoDanhGiaByNhaXe(1);
+		List<ThongTinDanhGiaDTO> list = khachHangService.getListInfoDanhGiaByNhaXe(1);
 		
 		Assert.assertTrue(list.get(0).getNgayDi().toString().equals("2014-11-24") );
 	

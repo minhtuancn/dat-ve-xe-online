@@ -6,8 +6,8 @@ import java.util.List;
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.VeXe;
-import com.vexeonline.dto.SDTNhaXe;
-import com.vexeonline.dto.ThongTinDanhGia;
+import com.vexeonline.dto.SDTNhaXeDTO;
+import com.vexeonline.dto.ThongTinDanhGiaDTO;
 
 /**
  * 
@@ -73,7 +73,7 @@ public interface KhachHangService {
 	 */
 	public boolean huyVe(int maVe) throws Exception;
 	
-	public List<ThongTinDanhGia> getListInfoDanhGiaByNhaXe(int idNhaXe);
+	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe);
 	
-	public List<SDTNhaXe> getListSDTNhaXe(int idNhaXe);
+	public List<SDTNhaXeDTO> getListSDTNhaXe(int idNhaXe);
 }

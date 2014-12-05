@@ -10,7 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.dto.SDTNhaXe;
+import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.service.KhachHangService;
 import com.vexeonline.service.KhachHangServiceImpl;
 @Namespace(value = "/")
@@ -21,7 +21,7 @@ public class LaySDTNhaXe extends ActionSupport {
 	private static Logger logger = Logger.getLogger(LaySDTNhaXe.class);
 	private static KhachHangService khachHangService = new KhachHangServiceImpl();
 	private int idNhaXe;
-	private List<SDTNhaXe> list;
+	private List<SDTNhaXeDTO> list;
 
 	@Action(value = "listsdt", results = @Result(type = "json", name = SUCCESS, params = {"root", "list" }))
 	public String getListInfoDanhGia() {
@@ -44,11 +44,11 @@ public class LaySDTNhaXe extends ActionSupport {
 		this.idNhaXe = idNhaXe;
 	}
 
-	public List<SDTNhaXe> getList() {
+	public List<SDTNhaXeDTO> getList() {
 		return list;
 	}
 
-	public void setList(List<SDTNhaXe> list) {
+	public void setList(List<SDTNhaXeDTO> list) {
 		this.list = list;
 	}
 

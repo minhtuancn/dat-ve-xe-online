@@ -3,9 +3,7 @@ package com.vexeonline.dto;
 import java.io.Serializable;
 
 public class OfficeDTO implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -7456827416746463571L;
 	private Integer id;
 	private String name;
 	private String address;
