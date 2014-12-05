@@ -3,8 +3,8 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <form id="scheduleForm" action="" method="post" class="round-5">
 	<div class="input-group">
-		<label for="dayOfWeek">Ngày trong tuần</label>
-		<select name="dayOfWeek">
+		<label for="ngayTrongTuan">Ngày trong tuần</label>
+		<select name="ngayTrongTuan">
 			<option value="SUNDAY">Chủ nhật</option>
 			<option value="MONDAY">Thứ hai</option>
 			<option value="TUESDAY">Thứ ba</option>
@@ -15,32 +15,32 @@
 		</select>
 	</div>
 	<div class="input-group">
-		<label for="time">Giờ xuất phát</label>
-		<input class="textbox" type="text" name="time" required/>
+		<label for="gioChay">Giờ xuất phát</label>
+		<input class="textbox" type="text" name="gioChay" required/>
 	</div>
 	<div class="input-group">
-		<label for="route">Tuyến xe</label>
-		<select name="route">
-			<s:iterator value="routes">
+		<label for="tuyenXe">Tuyến xe</label>
+		<select name="tuyenXe">
+			<s:iterator value="tuyenXes">
 				<s:property />
 			</s:iterator>
 		</select>
 	</div>
 	<div class="input-group">
-		<label for="totalTime">Tổng thời gian</label>
-		<input class="textbox" type="text" name="totalTime" required/>
+		<label for="tongThoiGian">Tổng thời gian</label>
+		<input class="textbox" type="text" name="tongThoiGian" required/>
 	</div>
 	<div class="input-group">
-		<label for="vehicle">Xe</label>
-		<select name="vehicle">
-			<s:iterator value="vehicles">
+		<label for="xe">Xe</label>
+		<select name="xe">
+			<s:iterator value="xes">
 				<s:property />
 			</s:iterator>
 		</select>
 	</div>
 	<div class="input-group">
-		<label for="price">Giá vé</label>
-		<input class="textbox" type="text" name="price" required/>
+		<label for="giaVe">Giá vé</label>
+		<input class="textbox" type="text" name="giaVe" required/>
 	</div>
 	<div class="input-group">
 		<label>&nbsp;</label>

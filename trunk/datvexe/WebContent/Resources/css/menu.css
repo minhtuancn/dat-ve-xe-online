@@ -4,6 +4,8 @@
 
 .tb-menu a {
 	text-decoration: none;
+	display: block;
+	padding: 10px 15px;
 }
 
 .tb-menu ul {
@@ -11,7 +13,7 @@
 	display: inline;
 	list-style: none;
 	margin: 0;
-	padding: 15px 4px 17px 0;
+	/* padding: 15px 4px 17px 0; */
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -22,7 +24,7 @@
 	display: inline-block;
 	margin-right: -4px;
 	position: relative;
-	padding: 15px 20px;
+	/* padding: 15px 20px; */
 	background: #fff;
 	cursor: pointer;
 	-webkit-transition: all 0.2s;
@@ -38,9 +40,9 @@
 }
 
 .tb-menu ul li ul {
-	padding: 0;
+	padding: 0px;
 	position: absolute;
-	top: 48px;
+	top: 38px;
 	left: 0;
 	width: 150px;
 	-webkit-box-shadow: none;
