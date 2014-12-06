@@ -47,7 +47,10 @@ public class TestGetInfoVeXe {
 
 		Session session = sessionFactory.openSession();
 		sessionFactory.getCurrentSession().beginTransaction();
-
+		Session session2 = sessionFactory.getCurrentSession();
+		
+		System.out.println(session2.equals(session));
+		
 		VeXe veXe = veXeDao.getInfoVeXe(1);
 
 		assertTrue(veXe != null);
