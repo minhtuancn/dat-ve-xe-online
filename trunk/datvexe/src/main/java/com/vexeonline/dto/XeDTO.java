@@ -1,6 +1,7 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XeDTO implements Serializable {
@@ -11,19 +12,19 @@ public class XeDTO implements Serializable {
 	private String bienSo;
 	private String loaiXe;
 	private Integer soCho;
-	private String tinhTrang;
-	private List<String> tienIchs;
+	private boolean active;
+	private List<Integer> maTienIchs = new ArrayList<Integer>();
+	private List<String> tienIchs = new ArrayList<String>();
 
 	public XeDTO() {
-		
 	}
 	
-	public XeDTO(Integer id,String bienSo,String loaiXe,Integer soCho,String tinhTrang,List<String> tienIchs) {
+	public XeDTO(Integer id,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
 		this.id = id;
 		this.bienSo = bienSo;
 		this.loaiXe = loaiXe;
 		this.soCho = soCho;
-		this.tinhTrang = tinhTrang;
+		this.active = active;
 		this.tienIchs = tienIchs;
 	}
 	
@@ -59,12 +60,12 @@ public class XeDTO implements Serializable {
 		this.soCho = soCho;
 	}
 
-	public String getTinhTrang() {
-		return tinhTrang;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setTinhTrang(String tinhTrang) {
-		this.tinhTrang = tinhTrang;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public List<String> getTienIchs() {
@@ -73,5 +74,13 @@ public class XeDTO implements Serializable {
 
 	public void setTienIchs(List<String> tienIchs) {
 		this.tienIchs = tienIchs;
+	}
+
+	public List<Integer> getMaTienIchs() {
+		return maTienIchs;
+	}
+
+	public void setMaTienIchs(List<Integer> maTienIchs) {
+		this.maTienIchs = maTienIchs;
 	}
 }
