@@ -14,25 +14,33 @@
 }
 
 .seat {
-	clear: both;
-	width: 100px;
-	height: 50px;
+	display: table-cell;
+	text-align: center;
 	margin: 10px;
 }
 
+.seat .full {
+	color: red;
+}
+
+.seat .empty {
+	color: green;
+}
+
 .seat .number {
-	display: table-cell;
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
+	display: inline-block;
+	width: 25px;
+	height: 40px;
+	line-height: 40px;
 	text-align: right;
-	margin: 4px 0 0;
 	font-size: 15pt;
 }
 
 .seat .select {
-	display: table-cell;
+	display: inline-block;
 	margin: 0px;
+	height: 40px;
+	line-height: 40px;
 }
 
 .seat .select input {
@@ -45,11 +53,11 @@
 }
 
 #seats {
-	width: auto;
+	width: 450px;
 	border: 1px dotted #FF0000;
 	padding: 20px;
 }
 
 #seats table {
-	width: 200px;
+	width: 400px;
 }

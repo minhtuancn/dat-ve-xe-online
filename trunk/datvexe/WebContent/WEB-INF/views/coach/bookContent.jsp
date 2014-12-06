@@ -23,18 +23,18 @@
 			<s:iterator var="seat" value="seats" status="stat">
 				<s:if test="seat">
 					<td class="seat">
-						<div class="number"><s:property value="#stat.count"/></div>
+						<div class="number full"><s:property value="#stat.count"/></div>
 						<div class="select"><input type="checkbox" name="seat" disabled="disabled" /></div>
 					</td>	
 				</s:if>
 				<s:else>
 					<td class="seat">
-						<div class="number"><s:property value="#stat.count"/></div>
+						<div class="number empty"><s:property value="#stat.count"/></div>
 						<div class="select"><input type="checkbox" name="seat" value="#stat.count" /></div>
 					</td>
 				</s:else>
 				<s:if test="#stat.count % 4 == 0"> 
-					<td></td>	
+					</tr><tr>	
 				</s:if>
 			</s:iterator>
 			</tr>

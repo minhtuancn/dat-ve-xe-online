@@ -35,7 +35,7 @@
 }
 
 .tb-menu ul li:hover {
-	background: #555;
+	background: #e6e6fa;
 	color: #fff;
 }
 
@@ -59,18 +59,19 @@
 }
 
 .tb-menu ul li ul li {
-	background: #555;
+	background: #e6e6fa;
 	display: block;
 	color: #fff;
 	text-shadow: 0 -1px 0 #000;
 }
 
 .tb-menu ul li ul li:hover {
-	background: #666;
+	background: #1e90ff;
 }
 
 .tb-menu ul li:hover ul {
 	display: block;
 	opacity: 1;
 	visibility: visible;
+	z-index: 10000000;	
 }
