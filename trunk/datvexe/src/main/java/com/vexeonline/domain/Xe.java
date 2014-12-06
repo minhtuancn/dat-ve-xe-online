@@ -52,7 +52,7 @@ public class Xe implements Serializable {
 	@JoinColumn(nullable = false)
 	private NhaXe nhaXe;
 
-	@ManyToMany(mappedBy = "xes", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "xes", fetch = FetchType.LAZY)
 	private Set<TienIch> tienIchs = new HashSet<TienIch>(0);
 
 	/**

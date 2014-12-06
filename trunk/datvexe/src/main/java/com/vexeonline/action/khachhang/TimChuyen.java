@@ -35,8 +35,7 @@ public class TimChuyen extends ActionSupport {
 	@Action(value = "timchuyenxe", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String getListChuyenXe() {
 		try {
-			System.out.println(tinhDi);
-			
+			//if (ServletActionContext.getContext().getSession().get("user").equals(RoleOfUser.NHAXE)) 
 			list = new KhachHangServiceImpl().getListChuyenXe("Gia Lai", "HCM",
 					ngayDi, soCho);
 
