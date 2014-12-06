@@ -24,7 +24,6 @@ public class CoachAction extends ActionSupport {
 	private List<Boolean> seats = new ArrayList<Boolean>();
 	private List<ChuyenXeDTO> chuyenxes = new ArrayList<ChuyenXeDTO>();
 	private List<OfficeDTO> offices = new ArrayList<OfficeDTO>();
-	private List<XeDTO> xes = new ArrayList<XeDTO>();
 	private List<LichChuyenDTO> schedules = new ArrayList<LichChuyenDTO>();
 
 	public List<LichChuyenDTO> getSchedules() {
@@ -33,14 +32,6 @@ public class CoachAction extends ActionSupport {
 
 	public void setSchedules(List<LichChuyenDTO> schedules) {
 		this.schedules = schedules;
-	}
-
-	public List<XeDTO> getXes() {
-		return xes;
-	}
-
-	public void setXes(List<XeDTO> xes) {
-		this.xes = xes;
 	}
 
 	public Integer getId() {
@@ -77,26 +68,6 @@ public class CoachAction extends ActionSupport {
 
 	@Action(value = "home", results = @Result(name = "success", location = "coach.home", type = "tiles"))
 	public String showAdminHomePage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "vehicles", results = @Result(name = "success", location = "coach.vehicles", type = "tiles"))
-	public String showVehiclesPage() {
-		xes.add(new XeDTO(1, "92-1234", "Giường nằm 40 chỗ", 40,
-				"Đang hoạt động", null));
-		xes.add(new XeDTO(2, "92-2234", "Ghế ngồi 45 chỗ", 40,
-				"Đang hoạt động", null));
-		xes.add(new XeDTO(3, "92-3234", "Giường nằm 40 chỗ", 40,
-				"Không hoạt hoạt động", null));
-		xes.add(new XeDTO(4, "92-4234", "Ghế ngồi 45 chỗ", 40,
-				"Đang hoạt động", null));
-		xes.add(new XeDTO(5, "92-5234", "Giường nằm 40 chỗ", 40,
-				"Không hoạt động", null));
-		return SUCCESS;
-	}
-
-	@Action(value = "vehicleDetail", results = @Result(name = "success", location = "coach.vehicleDetail", type = "tiles"))
-	public String showVehicleDetailPage() {
 		return SUCCESS;
 	}
 
