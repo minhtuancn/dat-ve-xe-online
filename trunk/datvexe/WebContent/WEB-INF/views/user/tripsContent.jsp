@@ -203,7 +203,7 @@
 <input id="getRate" type="text" hidden="hidden"/>
 <input id="tenNhaXe" type="text" hidden="hidden"/>
 
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog"
+<div id="myModal" class="modal fade " tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -253,8 +253,6 @@
 	<!-- /.modal-dialog -->
 </div>
 
-<input type="text" id="a" value="4.4" class="rating" />
-
 <div id="myModal_listSdt" class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -276,7 +274,7 @@
 
 <div id="myModal_listDanhGia" class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
@@ -316,7 +314,6 @@
 
 	 $(document).on("click", ".openListDanhGia", function() {
 			var idNhaXe = $(this).data('id');
-			//alert(idNhaXe);
 			$('#table-listDanhGia').bootstrapTable({
 				method : 'get',
 				url : 'listdanhgia?idNhaXe=' + idNhaXe,
@@ -328,24 +325,23 @@
 
 				columns : [ {
 					field : 'diem',
-					title : 'Đánh giá',
+					title : 'Số điểm',
 					formatter: RateFormatter
 				}, {
 					field : 'tenNguoiDanhGia',
-					title : 'Người đánh giá',
+					title : 'Tên',
 					formatter: NguoiDanhGiaFormatter
-				},{
-					field : 'noiDung',
-					title : 'Nội dung đánh giá',
-					formatter: NoiDungDanhGiaFormatter
 				}, {
 					field : 'ngayDi',
-					title : 'Đã đi ngày',
+					title : 'Chuyến đi ngày',
 					formatter: NgayDiFormatter
-				}  ],
+				} ,{
+					field : 'noiDung',
+					title : 'Nội dung',
+					formatter: NoiDungDanhGiaFormatter
+				}],
 				
 				onLoadSuccess: function() {
-					alert();
 					 $(".rateColumn").rating();
 				}
 			});
@@ -355,18 +351,22 @@
 	 
 	 
 	function RateFormatter(value, row) {
-		return '<input type="text" id="b" value="4.4" class="rateColumn" />';
+		return '<input value="' + value + '" class="rateColumn" style=""width : 50px;"" data-size="xs" data-show-clear="false" data-show-caption="false" data-readonly="true" />';
 	}
 	function NguoiDanhGiaFormatter(value, row) {
-		return '<p style="font-size : 20px; color : #99CC66;">' + value	+ '</p>';
+		return '<p style="font-size : 13px; width : 70px;">' + value	+ '</p>';
 	}
 	function NoiDungDanhGiaFormatter(value, row) {
-		return '<p style="font-size : 20px; color : #99CC66;">' + value	+ '</p>';
+		return '<p style="font-size : 11px;  width : 300px;" >' + value	+ '</p>';
 	}
 	function NgayDiFormatter(value, row) {
-		return '<p style="font-size : 20px; color : #FFCC00;">' + value	+ '</p>'; 
+		return '<p style="font-size : 11px; width : 70px;">' + formatDate(value)	+ '</p>'; 
 	}
 
+	function formatDate(date) {
+		var myDate = new Date(date);
+		return  myDate.getDate() + "-" + (myDate.getMonth() + 1)+ "-" + myDate.getFullYear();
+	}
 </script>
 
 <script type="text/javascript">
