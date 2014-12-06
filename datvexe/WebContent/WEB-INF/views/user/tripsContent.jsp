@@ -181,8 +181,12 @@
 										VNĐ
 									</div>
 									<div>
-										<button class="btn btn-info openListSdt"  data-toggle="modal" data-id='<s:property value="#lichTuyen.xe.nhaXe.idNhaXe" />' data-target="#myModal_listSdt">Đặt vé</button>
-										
+									<s:if test="#session.user != null">
+										<a class="btn btn-info" href='coachcp/book?idLichTuyen=<s:property value="#lichTuyen.idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
+									</s:if>
+									<s:else>
+										<button class="btn btn-info openListSdt"  data-toggle="modal" data-id='<s:property value="#lichTuyen.xe.nhaXe.idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</button>
+									</s:else>
 									</div>
 								</div>
 							</td>
@@ -236,7 +240,7 @@
 						<label for="diem"  class="control-label col-xs-2" >Điểm</label>
 						<div class="col-xs-10">
 							<input value="0" name="diem" class="rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" 
-											data-show-clear="true" data-show-caption="true" data-readonly="false"  >
+											data-show-clear="true" data-show-caption="true" data-readonly="false"  />
 						</div>
 						
 					</div>	
@@ -248,6 +252,8 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+
+<input type="text" id="a" value="4.4" class="rating" />
 
 <div id="myModal_listSdt" class="modal fade" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -308,38 +314,6 @@
 
 <script type="text/javascript">
 
-	$(document).on("click", ".openListSdt", function() {
-		var idNhaXe = $(this).data('id');
-		$('#table-listSdt').bootstrapTable({
-			method : 'get',
-			url : 'listsdt?idNhaXe=' + idNhaXe,
-			striped : true,
-			cache : false,
-			pagination : true,
-			pageSize : 10,
-			pageList : [ 10, 25, 50, 100, 200 ],
-
-			columns : [ {
-				field : 'tenVanPhong',
-				title : 'Văn Phòng',
-				formatter: TenVanPhongFormatter
-			}, {
-				field : 'sdt',
-				title : 'Số điện thoại',
-				formatter: SDTFormatter
-			} ]
-		});
-	});
-	
-	 function SDTFormatter(value, row) {
-			return '<p style="font-size : 20px; color : #FFCC00;">' + value +'</p>'; 
-	 }
-	 
-	 function TenVanPhongFormatter(value, row) {
-		 return '<p style="font-size : 20px; color : #99CC66;">' + value +'</p>'; 
-	 }
-	 
-	 
 	 $(document).on("click", ".openListDanhGia", function() {
 			var idNhaXe = $(this).data('id');
 			//alert(idNhaXe);
@@ -347,6 +321,7 @@
 				method : 'get',
 				url : 'listdanhgia?idNhaXe=' + idNhaXe,
 				striped : true,
+				cache : false,
 				pagination : true,
 				pageSize : 10,
 				pageList : [ 10, 25, 50, 100, 200 ],
@@ -367,23 +342,71 @@
 					field : 'ngayDi',
 					title : 'Đã đi ngày',
 					formatter: NgayDiFormatter
-				}  ]
+				}  ],
+				
+				onLoadSuccess: function() {
+					alert();
+					 $(".rateColumn").rating();
+				}
 			});
+			//alert();
 		});
+
 	 
-	 function RateFormatter(value, row) {
-			return '<p style="font-size : 20px; color : #FFCC00;">' + value +'</p>'; 
-	 }
-	 function NguoiDanhGiaFormatter(value, row) {
-		 return '<p style="font-size : 20px; color : #99CC66;">' + value +'</p>'; 
-	 }
-	 function NoiDungDanhGiaFormatter(value, row) {
-		 return '<p style="font-size : 20px; color : #99CC66;">' + value +'</p>'; 
-	 }
-	 function NgayDiFormatter(value, row) {
-			return '<p style="font-size : 20px; color : #FFCC00;">' + value +'</p>'; 
-	 }
 	 
+	function RateFormatter(value, row) {
+		return '<input type="text" id="b" value="4.4" class="rateColumn" />';
+	}
+	function NguoiDanhGiaFormatter(value, row) {
+		return '<p style="font-size : 20px; color : #99CC66;">' + value	+ '</p>';
+	}
+	function NoiDungDanhGiaFormatter(value, row) {
+		return '<p style="font-size : 20px; color : #99CC66;">' + value	+ '</p>';
+	}
+	function NgayDiFormatter(value, row) {
+		return '<p style="font-size : 20px; color : #FFCC00;">' + value	+ '</p>'; 
+	}
+
+</script>
+
+<script type="text/javascript">
+
+$(document).on("click", ".openListSdt", function() {
+	var idNhaXe = $(this).data('id');
+	$('#table-listSdt').bootstrapTable({
+		method : 'get',
+		url : 'listsdt?idNhaXe=' + idNhaXe,
+		striped : true,
+		cache : false,
+		pagination : true,
+		pageSize : 10,
+		pageList : [ 10, 25, 50, 100, 200 ],
+
+		columns : [ {
+			field : 'tenVanPhong',
+			title : 'Văn Phòng',
+			formatter: TenVanPhongFormatter
+		}, {
+			field : 'sdt',
+			title : 'Số điện thoại',
+			formatter: SDTFormatter
+		} ]
+	});
+});
+
+ function SDTFormatter(value, row) {
+		return '<p style="font-size : 20px; color : #FFCC00;">' + value +'</p>'; 
+ }
+ 
+ function TenVanPhongFormatter(value, row) {
+	 return '<p style="font-size : 20px; color : #99CC66;">' + value +'</p>'; 
+ }
+ 
+
+/* 	$("#table-listDanhGia").ready(function() {
+		$(".rateColumn").addClass("rating");
+	});
+	 */
 	//Attach a submit handler to the form
 	$("#formDanhGia").submit(
 			function(event) {
@@ -417,12 +440,10 @@
 	$("#trips tbody").delegate("tr", "click", function() {
 		var tenNhaXe = $("td:first", this).text();
 		//var rate = $(".input-rating", this).val();
-	
+
 		document.getElementById("nhaXeSDT").innerHTML = tenNhaXe;
 		document.getElementById("nhaXeDanhGia").innerHTML = tenNhaXe;
 		//alert(document.getElementById("tenNhaXe").innerHTML);
 		/* var fourthCellText = $("td:eq(5)", this).text(); */
 	});
-
-	
 </script>
