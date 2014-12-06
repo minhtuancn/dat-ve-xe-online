@@ -29,7 +29,7 @@ public class TestLogin {
 	@Test
 	public void test1() {
 		addData();
-		org.junit.Assert.assertTrue(khachHang.login("tung", "123456"));
+		org.junit.Assert.assertTrue(khachHang.login("tung", "123456").getUserName().equals("tung"));
 	}
 
 	private void addData() {
