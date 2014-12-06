@@ -10,15 +10,19 @@
 <title>Login</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/ticketbooking.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/login.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap-theme.min.css" />
 </head>
 <body>
-<s:if test="hasActionErrors()">
-   <div class="errors">
-      <s:actionerror/>
-   </div>
-</s:if>
+
 	<form id="loginForm" action="dangnhap" method="post" class="round-5">
-		<s:fielderror />
+		<s:if test="hasActionErrors()">
+			<div style="color : red;">
+				<s:actionerror />
+			</div>
+		</s:if>
 		<div class="input-group">
 			<label style="width: 150px;" for="userName">Tên người dùng <span class="required">*</span></label>
 			<input type="text" name="userName" class="textbox" required />
