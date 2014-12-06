@@ -35,6 +35,14 @@ public class User {
 	
 	private boolean isActive;
 
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+
 	@RequiredStringValidator(key = "require.userName", trim = true)
 	@StringLengthFieldValidator(key = "length.userName", minLength = "6", maxLength = "30")
 	public String getUserName() {
