@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
@@ -28,6 +29,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private RoleOfUser role;
+	
+	@ManyToOne
+	private NhaXe nhaXe;
 	
 	private boolean isActive;
 
@@ -68,4 +72,11 @@ public class User {
 		this.isActive = isActive;
 	}
 
+	public NhaXe getNhaXe() {
+		return nhaXe;
+	}
+
+	public void setNhaXe(NhaXe nhaXe) {
+		this.nhaXe = nhaXe;
+	}
 }

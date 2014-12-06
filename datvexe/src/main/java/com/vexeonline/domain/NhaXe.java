@@ -4,7 +4,9 @@
 package com.vexeonline.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -39,11 +41,14 @@ public class NhaXe implements Serializable {
 	private String hinhAnh;
 
 	private float rate;
-
+	
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<VanPhong> vanPhongs = new HashSet<VanPhong>(0);
 	private boolean isActive;
 
+	@OneToMany
+	private List<User> users = new ArrayList<User>();
+	
 	/**
 	 * @author Tung
 	 */
@@ -108,4 +113,11 @@ public class NhaXe implements Serializable {
 		this.rate = rate;
 	}
 
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 }
