@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -21,6 +22,8 @@ import com.vexeonline.service.KhachHangServiceImpl;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
+@InterceptorRef(value = "defaultStack", params = { "validation.excludeMethods",
+		"getListInfoDanhGia" })
 @Results({ @Result(name = "input", location = "trips", type = "tiles") })
 public class DanhGia extends ActionSupport {
 	private static final long serialVersionUID = 8885262333443840202L;
@@ -46,7 +49,7 @@ public class DanhGia extends ActionSupport {
 			"root", "list" }))
 	public String getListInfoDanhGia() {
 		try {
-
+			logger.error("tung sadsad");
 			list = khachHangService.getListInfoDanhGiaByNhaXe(idNhaXe);
 
 		} catch (Exception e) {

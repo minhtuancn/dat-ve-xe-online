@@ -31,6 +31,7 @@ import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.domain.SDTVanPhong;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.TrangThaiChuyenXe;
@@ -42,7 +43,6 @@ import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.service.admin.QuanLyDanhGiaServiceImpl;
-import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 
 public class KhachHangServiceImpl implements KhachHangService {
@@ -62,10 +62,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 			throw new IllegalArgumentException("ArgumentException");
 		}
 
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -78,10 +76,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
-
+		} 
 		return listTuyenXe;
 	}
 
@@ -188,6 +183,12 @@ public class KhachHangServiceImpl implements KhachHangService {
 		danhGia.setNoiDung("12321");
 		session.save(danhGia);
 
+		User user = new User();
+		user.setUserName("tung");
+		user.setPassword("123456");
+		user.setRole(RoleOfUser.NHAXE);
+		session.save(user);
+		
 		session.flush();
 		session.close();
 
@@ -219,39 +220,32 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return veXe;
 	}
 
-	public boolean login(String userName, String password) {
-		password = EncodeMD5.encodeMD5(password);
-		boolean flag = true;
-		Session session = null;
+	public User login(String userName, String password) {
+		//password = EncodeMD5.encodeMD5(password);
+		User user = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
+			
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
-			User user = userDAO.getUserByUserName(userName);
+			user = userDAO.getUserByUserName(userName);
 			if (user == null || !user.getPassword().equals(password)) {
-				flag = false;
+				user = null;
 			}
-
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
-			flag = false;
-			logger.error("Error", ex);
-		} finally {
-			session.close();
+			logger.error("Error", ex);	
 		}
-		return flag;
+		return user;
 	}
 
 	public boolean datVe(int soCho, int idChuyenXe, HanhKhach hanhKhach) {
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -272,19 +266,15 @@ public class KhachHangServiceImpl implements KhachHangService {
 			}
 			logger.error("Error", ex);
 			return false;
-		} finally {
-			session.close();
-		}
+		} 
 		return true;
 	}
 
 	public boolean danhGiaChuyenXe(Date ngayDi, String sdt, String noiDung,
 			float diem){
 		
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 			boolean flag = false;
@@ -323,17 +313,13 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
+		} 
 		return true;
 	}
 
 	public boolean huyVe(int maVe) throws Exception {
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -350,18 +336,14 @@ public class KhachHangServiceImpl implements KhachHangService {
 			}
 			logger.error("Error", ex);
 			throw new Exception("Error");
-		} finally {
-			session.close();
 		}
 		return true;
 	}
 
 	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe) {
 		List<ThongTinDanhGiaDTO> listThongTinDanhGia = new ArrayList<ThongTinDanhGiaDTO>(0);
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -386,18 +368,14 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
+		} 
 		return listThongTinDanhGia;
 	}
 	
 	public List<SDTNhaXeDTO> getListSDTNhaXe(int idNhaXe) {
 		List<SDTNhaXeDTO> listSDTNhaXe = new ArrayList<SDTNhaXeDTO>(0);
-		Session session = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -419,9 +397,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} finally {
-			session.close();
-		}
+		} 
 		return listSDTNhaXe;
 	}
 

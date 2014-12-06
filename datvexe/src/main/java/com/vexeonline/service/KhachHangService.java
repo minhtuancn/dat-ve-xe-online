@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.TuyenXe;
+import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
@@ -41,7 +42,7 @@ public interface KhachHangService {
 	 * @param password
 	 * @return
 	 */
-	public boolean login(String userName, String password);
+	public User login(String userName, String password);
 
 	/**
 	 * 

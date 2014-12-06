@@ -26,9 +26,7 @@ public class LaySDTNhaXe extends ActionSupport {
 	@Action(value = "listsdt", results = @Result(type = "json", name = SUCCESS, params = {"root", "list" }))
 	public String getListInfoDanhGia() {
 		try {
-			logger.error("sasdsadsada");
 			list = khachHangService.getListSDTNhaXe(idNhaXe);
-			logger.error("sasdsadsada");
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
