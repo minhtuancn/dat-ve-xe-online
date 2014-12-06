@@ -41,6 +41,7 @@ public class Logins extends ActionSupport implements SessionAware {
 				addActionError("Tên tài khoản hoặc mật khẩu không đúng!");
 				return INPUT;
 			} else {
+				session.put("userId", user.getIdUser());
 				session.put("user", user.getUserName());
 				session.put("role", user.getRole());
 			}
@@ -81,5 +82,4 @@ public class Logins extends ActionSupport implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
-
 }

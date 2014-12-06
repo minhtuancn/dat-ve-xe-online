@@ -2,11 +2,13 @@ package com.vexeonline.action.nhaxe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,16 +23,24 @@ import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
-public class QuanLyXe extends ActionSupport {
+public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 1003544484121846277L;
 	
 	private static final QuanLyXeService xeService = new QuanLyXeServiceImpl();
 	private static final TienIchDAO tienIchDAO = new TienIchDAOImpl();
 	
+	@SuppressWarnings("unused")
+	private Map<String,Object> session;
+	
 	private List<XeDTO> xes = null;
 	private XeDTO xe = null;
 	private List<TienIch> tienIchs = new ArrayList<TienIch>();
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
 	
 	public List<XeDTO> getXes() {
 		return xes;
