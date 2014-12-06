@@ -14,13 +14,16 @@
 }
 
 #loginForm .input-group .textbox {
-	width: 230px;
+	display: inline-block;
+	width: 250px;
 }
 
 #loginForm .input-group .button {
-	width: 230px;
+	display: inline-block;
+	width: 250px;
 }
 
 #loginForm .input-group label {
+	display: inline-block;
 	width: 150px;
 }

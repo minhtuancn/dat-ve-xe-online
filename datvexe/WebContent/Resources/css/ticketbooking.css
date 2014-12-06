@@ -141,12 +141,12 @@ form .input-group label {
 	position: relative;
 }
 
-#ticketSearch .input-group .errorMessage {
+.input-group .errorMessage {
 	display: none;
 	visibility: hidden;
 }
 
-#ticketSearch .errorMessage {
+.errorMessage {
 	padding: 5px;
 	list-style-type: none;
 	color: #a94442;

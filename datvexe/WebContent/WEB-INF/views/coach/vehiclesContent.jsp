@@ -42,7 +42,7 @@ $(document).ready(function() {
 			<s:iterator value="xes">
 				<tr>
 					<td><s:property value="id"/></td>
-					<td><s:property value="bienSoXe"/></td>
+					<td><s:property value="bienSo"/></td>
 					<td><s:property value="loaiXe"/></td>
 					<td><s:property value="soCho"/></td>
 					<td><s:property value="tinhTrang"/></td>
