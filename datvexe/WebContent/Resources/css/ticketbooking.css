@@ -32,12 +32,22 @@ body {
 	background-color: black;
 }
 
-form .input-group {
+.input-group {
 	margin-bottom: 10px;
 }
 
-form .input-group label {
+.input-group label {
 	width: 150px;
+}
+
+.input-group .input-label {
+	width: 150px;
+	display: inline-block;
+	top: 0;
+}
+
+.input-group .input-control {
+	
 }
 
 .fl-l {

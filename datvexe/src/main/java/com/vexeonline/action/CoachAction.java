@@ -10,9 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.vexeonline.dto.ChuyenXeDTO;
-import com.vexeonline.dto.LichChuyenDTO;
 import com.vexeonline.dto.OfficeDTO;
-import com.vexeonline.dto.XeDTO;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
@@ -24,15 +22,6 @@ public class CoachAction extends ActionSupport {
 	private List<Boolean> seats = new ArrayList<Boolean>();
 	private List<ChuyenXeDTO> chuyenxes = new ArrayList<ChuyenXeDTO>();
 	private List<OfficeDTO> offices = new ArrayList<OfficeDTO>();
-	private List<LichChuyenDTO> schedules = new ArrayList<LichChuyenDTO>();
-
-	public List<LichChuyenDTO> getSchedules() {
-		return schedules;
-	}
-
-	public void setSchedules(List<LichChuyenDTO> schedules) {
-		this.schedules = schedules;
-	}
 
 	public Integer getId() {
 		return id;
@@ -73,29 +62,6 @@ public class CoachAction extends ActionSupport {
 
 	@Action(value = "newVehicle", results = @Result(name = "success", location = "coach.newVehicle", type = "tiles"))
 	public String showNewVehiclePage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "schedules", results = @Result(name = "success", location = "coach.schedules", type = "tiles"))
-	public String showSchedulesPage() {
-		schedules
-				.add(new LichChuyenDTO(1, "Thứ 2", "11h30", 1,
-						"Sài Gòn - Đà Nẵng", "22h", 1, "92H-1234", 430000,
-						"Hoạt động"));
-		schedules
-		.add(new LichChuyenDTO(2, "Thứ 5", "6h30", 1,
-				"Sài Gòn - Đà Nẵng", "22h", 1, "92H-2234", 430000,
-				"Hoạt động"));
-		return SUCCESS;
-	}
-
-	@Action(value = "newSchedule", results = @Result(name = "success", location = "coach.newSchedule", type = "tiles"))
-	public String showNewSchedulePage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "scheduleDetail", results = @Result(name = "success", location = "coach.scheduleDetail", type = "tiles"))
-	public String showScheduleDetailPage() {
 		return SUCCESS;
 	}
 

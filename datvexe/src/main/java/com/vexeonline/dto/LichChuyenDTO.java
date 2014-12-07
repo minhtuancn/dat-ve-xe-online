@@ -2,12 +2,15 @@ package com.vexeonline.dto;
 
 import java.io.Serializable;
 
+import com.vexeonline.domain.NgayCuaTuan;
+
 public class LichChuyenDTO implements Serializable {
 
 	private static final long serialVersionUID = -4209790089903009090L;
-	
+
 	private Integer id;
 	private String ngayTrongTuan;
+	private NgayCuaTuan idNgayTrongTuan;
 	private String gioChay;
 	private Integer idTuyenXe;
 	private String tenTuyenXe;
@@ -21,17 +24,14 @@ public class LichChuyenDTO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LichChuyenDTO(Integer id, String ngayTrongTuan, String gioChay,
-			Integer idTuyenXe, String tenTuyenXe, String tongThoiGian,
-			Integer idXe, String bienSoXe, Integer giaVe, String trangThai) {
-		this.id = id;
-		this.ngayTrongTuan = ngayTrongTuan;
+	public LichChuyenDTO(NgayCuaTuan idNgayTrongTuan, String gioChay,
+			Integer idTuyenXe, String tongThoiGian, Integer idXe,
+			Integer giaVe, String trangThai) {
+		this.idNgayTrongTuan = idNgayTrongTuan;
 		this.gioChay = gioChay;
 		this.idTuyenXe = idTuyenXe;
-		this.tenTuyenXe = tenTuyenXe;
 		this.tongThoiGian = tongThoiGian;
 		this.idXe = idXe;
-		this.bienSoXe = bienSoXe;
 		this.giaVe = giaVe;
 		this.trangThai = trangThai;
 	}
@@ -50,6 +50,14 @@ public class LichChuyenDTO implements Serializable {
 
 	public void setNgayTrongTuan(String ngayTrongTuan) {
 		this.ngayTrongTuan = ngayTrongTuan;
+	}
+
+	public NgayCuaTuan getIdNgayTrongTuan() {
+		return idNgayTrongTuan;
+	}
+
+	public void setIdNgayTrongTuan(NgayCuaTuan idNgayTrongTuan) {
+		this.idNgayTrongTuan = idNgayTrongTuan;
 	}
 
 	public String getGioChay() {
