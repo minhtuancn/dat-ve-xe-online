@@ -9,6 +9,7 @@ public class XeDTO implements Serializable {
 	private static final long serialVersionUID = -3118093754955039931L;
 
 	private Integer id;
+	private Integer idNhaXe;
 	private String bienSo;
 	private String loaiXe;
 	private Integer soCho;
@@ -19,8 +20,9 @@ public class XeDTO implements Serializable {
 	public XeDTO() {
 	}
 	
-	public XeDTO(Integer id,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
+	public XeDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
 		this.id = id;
+		this.idNhaXe = idNhaXe;
 		this.bienSo = bienSo;
 		this.loaiXe = loaiXe;
 		this.soCho = soCho;
@@ -30,6 +32,14 @@ public class XeDTO implements Serializable {
 	
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getIdNhaXe() {
+		return idNhaXe;
+	}
+
+	public void setIdNhaXe(Integer idNhaXe) {
+		this.idNhaXe = idNhaXe;
 	}
 
 	public void setId(Integer id) {

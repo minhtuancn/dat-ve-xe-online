@@ -7,21 +7,26 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.vexeonline.dao.NhaXeDAO;
+import com.vexeonline.dao.NhaXeDAOImpl;
 import com.vexeonline.dao.TienIchDAO;
 import com.vexeonline.dao.TienIchDAOImpl;
 import com.vexeonline.dao.XeDAO;
 import com.vexeonline.dao.XeDAOImpl;
+import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.XeDTO;
 import com.vexeonline.utils.HibernateUtil;
 
 public class QuanLyXeServiceImpl implements QuanLyXeService {
+	
 	private static Logger logger = Logger
 			.getLogger(QuanLyXeServiceImpl.class);
 	
 	private static XeDAO xeDAO = new XeDAOImpl();
 	private static TienIchDAO tienIchDAO = new TienIchDAOImpl();
+	private static NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 	
 	public List<XeDTO> listXe() {
 		
@@ -64,18 +69,21 @@ public class QuanLyXeServiceImpl implements QuanLyXeService {
 	}
 
 	public void addNew(XeDTO xe) throws Exception {
-		Session session = null;
-		Transaction tx = null;
+		/*Session session = null;
+		Transaction tx = null;*/
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
+			/*session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
+					.beginTransaction();*/
 			
 			Xe tmp = new Xe();
 			tmp.setBienSoXe(xe.getBienSo());
 			tmp.setLoaiXe(xe.getLoaiXe());
 			tmp.setSoCho(xe.getSoCho());
 			tmp.setActive(xe.isActive());
+			
+			NhaXe nhaXe = nhaXeDAO.getById(xe.getIdNhaXe());
+			tmp.setNhaXe(nhaXe);
 			
 			TienIch tienIch = null;
 			
@@ -85,16 +93,16 @@ public class QuanLyXeServiceImpl implements QuanLyXeService {
 			}
 			
 			xeDAO.save(tmp);
-			tx.commit();
+			/*tx.commit();*/
 			
 		} catch (Exception ex) {
-			if (tx != null) {
+			/*if (tx != null) {
 				tx.rollback();
-			}
+			}*/
 			logger.error("Error", ex);
 			throw new Exception(ex);
 		} finally {
-			session.close();
+			/*session.close();*/
 		}
 	}
 
@@ -138,14 +146,14 @@ public class QuanLyXeServiceImpl implements QuanLyXeService {
 	@Override
 	public XeDTO getById(Integer id) throws Exception {
 		
-		Session session = null;
-		Transaction tx = null;
+		/*Session session = null;
+		Transaction tx = null;*/
 		XeDTO result = null;
 		
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
+			/*session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
+					.beginTransaction();*/
 			Xe xe = xeDAO.getById(id);
 			
 			result = new XeDTO();
@@ -159,11 +167,11 @@ public class QuanLyXeServiceImpl implements QuanLyXeService {
 				result.getMaTienIchs().add(tienIch.getIdTienIch());
 				result.getTienIchs().add(tienIch.getTenTienIch());
 			}
-			tx.commit();
+			/*tx.commit();*/
 		} catch (Exception e) {
-			tx.rollback();
+			/*tx.rollback();*/
 		} finally {
-			session.close();
+			/*session.close();*/
 		}
 		
 		return result;

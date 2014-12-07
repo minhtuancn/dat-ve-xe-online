@@ -8,6 +8,7 @@ import com.vexeonline.domain.User;
 import com.vexeonline.utils.HibernateUtil;
 
 public class UserDAOImpl implements UserDAO {
+	
 	private static Session session;
 
 	public User getUserByUserName(String userName) {
@@ -32,4 +33,8 @@ public class UserDAOImpl implements UserDAO {
 		return HibernateUtil.getSessionFactory().getCurrentSession().createQuery("from User").list();
 	}
 
+	@Override
+	public User getUserById(Integer id) {
+		return (User) HibernateUtil.getSessionFactory().getCurrentSession().get(User.class, id);
+	}
 }

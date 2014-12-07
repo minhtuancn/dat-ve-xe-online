@@ -27,10 +27,13 @@ import com.vexeonline.service.KhachHangServiceImpl;
 	@Result(name = "error", location = "home", type = "tiles"),
 	@Result(name = "admin", location = "home", type = "tiles")})
 public class Logins extends ActionSupport implements SessionAware {
+	
 	private static final long serialVersionUID = 7403034168521515594L;
 	private static Logger logger = Logger.getLogger(Logins.class);
+	
 	private String userName;
 	private String password;
+	
 	Map<String, Object> session;
 
 	@Action(value = "dangnhap", results = @Result(name = "nhaxe", location = "home", type = "redirect"))

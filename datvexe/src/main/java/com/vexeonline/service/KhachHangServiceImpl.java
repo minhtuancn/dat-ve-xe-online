@@ -187,7 +187,15 @@ public class KhachHangServiceImpl implements KhachHangService {
 		user.setUserName("tung");
 		user.setPassword("123456");
 		user.setRole(RoleOfUser.NHAXE);
+		user.setNhaXe(nhaXe);
 		session.save(user);
+		
+		User user2 = new User();
+		user2.setUserName("hungdq");
+		user2.setPassword("123456");
+		user2.setRole(RoleOfUser.NHAXE);
+		user2.setNhaXe(nhaXe);
+		session.save(user2);
 		
 		session.flush();
 		session.close();
