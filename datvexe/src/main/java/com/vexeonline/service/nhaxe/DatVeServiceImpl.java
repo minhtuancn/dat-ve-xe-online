@@ -1,7 +1,6 @@
 package com.vexeonline.service.nhaxe;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -71,5 +70,4 @@ public class DatVeServiceImpl implements DatVeService{
 	public void datVe(int idChuyenXe, List<Integer> seatings) {
 		
 	}
-
 }

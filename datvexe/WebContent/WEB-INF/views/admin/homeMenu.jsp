@@ -21,5 +21,6 @@
 		</li>
 		<li><a href="${pageContext.request.contextPath}/ticketInfo">Kiểm tra vé</a></li>
 		<li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+		<li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
 	</ul>
 </div>

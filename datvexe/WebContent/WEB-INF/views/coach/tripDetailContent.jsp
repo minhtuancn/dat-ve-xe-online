@@ -62,8 +62,8 @@ $(document).ready(function() {
 		${chuyenXe.trangThai}
 	</div>
 	<div class="input-group">
-		<label>&nbsp;</label>
-		<div><input class="btn btn-primary" type="submit" value="Lưu" /></div>
+		<label class="input-label">&nbsp;</label>
+		<input class="input-control btn btn-primary" type="submit" value="Lưu" />
 	</div>
 </form>
 <form id="customersForm">

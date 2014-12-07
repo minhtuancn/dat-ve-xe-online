@@ -31,10 +31,10 @@
 	<div class="input-group">
 		<label class="input-label" for="active">Còn hoạt động</label>
 		<s:if test="%{xe.active}">
-			<input class="input-control" type="checkbox" name="xe.active" checked="checked"/>
+			<input type="checkbox" name="xe.active" checked="checked"/>
 		</s:if>
 		<s:else>
-			<input class="input-control" type="checkbox" name="xe.active"/>
+			<input type="checkbox" name="xe.active"/>
 		</s:else>
 	</div>
 	<div class="input-group">
@@ -50,6 +50,6 @@
 	</div>
 	<div class="input-group">
 		<label>&nbsp;</label>
-		<input class="button" type="submit" value="Lưu" />
+		<input class="input-control btn btn-primary" type="submit" value="Lưu" />
 	</div>
 </form>
