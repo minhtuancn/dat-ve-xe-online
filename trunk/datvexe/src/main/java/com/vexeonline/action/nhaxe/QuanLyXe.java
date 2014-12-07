@@ -9,12 +9,13 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.vexeonline.dao.TienIchDAO;
 import com.vexeonline.dao.TienIchDAOImpl;
+import com.vexeonline.dao.UserDAO;
+import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.dto.XeDTO;
 import com.vexeonline.service.nhaxe.QuanLyXeService;
@@ -29,8 +30,8 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private static final QuanLyXeService xeService = new QuanLyXeServiceImpl();
 	private static final TienIchDAO tienIchDAO = new TienIchDAOImpl();
+	private static final UserDAO userDAO = new UserDAOImpl();
 	
-	@SuppressWarnings("unused")
 	private Map<String,Object> session;
 	
 	private List<XeDTO> xes = null;
@@ -64,9 +65,13 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 
 	@Action(value = "vehicles", results = @Result(name = "success", location = "coach.vehicles", type = "tiles"))
 	public String showVehiclesPage() {
+		/*Transaction tx = null;*/
 		try {
+			/*tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();*/
 			xes = xeService.listXe();
+			/*tx.commit();*/
 		} catch (Exception e) {
+			/*if (tx != null) tx.rollback();*/
 			e.printStackTrace();
 		}
 		return SUCCESS;
@@ -74,22 +79,36 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 
 	@Action(value = "newVehicle", results = @Result(name = "success", location = "coach.newVehicle", type = "tiles"))
 	public String showNewVehiclePage() {
-		Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-		tienIchs = tienIchDAO.list();
-		tx.commit();
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			tienIchs = tienIchDAO.list();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 	
 	@Action(value = "saveVehicle", results = @Result(name = "success", location = "vehicles", type = "redirect"))
 	public String saveVehicle() {
 		
+		Transaction tx = null;
+		
 		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			if (xe.getId() != null) {
 				xeService.update(xe);
 			} else {
+				Integer userId = (Integer) session.get("userId");
+				Integer idNhaXe = userDAO.getUserById(userId).getNhaXe().getIdNhaXe();
+				xe.setIdNhaXe(idNhaXe);
 				xeService.addNew(xe);
 			}
+			tx.commit();
 		} catch (Exception e) {
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		}
 		return SUCCESS;
@@ -97,16 +116,14 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	@Action(value = "vehicleDetail", results = @Result(name = "success", location = "coach.vehicleDetail", type = "tiles"))
 	public String showVehicleDetailPage() {
+		Transaction tx = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			Transaction tx = session.beginTransaction();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			tienIchs = tienIchDAO.list();
-			tx.commit();
-			session.close();
-			
 			xe = xeService.getById(xe.getId());
-			
+			tx.commit();
 		} catch (Exception e) {
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		}
 		return SUCCESS;
