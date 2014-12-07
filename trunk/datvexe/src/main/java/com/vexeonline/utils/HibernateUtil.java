@@ -2,12 +2,15 @@ package com.vexeonline.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.registry.internal.StandardServiceRegistryImpl;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 
 	private static final SessionFactory sessionFactory = buildSessionFactory();
+
+	private static ServiceRegistry serviceRegistry;
 
 	private HibernateUtil() {
 
@@ -18,7 +21,7 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate_test.cfg.xml");
 
-			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+			serviceRegistry = new StandardServiceRegistryBuilder()
 					.applySettings(configuration.getProperties()).build();
 			return configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable ex) {
@@ -33,4 +36,7 @@ public class HibernateUtil {
 		return sessionFactory;
 	}
 
+	public static void close() {
+		((StandardServiceRegistryImpl) serviceRegistry).destroy();
+	}
 }

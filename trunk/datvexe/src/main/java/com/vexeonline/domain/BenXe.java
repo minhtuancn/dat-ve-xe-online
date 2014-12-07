@@ -5,6 +5,7 @@ package com.vexeonline.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class BenXe implements Serializable {
 	@Column(length = 500)
 	private String moTa;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private DiaChi diaChi;
 

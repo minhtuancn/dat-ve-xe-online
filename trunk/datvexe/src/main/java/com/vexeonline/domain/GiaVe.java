@@ -4,7 +4,7 @@
 package com.vexeonline.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Type;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -36,11 +36,11 @@ public class GiaVe implements Serializable {
 	@JoinColumn(nullable = false)
 	private LichTuyen lichTuyen;
 
-	@Type(type = "date")
+	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date ngayBatDau;
 
-	@Type(type = "date")
+	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date ngayKetThuc;
 
