@@ -56,13 +56,13 @@ $(document).ready(function() {
 				<td><s:property value="#cx.ngayDi"/></td>
 				<td><s:property value="#cx.gioKhoiHanh"/></td>
 				<td><s:property value="#cx.soHanhKhach"/></td>
-				<td><s:property value="#cx.trangThai"/></td>
-				<%-- <s:if test="%{#cx.trangThai == 'BINHTHUONG'}">
+				<%-- <td><s:property value="#cx.trangThai"/></td> --%>
+				<s:if test='#cx.trangThai.toString() == "BINHTHUONG"'>
 					<td>Bình thường</td>
 				</s:if>
-				<s:elseif test="%{#cx.trangThai == 'HUY'}">
+				<s:elseif test='#cx.trangThai.toString() == "HUY"'>
 					<td>Đã hủy</td>
-				</s:elseif> --%>
+				</s:elseif>
 				<td>
 					<a href="${pageContext.request.contextPath}/coachcp/tripDetail?id=${cx.id}" class="btn btn-primary">Detail</a>
 				</td>

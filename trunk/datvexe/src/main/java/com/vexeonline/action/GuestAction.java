@@ -32,17 +32,12 @@ public class GuestAction extends ActionSupport implements SessionAware {
 	public String showHomePage() {
 		RoleOfUser role = (RoleOfUser) session.get("role");
 		String result = null;
-		
-		switch (role) {
-		case ADMIN:
-			result = "admin";
-			break;
-		case NHAXE:
-			result = "coach";
-			break;
-		default:
+		if (role == null) {
 			result = "user";
-			break;
+		} else if (role.equals(RoleOfUser.ADMIN)) {
+			result = "admin";
+		} else if (role.equals(RoleOfUser.NHAXE)) {
+			result = "coach";
 		}
 		return result;
 	}

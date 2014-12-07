@@ -59,7 +59,12 @@ $(document).ready(function() {
 	</div>
 	<div class="input-group">
 		<label for="chuyenXe.trangThai">Trạng thái</label>
-		${chuyenXe.trangThai}
+		<s:if test='chuyenXe.trangThai.toString() == "BINHTHUONG"'>
+			<td>Bình thường</td>
+		</s:if>
+		<s:elseif test='chuyenXe.trangThai.toString() == "HUY"'>
+			<td>Đã hủy</td>
+		</s:elseif>
 	</div>
 	<div class="input-group">
 		<label class="input-label">&nbsp;</label>
