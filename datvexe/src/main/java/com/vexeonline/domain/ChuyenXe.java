@@ -4,7 +4,7 @@
 package com.vexeonline.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Type;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
@@ -39,13 +39,13 @@ public class ChuyenXe implements Serializable {
 	@Column(length = 50)
 	private String taiXe;
 
-	@Type(type = "date")
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date ngayDi;
-
+	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private TrangThaiChuyenXe trangThai;
+	private TrangThaiChuyenXe trangThai = TrangThaiChuyenXe.BINHTHUONG;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -121,5 +121,4 @@ public class ChuyenXe implements Serializable {
 	public void setDanhGias(Set<DanhGia> danhGias) {
 		this.danhGias = danhGias;
 	}
-
 }

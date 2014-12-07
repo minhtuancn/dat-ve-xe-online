@@ -36,59 +36,69 @@ $(document).ready(function() {
 });
 //-->
 </script>
-<form id="tripDetailForm" action="" method="post">
+<form id="tripDetailForm" action="saveTrip" method="post">
 	<div class="input-group">
-		<label for="maChuyen">Mã chuyến</label>
-		<input class="textbox" type="text" name="maChuyen" disabled="disabled" value="${trip.id}"/>
+		<label for="chuyenXe.id">Mã chuyến</label>
+		<input class="textbox" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/>
 	</div>
 	<div class="input-group">
-		<label for="tenTaiXe">Tài xế</label>
-		<input class="textbox" type="text" name="tenTaiXe" value="${trip.tenTaiXe}"/>
+		<label for="chuyenXe.tenTaiXe">Tài xế</label>
+		<input class="textbox" type="text" name="chuyenXe.tenTaiXe" value="${chuyenXe.tenTaiXe}"/>
 	</div>
 	<div class="input-group">
-		<label for="ngayDi">Ngày đi</label>
-		<input class="textbox" type="text" name="ngayDi" required="required" value="${trip.ngayDi}" />
+		<label for="chuyenXe.ngayDi">Ngày đi</label>
+		<input class="textbox" type="text" name="chuyenXengayDi" required="required" value="${chuyenXe.ngayDi}" />
 	</div>
 	<div class="input-group">
-		<label for="time">Giời khởi hành</label>
-		<input class="textbox" type="text" name="gioKhoiHanh" value="${trip.gioKhoiHanh}" />
+		<label for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
+		<input class="textbox" type="text" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
 	</div>
 	<div class="input-group">
 		<label>SL hành khách</label>
-		<div><s:property value="trip.soHanhKhach"/></div>
+		<input type="text" class="textbox" disabled="disabled" value="${chuyenXe.soHanhKhach}">
 	</div>
 	<div class="input-group">
-		<label for="isActive">Còn hoạt động</label>
-		<s:if test="%{trip.isActive}">
-			<input type="checkbox" name="isActive" checked="checked" />
-		</s:if>
-		<s:else>
-			<input type="checkbox" name="isActive"/>
-		</s:else>
+		<label for="chuyenXe.trangThai">Trạng thái</label>
+		${chuyenXe.trangThai}
+	</div>
+	<div class="input-group">
+		<label>&nbsp;</label>
+		<div><input class="btn btn-primary" type="submit" value="Lưu" /></div>
 	</div>
 </form>
 <form id="customersForm">
-	<table id="customers">
+	<table id="customers" class="display">
 		<thead>
 			<tr>
+				<td>Mã hành khách</td>
 				<td>Họ tên</td>
 				<td>Số điện thoại</td>
 				<td>Vị trí</td>
+				<td>Thanh toán</td>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
+				<td>Mã hành khách</td>
 				<td>Họ tên</td>
 				<td>Số điện thoại</td>
 				<td>Vị trí</td>
+				<td>Thanh toán</td>
 			</tr>
 		</tfoot>
 		<tbody>
-			<s:iterator var="customer" value="customers">
+			<s:iterator var="hk" value="chuyenXe.hanhKhachs">
 				<tr>
-					<td><s:property value="#customer.name"/></td>
-					<td><s:property value="#customer.phoneNumber"/></td>
-					<td><s:property value="#customer.position"/></td>
+					<td><s:property value="#hk.idHanhKhach"/></td>
+					<td><s:property value="#hk.tenHanhKhach"/></td>
+					<td><s:property value="#hk.soDienThoai"/></td>
+					<td><s:property value="#hk.viTri"/></td>
+					<s:if test="%{#hk.thanhToan}">
+						<td>Đã thanh toán</td>
+					</s:if>
+					<s:else>
+						<td>Chưa thanh toán</td>
+					</s:else>
 				</tr>
 			</s:iterator>
 		</tbody>

@@ -9,7 +9,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.dto.ChuyenXeDTO;
 import com.vexeonline.dto.OfficeDTO;
 
 @Namespace(value = "/coachcp")
@@ -20,7 +19,6 @@ public class CoachAction extends ActionSupport {
 
 	private Integer id;
 	private List<Boolean> seats = new ArrayList<Boolean>();
-	private List<ChuyenXeDTO> chuyenxes = new ArrayList<ChuyenXeDTO>();
 	private List<OfficeDTO> offices = new ArrayList<OfficeDTO>();
 
 	public Integer getId() {
@@ -29,14 +27,6 @@ public class CoachAction extends ActionSupport {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public List<ChuyenXeDTO> getChuyenxes() {
-		return chuyenxes;
-	}
-
-	public void setChuyenxes(List<ChuyenXeDTO> chuyenxes) {
-		this.chuyenxes = chuyenxes;
 	}
 
 	public List<Boolean> getSeats() {
@@ -74,21 +64,6 @@ public class CoachAction extends ActionSupport {
 				seats.add(false);
 			}
 		}
-		return SUCCESS;
-	}
-
-	@Action(value = "trips", results = @Result(name = "success", location = "coach.trips", type = "tiles"))
-	public String showTripsPage() {
-		chuyenxes.add(new ChuyenXeDTO(1, "1/1/2014", "11:30", 30, "Hoat dong"));
-		chuyenxes.add(new ChuyenXeDTO(2, "3/2/2014", "17:30", 45, "Hoat dong"));
-		chuyenxes.add(new ChuyenXeDTO(3, "5/3/2014", "6:30", 40, "Hoat dong"));
-		chuyenxes.add(new ChuyenXeDTO(4, "7/4/2014", "5:30", 35, "Hoat dong"));
-		chuyenxes.add(new ChuyenXeDTO(5, "15/5/2014", "9:30", 20, "Da Huy"));
-		return SUCCESS;
-	}
-
-	@Action(value = "tripDetail", results = @Result(name = "success", location = "coach.tripDetail", type = "tiles"))
-	public String showTripDetailPage() {
 		return SUCCESS;
 	}
 

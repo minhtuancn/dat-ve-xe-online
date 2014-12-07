@@ -29,6 +29,7 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<td>Mã chuyến</td>
+			<td>Tuyến</td>
 			<td>Ngày đi</td>
 			<td>Giờ khởi hành</td>
 			<td>Số hành khách</td>
@@ -39,6 +40,7 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<td>Mã chuyến</td>
+			<td>Tuyến</td>
 			<td>Ngày đi</td>
 			<td>Giờ khởi hành</td>
 			<td>Số hành khách</td>
@@ -50,10 +52,17 @@ $(document).ready(function() {
 		<s:iterator var="cx" value="chuyenxes">
 			<tr>
 				<td><s:property value="#cx.id"/></td>
+				<td><s:property value="#cx.tuyen"/></td>
 				<td><s:property value="#cx.ngayDi"/></td>
 				<td><s:property value="#cx.gioKhoiHanh"/></td>
 				<td><s:property value="#cx.soHanhKhach"/></td>
 				<td><s:property value="#cx.trangThai"/></td>
+				<%-- <s:if test="%{#cx.trangThai == 'BINHTHUONG'}">
+					<td>Bình thường</td>
+				</s:if>
+				<s:elseif test="%{#cx.trangThai == 'HUY'}">
+					<td>Đã hủy</td>
+				</s:elseif> --%>
 				<td>
 					<a href="${pageContext.request.contextPath}/coachcp/tripDetail?id=${cx.id}" class="btn btn-primary">Detail</a>
 				</td>

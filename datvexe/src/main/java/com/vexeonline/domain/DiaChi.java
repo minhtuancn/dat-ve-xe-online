@@ -41,6 +41,16 @@ public class DiaChi implements Serializable {
 	public DiaChi() {
 
 	}
+	
+	
+
+	public DiaChi(String tinh, String huyen, String chiTiet) {
+		this.tinh = tinh;
+		this.huyen = huyen;
+		this.chiTiet = chiTiet;
+	}
+
+
 
 	public Integer getIdDiaChi() {
 		return idDiaChi;

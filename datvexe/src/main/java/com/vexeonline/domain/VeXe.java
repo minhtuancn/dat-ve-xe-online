@@ -1,5 +1,7 @@
 package com.vexeonline.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +13,16 @@ import javax.persistence.ManyToOne;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 @Entity
-public class VeXe {
+public class VeXe implements Serializable {
+
+	private static final long serialVersionUID = 2052803547818468572L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private int idVeXe;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private int choNgoi;
 
 	private boolean isThanhToan;
@@ -79,5 +84,4 @@ public class VeXe {
 	public void setHanhKhach(HanhKhach hanhKhach) {
 		this.hanhKhach = hanhKhach;
 	}
-
 }

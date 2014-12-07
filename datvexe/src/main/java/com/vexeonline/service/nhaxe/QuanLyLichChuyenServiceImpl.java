@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Transaction;
-
 import com.vexeonline.dao.LichTuyenDAO;
 import com.vexeonline.dao.LichTuyenDAOImpl;
 import com.vexeonline.dao.TuyenXeDAO;
@@ -138,12 +136,5 @@ public class QuanLyLichChuyenServiceImpl implements QuanLyLichChuyenService {
 		giaVe.setGiaVe(lichChuyen.getGiaVe());
 		tmp.getGiaVes().add(giaVe);
 		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);	
-	}
-	
-	/*TEST*/
-	public static void main(String[] args) {
-		Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-		LichChuyenDTO tmp = new LichChuyenDTO();
-		tx.commit();
 	}
 }

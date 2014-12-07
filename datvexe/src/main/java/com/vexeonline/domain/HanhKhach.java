@@ -17,8 +17,9 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 
 @Entity
 public class HanhKhach implements Serializable {
+	
 	private static final long serialVersionUID = 5530134202517358350L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
@@ -26,7 +27,7 @@ public class HanhKhach implements Serializable {
 
 	@Column(nullable = false, length = 100)
 	private String tenHanhKhach;
-
+	
 	@Column(nullable = false, length = 11, unique = true)
 	private String sdt;
 
@@ -36,6 +37,16 @@ public class HanhKhach implements Serializable {
 	@OneToMany(mappedBy = "hanhKhach")
 	private Set<VeXe> veXes = new HashSet<VeXe>(0);
 
+	public HanhKhach() {
+	}
+	
+	public HanhKhach(String tenHanhKhach, String sdt, String email) {
+		super();
+		this.tenHanhKhach = tenHanhKhach;
+		this.sdt = sdt;
+		this.email = email;
+	}
+	
 	public int getIdHanhKhach() {
 		return idHanhKhach;
 	}
