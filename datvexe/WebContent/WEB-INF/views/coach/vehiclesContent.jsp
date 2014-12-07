@@ -45,7 +45,13 @@ $(document).ready(function() {
 					<td><s:property value="bienSo"/></td>
 					<td><s:property value="loaiXe"/></td>
 					<td><s:property value="soCho"/></td>
-					<td><s:property value="tinhTrang"/></td>
+					
+					<s:if test="active">
+						<td>Hoạt động</td>
+					</s:if>
+					<s:else>
+						<td>Không hoạt động</td>
+					</s:else>
 					<td><a class="btn btn-primary" href="${pageContext.request.contextPath}/coachcp/vehicleDetail?id=${id}">Chi tiết</a></td>
 				</tr>
 			</s:iterator>
