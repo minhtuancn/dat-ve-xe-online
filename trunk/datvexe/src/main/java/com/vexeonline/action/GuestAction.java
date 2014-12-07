@@ -1,26 +1,50 @@
 package com.vexeonline.action;
 
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.vexeonline.domain.RoleOfUser;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
-public class GuestAction extends ActionSupport {
+public class GuestAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Map<String,Object> session;
 	
 	@Action(value = "login", results = @Result(name = "success", location="/WEB-INF/views/template/login.jsp"))
 	public String showLoginPage() {
 		return SUCCESS;
 	}
 	
-	@Action(value = "home", results = @Result(name = "success", location="home", type = "tiles"))
+	@Action(value = "home", results = {
+			@Result(name = "user", location="home", type = "tiles"),
+			@Result(name = "admin", location="admin.home", type = "tiles"),
+			@Result(name = "coach", location="coach.home", type = "tiles")
+	})
 	public String showHomePage() {
-		return SUCCESS;
+		RoleOfUser role = (RoleOfUser) session.get("role");
+		String result = null;
+		
+		switch (role) {
+		case ADMIN:
+			result = "admin";
+			break;
+		case NHAXE:
+			result = "coach";
+			break;
+		default:
+			result = "user";
+			break;
+		}
+		return result;
 	}
 	
 	@Action(value = "intro", results = @Result(name = "success", location="intro", type = "tiles"))
@@ -46,5 +70,10 @@ public class GuestAction extends ActionSupport {
 	@Action(value = "trips", results = @Result(name = "success", location="trips", type = "tiles"))
 	public String showTripsPage() {
 		return SUCCESS;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 }

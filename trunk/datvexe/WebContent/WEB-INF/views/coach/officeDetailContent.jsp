@@ -41,4 +41,8 @@
 			<input type="checkbox" name="office.active"/>
 		</s:else>
 	</div>
+	<div class="input-group">
+		<label>&nbsp;</label>
+		<input type="submit" value="Lưu" class="input-control btn btn-primary">
+	</div>
 </form>
