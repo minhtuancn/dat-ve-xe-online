@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -24,6 +25,7 @@ import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
+@InterceptorRef(value = "defaultStack", params = {"validation.excludeMethods", "vehicles, saveVehicle, vehicleDetail"})
 public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 1003544484121846277L;
@@ -34,10 +36,28 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private Map<String,Object> session;
 	
+	private Integer id;
 	private List<XeDTO> xes = null;
 	private XeDTO xe = null;
+	private List<Integer> maTienIchs = new ArrayList<Integer>();
 	private List<TienIch> tienIchs = new ArrayList<TienIch>();
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public List<Integer> getMaTienIchs() {
+		return maTienIchs;
+	}
+
+	public void setMaTienIchs(List<Integer> maTienIchs) {
+		this.maTienIchs = maTienIchs;
+	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -77,7 +97,9 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 
-	@Action(value = "newVehicle", results = @Result(name = "success", location = "coach.newVehicle", type = "tiles"))
+	@Action(value = "newVehicle",results = {
+			@Result(name = "success", location = "coach.newVehicle", type = "tiles")	
+	})
 	public String showNewVehiclePage() {
 		Transaction tx = null;
 		try {
@@ -91,7 +113,10 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "saveVehicle", results = @Result(name = "success", location = "vehicles", type = "redirect"))
+	@Action(value = "saveVehicle", results = {
+		@Result(name = "success", location = "vehicles", type = "redirect"),
+		@Result(name = "input", location = "coach.newVehicle", type = "tiles")
+	})
 	public String saveVehicle() {
 		
 		Transaction tx = null;
@@ -120,7 +145,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			tienIchs = tienIchDAO.list();
-			xe = xeService.getById(xe.getId());
+			xe = xeService.getById(id);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();

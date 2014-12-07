@@ -170,10 +170,26 @@ public class KhachHangServiceImpl implements KhachHangService {
 		session.save(veXe);
 
 		TienIch tienIch = new TienIch();
-		tienIch.setTenTienIch("DRINK");
+		tienIch.setTenTienIch("Nước uống");
 		tienIch.getXes().add(xe);
 		session.save(tienIch);
-
+		
+		tienIch = new TienIch();
+		tienIch.setTenTienIch("Thức ăn");
+		session.save(tienIch);
+		
+		tienIch = new TienIch();
+		tienIch.setTenTienIch("Điều hòa");
+		session.save(tienIch);
+		
+		tienIch = new TienIch();
+		tienIch.setTenTienIch("Chăn");
+		session.save(tienIch);
+		
+		tienIch = new TienIch();
+		tienIch.setTenTienIch("Khăn lạnh");
+		session.save(tienIch);
+		
 		xe.getTienIchs().add(tienIch);
 
 		DanhGia danhGia = new DanhGia();
