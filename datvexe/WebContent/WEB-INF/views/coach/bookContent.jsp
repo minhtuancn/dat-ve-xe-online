@@ -34,7 +34,7 @@
 					</td>
 				</s:else>
 				<s:if test="#stat.count % 4 == 0"> 
-					</tr><tr>	
+					<tr></tr>
 				</s:if>
 			</s:iterator>
 			</tr>
