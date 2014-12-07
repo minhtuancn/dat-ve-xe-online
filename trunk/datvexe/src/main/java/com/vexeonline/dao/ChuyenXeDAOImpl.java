@@ -4,6 +4,7 @@
  */
 package com.vexeonline.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.vexeonline.domain.ChuyenXe;
@@ -48,6 +49,18 @@ public class ChuyenXeDAOImpl implements ChuyenXeDAO {
 
 	public void update(ChuyenXe chuyenXe) {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(chuyenXe);
+	}
+
+	public ChuyenXe getChuyenXeByNgayDiLichTuyen(int idLichTuyen, Date ngayDi) {
+		return (ChuyenXe) HibernateUtil.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from ChuyenXe as c " + 
+							"left join fetch c.veXes "
+							+ "where c.ngayDi = :ngayDi "
+							+ "and c.lichTuyen.idLichTuyen = :idLichTuyen")
+				.setDate("ngayDi", ngayDi)
+				.setInteger("idLichTuyen", idLichTuyen)
+				.uniqueResult();
 	}
 
 }
