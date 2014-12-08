@@ -9,21 +9,21 @@
 	width: 1024px;
 }
 
+#loginForm > div {
+	margin: auto;
+	width: 520px;
+}
+
 #loginForm .input-group {
 	margin-top: 10px;
 }
 
-#loginForm .input-group .textbox {
+#loginForm .input-group .input-control {
 	display: inline-block;
 	width: 250px;
 }
 
-#loginForm .input-group .button {
-	display: inline-block;
-	width: 250px;
-}
-
-#loginForm .input-group label {
+#loginForm .input-group .input-label {
 	display: inline-block;
 	width: 150px;
 }

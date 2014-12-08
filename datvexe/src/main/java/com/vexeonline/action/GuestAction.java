@@ -19,8 +19,15 @@ public class GuestAction extends ActionSupport implements SessionAware {
 	
 	private Map<String,Object> session;
 	
-	@Action(value = "login", results = @Result(name = "success", location="/WEB-INF/views/template/login.jsp"))
+	@Action(value = "login", results = {
+			@Result(name = "success", location="/WEB-INF/views/template/login.jsp"),
+			@Result(name = "logged", location="home", type = "redirect")
+	})
 	public String showLoginPage() {
+		RoleOfUser role = (RoleOfUser) session.get("role");
+		if (role != null) {
+			return "logged";
+		}
 		return SUCCESS;
 	}
 	
