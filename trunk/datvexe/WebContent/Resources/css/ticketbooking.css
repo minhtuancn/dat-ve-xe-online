@@ -24,7 +24,7 @@ body {
 	clear: both;
 	/* background-image: url("../images/body.jpg");
 	background-repeat: repeat-x; */
-	min-height: 700px;
+	min-height: 500px;
 }
 
 #footer {
@@ -87,7 +87,7 @@ body {
 #main #banner #ticketSearch {
 	position: relative;
 	left: 100px;
-	top: 30px;
+	top: 15px;
 	background-color: rgba(255, 255, 255, .5);
 	padding: 10px;
 	width: 420px;
@@ -136,21 +136,6 @@ body {
 
 /* Guest */
 
-#ticketSearch #search-tt {
-	padding-left: 20px;
-}
-
-#ticketSearch input[type="submit"] {
-	margin-top: 15px;
-	width: auto;
-}
-
-#ticketSearch .input-group {
-	margin-bottom: 10px;
-	width: 190px;
-	position: relative;
-}
-
 .input-group .errorMessage {
 	display: none;
 	visibility: hidden;
@@ -167,12 +152,20 @@ body {
 	-moz-border-radius: 5px;
 }
 
-#ticketSearch .input-group .textbox {
+#ticketSearch #search-tt {
+	text-transform: uppercase;
+	text-align: center;
+}
+
+#ticketSearch button[type="submit"] {
+	margin-top: 15px;
 	width: 190px;
 }
 
-#ticketSearch .input-group label {
-	display: block;
+#ticketSearch .input-group {
+	margin-bottom: 10px;
+	width: 190px;
+	position: relative;
 }
 
 #ticketInfo {
@@ -184,22 +177,6 @@ body {
 	padding: 20px;
 	background-color: white;
 	width: 1024px;
-}
-
-#ticketInfo .input-group {
-	margin-top: 10px;
-}
-
-#ticketInfo .input-group .textbox {
-	width: 350px;
-}
-
-#ticketInfo .input-group .button {
-	width: 350px;
-}
-
-#ticketInfo .input-group label {
-	width: 150px;
 }
 
 /* Admin */

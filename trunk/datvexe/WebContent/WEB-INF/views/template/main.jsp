@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/datepicker.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
-
 <script type="text/javascript">
 // When the document is ready
 $(document).ready(function () {
@@ -43,7 +41,6 @@ function getCurrentDate() {
 					headerKey="" readonly="true" />
 
 			</div>
-
 			<div class="input-group fl-l mg-l-10">
 				<label for="tinhDen">Tỉnh Đến</label>
 				<s:select name="tinhDen"
@@ -61,8 +58,12 @@ function getCurrentDate() {
 				<label for="seats">Số lượng</label> 
 				<input name="soCho" value="1" type="number" min="1"  class="form-control"  />
 			</div>
+			<div class="input-group fl-l mg-l-10">
+			</div>
 			<div class="input-group">
-				<button type="submit" class="btn btn-default">Tìm</button>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-primary">Tìm</button>
+				</div>
 			</div>
 			<s:fielderror />
 		</fieldset>

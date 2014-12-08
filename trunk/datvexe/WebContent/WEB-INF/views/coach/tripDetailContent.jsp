@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/datepicker.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/datatable/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
@@ -33,6 +35,12 @@
 <!--
 $(document).ready(function() {
     $('#customers').DataTable();
+    $('#ngayDi').datepicker({
+        format: "dd/mm/yyyy",
+        todayHighlight: true,
+        language: 'vi',
+        autoclose: true
+    });
 });
 //-->
 </script>
@@ -47,11 +55,11 @@ $(document).ready(function() {
 	</div>
 	<div class="input-group">
 		<label for="chuyenXe.ngayDi">Ngày đi</label>
-		<input class="textbox" type="text" name="chuyenXengayDi" required="required" value="${chuyenXe.ngayDi}" />
+		<input id="ngayDi" class="textbox" type="text" name="chuyenXengayDi" required="required" readonly="readonly" value="${chuyenXe.ngayDi}" />
 	</div>
 	<div class="input-group">
 		<label for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
-		<input class="textbox" type="text" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
+		<input class="textbox" type="time" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
 	</div>
 	<div class="input-group">
 		<label>SL hành khách</label>
