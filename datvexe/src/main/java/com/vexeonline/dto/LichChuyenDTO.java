@@ -18,22 +18,20 @@ public class LichChuyenDTO implements Serializable {
 	private Integer idXe;
 	private String bienSoXe;
 	private Integer giaVe;
-	private String trangThai;
-
+	private boolean active;
+	
 	public LichChuyenDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public LichChuyenDTO(NgayCuaTuan idNgayTrongTuan, String gioChay,
-			Integer idTuyenXe, String tongThoiGian, Integer idXe,
-			Integer giaVe, String trangThai) {
+			Integer idTuyenXe, String tongThoiGian, Integer idXe, Integer giaVe) {
 		this.idNgayTrongTuan = idNgayTrongTuan;
 		this.gioChay = gioChay;
 		this.idTuyenXe = idTuyenXe;
 		this.tongThoiGian = tongThoiGian;
 		this.idXe = idXe;
 		this.giaVe = giaVe;
-		this.trangThai = trangThai;
 	}
 
 	public Integer getId() {
@@ -116,11 +114,11 @@ public class LichChuyenDTO implements Serializable {
 		this.giaVe = giaVe;
 	}
 
-	public String getTrangThai() {
-		return trangThai;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setTrangThai(String trangThai) {
-		this.trangThai = trangThai;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

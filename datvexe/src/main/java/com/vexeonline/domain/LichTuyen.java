@@ -4,7 +4,7 @@
 package com.vexeonline.domain;
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Type;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.opensymphony.xwork2.validator.annotations.DoubleRangeFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -41,9 +41,11 @@ public class LichTuyen implements Serializable {
 	@Column(nullable = false)
 	private NgayCuaTuan thu;
 
-	@Type(type = "time")
+	/*@Type(type = "time")*/
+	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
-	private Time gioDi;
+	private Date gioDi;
+	/*private Time gioDi;*/
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -64,7 +66,9 @@ public class LichTuyen implements Serializable {
 
 	@OneToMany(mappedBy = "lichTuyen")
 	private Set<GiaVe> giaVes = new HashSet<GiaVe>(0);
-
+	
+	private boolean active;
+	
 	/**
 	 * @author Tung
 	 */
@@ -90,11 +94,11 @@ public class LichTuyen implements Serializable {
 	}
 
 	@RequiredFieldValidator(key = "require.gioDi")
-	public Time getGioDi() {
+	public Date getGioDi() {
 		return gioDi;
 	}
 
-	public void setGioDi(Time gioDi) {
+	public void setGioDi(Date gioDi) {
 		this.gioDi = gioDi;
 	}
 
@@ -140,4 +144,11 @@ public class LichTuyen implements Serializable {
 		this.chuyenXes = chuyenXes;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
