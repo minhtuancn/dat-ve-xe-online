@@ -1,9 +1,11 @@
 package com.vexeonline.service.nhaxe;
 
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.Transaction;
 
 import com.vexeonline.dao.LichTuyenDAO;
 import com.vexeonline.dao.LichTuyenDAOImpl;
@@ -22,10 +24,52 @@ public class QuanLyLichChuyenServiceImpl implements QuanLyLichChuyenService {
 	@Override
 	public LichChuyenDTO getById(Integer id) throws Exception {
 		LichTuyen tmp = lichChuyenDAO.getById(id);
+		LichChuyenDTO result = lichChuyen2DTO(tmp);
+		return result;
+	}
 
+	@Override
+	public List<LichChuyenDTO> list() throws Exception {
+		List<LichChuyenDTO> result = new ArrayList<LichChuyenDTO>();
+		List<LichTuyen> lichTuyens = lichChuyenDAO.list();
+		for (LichTuyen tmp : lichTuyens) {
+			result.add(lichChuyen2DTO(tmp));
+		}
+		return result;
+	}
+
+	@Override
+	public void themLichChuyen(LichChuyenDTO lichChuyen) throws Exception {
+		LichTuyen tmp = new LichTuyen();
+		tmp.setThu(lichChuyen.getIdNgayTrongTuan());
+		tmp.setGioDi(new SimpleDateFormat("hh:mm").parse(lichChuyen
+				.getGioChay()));
+		tmp.setTuyenXe(tuyenXeDAO.getById(lichChuyen.getIdTuyenXe()));
+		tmp.setTongThoiGian(Double.parseDouble(lichChuyen.getTongThoiGian()));
+		GiaVe giaVe = new GiaVe();
+		giaVe.setGiaVe(lichChuyen.getGiaVe());
+		tmp.getGiaVes().add(giaVe);
+		HibernateUtil.getSessionFactory().getCurrentSession().persist(tmp);
+	}
+
+	@Override
+	public void capNhatLichChuyen(LichChuyenDTO lichChuyen) throws Exception {
+		LichTuyen tmp = lichChuyenDAO.getById(lichChuyen.getId());
+		tmp.setThu(lichChuyen.getIdNgayTrongTuan());
+		tmp.setGioDi(new SimpleDateFormat("hh:mm").parse(lichChuyen
+				.getGioChay()));
+		tmp.setTuyenXe(tuyenXeDAO.getById(lichChuyen.getIdTuyenXe()));
+		tmp.setTongThoiGian(Double.parseDouble(lichChuyen.getTongThoiGian()));
+		GiaVe giaVe = new GiaVe();
+		giaVe.setGiaVe(lichChuyen.getGiaVe());
+		tmp.getGiaVes().add(giaVe);
+		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);
+	}
+
+	private LichChuyenDTO lichChuyen2DTO(LichTuyen lichChuyen) {
 		LichChuyenDTO result = new LichChuyenDTO();
-		result.setId(tmp.getIdLichTuyen());
-		switch (tmp.getThu()) {
+		result.setId(lichChuyen.getIdLichTuyen());
+		switch (lichChuyen.getThu()) {
 		case SUNDAY:
 			result.setNgayTrongTuan("Chủ nhật");
 			break;
@@ -48,93 +92,46 @@ public class QuanLyLichChuyenServiceImpl implements QuanLyLichChuyenService {
 			result.setNgayTrongTuan("Thứ bảy");
 			break;
 		}
-		result.setGioChay(tmp.getGioDi().toString());
-		result.setIdTuyenXe(tmp.getTuyenXe().getIdTuyenXe());
-		result.setTenTuyenXe(tmp.getTuyenXe().getBenDen() + " - " + tmp.getTuyenXe().getBenDen());
-		result.setTongThoiGian(Double.toString(tmp.getTongThoiGian()));
-		result.setIdXe(tmp.getXe().getIdXe());
-		result.setBienSoXe(tmp.getXe().getBienSoXe());
-		for (GiaVe giaVe : tmp.getGiaVes()) {
-			result.setGiaVe(giaVe.getGiaVe());
+		result.setGioChay(new SimpleDateFormat("hh:mm").format(lichChuyen
+				.getGioDi()));
+		result.setIdTuyenXe(lichChuyen.getTuyenXe().getIdTuyenXe());
+		result.setTenTuyenXe(lichChuyen.getTuyenXe().getBenDen().getTenBenXe()
+				+ " - " + lichChuyen.getTuyenXe().getBenDen().getTenBenXe());
+		result.setTongThoiGian(Double.toString(lichChuyen.getTongThoiGian()));
+		result.setIdXe(lichChuyen.getXe().getIdXe());
+		result.setBienSoXe(lichChuyen.getXe().getBienSoXe());
+
+		Date currentDate = new Date();
+		for (GiaVe giaVe : lichChuyen.getGiaVes()) {
+			if (giaVe.getNgayBatDau().before(currentDate)
+					&& giaVe.getNgayKetThuc().after(currentDate)) {
+				result.setGiaVe(giaVe.getGiaVe());
+			}
 			break;
 		}
-		// TODO
-		result.setTrangThai("");
+		result.setActive(lichChuyen.isActive());
 		return result;
 	}
 
-	@Override
-	public List<LichChuyenDTO> list() throws Exception {
-		List<LichChuyenDTO> result = new ArrayList<LichChuyenDTO>();
-		List<LichTuyen> lichTuyens = lichChuyenDAO.list();
-		LichChuyenDTO lichChuyenDTO = null;
-		for (LichTuyen tmp : lichTuyens) {
-			lichChuyenDTO = new LichChuyenDTO();
-			lichChuyenDTO.setId(tmp.getIdLichTuyen());
-			switch (tmp.getThu()) {
-			case SUNDAY:
-				lichChuyenDTO.setNgayTrongTuan("Chủ nhật");
-				break;
-			case MONDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ hai");
-				break;
-			case TUESDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ ba");
-				break;
-			case WEDNESDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ tư");
-				break;
-			case THURSDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ năm");
-				break;
-			case FRIDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ sáu");
-				break;
-			case SATUREDAY:
-				lichChuyenDTO.setNgayTrongTuan("Thứ bảy");
-				break;
+	public static void main(String[] args) {
+		Transaction tx = null;
+		QuanLyLichChuyenService service = new QuanLyLichChuyenServiceImpl();
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			List<LichChuyenDTO> lichChuyens = service.list();
+			for (LichChuyenDTO lichChuyen : lichChuyens) {
+				System.out.println(lichChuyen.getTenTuyenXe() + " "
+						+ lichChuyen.getBienSoXe() + " "
+						+ lichChuyen.getNgayTrongTuan() + " "
+						+ lichChuyen.getGioChay() + " " + lichChuyen.getGiaVe());
 			}
-			lichChuyenDTO.setGioChay(tmp.getGioDi().toString());
-			lichChuyenDTO.setIdTuyenXe(tmp.getTuyenXe().getIdTuyenXe());
-			lichChuyenDTO.setTenTuyenXe(tmp.getTuyenXe().getBenDen() + " - " + tmp.getTuyenXe().getBenDen());
-			lichChuyenDTO.setTongThoiGian(Double.toString(tmp.getTongThoiGian()));
-			lichChuyenDTO.setIdXe(tmp.getXe().getIdXe());
-			lichChuyenDTO.setBienSoXe(tmp.getXe().getBienSoXe());
-			for (GiaVe giaVe : tmp.getGiaVes()) {
-				lichChuyenDTO.setGiaVe(giaVe.getGiaVe());
-				break;
-			}
-			// TODO
-			lichChuyenDTO.setTrangThai("");
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close();
 		}
-		return result;
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void themLichChuyen(LichChuyenDTO lichChuyen) throws Exception {
-		LichTuyen tmp = new LichTuyen();
-		tmp.setThu(lichChuyen.getIdNgayTrongTuan());
-		tmp.setGioDi(new Time(Date.parse(lichChuyen.getGioChay())));
-		tmp.setTuyenXe(tuyenXeDAO.getById(lichChuyen.getIdTuyenXe()));
-		tmp.setTongThoiGian(Double.parseDouble(lichChuyen.getTongThoiGian()));
-		GiaVe giaVe = new GiaVe();
-		giaVe.setGiaVe(lichChuyen.getGiaVe());
-		tmp.getGiaVes().add(giaVe);
-		HibernateUtil.getSessionFactory().getCurrentSession().persist(tmp);
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public void capNhatLichChuyen(LichChuyenDTO lichChuyen) throws Exception {
-		LichTuyen tmp = lichChuyenDAO.getById(lichChuyen.getId());
-		tmp.setThu(lichChuyen.getIdNgayTrongTuan());
-		tmp.setGioDi(new Time(Date.parse(lichChuyen.getGioChay())));
-		tmp.setTuyenXe(tuyenXeDAO.getById(lichChuyen.getIdTuyenXe()));
-		tmp.setTongThoiGian(Double.parseDouble(lichChuyen.getTongThoiGian()));
-		GiaVe giaVe = new GiaVe();
-		giaVe.setGiaVe(lichChuyen.getGiaVe());
-		tmp.getGiaVes().add(giaVe);
-		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);	
 	}
 }

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
 <style>
 <!--
-#tripDetailForm {
+#tripDetailWrapper {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -17,6 +17,10 @@
 	padding: 20px;
 	background-color: white;
 	width: 1024px;
+}
+
+#tripDetailWrapper form {
+	width: 450px;
 }
 
 #customersForm {
@@ -44,41 +48,56 @@ $(document).ready(function() {
 });
 //-->
 </script>
-<form id="tripDetailForm" action="saveTrip" method="post">
-	<div class="input-group">
-		<label for="chuyenXe.id">Mã chuyến</label>
-		<input class="textbox" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/>
+<div id="tripDetailWrapper">
+	<form action="saveTrip" method="post" class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="chuyenXe.id">Mã chuyến</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/>
+		</div>
 	</div>
-	<div class="input-group">
-		<label for="chuyenXe.tenTaiXe">Tài xế</label>
-		<input class="textbox" type="text" name="chuyenXe.tenTaiXe" value="${chuyenXe.tenTaiXe}"/>
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="chuyenXe.tenTaiXe">Tài xế</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" name="chuyenXe.tenTaiXe" value="${chuyenXe.tenTaiXe}"/>
+		</div>
 	</div>
-	<div class="input-group">
-		<label for="chuyenXe.ngayDi">Ngày đi</label>
-		<input id="ngayDi" class="textbox" type="text" name="chuyenXengayDi" required="required" readonly="readonly" value="${chuyenXe.ngayDi}" />
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="chuyenXe.ngayDi">Ngày đi</label>
+		<div class="col-sm-8">
+			<input class="form-control" id="ngayDi" type="text" name="chuyenXengayDi" required="required" readonly="readonly" value="${chuyenXe.ngayDi}" />
+		</div>
 	</div>
-	<div class="input-group">
-		<label for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
-		<input class="textbox" type="time" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="time" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
+		</div>
 	</div>
-	<div class="input-group">
-		<label>SL hành khách</label>
-		<input type="text" class="textbox" disabled="disabled" value="${chuyenXe.soHanhKhach}">
+	<div class="form-group">
+		<label class="control-label col-sm-4">SL hành khách</label>
+		<div class="col-sm-8">
+			<input class="form-control" type="text" disabled="disabled" value="${chuyenXe.soHanhKhach}">
+		</div>
 	</div>
-	<div class="input-group">
-		<label for="chuyenXe.trangThai">Trạng thái</label>
-		<s:if test='chuyenXe.trangThai.toString() == "BINHTHUONG"'>
-			<td>Bình thường</td>
-		</s:if>
-		<s:elseif test='chuyenXe.trangThai.toString() == "HUY"'>
-			<td>Đã hủy</td>
-		</s:elseif>
+	<div class="form-group">
+		<label class="control-label col-sm-4" for="chuyenXe.trangThai">Trạng thái</label>
+		<div class="col-sm-8">
+			<s:if test='chuyenXe.trangThai.toString() == "BINHTHUONG"'>
+				<td class="form-control">Bình thường</td>
+			</s:if>
+			<s:elseif test='chuyenXe.trangThai.toString() == "HUY"'>
+				<td class="form-control">Đã hủy</td>
+			</s:elseif>
+		</div>
 	</div>
-	<div class="input-group">
-		<label class="input-label">&nbsp;</label>
-		<input class="input-control btn btn-primary" type="submit" value="Lưu" />
+	<div class="form-group">
+		<div class="col-sm-offset-4 col-sm-8">
+			<input class="form-control btn btn-primary" type="submit" value="Lưu" />
+		</div>
 	</div>
 </form>
+</div>
 <form id="customersForm">
 	<table id="customers" class="display">
 		<thead>

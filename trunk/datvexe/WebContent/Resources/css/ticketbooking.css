@@ -216,7 +216,7 @@ body {
 
 /* Coach */
 
-#scheduleForm {
+#scheduleDetailWrapper {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -225,6 +225,12 @@ body {
 	padding: 20px;
 	background-color: white;
 	width: 1024px;
+}
+
+#scheduleDetail, #priceDetail {
+	display: inline-block;
+	vertical-align: top;
+	width: 45%;
 }
 
 #coachForm {
