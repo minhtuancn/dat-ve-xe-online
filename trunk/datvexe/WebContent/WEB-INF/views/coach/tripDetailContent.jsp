@@ -53,7 +53,8 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label class="control-label col-sm-4" for="chuyenXe.id">Mã chuyến</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/>
+			<%-- <input class="form-control" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/> --%>
+			<s:textfield name="chuyenXe.id" cssClass="form-control" readonly="true"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -65,13 +66,13 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label class="control-label col-sm-4" for="chuyenXe.ngayDi">Ngày đi</label>
 		<div class="col-sm-8">
-			<input class="form-control" id="ngayDi" type="text" name="chuyenXengayDi" required="required" readonly="readonly" value="${chuyenXe.ngayDi}" />
+			<s:textfield name="chuyenXe.ngayDi" readonly="true" cssClass="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-4" for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
 		<div class="col-sm-8">
-			<input class="form-control" type="time" name="chuyenXe.gioKhoiHanh" value="${chuyenXe.gioKhoiHanh}" />
+			<s:textfield name="chuyenXe.gioKhoiHanh" readonly="true" cssClass="form-control" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -83,12 +84,8 @@ $(document).ready(function() {
 	<div class="form-group">
 		<label class="control-label col-sm-4" for="chuyenXe.trangThai">Trạng thái</label>
 		<div class="col-sm-8">
-			<s:if test='chuyenXe.trangThai.toString() == "BINHTHUONG"'>
-				<td class="form-control">Bình thường</td>
-			</s:if>
-			<s:elseif test='chuyenXe.trangThai.toString() == "HUY"'>
-				<td class="form-control">Đã hủy</td>
-			</s:elseif>
+			<s:select name="chuyenXe.trangThai" list="trangThais" cssClass="form-control">
+			</s:select>
 		</div>
 	</div>
 	<div class="form-group">
