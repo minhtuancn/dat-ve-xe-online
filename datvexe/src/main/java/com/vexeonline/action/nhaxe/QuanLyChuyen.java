@@ -1,6 +1,8 @@
 package com.vexeonline.action.nhaxe;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -10,6 +12,7 @@ import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.vexeonline.domain.HanhKhach;
+import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.dto.ChuyenXeDTO;
 import com.vexeonline.service.nhaxe.QuanLyChuyenXeService;
 import com.vexeonline.service.nhaxe.QuanLyChuyenXeServiceImpl;
@@ -25,6 +28,15 @@ public class QuanLyChuyen extends ActionSupport {
 	private List<ChuyenXeDTO> chuyenxes;
 	private ChuyenXeDTO chuyenXe;
 	private List<HanhKhach> hanhKhachs;
+	private Map<String,String> trangThais;
+
+	public Map<String, String> getTrangThais() {
+		return trangThais;
+	}
+
+	public void setTrangThais(Map<String, String> trangThais) {
+		this.trangThais = trangThais;
+	}
 
 	public Integer getId() {
 		return id;
@@ -83,6 +95,11 @@ public class QuanLyChuyen extends ActionSupport {
 			QuanLyChuyenXeService chuyenXeService = new QuanLyChuyenXeServiceImpl();
 			chuyenXe = chuyenXeService.getById(id);
 			tx.commit();
+			
+			trangThais = new HashMap<String, String>();
+			trangThais.put(TrangThaiChuyenXe.BINHTHUONG.toString(), "Đang hoạt động");
+			trangThais.put(TrangThaiChuyenXe.HUY.toString(), "Đã hủy chuyến");
+			
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
@@ -90,7 +107,7 @@ public class QuanLyChuyen extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	@Action(value = "saveTrip", results = @Result(name = "success", location = "coach.trips", type = "redirect"))
+	@Action(value = "saveTrip", results = @Result(name = "success", location = "trips", type = "redirect"))
 	public String saveTrip() {
 		Transaction tx = null;
 		try {

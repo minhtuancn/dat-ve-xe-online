@@ -10,7 +10,6 @@ import com.vexeonline.dao.LichTuyenDAO;
 import com.vexeonline.dao.LichTuyenDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.VeXe;
@@ -21,6 +20,7 @@ import com.vexeonline.utils.HibernateUtil;
 public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 
 	private static final ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
+	@SuppressWarnings("unused")
 	private static final LichTuyenDAO lichChuyenDAO = new LichTuyenDAOImpl();
 
 	@Override
@@ -101,11 +101,11 @@ public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 	public void update(ChuyenXeDTO chuyenXe) throws Exception {
 		ChuyenXe tmp = chuyenXeDAO.getById(chuyenXe.getId());
 		tmp.setTaiXe(chuyenXe.getTenTaiXe());
-		tmp.setNgayDi(null);
+		tmp.setNgayDi(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(chuyenXe.getNgayDi() + " " + chuyenXe.getGioKhoiHanh()));
 		tmp.setTrangThai(chuyenXe.getTrangThai());
-		LichTuyen lichChuyen = lichChuyenDAO
+		/*LichTuyen lichChuyen = lichChuyenDAO
 				.getById(chuyenXe.getIdLichChuyen());
-		tmp.setLichTuyen(lichChuyen);
+		tmp.setLichTuyen(lichChuyen);*/
 		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);
 	}
 }
