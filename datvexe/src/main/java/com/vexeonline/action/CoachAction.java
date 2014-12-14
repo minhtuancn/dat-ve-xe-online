@@ -69,12 +69,6 @@ public class CoachAction extends ActionSupport {
 
 	@Action(value = "offices", results = @Result(name = "success", location = "coach.offices", type = "tiles"))
 	public String showOfficesPage() {
-		offices.add(new OfficeDTO(1, "Văn phòng 1", "Hồ Chí Minh", "12345",
-				true));
-		offices.add(new OfficeDTO(2, "Văn phòng 2", "Hà Nội", "23456", false));
-		offices.add(new OfficeDTO(3, "Văn phòng 3", "Quảng Nam", "34567", true));
-		offices.add(new OfficeDTO(4, "Văn phòng 4", "Đà Nẵng", "45678", true));
-		offices.add(new OfficeDTO(5, "Văn phòng 5", "Huế", "56789", false));
 		return SUCCESS;
 	}
 

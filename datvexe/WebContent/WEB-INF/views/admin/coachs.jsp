@@ -26,6 +26,7 @@ $(document).ready(function() {
 				<td>Tên nhà xe</td>
 				<td>Mô tả</td>
 				<td>Hoạt động</td>
+				<td></td>
 			</tr>
 		</thead>
 		<tfoot>
@@ -34,15 +35,24 @@ $(document).ready(function() {
 				<td>Tên nhà xe</td>
 				<td>Mô tả</td>
 				<td>Hoạt động</td>
+				<td></td>
 			</tr>
 		</tfoot>
 		<tbody>
-			<s:iterator value="nhaXe">
+			<s:iterator var="coach" value="coachs">
 				<tr>
-					<td><s:property value="idNhaXe"/></td>
-					<td><s:property value="tenNhaXe"/></td>
-					<td><s:property value="moTa"/></td>
-					<td><s:property value="isActive"/></td>
+					<td><s:property value="#coach.id"/></td>
+					<td><s:property value="#coach.name"/></td>
+					<td><s:property value="#coach.description"/></td>
+					<s:if test="%{#coach.active}">
+						<td>Đang hoạt động</td>
+					</s:if>
+					<s:else>
+						<td>Không hoạt động</td>
+					</s:else>
+					<td>
+						<a href="${pageContext.request.contextPath}/admincp/coachDetail?id=${coach.id}" class="btn btn-primary">Chi tiết</a>
+					</td>
 				</tr>
 			</s:iterator>
 		</tbody>

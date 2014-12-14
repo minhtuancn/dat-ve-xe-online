@@ -1,21 +1,19 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class OfficeDTO implements Serializable {
+	
 	private static final long serialVersionUID = -7456827416746463571L;
+	
 	private Integer id;
 	private String name;
 	private String address;
-	private String phoneNumber;
+	private List<PhoneNumberDTO> phoneNumber;
 	private boolean active;
 
-	public OfficeDTO(Integer id,String name,String address,String phoneNumber,boolean active) {
-		this.id = id;
-		this.name = name;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.active = active;
+	public OfficeDTO() {
 	}
 	
 	public Integer getId() {
@@ -50,11 +48,18 @@ public class OfficeDTO implements Serializable {
 		this.active = active;
 	}
 
-	public String getPhoneNumber() {
+	public List<PhoneNumberDTO> getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(List<PhoneNumberDTO> phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "OfficeDTO [id=" + id + ", name=" + name + ", address="
+				+ address + ", phoneNumber=" + phoneNumber + ", active="
+				+ active + "]";
 	}
 }
