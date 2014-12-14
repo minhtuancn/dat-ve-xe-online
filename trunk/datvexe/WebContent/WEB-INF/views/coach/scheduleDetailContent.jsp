@@ -13,7 +13,7 @@
 		<div class="form-group">
 			<label for="ngayTrongTuan" class="control-label col-sm-4">Thứ</label>
 			<div class="col-sm-8">
-				<s:select list="dateOfWeeks" value="schedules.ngayTrongTuan" cssClass="form-control" />
+				<s:select list="dateOfWeeks" value="schedule.ngayTrongTuan" cssClass="form-control" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -37,7 +37,7 @@
 		<div class="form-group">
 			<label class="control-label col-sm-4" for="xe">Xe</label>
 			<div class="col-sm-8">
-				<s:textfield name="schedule.bienSoXe" cssClass="form-control" theme="bootstrap" />
+				<s:textfield name="schedule.bienSoXe" cssClass="form-control"/>
 			</div>
 		</div>
 	</div>
@@ -60,6 +60,11 @@
 				<div class="col-sm-8">
 					<input class="form-control" type="number" name="giaVe" required/>
 				</div>	
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-8 col-sm-offset-4">
+				<s:checkbox name="schedule.active" label="Bỏ chọn để hủy lịch chuyến" />
 			</div>
 		</div>
 		<div class="form-group">

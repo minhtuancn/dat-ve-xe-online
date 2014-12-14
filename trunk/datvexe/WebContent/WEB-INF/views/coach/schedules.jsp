@@ -51,9 +51,37 @@ $(document).ready(function() {
 			<tr>
 				<td><s:property value="#schedule.id"/></td>
 				<td><s:property value="#schedule.tenTuyenXe"/></td>
-				<td><s:property value="#schedule.ngayTrongTuan"/></td>
+				<%-- <td><s:property value="#schedule.ngayTrongTuan"/></td> --%>
+				
+				<s:if test="%{#schedule.ngayTrongTuan.toString() == 'MONDAY'}">
+					<td>Thứ hai</td>
+				</s:if>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'TUESDAY'}">
+					<td>Thứ ba</td>
+				</s:elseif>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'WEDNESDAY'}">
+					<td>Thứ tư</td>
+				</s:elseif>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'THURSDAY'}">
+					<td>Thứ năm</td>
+				</s:elseif>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'FRIDAY'}">
+					<td>Thứ sáu</td>
+				</s:elseif>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'SATUREDAY'}">
+					<td>Thứ bảy</td>
+				</s:elseif>
+				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'SUNDAY'}">
+					<td>Chủ nhật</td>
+				</s:elseif>
+				
 				<td><s:property value="#schedule.gioChay"/></td>
-				<td><s:property value="#schedule.trangThai"/></td>
+				<s:if test="%{#schedule.active}">
+					<td>Còn hoạt động</td>
+				</s:if>
+				<s:else>
+					<td>Không hoạt động</td>
+				</s:else>
 				<td>
 					<a href="${pageContext.request.contextPath}/coachcp/scheduleDetail?id=${schedule.id}" class="btn btn-primary">Chi tiết</a>
 				</td>
