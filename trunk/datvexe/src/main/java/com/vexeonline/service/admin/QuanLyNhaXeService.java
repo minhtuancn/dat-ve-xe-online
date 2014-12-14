@@ -2,12 +2,11 @@ package com.vexeonline.service.admin;
 
 import java.util.List;
 
-import com.vexeonline.domain.NhaXe;
+import com.vexeonline.dto.NhaXeDTO;
 
 public interface QuanLyNhaXeService {
-	public List<NhaXe> listNhaXe();
-
-	public void addNew(NhaXe nhaXe) throws Exception;
-
-	public void editInfo(NhaXe nhaXe) throws Exception;
+	public List<NhaXeDTO> listNhaXe() throws Exception;
+	public NhaXeDTO getById(Integer id) throws Exception;
+	public void addNew(NhaXeDTO nhaXe) throws Exception;
+	public void editInfo(NhaXeDTO nhaXe) throws Exception;
 }

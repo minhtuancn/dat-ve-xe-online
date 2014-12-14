@@ -82,5 +82,4 @@ public class VanPhong {
 	public void setSDTVanPhongs(Set<SDTVanPhong> sDTVanPhongs) {
 		SDTVanPhongs = sDTVanPhongs;
 	}
-
 }

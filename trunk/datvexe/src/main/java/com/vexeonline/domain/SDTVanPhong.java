@@ -55,4 +55,11 @@ public class SDTVanPhong {
 		this.vanPhong = vanPhong;
 	}
 
+	public int getIdSDTVanPhong() {
+		return idSDTVanPhong;
+	}
+
+	public void setIdSDTVanPhong(int idSDTVanPhong) {
+		this.idSDTVanPhong = idSDTVanPhong;
+	}
 }
