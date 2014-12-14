@@ -6,5 +6,6 @@
 		<li><a href="${pageContext.request.contextPath}/intro">Giới thiệu</a></li>
 		<li><a href="${pageContext.request.contextPath}/ticketInfo">Kiểm tra vé</a></li>
 		<li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+		<li><a href="${pageContext.request.contextPath}/login">Đăng nhập</a></li>
 	</ul>
 </div>

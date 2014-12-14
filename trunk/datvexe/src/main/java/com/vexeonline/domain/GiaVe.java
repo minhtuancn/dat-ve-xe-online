@@ -56,6 +56,15 @@ public class GiaVe implements Serializable {
 	public GiaVe() {
 
 	}
+	
+	
+
+	public GiaVe(Date ngayBatDau, Date ngayKetThuc, int giaVe) {
+		super();
+		this.ngayBatDau = ngayBatDau;
+		this.ngayKetThuc = ngayKetThuc;
+		this.giaVe = giaVe;
+	}
 
 	public Integer getIdGiaVe() {
 		return idGiaVe;
