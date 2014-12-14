@@ -13,6 +13,10 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
 	</definition>
 	<definition name="home" extends="baseLayout" />
+	<definition name="login" extends="baseLayout">
+		<put-attribute name="title" value="Đăng nhập" />
+		<put-attribute name="main" value="/WEB-INF/views/template/login.jsp" />
+	</definition>
 	<definition name="intro" extends="baseLayout">
 		<put-attribute name="title" value="Giới thiệu" />
 		<put-attribute name="main" value="/WEB-INF/views/user/introContent.jsp" />
@@ -67,7 +71,10 @@
 		<put-attribute name="title" value="Them tuyen xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/routeDetailContent.jsp" />
 	</definition>
-	
+	<definition name="admin.ticketInfo" extends="admin.home">
+		<put-attribute name="title" value="Thông tin vé" />
+		<put-attribute name="main" value="/WEB-INF/views/user/ticketInfoContent.jsp" />
+	</definition>
 	<!-- Coach -->
 	<definition name="coach.home" extends="baseLayout">
 		<put-attribute name="title" value="Coach Control Panel" />
