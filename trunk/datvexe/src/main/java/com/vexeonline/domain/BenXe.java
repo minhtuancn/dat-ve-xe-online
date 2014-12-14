@@ -39,6 +39,8 @@ public class BenXe implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private DiaChi diaChi;
+	
+	private boolean active;
 
 	/**
 	 * @author Tung
@@ -79,5 +81,13 @@ public class BenXe implements Serializable {
 
 	public void setDiaChi(DiaChi diaChi) {
 		this.diaChi = diaChi;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

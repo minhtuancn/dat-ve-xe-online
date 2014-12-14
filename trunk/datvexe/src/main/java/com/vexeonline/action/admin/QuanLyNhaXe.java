@@ -22,7 +22,25 @@ public class QuanLyNhaXe extends ActionSupport {
 	
 	private static final QuanLyNhaXeService coachService = new QuanLyNhaXeServiceImpl();
 	
+	private Integer id;
+	private NhaXeDTO coach;
 	private List<NhaXeDTO> coachs;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public NhaXeDTO getCoach() {
+		return coach;
+	}
+
+	public void setCoach(NhaXeDTO coach) {
+		this.coach = coach;
+	}
 
 	public List<NhaXeDTO> getCoachs() {
 		return coachs;
@@ -48,6 +66,20 @@ public class QuanLyNhaXe extends ActionSupport {
 	
 	@Action(value = "newCoach", results = @Result(name = "success", location="admin.newCoach", type = "tiles"))
 	public String showNewCoachPage() {
+		return SUCCESS;
+	}
+	
+	@Action(value = "coachDetail", results = @Result(name = "success", location="admin.newCoach", type = "tiles"))
+	public String showCoachDetailPage() {
+		Transaction tx = null;
+		try {
+			tx =  HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			coach = coachService.getById(id);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 }

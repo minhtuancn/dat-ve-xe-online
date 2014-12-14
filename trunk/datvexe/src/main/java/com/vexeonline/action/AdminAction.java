@@ -18,16 +18,6 @@ public class AdminAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	@Action(value = "stations", results = @Result(name = "success", location="admin.stations", type = "tiles"))
-	public String showStationsPage() {
-		return SUCCESS;
-	}
-	
-	@Action(value = "newStation", results = @Result(name = "success", location="admin.newStation", type = "tiles"))
-	public String showNewStationPage() {
-		return SUCCESS;
-	}
-	
 	@Action(value = "routes", results = @Result(name = "success", location="admin.routes", type = "tiles"))
 	public String showRoutesPage() {
 		return SUCCESS;
