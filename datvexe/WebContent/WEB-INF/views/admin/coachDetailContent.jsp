@@ -1,30 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<form id="coachForm" action="" method="post" class="round-5">
-	<div class="input-group">
-		<label for="tenNhaXe">Tên nhà xe</label>
-		<input class="textbox" type="text" name="tenNhaXe" />
-	</div>
-	<div class="input-group">
-		<label for="moTa">Mô tả</label>
-		<input class="textbox" type="text" name="moTa" />
-	</div>
-	<div class="input-group">
-		<label for="hinhAnh">Hình ảnh</label>
-		<input type="file" name="hinhAnh"  />
-	</div>
-	<div class="input-group">
-		<label for="isActive">Còn hoạt động</label>
-		<s:if test="%{isActive == true}">
-			<input name="isActive" type="checkbox" />
-		</s:if>
-		<s:else>
-			<input name="isActive" type="checkbox" />
-		</s:else>
-	</div>
-	<div class="input-group">
-		<label>&nbsp;</label>
-		<input class="button" type="submit" />
-	</div>
-</form>
+<style>
+<!--
+	#coach_wrapper {
+		width: 1024px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 100px;
+	}
+-->
+</style>
+<div id="coach_wrapper">
+	<s:form action="saveCoach" method="post" theme="bootstrap" cssClass="well form-vertical">
+		<s:hidden name="coach.id" />
+		<s:textfield name="coach.name" readonly="%{coach.id}" label="Tên nhà xe" />
+		<s:textarea name="coach.description" label="Mô tả" />
+		<s:checkbox name="coach.active" label="Còn hoạt đông ?" />
+		<s:submit value="Lưu" cssClass="btn btn-primary" />
+	</s:form>
+</div>

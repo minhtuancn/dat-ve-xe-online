@@ -51,6 +51,10 @@
 		<put-attribute name="title" value="Danh sách nhà xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/coachs.jsp" />
 	</definition>
+	<definition name="admin.coachDetail" extends="admin.home">
+		<put-attribute name="title" value="Thông tin nhà xe" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/coachDetailContent.jsp" />
+	</definition>
 	<definition name="admin.newCoach" extends="admin.home">
 		<put-attribute name="title" value="Thêm mới nhà xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/coachDetailContent.jsp" />
@@ -58,6 +62,10 @@
 	<definition name="admin.stations" extends="admin.home">
 		<put-attribute name="title" value="Danh sach ben xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/stationsContent.jsp" />
+	</definition>
+	<definition name="admin.stationDetail" extends="admin.home">
+		<put-attribute name="title" value="Thông tin bến xe" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/stationDetailContent.jsp" />
 	</definition>
 	<definition name="admin.newStation" extends="admin.home">
 		<put-attribute name="title" value="Thêm bến xe" />
