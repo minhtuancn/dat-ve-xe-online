@@ -1,6 +1,7 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.vexeonline.domain.NgayCuaTuan;
 
@@ -9,29 +10,27 @@ public class LichChuyenDTO implements Serializable {
 	private static final long serialVersionUID = -4209790089903009090L;
 
 	private Integer id;
-	private String ngayTrongTuan;
-	private NgayCuaTuan idNgayTrongTuan;
+	private NgayCuaTuan ngayTrongTuan;
 	private String gioChay;
 	private Integer idTuyenXe;
 	private String tenTuyenXe;
 	private String tongThoiGian;
 	private Integer idXe;
 	private String bienSoXe;
-	private Integer giaVe;
 	private boolean active;
-	
+	private PriceDTO currentPrice;
+	private List<PriceDTO> prices;
+
 	public LichChuyenDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public LichChuyenDTO(NgayCuaTuan idNgayTrongTuan, String gioChay,
-			Integer idTuyenXe, String tongThoiGian, Integer idXe, Integer giaVe) {
-		this.idNgayTrongTuan = idNgayTrongTuan;
+	public LichChuyenDTO(NgayCuaTuan ngayTrongTuan, String gioChay,
+			Integer idTuyenXe, String tongThoiGian, Integer idXe) {
+		this.ngayTrongTuan = ngayTrongTuan;
 		this.gioChay = gioChay;
 		this.idTuyenXe = idTuyenXe;
 		this.tongThoiGian = tongThoiGian;
 		this.idXe = idXe;
-		this.giaVe = giaVe;
 	}
 
 	public Integer getId() {
@@ -42,20 +41,12 @@ public class LichChuyenDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getNgayTrongTuan() {
+	public NgayCuaTuan getNgayTrongTuan() {
 		return ngayTrongTuan;
 	}
 
-	public void setNgayTrongTuan(String ngayTrongTuan) {
+	public void setNgayTrongTuan(NgayCuaTuan ngayTrongTuan) {
 		this.ngayTrongTuan = ngayTrongTuan;
-	}
-
-	public NgayCuaTuan getIdNgayTrongTuan() {
-		return idNgayTrongTuan;
-	}
-
-	public void setIdNgayTrongTuan(NgayCuaTuan idNgayTrongTuan) {
-		this.idNgayTrongTuan = idNgayTrongTuan;
 	}
 
 	public String getGioChay() {
@@ -106,19 +97,27 @@ public class LichChuyenDTO implements Serializable {
 		this.bienSoXe = bienSoXe;
 	}
 
-	public Integer getGiaVe() {
-		return giaVe;
-	}
-
-	public void setGiaVe(Integer giaVe) {
-		this.giaVe = giaVe;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public PriceDTO getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(PriceDTO currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	public List<PriceDTO> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<PriceDTO> prices) {
+		this.prices = prices;
 	}
 }
