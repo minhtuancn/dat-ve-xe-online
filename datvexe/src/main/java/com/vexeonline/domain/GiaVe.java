@@ -109,4 +109,11 @@ public class GiaVe implements Serializable {
 	public void setGiaVe(int giaVe) {
 		this.giaVe = giaVe;
 	}
+
+	@Override
+	public String toString() {
+		return "GiaVe [idGiaVe=" + idGiaVe + ", lichTuyen=" + lichTuyen
+				+ ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc
+				+ ", giaVe=" + giaVe + "]";
+	}
 }

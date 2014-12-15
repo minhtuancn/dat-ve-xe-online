@@ -2,6 +2,8 @@ package com.vexeonline.dao.tuyenxedao;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -41,7 +43,7 @@ public class TestGetListTuyenXe {
 	}
 
 	@Test
-	public void test1() {
+	public void test1() throws ParseException {
 		addData();
 
 		Session session = sessionFactory.openSession();
@@ -50,7 +52,7 @@ public class TestGetListTuyenXe {
 		//session.beginTransaction();
 		
 		List<TuyenXe> list = tuyenDao.getListTuyenXe("Gia Lai", "HCM",
-				"2014-11-24", NgayCuaTuan.MONDAY);
+				new SimpleDateFormat("yyyy-MM-dd").parse("2014-11-24"), NgayCuaTuan.MONDAY);
 		org.junit.Assert.assertTrue(list.size() == 1);
 		
 		

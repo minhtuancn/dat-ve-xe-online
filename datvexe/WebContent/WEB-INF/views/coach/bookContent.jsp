@@ -2,15 +2,15 @@
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/book.css" />
-<form id="bookForm" action="" method="post" class="round-5">
+<form id="bookForm" action="datve" method="post" class="round-5">
 	<div id="info" class="fl-l">
 		<div class="input-group">
-			<label for="stationName">Tên hành khách</label>
-			<input class="textbox" type="text" name="stationName" required/>
+			<label for="tenHanhKhach">Tên hành khách</label>
+			<input class="textbox" type="text" name="tenHanhKhach" required/>
 		</div>
 		<div class="input-group">
-			<label for="description">Số điện thoại</label>
-			<input class="textbox" type="text" name="stationName" required/>
+			<label for="sdt">Số điện thoại</label>
+			<input class="textbox" type="text" name="sdt" required/>
 		</div>
 		<div class="input-group">
 			<label>&nbsp;</label>
@@ -24,13 +24,13 @@
 				<s:if test="seat">
 					<td class="seat">
 						<div class="number full"><s:property value="#stat.count"/></div>
-						<div class="select"><input type="checkbox" name="seat" disabled="disabled" /></div>
+						<div class="select"><input type="checkbox" name="seateds" disabled="disabled" /></div>
 					</td>	
 				</s:if>
 				<s:else>
 					<td class="seat">
 						<div class="number empty"><s:property value="#stat.count"/></div>
-						<div class="select"><input type="checkbox" name="seat" value="#stat.count" /></div>
+						<div class="select"><input type="checkbox" name="seateds" value='<s:property value="#stat.count"/>' /></div>
 					</td>
 				</s:else>
 				<s:if test="#stat.count % 4 == 0"> 

@@ -35,14 +35,14 @@ function getCurrentDate() {
 </style>
 <div id="banner">
 
-	<form id="ticketSearch" action="timchuyenxe" method="post" class="round-5">
+	<form id="ticketSearch" action="${pageContext.request.contextPath}/timchuyenxe" method="post" class="round-5">
 		<fieldset>
 			<h2 id="search-tt">Tìm vé xe</h2>
 			<div class="input-group fl-l">
 				<label for="tinhDi" >Tỉnh Đi</label>
 				<s:select name="tinhDi"
 					headerValue="--- Chọn ---" 
-					list="#{'Gia Lai' : 'Gia Lai', 'HCM':'HCM', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
+					list="#{'Gia Lai' : 'Gia Lai', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
 					'Cà Mau':'Cà Mau', 'Hà Nội':'Hà Nội', 'Đà Nằng':'Đà Nẵng', 'Nha Trang':'Nha Trang', 'Hải Phòng':'Hải Phòng'}" 
 					cssClass="form-control"
 					headerKey="" readonly="true" />
@@ -52,7 +52,7 @@ function getCurrentDate() {
 				<label for="tinhDen">Tỉnh Đến</label>
 				<s:select name="tinhDen"
 					headerValue="--- Chọn ---" 
-					list="#{'Gia Lai' : 'Gia Lai', 'HCM':'HCM', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
+					list="#{'Gia Lai' : 'Gia Lai', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
 					'Cà Mau':'Cà Mau', 'Hà Nội':'Hà Nội', 'Đà Nằng':'Đà Nẵng', 'Nha Trang':'Nha Trang', 'Hải Phòng':'Hải Phòng'}" 
 					cssClass="form-control"
 					headerKey="" readonly="true" />
