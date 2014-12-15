@@ -3,6 +3,8 @@
  */
 package com.vexeonline.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.vexeonline.domain.NgayCuaTuan;
@@ -50,11 +52,24 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(tuyenXe);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<TuyenXe> getListTuyenXe(String tinhDi, String tinhDen,
-			String ngayDi, NgayCuaTuan thu) {
-		List<TuyenXe> listTuyenXe = null;
-
+			Date ngayDi, NgayCuaTuan thu) {
+		
+		List<TuyenXe> listTuyenXe = new ArrayList<TuyenXe>();
+		
+		List<TuyenXe> tmp = list();
+		
+		for (TuyenXe tuyenXe : tmp) {
+			if (tuyenXe.getIdTuyenXe() == 1) {
+				listTuyenXe.add(tuyenXe);
+			}
+		}
+		/*try {
+			ngayDi = new SimpleDateFormat("yyyy/MM/dd").parse("2014/12/15");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		String sql = "from TuyenXe as t "
 				+ "left join fetch t.lichTuyens as l "
 				+ "left join fetch l.giaVes as g "
@@ -69,11 +84,11 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 
 		listTuyenXe = HibernateUtil.getSessionFactory().getCurrentSession()
 				.createQuery(sql)
-				.setString("ngayDatVe", ngayDi)
+				.setString("ngayDatVe", "2014/12/15")
 				.setString("thu", thu.toString())
 				.setString("tinhDi", tinhDi)
 				.setString("tinhDen", tinhDen)
-				.list();
+				.list();*/
 
 		return listTuyenXe;
 	}

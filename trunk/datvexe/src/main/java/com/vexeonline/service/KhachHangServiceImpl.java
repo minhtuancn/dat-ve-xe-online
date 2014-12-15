@@ -1,7 +1,7 @@
 package com.vexeonline.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,9 +23,12 @@ import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
+import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.HanhKhach;
+import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
@@ -37,6 +40,7 @@ import com.vexeonline.utils.HibernateUtil;
 public class KhachHangServiceImpl implements KhachHangService {
 
 	private final Logger logger = Logger.getLogger(getClass());
+	
 	private static TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
@@ -46,24 +50,38 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho) {
+		
 		List<TuyenXe> listTuyenXe = new ArrayList<TuyenXe>(0);
+		
 		if (tinhDi == null || tinhDen == null || ngayDi == null) {
 			throw new IllegalArgumentException("ArgumentException");
 		}
 
 		Transaction tx = null;
+		
 		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-
-			listTuyenXe = tuyenXeDAO.getListTuyenXe(tinhDi, tinhDen,
-					ngayDi.toString(), dayOfWeek(ngayDi));
-
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			listTuyenXe = tuyenXeDAO.getListTuyenXe(tinhDi, tinhDen, ngayDi, dayOfWeek(ngayDi));
+			for (TuyenXe tuyenXe : listTuyenXe) {
+				System.out.println(tuyenXe.getLichTuyens().size());
+				for (LichTuyen lc : tuyenXe.getLichTuyens()) {
+					lc.getGioDi();
+					
+					for (TienIch ti : lc.getXe().getTienIchs()) {
+						ti.getTenTienIch();
+					}
+					
+					for (ChuyenXe cx : lc.getChuyenXes()) {
+						cx.getNgayDi();
+					}
+					for (GiaVe gv : lc.getGiaVes()) {
+						gv.getGiaVe();
+					}
+				}
+			}
 			tx.commit();
 		} catch (Exception ex) {
-			if (tx != null) {
-				tx.rollback();
-			}
+			if (tx != null) tx.rollback();
 			logger.error("Error", ex);
 		} 
 		return listTuyenXe;
@@ -223,7 +241,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 					.beginTransaction();
 
 			List<Object[]> listData = danhGiaDAO.getListInfoDanhGiaByIdNhaXe(idNhaXe);
-			
+			System.out.println(idNhaXe);
 			if (listData == null) {
 				return null;
 			}
@@ -280,14 +298,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 	
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
-		int a = (14 - date.getMonth()) / 12;
-		int y = date.getYear() - a;
-		int m = date.getMonth() + 12 * a - 2;
-		int dayOfWeek = (date.getDay() + y + y / 4 - y / 100 + y / 400 + (31 * m) / 12) % 7;
 
 		NgayCuaTuan day = null;
 
-		switch (dayOfWeek) {
+		switch (date.getDay()) {
 		case 0:
 			day = NgayCuaTuan.SUNDAY;
 			break;

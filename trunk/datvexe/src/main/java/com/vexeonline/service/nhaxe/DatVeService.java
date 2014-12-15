@@ -12,10 +12,13 @@ public interface DatVeService {
 	 * @return idChuyenXe geted from DB or create new if not exist folow idLichTuyen and ngayDi
 	 */
     public int getInfoChuyenXe(List<Boolean> seats, int idLichTuyen, Date ngayDi) throws Exception;
-    
+   
     /**
-     * seatings is seats wil book
-     * @param idChuyenXe 
+     *  seatings is seats wil book
+     * @param idChuyenXe
+     * @param seatings
+     * @param tenHanhKhach
+     * @param sdt
      */
-    public void datVe(int idChuyenXe, List<Integer> seatings); 
+    public void datVe(int idChuyenXe, String[] seatings, String tenHanhKhach, String sdt) throws Exception; 
 }

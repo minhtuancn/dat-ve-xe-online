@@ -151,4 +151,13 @@ public class LichTuyen implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public String toString() {
+		return "LichTuyen [idLichTuyen=" + idLichTuyen + ", thu=" + thu
+				+ ", gioDi=" + gioDi + ", tuyenXe=" + tuyenXe
+				+ ", tongThoiGian=" + tongThoiGian + ", chuyenXes=" + chuyenXes
+				+ ", xe=" + xe + ", giaVes=" + giaVes + ", active=" + active
+				+ "]";
+	}
 }

@@ -100,4 +100,10 @@ public class TuyenXe implements Serializable {
 		this.lichTuyens = lichTuyens;
 	}
 
+	@Override
+	public String toString() {
+		return "TuyenXe [idTuyenXe=" + idTuyenXe + ", benDi=" + benDi
+				+ ", benDen=" + benDen + ", doDai=" + doDai + ", moTa=" + moTa
+				+ ", lichTuyens=" + lichTuyens + "]";
+	}
 }

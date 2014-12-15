@@ -1,8 +1,5 @@
 package com.vexeonline.action.nhaxe;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -15,7 +12,8 @@ import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.service.nhaxe.DatVeService;
 import com.vexeonline.service.nhaxe.DatVeServiceImpl;
@@ -23,10 +21,8 @@ import com.vexeonline.service.nhaxe.DatVeServiceImpl;
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
 @InterceptorRef(value = "defaultStack", params = { "validation.excludeMethods",
-		"execute, danhSachGhe" })
-@Results({
-	 @Result(name = "input", location = "book", type = "redirect"),
-		 })
+		"execute" })
+@Results({ @Result(name = "input", location = "coach.book", type = "tiles") })
 public class DatVeXe extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 6453306615485591423L;
 	private static Logger logger = Logger.getLogger(DatVeXe.class);
@@ -34,51 +30,33 @@ public class DatVeXe extends ActionSupport implements SessionAware {
 	Map<String, Object> session;
 	private String tenHanhKhach;
 	private String sdt;
-	private int idLichTuyen;
-	private Date ngayDi;
-	private int idChuyenXe;
-	private List<Boolean> seats = new ArrayList<Boolean>(0);
+	private String[] seateds = new String[0];
 
-	@Action(value = "chonghe", results = @Result(name = "success", location = "coach.book", type="tiles"))
-	public String danhSachGhe() {
-		try {
-			session.put("user", "tung");
-			session.put("role", "NHAXE");
-			
-			if (session.get("user") == null || session.get("role") == null
-					|| !session.get("role").toString().equals(RoleOfUser.NHAXE.toString())) {
-				
-				return INPUT;
-			}
-			logger.info(idLichTuyen + " " + ngayDi);
-			
-			idChuyenXe = datVeXeService.getInfoChuyenXe(seats, idLichTuyen, ngayDi);
-			
-			for (Boolean boo : seats) {
-				System.out.println(boo);
-			}
-		
-			
-			session.put("idChuyenXe", idChuyenXe);
-		} catch (Exception e) {
-			logger.error("Error", e);
-			addActionError("Sorry!Error occur");
-			return ERROR;
-		}
-		return SUCCESS;
-	}
-
-	@Action(value = "datve", results = @Result(name = "nhaxe", location = "home", type = "redirect"))
+	@Action(value = "datve", results = @Result(name = "success", location = "home", type = "redirect"))
 	public String datVe() {
 		try {
-			if (session.get("user") == null || session.get("role") == null
-					|| !session.get("role").toString().equals(RoleOfUser.NHAXE)) {
+			session.put("user", "tug");
+			session.put("role", "NHAXE");
+			session.put("idChuyenXe", 1);
+
+			logger.info(seateds.length);
+			logger.info(seateds[0]);
+			int idChuyenXe = (int) session.get("idChuyenXe");
+			logger.info(idChuyenXe);
+
+			if (session.get("user") == null
+					|| session.get("role") == null
+					|| !session.get("role").toString()
+							.equals(RoleOfUser.NHAXE.toString())) {
+				logger.info("sadsadsa");
 				return INPUT;
 			}
-		//	int idChuyenXe = 
-			
+
+			datVeXeService.datVe(idChuyenXe, seateds, tenHanhKhach, sdt);
+
 		} catch (Exception e) {
 			logger.error("Error", e);
+			addActionError(e.getMessage());
 			return ERROR;
 		}
 		return SUCCESS;
@@ -89,7 +67,7 @@ public class DatVeXe extends ActionSupport implements SessionAware {
 		this.session = session;
 	}
 
-	//@RequiredStringValidator(message = "Tên hành khách không thể thiếu!", trim = true)
+	@RequiredStringValidator(message = "Tên hành khách không thể thiếu!", trim = true)
 	public String getTenHanhKhach() {
 		return tenHanhKhach;
 	}
@@ -98,7 +76,7 @@ public class DatVeXe extends ActionSupport implements SessionAware {
 		this.tenHanhKhach = tenHanhKhach;
 	}
 
-	//@StringLengthFieldValidator(message = "Số điện thoại có chiều dài 10 hoặc 11!", trim = true, minLength = "10", maxLength = "11")
+	@StringLengthFieldValidator(message = "Số điện thoại có chiều dài 10 hoặc 11!", trim = true, minLength = "10", maxLength = "11")
 	public String getSdt() {
 		return sdt;
 	}
@@ -107,38 +85,11 @@ public class DatVeXe extends ActionSupport implements SessionAware {
 		this.sdt = sdt;
 	}
 
-	@RequiredFieldValidator(message = "Thiếu id Lịch tuyến!")
-	public int getIdLichTuyen() {
-		return idLichTuyen;
+	public String[] getSeateds() {
+		return seateds;
 	}
 
-	public void setIdLichTuyen(int idLichTuyen) {
-		this.idLichTuyen = idLichTuyen;
+	public void setSeateds(String[] seateds) {
+		this.seateds = seateds;
 	}
-
-	@RequiredFieldValidator(message = "Thiếu ngày đi!")
-	public Date getNgayDi() {
-		return ngayDi;
-	}
-
-	public void setNgayDi(Date ngayDi) {
-		this.ngayDi = ngayDi;
-	}
-
-	public int getIdChuyenXe() {
-		return idChuyenXe;
-	}
-
-	public void setIdChuyenXe(int idChuyenXe) {
-		this.idChuyenXe = idChuyenXe;
-	}
-
-	public List<Boolean> getSeats() {
-		return seats;
-	}
-
-	public void setSeats(List<Boolean> seats) {
-		this.seats = seats;
-	}
-
 }

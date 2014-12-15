@@ -7,6 +7,8 @@
 	href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/datatable/js/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/dataTables.bootstrap.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/Resources/css/trips.css" />
 <link rel="stylesheet"
@@ -68,7 +70,7 @@
 </center>
 
 <hr />
-<table id="trips">
+<table id="trips" class="display">
 	<thead>
 		<tr>
 			<th>Hãng xe</th>
@@ -96,7 +98,7 @@
 		<s:iterator value="list" var="tuyenXe">
 			<s:iterator value="#tuyenXe.lichTuyens" var="lichTuyen">
 				<s:iterator value="#lichTuyen.giaVes" var="giaVe">
-					<s:iterator value="#lichTuyen.chuyenXes" var="chuyenXe">
+					<%-- <s:iterator value="#lichTuyen.chuyenXes" var="chuyenXe"> --%>
 						<tr>
 							<td><s:property value="#lichTuyen.xe.nhaXe.tenNhaXe" /></td>
 							<td>
@@ -159,9 +161,9 @@
 							<td>Còn	<s:if test="%{#lichTuyen.chuyenXes.size() == 0}">
 										<s:property value="#lichTuyen.xe.soCho" />
 									</s:if> 
-									<s:else>
+									<%-- <s:else>
 										<s:property	value="#lichTuyen.xe.soCho - #chuyenXe.veXes.size()" />
-									</s:else> Chỗ
+									</s:else>  --%>Chỗ
 							</td>
 							<td>
 								<div>
@@ -182,7 +184,7 @@
 									</div>
 									<div>
 									<s:if test="#session.user != null">
-										<a class="btn btn-info" href='coachcp/book?idLichTuyen=<s:property value="#lichTuyen.idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
+										<a class="btn btn-info" href='coachcp/chonghe?idLichTuyen=<s:property value="#lichTuyen.idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
 									</s:if>
 									<s:else>
 										<button class="btn btn-info openListSdt"  data-toggle="modal" data-id='<s:property value="#lichTuyen.xe.nhaXe.idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</button>
@@ -192,7 +194,7 @@
 							</td>
 						</tr>
 						
-					</s:iterator>
+					<%-- </s:iterator> --%>
 				</s:iterator>
 			</s:iterator>
 		</s:iterator>
