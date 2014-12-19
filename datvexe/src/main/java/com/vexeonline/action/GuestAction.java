@@ -42,16 +42,6 @@ public class GuestAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "ticketInfo", results = @Result(name = "success", location = "ticketInfo", type = "tiles"))
-	public String showTicketInfoPage() {
-		return SUCCESS;
-	}
-	
-	@Action(value = "ticketDetail", results = @Result(name = "success", location = "ticketDetail", type = "tiles"))
-	public String showTicketDetailPage() {
-		return SUCCESS;
-	}
-	
 	@Action(value = "contact", results = @Result(name = "success", location="contact", type = "tiles"))
 	public String showContactPage() {
 		return SUCCESS;
