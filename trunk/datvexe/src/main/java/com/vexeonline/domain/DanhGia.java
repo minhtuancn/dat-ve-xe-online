@@ -35,10 +35,6 @@ public class DanhGia implements Serializable{
 	@JoinColumn(nullable = false)
 	private HanhKhach hanhKhach;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private ChuyenXe chuyenXe;
-
 	public int getIdDanhGia() {
 		return idDanhGia;
 	}
@@ -71,14 +67,6 @@ public class DanhGia implements Serializable{
 
 	public void setHanhKhach(HanhKhach hanhKhach) {
 		this.hanhKhach = hanhKhach;
-	}
-
-	public ChuyenXe getChuyenXe() {
-		return chuyenXe;
-	}
-
-	public void setChuyenXe(ChuyenXe chuyenXe) {
-		this.chuyenXe = chuyenXe;
 	}
 
 	public boolean getTrangThai() {

@@ -44,7 +44,7 @@ public class ChuyenXe implements Serializable {
 	private Date ngayDi;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(nullable = false, length = 10)
 	private TrangThaiChuyenXe trangThai = TrangThaiChuyenXe.BINHTHUONG;
 
 	@ManyToOne
@@ -53,9 +53,6 @@ public class ChuyenXe implements Serializable {
 
 	@OneToMany(mappedBy = "chuyenXe")
 	private Set<VeXe> veXes = new HashSet<VeXe>(0);
-
-	@OneToMany(mappedBy = "chuyenXe")
-	private Set<DanhGia> danhGias = new HashSet<DanhGia>(0);
 
 	/**
 	 * @author Tung
@@ -112,13 +109,5 @@ public class ChuyenXe implements Serializable {
 
 	public void setVeXes(Set<VeXe> veXes) {
 		this.veXes = veXes;
-	}
-
-	public Set<DanhGia> getDanhGias() {
-		return danhGias;
-	}
-
-	public void setDanhGias(Set<DanhGia> danhGias) {
-		this.danhGias = danhGias;
 	}
 }
