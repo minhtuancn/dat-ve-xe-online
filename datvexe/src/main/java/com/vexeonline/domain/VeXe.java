@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,8 +27,9 @@ public class VeXe implements Serializable {
 	@Column(nullable = false)
 	private int choNgoi;
 
-	private boolean isThanhToan;
-	private boolean trangThai;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private TrangThaiVeXe trangThai;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -53,19 +56,11 @@ public class VeXe implements Serializable {
 		this.choNgoi = choNgoi;
 	}
 
-	public boolean isThanhToan() {
-		return isThanhToan;
-	}
-
-	public void setThanhToan(boolean isThanhToan) {
-		this.isThanhToan = isThanhToan;
-	}
-
-	public boolean isTrangThai() {
+	public TrangThaiVeXe getTrangThai() {
 		return trangThai;
 	}
 
-	public void setTrangThai(boolean trangThai) {
+	public void setTrangThai(TrangThaiVeXe trangThai) {
 		this.trangThai = trangThai;
 	}
 

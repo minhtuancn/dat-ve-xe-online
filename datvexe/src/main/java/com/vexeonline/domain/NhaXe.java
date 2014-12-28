@@ -41,14 +41,17 @@ public class NhaXe implements Serializable {
 	private String hinhAnh;
 
 	private float rate;
-	
+
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<VanPhong> vanPhongs = new HashSet<VanPhong>(0);
 	private boolean isActive;
 
 	@OneToMany
 	private List<User> users = new ArrayList<User>();
-	
+
+	@OneToMany
+	private Set<DanhGia> danhGias = new HashSet<DanhGia>(0);
+
 	/**
 	 * @author Tung
 	 */
@@ -120,4 +123,13 @@ public class NhaXe implements Serializable {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+	public Set<DanhGia> getDanhGias() {
+		return danhGias;
+	}
+
+	public void setDanhGias(Set<DanhGia> danhGias) {
+		this.danhGias = danhGias;
+	}
+
 }
