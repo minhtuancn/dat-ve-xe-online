@@ -41,11 +41,11 @@ import com.vexeonline.service.nhaxe.QuanLyChuyenXeService;
 import com.vexeonline.service.nhaxe.QuanLyChuyenXeServiceImpl;
 
 public class MockDatabase {
+
 	public static void mockData() throws ParseException {
-		
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-		
+
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
 		session.save(diaChi1);
@@ -74,19 +74,19 @@ public class MockDatabase {
 		nhaXe.setTenNhaXe("Việt Tân Phát");
 		session.save(nhaXe);
 
-		VanPhong vanPhong  = new VanPhong();
+		VanPhong vanPhong = new VanPhong();
 		vanPhong.setDiaChi(diaChi1);
 		vanPhong.setNhaXe(nhaXe);
 		vanPhong.setTenVanPhong("Văn phòng An Khê");
 		session.save(vanPhong);
-		
+
 		SDTVanPhong sdtVanPhong = new SDTVanPhong();
 		sdtVanPhong.setVanPhong(vanPhong);
 		sdtVanPhong.setSDT("01224404993");
 		session.save(sdtVanPhong);
-		
+
 		vanPhong.getSDTVanPhongs().add(sdtVanPhong);
-		
+
 		Xe xe = new Xe();
 		xe.setBienSoXe("81-12345");
 		xe.setLoaiXe("Ghế Ngồi");
@@ -102,21 +102,22 @@ public class MockDatabase {
 		lichTuyen.setTuyenXe(tuyenXe);
 		session.save(lichTuyen);
 
-		//
 		tuyenXe.getLichTuyens().add(lichTuyen);
 
 		GiaVe giaVe = new GiaVe();
 		giaVe.setGiaVe(300000);
 		giaVe.setLichTuyen(lichTuyen);
-		giaVe.setNgayBatDau(new SimpleDateFormat("dd/MM/yyyy").parse("11/1/2014"));
-		giaVe.setNgayKetThuc(new SimpleDateFormat("dd/MM/yyyy").parse("20/12/2015"));
+		giaVe.setNgayBatDau(new SimpleDateFormat("dd/MM/yyyy")
+				.parse("11/1/2014"));
+		giaVe.setNgayKetThuc(new SimpleDateFormat("dd/MM/yyyy")
+				.parse("20/12/2015"));
 		session.save(giaVe);
 
-		//
 		lichTuyen.getGiaVes().add(giaVe);
 
 		ChuyenXe chuyenXe = new ChuyenXe();
-		chuyenXe.setNgayDi(new SimpleDateFormat("dd/MM/yyyy").parse("20/12/2014"));
+		chuyenXe.setNgayDi(new SimpleDateFormat("dd/MM/yyyy")
+				.parse("20/12/2014"));
 		chuyenXe.setLichTuyen(lichTuyen);
 		chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
 		session.save(chuyenXe);
@@ -138,23 +139,23 @@ public class MockDatabase {
 		tienIch.setTenTienIch("DRINK");
 		tienIch.getXes().add(xe);
 		session.save(tienIch);
-		
+
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("TISSUE");
 		session.save(tienIch);
-		
+
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("DVD");
 		session.save(tienIch);
-		
+
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("TOILET");
 		session.save(tienIch);
-		
+
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("AIRCON");
 		session.save(tienIch);
-		
+
 		xe.getTienIchs().add(tienIch);
 
 		DanhGia danhGia = new DanhGia();
@@ -169,26 +170,19 @@ public class MockDatabase {
 		user.setRole(RoleOfUser.NHAXE);
 		user.setNhaXe(nhaXe);
 		session.save(user);
-		
+
 		User user2 = new User();
 		user2.setUserName("hungdq");
 		user2.setPassword("123456");
 		user2.setRole(RoleOfUser.NHAXE);
 		user2.setNhaXe(nhaXe);
 		session.save(user2);
-		
-		//generateMockData();
-		
-		tx.commit();
-		
-		HibernateUtil.close();
 	}
-	
-	@SuppressWarnings("deprecation")
-	private static void generateMockData() {
+
+	public static void generateMockData() throws ParseException {
 
 		// /////////////////////////////////////////////
-
+		
 		NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 
 		NhaXe nhaXe = new NhaXe();
@@ -196,7 +190,7 @@ public class MockDatabase {
 		nhaXeDAO.save(nhaXe);
 
 		nhaXe = new NhaXe();
-		nhaXe.setTenNhaXe("PhÆ°Æ¡ng Trang");
+		nhaXe.setTenNhaXe("Phương Trang");
 		nhaXeDAO.save(nhaXe);
 
 		// /////////////////////////////////////////////
@@ -204,18 +198,18 @@ public class MockDatabase {
 		BenXeDAO benXeDAO = new BenXeDAOImpl();
 
 		BenXe bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
-		bx.setTenBenXe("Báº¿n xe miá»�n Ä‘Ã´ng");
+		bx.setDiaChi(new DiaChi("Quảng Nam", "Thăng Bình", ""));
+		bx.setTenBenXe("Bến xe Hà Lam");
 		benXeDAO.save(bx);
 
 		bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
-		bx.setTenBenXe("Báº¿n xe Ä�Ã  Náºµng");
+		bx.setDiaChi(new DiaChi("Đà Nẵng", "Cẩm Lệ", ""));
+		bx.setTenBenXe("Bến xe Đà Nẵng");
 		benXeDAO.save(bx);
 
 		bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
-		bx.setTenBenXe("Báº¿n xe nÆ°á»›c ngáº§m");
+		bx.setDiaChi(new DiaChi("Hà Nội", "Hoàng Mai", ""));
+		bx.setTenBenXe("Bến xe nước ngầm");
 		benXeDAO.save(bx);
 
 		// /////////////////////////////////////////////
@@ -226,21 +220,21 @@ public class MockDatabase {
 		tx.setBenDi(benXeDAO.getById(2));
 		tx.setBenDen(benXeDAO.getById(3));
 		tx.setDoDai(10000);
-		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
+		tx.setMoTa("Mô tả tuyến");
 		tuyenXeDAO.save(tx);
 
 		tx = new TuyenXe();
 		tx.setBenDi(benXeDAO.getById(3));
 		tx.setBenDen(benXeDAO.getById(1));
 		tx.setDoDai(10000);
-		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
+		tx.setMoTa("Mô tả tuyến");
 		tuyenXeDAO.save(tx);
 
 		tx = new TuyenXe();
 		tx.setBenDi(benXeDAO.getById(1));
 		tx.setBenDen(benXeDAO.getById(3));
 		tx.setDoDai(10000);
-		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
+		tx.setMoTa("Mô tả tuyến");
 		tuyenXeDAO.save(tx);
 
 		// /////////////////////////////////////////////
@@ -249,14 +243,14 @@ public class MockDatabase {
 
 		Xe xe = new Xe();
 		xe.setBienSoXe("12345");
-		xe.setLoaiXe("GiÆ°á»�ng náº±m 40 chá»—");
+		xe.setLoaiXe("Giường nằm 40 chỗ");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(1));
 		xeDAO.save(xe);
 
 		xe = new Xe();
 		xe.setBienSoXe("22345");
-		xe.setLoaiXe("GiÆ°á»�ng náº±m 40 chá»—");
+		xe.setLoaiXe("Giường nằm 40 chỗ");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(2));
 		xeDAO.save(xe);
@@ -268,21 +262,21 @@ public class MockDatabase {
 		LichTuyen lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.MONDAY);
-		lichChuyen.setGioDi(new Time(10, 30, 00));
+		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(1));
 		lichChuyenDAO.save(lichChuyen);
 
 		lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.SUNDAY);
-		lichChuyen.setGioDi(new Time(11, 30, 00));
+		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(2));
 		lichChuyenDAO.save(lichChuyen);
 
 		lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.THURSDAY);
-		lichChuyen.setGioDi(new Time(17, 30, 00));
+		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(1));
 		lichChuyenDAO.save(lichChuyen);
 
@@ -303,6 +297,21 @@ public class MockDatabase {
 					.println("<====================================================================>");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			//mockData();
+			generateMockData();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close();
 		}
 	}
 }

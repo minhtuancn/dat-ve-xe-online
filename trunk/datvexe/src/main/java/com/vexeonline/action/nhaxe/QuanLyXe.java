@@ -18,9 +18,9 @@ import com.vexeonline.dao.TienIchDAOImpl;
 import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.domain.TienIch;
-import com.vexeonline.dto.XeDTO;
-import com.vexeonline.service.nhaxe.QuanLyXeService;
-import com.vexeonline.service.nhaxe.QuanLyXeServiceImpl;
+import com.vexeonline.dto.VehicleDTO;
+import com.vexeonline.service.nhaxe.VehicleService;
+import com.vexeonline.service.nhaxe.VehicleServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
@@ -30,15 +30,15 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 1003544484121846277L;
 	
-	private static final QuanLyXeService xeService = new QuanLyXeServiceImpl();
+	private static final VehicleService xeService = new VehicleServiceImpl();
 	private static final TienIchDAO tienIchDAO = new TienIchDAOImpl();
 	private static final UserDAO userDAO = new UserDAOImpl();
 	
 	private Map<String,Object> session;
 	
 	private Integer id;
-	private List<XeDTO> xes = null;
-	private XeDTO xe = null;
+	private List<VehicleDTO> xes = null;
+	private VehicleDTO xe = null;
 	private List<Integer> maTienIchs = new ArrayList<Integer>();
 	private List<TienIch> tienIchs = new ArrayList<TienIch>();
 	
@@ -63,15 +63,15 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		this.session = session;
 	}
 	
-	public List<XeDTO> getXes() {
+	public List<VehicleDTO> getXes() {
 		return xes;
 	}
 
-	public XeDTO getXe() {
+	public VehicleDTO getXe() {
 		return xe;
 	}
 
-	public void setXe(XeDTO xe) {
+	public void setXe(VehicleDTO xe) {
 		this.xe = xe;
 	}
 
@@ -88,7 +88,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		/*Transaction tx = null;*/
 		try {
 			/*tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();*/
-			xes = xeService.listXe();
+			xes = xeService.getVehicles();
 			/*tx.commit();*/
 		} catch (Exception e) {
 			/*if (tx != null) tx.rollback();*/
@@ -124,12 +124,12 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			if (xe.getId() != null) {
-				xeService.update(xe);
+				xeService.updateVehicle(xe);
 			} else {
 				Integer userId = (Integer) session.get("userId");
 				Integer idNhaXe = userDAO.getUserById(userId).getNhaXe().getIdNhaXe();
 				xe.setIdNhaXe(idNhaXe);
-				xeService.addNew(xe);
+				xeService.insertVehicle(xe);
 			}
 			tx.commit();
 		} catch (Exception e) {
@@ -145,7 +145,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			tienIchs = tienIchDAO.list();
-			xe = xeService.getById(id);
+			xe = xeService.getVehicle(id);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();

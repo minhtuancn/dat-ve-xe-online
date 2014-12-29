@@ -25,7 +25,7 @@ public class TienIch {
 	@Column(length = 100)
 	private String hinhAnh;
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "tienIchs")
 	private Set<Xe> xes = new HashSet<Xe>(0);
 
 	public int getIdTienIch() {
@@ -58,8 +58,9 @@ public class TienIch {
 		return xes;
 	}
 
-	public void setXes(Set<Xe> xes) {
-		this.xes = xes;
+	@Override
+	public String toString() {
+		return "TienIch [idTienIch=" + idTienIch + ", tenTienIch=" + tenTienIch
+				+ "]";
 	}
-
 }

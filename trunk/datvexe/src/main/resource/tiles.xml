@@ -62,7 +62,7 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/coachDetailContent.jsp" />
 	</definition>
 	<definition name="admin.stations" extends="admin.home">
-		<put-attribute name="title" value="Danh sach ben xe" />
+		<put-attribute name="title" value="Danh sách bến xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/stationsContent.jsp" />
 	</definition>
 	<definition name="admin.stationDetail" extends="admin.home">
@@ -74,11 +74,11 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/stationDetailContent.jsp" />
 	</definition>
 	<definition name="admin.routes" extends="admin.home">
-		<put-attribute name="title" value="Danh sach tuyen xe" />
+		<put-attribute name="title" value="Danh sách tuyến xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/routesContent.jsp" />
 	</definition>
 	<definition name="admin.newRoute" extends="admin.home">
-		<put-attribute name="title" value="Them tuyen xe" />
+		<put-attribute name="title" value="Thêm tuyến xe" />
 		<put-attribute name="main" value="/WEB-INF/views/admin/routeDetailContent.jsp" />
 	</definition>
 	<definition name="admin.ticketInfo" extends="admin.home">
