@@ -1,7 +1,11 @@
 package com.vexeonline.service.nhaxe;
 
+import java.util.List;
+
 import org.hibernate.Transaction;
 
+import com.vexeonline.dao.XeDAOImpl;
+import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.VehicleDTO;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -10,7 +14,7 @@ public class VehicleServiceTest {
 	private static final VehicleService service = new VehicleServiceImpl();
 	
 	public static void list() throws Exception {
-		for(VehicleDTO vehicle : service.getVehicles()) {
+		for(VehicleDTO vehicle : service.getVehicles(2)) {
 			System.out.println(vehicle);
 		}
 	}
@@ -54,17 +58,17 @@ public class VehicleServiceTest {
 	}
 	
 	public static void update() throws Exception {
-		VehicleDTO vehicle1 = service.getVehicle(1);
+		VehicleDTO vehicle1 = service.getVehicle(1, 1);
 		vehicle1.getTienIchs().add("TISSUE");
 		vehicle1.getTienIchs().add("DRINK");
 		service.updateVehicle(vehicle1);
 		
-		VehicleDTO vehicle2 = service.getVehicle(2);
+		VehicleDTO vehicle2 = service.getVehicle(1, 2);
 		vehicle2.getTienIchs().add("TISSUE");
 		vehicle2.getTienIchs().add("DVD");
 		service.updateVehicle(vehicle2);
 		
-		VehicleDTO vehicle3 = service.getVehicle(3);
+		VehicleDTO vehicle3 = service.getVehicle(1, 3);
 		vehicle3.getTienIchs().add("TISSUE");
 		vehicle3.getTienIchs().add("TOILET");
 		service.updateVehicle(vehicle3);
@@ -76,7 +80,13 @@ public class VehicleServiceTest {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			//insert();
 			//update();
-			list();
+			//list();
+			
+			List<Xe> vehicles = new  XeDAOImpl().list(1);
+			for (Xe vehicle : vehicles) {
+				System.out.println(vehicle);
+			}
+			
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
