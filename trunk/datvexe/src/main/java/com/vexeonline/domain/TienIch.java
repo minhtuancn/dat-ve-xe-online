@@ -19,7 +19,7 @@ public class TienIch {
 	@Column(unique = true, nullable = false)
 	private int idTienIch;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 20)
 	private String tenTienIch;
 
 	@Column(length = 100)

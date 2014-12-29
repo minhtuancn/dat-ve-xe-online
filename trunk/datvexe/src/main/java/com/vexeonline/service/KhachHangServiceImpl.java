@@ -45,14 +45,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 	private static GiaVeDAO giaVeDAO = new GiaVeDAOImpl();
-
-	/*static {
-		try {
-			MockDatabase.mockData();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}*/
 	
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho) {
@@ -63,6 +55,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi));
+			if (list == null) {
+				return listData;
+			}
 			
 			ThongTinChuyenXeDTO temp;
 			double rating;
@@ -88,7 +83,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 				temp.setGiaVe(giaVe);
 				
 				soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(temp.getIdLichTuyen(), ngayDi);
+				if (temp.getSoCho() < (soChoDaDat + soCho)) {
+					continue;
+				}
 				temp.setSoChoConLai(temp.getSoCho() - soChoDaDat);
+				
 				listData.add(temp);
 			}
 			tx.commit();
