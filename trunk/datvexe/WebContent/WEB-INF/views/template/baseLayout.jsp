@@ -15,10 +15,10 @@
 </head>
 <body>
 	<div id="header_wrapper">
-		<div id="banner_wrapper"><tiles:importAttribute  name="banner" /></div>
-		<div id="menu_wrapper"><tiles:importAttribute name="menu" /></div>
+		<div id="banner_wrapper"><tiles:insertAttribute  name="banner" /></div>
+		<div id="menu_wrapper"><tiles:insertAttribute name="menu" /></div>
 	</div>
-	<div id="main"><tiles:importAttribute name="main" /></div>
-	<div id="footer"><tiles:importAttribute name="footer" /></div>
+	<div id="main"><tiles:insertAttribute name="main" /></div>
+	<div id="footer"><tiles:insertAttribute name="footer" /></div>
 </body>
 </html>
