@@ -33,9 +33,18 @@ public class TienIchDAOImpl implements TienIchDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<TienIch> getByXe(int idXe) {
-		return HibernateUtil.getSessionFactory().getCurrentSession()
-				.createQuery("select x.tienIchs from Xe as x "
-						+ "where x.idXe = :idXe")
-				.list();
+		return HibernateUtil
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"select x.tienIchs from Xe as x "
+								+ "where x.idXe = :idXe").list();
+	}
+
+	@Override
+	public TienIch get(String name) {
+		String SQL = "from TienIch where tenTienIch = '" + name + "'";
+		return (TienIch) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery(SQL).uniqueResult();
 	}
 }

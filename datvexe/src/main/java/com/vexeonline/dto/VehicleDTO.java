@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XeDTO implements Serializable {
+import com.vexeonline.domain.TienIch;
+import com.vexeonline.domain.Xe;
+
+public class VehicleDTO implements Serializable {
 
 	private static final long serialVersionUID = -3118093754955039931L;
 
@@ -14,13 +17,12 @@ public class XeDTO implements Serializable {
 	private String loaiXe;
 	private Integer soCho;
 	private boolean active;
-	private List<Integer> maTienIchs = new ArrayList<Integer>();
 	private List<String> tienIchs = new ArrayList<String>();
 
-	public XeDTO() {
+	public VehicleDTO() {
 	}
 	
-	public XeDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
+	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
 		this.id = id;
 		this.idNhaXe = idNhaXe;
 		this.bienSo = bienSo;
@@ -28,6 +30,18 @@ public class XeDTO implements Serializable {
 		this.soCho = soCho;
 		this.active = active;
 		this.tienIchs = tienIchs;
+	}
+	
+	public VehicleDTO(Xe vehicle) {
+		this.id = vehicle.getIdXe();
+		this.idNhaXe = vehicle.getNhaXe().getIdNhaXe();
+		this.bienSo = vehicle.getBienSoXe();
+		this.loaiXe = vehicle.getLoaiXe();
+		this.soCho = vehicle.getSoCho();
+		this.active = vehicle.isActive();
+		for (TienIch tienIch : vehicle.getTienIchs()) {
+			this.tienIchs.add(tienIch.getTenTienIch());
+		}
 	}
 	
 	public Integer getId() {
@@ -86,11 +100,10 @@ public class XeDTO implements Serializable {
 		this.tienIchs = tienIchs;
 	}
 
-	public List<Integer> getMaTienIchs() {
-		return maTienIchs;
-	}
-
-	public void setMaTienIchs(List<Integer> maTienIchs) {
-		this.maTienIchs = maTienIchs;
+	@Override
+	public String toString() {
+		return "VehicleDTO [id=" + id + ", idNhaXe=" + idNhaXe + ", bienSo="
+				+ bienSo + ", loaiXe=" + loaiXe + ", soCho=" + soCho
+				+ ", active=" + active + ", tienIchs=" + tienIchs + "]";
 	}
 }

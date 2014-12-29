@@ -1,7 +1,6 @@
 package com.vexeonline.service;
 
 import java.sql.Time;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +33,6 @@ import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.utils.HibernateUtil;
-import com.vexeonline.utils.MockDatabase;
 
 public class KhachHangServiceImpl implements KhachHangService {
 
@@ -48,13 +46,13 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 	private static GiaVeDAO giaVeDAO = new GiaVeDAOImpl();
 
-	static {
+	/*static {
 		try {
 			MockDatabase.mockData();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho) {

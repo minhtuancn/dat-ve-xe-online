@@ -10,6 +10,7 @@ import com.vexeonline.domain.TienIch;
  */
 public interface TienIchDAO {
 	public TienIch getById(Integer id);
+	public TienIch get(String name);
 	public List<TienIch> list();
 	public TienIch save(TienIch tienIch);
 	public TienIch update(TienIch tienIch);
