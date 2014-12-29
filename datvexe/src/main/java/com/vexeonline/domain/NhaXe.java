@@ -52,6 +52,9 @@ public class NhaXe implements Serializable {
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<DanhGia> danhGias = new HashSet<DanhGia>(0);
 
+	@OneToMany(mappedBy = "nhaXe")
+	private List<Xe> xes = new ArrayList<Xe>(); 
+	
 	/**
 	 * @author Tung
 	 */
@@ -132,4 +135,11 @@ public class NhaXe implements Serializable {
 		this.danhGias = danhGias;
 	}
 
+	public List<Xe> getXes() {
+		return xes;
+	}
+
+	public void setXes(List<Xe> xes) {
+		this.xes = xes;
+	}
 }

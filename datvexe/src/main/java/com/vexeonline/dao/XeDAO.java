@@ -12,33 +12,16 @@ import com.vexeonline.domain.Xe;
  *
  */
 public interface XeDAO {
-	/**
-	 * @author Tung
-	 * @param session
-	 * @param id
-	 * @return
-	 */
-	public Xe getById(Integer id);
-
-	/**
-	 * @author Tung
-	 * @param session
-	 * @return
-	 */
+	
+	public Xe getById(Integer xeId);
+	
+	public Xe getById(Integer nhaXeId,Integer id);
+	
 	public List<Xe> list();
+	
+	public List<Xe> list(Integer nhaXeId);
 
-	/**
-	 * @author Tung
-	 * @param session
-	 * @param xe
-	 * @return
-	 */
 	public Integer save(Xe xe);
 
-	/**
-	 * @author Tung
-	 * @param session
-	 * @param xe
-	 */
 	public void update(Xe xe);
 }

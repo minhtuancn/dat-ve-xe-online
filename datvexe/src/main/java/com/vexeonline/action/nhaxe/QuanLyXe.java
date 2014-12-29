@@ -88,7 +88,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		/*Transaction tx = null;*/
 		try {
 			/*tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();*/
-			xes = xeService.getVehicles();
+			xes = xeService.getVehicles(1); // TODO Lay id nha xe tu session
 			/*tx.commit();*/
 		} catch (Exception e) {
 			/*if (tx != null) tx.rollback();*/
@@ -145,7 +145,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			tienIchs = tienIchDAO.list();
-			xe = xeService.getVehicle(id);
+			xe = xeService.getVehicle(1, id); // TODO Lay id nha xe tu session
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();

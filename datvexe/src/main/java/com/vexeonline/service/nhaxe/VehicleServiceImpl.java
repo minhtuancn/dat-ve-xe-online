@@ -22,9 +22,9 @@ public class VehicleServiceImpl implements VehicleService {
 	private static TienIchDAO tienIchDAO = new TienIchDAOImpl();
 	private static NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 	
-	public List<VehicleDTO> getVehicles() {
+	public List<VehicleDTO> getVehicles(Integer nhaXeId) {
 		List<VehicleDTO> result = new ArrayList<VehicleDTO>();
-		List<Xe> vehicles = xeDAO.list();
+		List<Xe> vehicles = xeDAO.list(nhaXeId);
 		for (Xe vehicle : vehicles) {
 			result.add(new VehicleDTO(vehicle));
 		}
@@ -42,15 +42,15 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
-	public VehicleDTO getVehicle(Integer id) throws Exception {
-		return new VehicleDTO(xeDAO.getById(id));
+	public VehicleDTO getVehicle(Integer nhaXeId,Integer id) throws Exception {
+		return new VehicleDTO(xeDAO.getById(nhaXeId, id));
 	}
 	
 	private Xe VehicleDTO2Vehicle(VehicleDTO vehicleDTO) {
 		Xe result = null;
 		
 		if (vehicleDTO.getId() != null) {
-			result = xeDAO.getById(vehicleDTO.getId());
+			result = xeDAO.getById(vehicleDTO.getIdNhaXe(), vehicleDTO.getId());
 		} else {
 			result = new Xe();
 		}
