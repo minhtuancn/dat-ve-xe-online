@@ -44,7 +44,6 @@ public interface GiaVeDAO {
 	public void update(GiaVe giaVe);
 	
 	/**
-	 * 
 	 * @param idLichTuyen
 	 * @param ngayDi
 	 * @return

@@ -30,9 +30,32 @@ public class LichTuyenDAOImpl implements LichTuyenDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(lichTuyen);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Object[]> getListInfo(String tinhDi, String tinhDen, NgayCuaTuan thu) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Object[]> list = HibernateUtil.getSessionFactory().getCurrentSession()
+			.createQuery("SELECT\r\n" + 
+					"		  l.idLichTuyen,\r\n" + 
+					"		  l.xe.nhaXe.idNhaXe,\r\n" + 
+					"		  l.xe.idXe,\r\n" + 
+					"		  l.xe.nhaXe.tenNhaXe,\r\n" + 
+					"		  l.xe.loaiXe,\r\n" + 
+					"		  l.xe.soCho,\r\n" + 
+					"		  l.tuyenXe.benDi.tenBenXe,\r\n" + 
+					"		  l.tuyenXe.benDen.tenBenXe,\r\n" + 
+					"		  l.gioDi,\r\n" + 
+					"		  l.tongThoiGian   \r\n" + 
+					"		 FROM\r\n" + 
+					"		  LichTuyen AS l  \r\n" + 
+					"		 WHERE\r\n" + 
+					"		  l.tuyenXe.benDi.diaChi.tinh LIKE :tinhDi\r\n" + 
+					"		 AND l.tuyenXe.benDen.diaChi.tinh LIKE :tinhDen\r\n" + 
+					"		 AND l.thu like :thu")
+			.setString("tinhDi", tinhDi)
+			.setString("tinhDen", tinhDen)
+			.setString("thu", thu.toString())
+			.list();
+		
+		return list;
 	}
 
 }

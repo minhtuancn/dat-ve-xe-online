@@ -59,8 +59,15 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 	}
 
 	public double ratingByNhaXe(int idNhaXe) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (double) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  ROUND(SUM(d.diem) / COUNT(*), 2)  \r\n" + 
+							" FROM\r\n" + 
+							"  DanhGia as d  \r\n" + 
+							" WHERE\r\n" + 
+							"  d.nhaXe.idNhaXe = :idNhaXe")
+				.setInteger("idNhaXe", idNhaXe)
+				.uniqueResult();
 	}
 
 }
