@@ -9,15 +9,17 @@ public class ThongTinChuyenXeDTO implements Serializable {
 	private String tenNhaXe;
 	private List<String> tienIchs;
 	private String loaiXe;
-	private int soCho;
 	private String tenBenDi;
 	private String tenBenDen;
 	private Time gioDi;
 	private double tongThoiGian;
 	private int soChoConLai;
+	private int soCho;
 	private double rating;
 	private int idNhaXe;
+	private int idLichTuyen;
 	private int giaVe;
+	private int idXe;
 
 	public String getTenNhaXe() {
 		return tenNhaXe;
@@ -41,14 +43,6 @@ public class ThongTinChuyenXeDTO implements Serializable {
 
 	public void setLoaiXe(String loaiXe) {
 		this.loaiXe = loaiXe;
-	}
-
-	public int getSoCho() {
-		return soCho;
-	}
-
-	public void setSoCho(int soCho) {
-		this.soCho = soCho;
 	}
 
 	public String getTenBenDi() {
@@ -113,6 +107,30 @@ public class ThongTinChuyenXeDTO implements Serializable {
 
 	public void setGiaVe(int giaVe) {
 		this.giaVe = giaVe;
+	}
+
+	public int getIdLichTuyen() {
+		return idLichTuyen;
+	}
+
+	public void setIdLichTuyen(int idLichTuyen) {
+		this.idLichTuyen = idLichTuyen;
+	}
+
+	public int getIdXe() {
+		return idXe;
+	}
+
+	public void setIdXe(int idXe) {
+		this.idXe = idXe;
+	}
+
+	public int getSoCho() {
+		return soCho;
+	}
+
+	public void setSoCho(int soCho) {
+		this.soCho = soCho;
 	}
 
 }

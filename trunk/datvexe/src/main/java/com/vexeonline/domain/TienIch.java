@@ -26,9 +26,6 @@ public class TienIch {
 	private String hinhAnh;
 
 	@ManyToMany
-	/*@JoinTable(name="Xe_TienIch", 
-    	joinColumns={@JoinColumn(name="idTienIch")}, 
-    	inverseJoinColumns={@JoinColumn(name="idXe")})*/
 	private Set<Xe> xes = new HashSet<Xe>(0);
 
 	public int getIdTienIch() {

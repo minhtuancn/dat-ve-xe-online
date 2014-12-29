@@ -14,7 +14,6 @@ import com.vexeonline.domain.RoleOfUser;
 @Namespace(value = "/")
 @ParentPackage(value = "default")
 public class GuestAction extends ActionSupport implements SessionAware {
-
 	private static final long serialVersionUID = 1L;
 	
 	private Map<String,Object> session;
@@ -25,6 +24,7 @@ public class GuestAction extends ActionSupport implements SessionAware {
 			@Result(name = "coach", location="coach.home", type = "tiles")
 	})
 	public String showHomePage() {
+		System.out.println("nguyen thanh tung");
 		RoleOfUser role = (RoleOfUser) session.get("role");
 		String result = null;
 		if (role == null) {

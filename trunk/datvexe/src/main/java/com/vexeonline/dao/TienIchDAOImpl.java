@@ -10,29 +10,32 @@ import com.vexeonline.utils.HibernateUtil;
  *
  */
 public class TienIchDAOImpl implements TienIchDAO {
-
-	@Override
 	public TienIch getById(Integer id) {
 		return (TienIch) HibernateUtil.getSessionFactory().getCurrentSession()
 				.load(TienIch.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<TienIch> list() {
 		return HibernateUtil.getSessionFactory().getCurrentSession()
 				.createQuery("from TienIch").list();
 	}
 
-	@Override
 	public TienIch save(TienIch tienIch) {
 		HibernateUtil.getSessionFactory().getCurrentSession().save(tienIch);
 		return tienIch;
 	}
 
-	@Override
 	public TienIch update(TienIch tienIch) {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(tienIch);
 		return tienIch;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<TienIch> getByXe(int idXe) {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("select x.tienIchs from Xe as x "
+						+ "where x.idXe = :idXe")
+				.list();
 	}
 }

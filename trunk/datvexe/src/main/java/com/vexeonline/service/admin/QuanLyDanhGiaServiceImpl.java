@@ -62,7 +62,7 @@ public class QuanLyDanhGiaServiceImpl implements QuanLyDanhGiaService{
 		}
 	}
 	
-	public float tinhNewRate(DanhGia danhGia) {
+/*	public float tinhNewRate(DanhGia danhGia) {
 		if (danhGia == null || !danhGia.getTrangThai()) {
 			throw new IllegalArgumentException();
 		}
@@ -74,6 +74,6 @@ public class QuanLyDanhGiaServiceImpl implements QuanLyDanhGiaService{
 		}
 		
 		return sumRate / (listDanhGia.size() + 1);
-	}
+	}*/
 
 }

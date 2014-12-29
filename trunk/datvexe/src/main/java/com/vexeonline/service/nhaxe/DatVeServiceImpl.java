@@ -17,6 +17,7 @@ import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.TrangThaiChuyenXe;
+import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -34,7 +35,7 @@ public class DatVeServiceImpl implements DatVeService{
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 			
-			ChuyenXe chuyenXe = chuyenXeDAO.getChuyenXeByNgayDiLichTuyen(idLichTuyen, ngayDi);
+			ChuyenXe chuyenXe = null;//TODO chuyenXeDAO.getChuyenXeByNgayDiLichTuyen(idLichTuyen, ngayDi);
 			
 			if (chuyenXe == null) {  //create new chuyen xe
 				LichTuyen lichTuyen = lichTuyenDAO.getById(idLichTuyen);
@@ -96,7 +97,7 @@ public class DatVeServiceImpl implements DatVeService{
 				veXe.setChoNgoi(Integer.parseInt(choNgoi));
 				veXe.setChuyenXe(chuyenXe);
 				veXe.setHanhKhach(hanhKhach);
-				veXe.setTrangThai(true);
+				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
 				veXeDAO.save(veXe);
 			}
 	

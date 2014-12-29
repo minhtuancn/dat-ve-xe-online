@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
+import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
 
 /**
@@ -17,7 +17,7 @@ import com.vexeonline.dto.ThongTinDanhGiaDTO;
  */
 public interface KhachHangService {
 	/**
-	 * get list ChuyenXe by tinhDi, tinhDen, ngayDi
+	 * get list ChuyenXe by tinhDi, tinhDen, ngayDi, soCho
 	 * 
 	 * @param tinhDi
 	 * @param tinhDen
@@ -25,7 +25,7 @@ public interface KhachHangService {
 	 * @param soCho
 	 * @return List<TuyenXe>
 	 */
-	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
+	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho);
 
 	/**

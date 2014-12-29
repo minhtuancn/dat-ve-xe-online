@@ -1,5 +1,7 @@
 package com.vexeonline.service;
 
+import java.sql.Time;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,79 +14,91 @@ import com.vexeonline.dao.ChuyenXeDAO;
 import com.vexeonline.dao.ChuyenXeDAOImpl;
 import com.vexeonline.dao.DanhGiaDAO;
 import com.vexeonline.dao.DanhGiaDAOImpl;
+import com.vexeonline.dao.GiaVeDAO;
+import com.vexeonline.dao.GiaVeDAOImpl;
 import com.vexeonline.dao.HanhKhachDAO;
 import com.vexeonline.dao.HanhKhachDAOImpl;
-import com.vexeonline.dao.NhaXeDAOImpl;
-import com.vexeonline.dao.TuyenXeDAO;
-import com.vexeonline.dao.TuyenXeDAOImpl;
+import com.vexeonline.dao.LichTuyenDAO;
+import com.vexeonline.dao.LichTuyenDAOImpl;
 import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
-import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
-import com.vexeonline.domain.NhaXe;
-import com.vexeonline.domain.TienIch;
-import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
+import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
-import com.vexeonline.service.admin.QuanLyDanhGiaServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
+import com.vexeonline.utils.MockDatabase;
 
 public class KhachHangServiceImpl implements KhachHangService {
 
 	private final Logger logger = Logger.getLogger(getClass());
 	
-	private static TuyenXeDAO tuyenXeDAO = new TuyenXeDAOImpl();
+	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
 	private static ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
 	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
+	private static GiaVeDAO giaVeDAO = new GiaVeDAOImpl();
 
-	public List<TuyenXe> getListChuyenXe(String tinhDi, String tinhDen,
-			Date ngayDi, int soCho) {
-		
-		List<TuyenXe> listTuyenXe = new ArrayList<TuyenXe>(0);
-		
-		if (tinhDi == null || tinhDen == null || ngayDi == null) {
-			throw new IllegalArgumentException("ArgumentException");
+	static {
+		try {
+			MockDatabase.mockData();
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-
+	}
+	
+	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
+			Date ngayDi, int soCho) {
+		List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(0); 
+		List<Object[]> list;
 		Transaction tx = null;
 		
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			listTuyenXe = tuyenXeDAO.getListTuyenXe(tinhDi, tinhDen, ngayDi, dayOfWeek(ngayDi));
-			for (TuyenXe tuyenXe : listTuyenXe) {
-				System.out.println(tuyenXe.getLichTuyens().size());
-				for (LichTuyen lc : tuyenXe.getLichTuyens()) {
-					lc.getGioDi();
-					
-					for (TienIch ti : lc.getXe().getTienIchs()) {
-						ti.getTenTienIch();
-					}
-					
-					for (ChuyenXe cx : lc.getChuyenXes()) {
-						cx.getNgayDi();
-					}
-					for (GiaVe gv : lc.getGiaVes()) {
-						gv.getGiaVe();
-					}
-				}
+			list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi));
+			
+			ThongTinChuyenXeDTO temp;
+			double rating;
+			int giaVe;
+			int soChoDaDat;
+			for (Object[] row : list) {
+				temp = new ThongTinChuyenXeDTO();
+				temp.setIdLichTuyen((int) row[0]);
+				temp.setIdNhaXe((int) row[1]);
+				temp.setIdXe((int) row[2]);
+				temp.setTenNhaXe((String) row[3]);
+				temp.setLoaiXe((String) row[4]);
+				temp.setSoCho((int)row[5]);
+				temp.setTenBenDi((String) row[6]);
+				temp.setTenBenDen((String) row[7]);
+				temp.setGioDi((Time) row[8]);
+				temp.setTongThoiGian((double) row[9]);
+				
+				rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
+				temp.setRating(rating);
+				
+				giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
+				temp.setGiaVe(giaVe);
+				
+				soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(temp.getIdLichTuyen(), ngayDi);
+				temp.setSoChoConLai(temp.getSoCho() - soChoDaDat);
+				listData.add(temp);
 			}
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) tx.rollback();
 			logger.error("Error", ex);
 		} 
-		return listTuyenXe;
+		return listData;
 	}
 
 	public VeXe kiemTraVe(String SDT, int maSoVe) {
@@ -171,33 +185,20 @@ public class KhachHangServiceImpl implements KhachHangService {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 			boolean flag = false;
-			ChuyenXe chuyenXe = null;
 			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
 			if (hanhKhach == null) {
 				return false;
 			}
-			for (VeXe veXe : hanhKhach.getVeXes()) {
-				if (veXe.getChuyenXe().getNgayDi().toString().equals(ngayDi.toString())) {
-					flag = true;
-					chuyenXe = veXe.getChuyenXe();
-					break;
-				}
-			}
 			
 			if (flag == true) {
 				DanhGia danhGia = new DanhGia();
-				danhGia.setChuyenXe(chuyenXe);
+				//danhGia.setChuyenXe(chuyenXe);
 				danhGia.setDiem(diem);
 				danhGia.setHanhKhach(hanhKhach);
 				danhGia.setNoiDung(noiDung);
 				//
 				danhGia.setTrangThai(true);
 				danhGiaDAO.save(danhGia);
-				//demo 
-				float rate = new QuanLyDanhGiaServiceImpl().tinhNewRate(danhGia);
-				NhaXe nhaXe = chuyenXe.getLichTuyen().getXe().getNhaXe();
-				nhaXe.setRate(rate);
-				new NhaXeDAOImpl().update(nhaXe);
 			}
 			
 			tx.commit();
@@ -294,11 +295,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return listSDTNhaXe;
 	}
 
-
-	
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
-
 		NgayCuaTuan day = null;
 
 		switch (date.getDay()) {

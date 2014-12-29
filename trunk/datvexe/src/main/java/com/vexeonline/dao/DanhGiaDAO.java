@@ -12,4 +12,11 @@ public interface DanhGiaDAO {
     public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe);
     public List<Object[]> getListInfoDanhGiaByIdNhaXe(int idNhaXe);
     public List<Object[]> getListSDTNhaXe(int idNhaXe);
+    
+    /**
+     * return rating of nha xe
+     * @param idNhaXe
+     * @return
+     */
+    public double ratingByNhaXe(int idNhaXe);
 }

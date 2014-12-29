@@ -13,4 +13,11 @@ public interface TienIchDAO {
 	public List<TienIch> list();
 	public TienIch save(TienIch tienIch);
 	public TienIch update(TienIch tienIch);
+	
+	/**
+	 * return tienIchs of xe
+	 * @param idXe
+	 * @return
+	 */
+	public List<TienIch> getByXe(int idXe);
 }
