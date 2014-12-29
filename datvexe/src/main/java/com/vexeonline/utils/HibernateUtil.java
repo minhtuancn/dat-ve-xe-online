@@ -19,7 +19,7 @@ public class HibernateUtil {
 	private static SessionFactory buildSessionFactory() {
 		try {
 			Configuration configuration = new Configuration();
-			configuration.configure("hibernate_test.cfg.xml");
+			configuration.configure("hibernate.cfg.xml");
 
 			serviceRegistry = new StandardServiceRegistryBuilder()
 					.applySettings(configuration.getProperties()).build();
@@ -29,7 +29,6 @@ public class HibernateUtil {
 			System.err.println("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
-
 	}
 
 	public static SessionFactory getSessionFactory() {

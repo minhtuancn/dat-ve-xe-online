@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
-public class DanhGia implements Serializable{
+public class DanhGia implements Serializable {
 
 	private static final long serialVersionUID = -2657494317065945255L;
 
@@ -30,10 +30,14 @@ public class DanhGia implements Serializable{
 	private float diem;
 
 	private boolean trangThai;
-	
+
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private HanhKhach hanhKhach;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private NhaXe nhaXe;
 
 	public int getIdDanhGia() {
 		return idDanhGia;
@@ -76,5 +80,13 @@ public class DanhGia implements Serializable{
 	public void setTrangThai(boolean trangThai) {
 		this.trangThai = trangThai;
 	}
-	
+
+	public NhaXe getNhaXe() {
+		return nhaXe;
+	}
+
+	public void setNhaXe(NhaXe nhaXe) {
+		this.nhaXe = nhaXe;
+	}
+
 }

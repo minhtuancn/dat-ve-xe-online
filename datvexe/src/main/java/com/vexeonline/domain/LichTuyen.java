@@ -41,11 +41,9 @@ public class LichTuyen implements Serializable {
 	@Column(nullable = false)
 	private NgayCuaTuan thu;
 
-	/*@Type(type = "time")*/
 	@Temporal(TemporalType.TIME)
 	@Column(nullable = false)
 	private Date gioDi;
-	/*private Time gioDi;*/
 
 	@ManyToOne
 	@JoinColumn(nullable = false)

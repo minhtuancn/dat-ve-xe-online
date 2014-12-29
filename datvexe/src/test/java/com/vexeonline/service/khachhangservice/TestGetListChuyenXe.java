@@ -2,7 +2,6 @@ package com.vexeonline.service.khachhangservice;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,13 +17,11 @@ import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.Xe;
-import com.vexeonline.service.KhachHangService;
-import com.vexeonline.service.KhachHangServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
 public class TestGetListChuyenXe {
 	private static SessionFactory sessionFactory;
-	private KhachHangService khachHang = new KhachHangServiceImpl();
+	//private KhachHangService khachHang = new KhachHangServiceImpl();
 
 	@BeforeClass
 	public static void beforeTest() {

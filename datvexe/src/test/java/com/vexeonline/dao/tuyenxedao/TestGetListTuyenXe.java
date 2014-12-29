@@ -3,8 +3,6 @@ package com.vexeonline.dao.tuyenxedao;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,8 +10,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.vexeonline.dao.TuyenXeDAO;
-import com.vexeonline.dao.TuyenXeDAOImpl;
 import com.vexeonline.domain.BenXe;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DiaChi;
@@ -30,7 +26,7 @@ import com.vexeonline.utils.HibernateUtil;
 
 public class TestGetListTuyenXe {
 	private static SessionFactory sessionFactory;
-	private TuyenXeDAO tuyenDao = new TuyenXeDAOImpl();
+	//private TuyenXeDAO tuyenDao = new TuyenXeDAOImpl();
 
 	@BeforeClass
 	public static void beforeTest() {

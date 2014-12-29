@@ -49,7 +49,7 @@ public class NhaXe implements Serializable {
 	@OneToMany
 	private List<User> users = new ArrayList<User>();
 
-	@OneToMany
+	@OneToMany(mappedBy = "nhaXe")
 	private Set<DanhGia> danhGias = new HashSet<DanhGia>(0);
 
 	/**

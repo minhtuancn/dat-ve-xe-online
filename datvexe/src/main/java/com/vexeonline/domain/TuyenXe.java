@@ -49,7 +49,7 @@ public class TuyenXe implements Serializable {
 	 * @author Tung
 	 */
 	public TuyenXe() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Integer getIdTuyenXe() {

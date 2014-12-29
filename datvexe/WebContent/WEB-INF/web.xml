@@ -20,10 +20,6 @@
 	</filter-mapping>
 
 	<listener>
-		<listener-class>com.vexeonline.utils.HibernateServletContextListener</listener-class>
-	</listener>
-
-	<listener>
 		<listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
 	</listener>
 	
