@@ -35,10 +35,19 @@ public class GiaVeDAOImpl implements GiaVeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(giaVe);
 	}
 
-	@Override
 	public int getGiaVe(int idLichTuyen, Date ngayDi) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  g.giaVe\r\n" + 
+							" FROM\r\n" + 
+							"  GiaVe as g  \r\n" + 
+							" WHERE\r\n" + 
+							"  g.lichTuyen.idLichTuyen = :idLichTuyen \r\n" + 
+							"  AND g.ngayBatDau <=  :ngayDi  \r\n" + 
+							"  AND g.ngayKetThuc >= :ngayDi \r\n")
+				.setInteger("idLichTuyen", idLichTuyen)
+				.setDate("ngayDi", ngayDi)
+				.uniqueResult();
 	}
 
 }

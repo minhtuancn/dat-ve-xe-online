@@ -1,5 +1,6 @@
 package com.vexeonline.dao;
 
+import java.sql.Time;
 import java.util.Date;
 
 import org.hibernate.Session;
@@ -36,16 +37,27 @@ public class VeXeDAOImpl implements VeXeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().delete(veXe);
 	}
 
-	public int laySoVeXeTheoLichTuyenVaNgayDi(int idLichTuyen, Date ngayDi) {
-		// TODO 
-		/*
-		 * return (ChuyenXe) HibernateUtil.getSessionFactory()
-		 * .getCurrentSession() .createQuery("from ChuyenXe as c " +
-		 * "left join fetch c.veXes " + "where c.ngayDi = :ngayDi " +
-		 * "and c.lichTuyen.idLichTuyen = :idLichTuyen") .setDate("ngayDi",
-		 * ngayDi) .setInteger("idLichTuyen", idLichTuyen) .uniqueResult();
-		 */
-		return 0;
+	@SuppressWarnings("deprecation")
+	public int laySoVeXeTheoLichTuyenVaNgayDi(int idLichTuyen, Date ngayDi, Time gioDi) {
+		return (int) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  COUNT(*) \r\n" + 
+							" FROM\r\n" + 
+							"  VeXe as v  \r\n" + 
+							" WHERE\r\n" + 
+							"  v.chuyenXe.lichTuyen.idLichTuyen = :idLichTuyen \r\n" + 
+							"  AND YEAR(v.chuyenXe.ngayDi) = :year   \r\n" + 
+							"  AND MONTH(v.chuyenXe.ngayDi) = :month \r\n" + 
+							"  AND DAY(v.chuyenXe.ngayDi) = :day   \r\n" + 
+							"  AND HOUR(v.chuyenXe.ngayDi) = :hour \r\n" + 
+							"  AND MINUTE(v.chuyenXe.ngayDi) = :minute")
+						.setInteger("idLichTuyen", idLichTuyen)
+						.setInteger("year", ngayDi.getYear())
+						.setInteger("month", ngayDi.getMonth())
+						.setInteger("day", ngayDi.getDate())
+						.setInteger("hour", gioDi.getHours())
+						.setInteger("minute", gioDi.getMinutes())
+						.uniqueResult();
 	}
 
 }

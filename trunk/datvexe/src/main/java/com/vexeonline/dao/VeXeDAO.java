@@ -1,5 +1,6 @@
 package com.vexeonline.dao;
 
+import java.sql.Time;
 import java.util.Date;
 
 import com.vexeonline.domain.VeXe;
@@ -17,12 +18,12 @@ public interface VeXeDAO {
     public void delete(VeXe veXe);
     
     /**
-     * return number booked by lich tuyen and ngay di
+     * return number booked by lich tuyen, ngay di, gio di
      * if no chuyen xe generated return 0
      * @param idLichTuyen
      * @param ngayDi
      * @return int
      */
-    public int laySoVeXeTheoLichTuyenVaNgayDi (int idLichTuyen, Date ngayDi);
+    public int laySoVeXeTheoLichTuyenVaNgayDi (int idLichTuyen, Date ngayDi, Time gioDi);
     
 }

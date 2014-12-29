@@ -37,7 +37,6 @@ import com.vexeonline.utils.HibernateUtil;
 public class KhachHangServiceImpl implements KhachHangService {
 
 	private final Logger logger = Logger.getLogger(getClass());
-	
 	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
@@ -82,7 +81,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 				giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
 				temp.setGiaVe(giaVe);
 				
-				soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(temp.getIdLichTuyen(), ngayDi);
+				/* When user book, they only choose date not hour and minute,
+				It not enough determined chuyenXe => more parameter gioDi to determined soCho booked 
+				*/
+				soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
 				if (temp.getSoCho() < (soChoDaDat + soCho)) {
 					continue;
 				}
