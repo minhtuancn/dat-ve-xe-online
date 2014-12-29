@@ -30,6 +30,7 @@ import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.domain.SDTVanPhong;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.TrangThaiChuyenXe;
+import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VanPhong;
@@ -40,7 +41,7 @@ import com.vexeonline.service.nhaxe.QuanLyChuyenXeService;
 import com.vexeonline.service.nhaxe.QuanLyChuyenXeServiceImpl;
 
 public class MockDatabase {
-	public static void main(String[] args) throws ParseException {
+	public static void mockData() throws ParseException {
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
@@ -54,7 +55,7 @@ public class MockDatabase {
 		session.save(diaChi2);
 
 		BenXe benXe1 = new BenXe();
-		benXe1.setTenBenXe("Bến xe An Khê");
+		benXe1.setTenBenXe("Bến xe An Khên");
 		benXe1.setDiaChi(diaChi1);
 		session.save(benXe1);
 
@@ -70,7 +71,7 @@ public class MockDatabase {
 		session.save(tuyenXe);
 
 		NhaXe nhaXe = new NhaXe();
-		nhaXe.setTenNhaXe("VietTanPhat");
+		nhaXe.setTenNhaXe("Việt Tân Phát");
 		session.save(nhaXe);
 
 		VanPhong vanPhong  = new VanPhong();
@@ -88,7 +89,7 @@ public class MockDatabase {
 		
 		Xe xe = new Xe();
 		xe.setBienSoXe("81-12345");
-		xe.setLoaiXe("Ghe Ngoi");
+		xe.setLoaiXe("Ghế Ngồi");
 		xe.setSoCho(45);
 		xe.setNhaXe(nhaXe);
 		session.save(xe);
@@ -129,34 +130,34 @@ public class MockDatabase {
 		VeXe veXe = new VeXe();
 		veXe.setChuyenXe(chuyenXe);
 		veXe.setChoNgoi(1);
+		veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
 
 		TienIch tienIch = new TienIch();
-		tienIch.setTenTienIch("Nước uống");
+		tienIch.setTenTienIch("DRINK");
 		tienIch.getXes().add(xe);
 		session.save(tienIch);
 		
 		tienIch = new TienIch();
-		tienIch.setTenTienIch("Thức ăn");
+		tienIch.setTenTienIch("TISSUE");
 		session.save(tienIch);
 		
 		tienIch = new TienIch();
-		tienIch.setTenTienIch("Điều hòa");
+		tienIch.setTenTienIch("DVD");
 		session.save(tienIch);
 		
 		tienIch = new TienIch();
-		tienIch.setTenTienIch("Chăn");
+		tienIch.setTenTienIch("TOILET");
 		session.save(tienIch);
 		
 		tienIch = new TienIch();
-		tienIch.setTenTienIch("Khăn lạnh");
+		tienIch.setTenTienIch("AIRCON");
 		session.save(tienIch);
 		
 		xe.getTienIchs().add(tienIch);
 
 		DanhGia danhGia = new DanhGia();
-		danhGia.setChuyenXe(chuyenXe);
 		danhGia.setDiem(4.2f);
 		danhGia.setHanhKhach(hanhKhach);
 		danhGia.setNoiDung("12321");
@@ -176,7 +177,7 @@ public class MockDatabase {
 		user2.setNhaXe(nhaXe);
 		session.save(user2);
 		
-		generateMockData();
+		//generateMockData();
 		
 		tx.commit();
 		
@@ -195,7 +196,7 @@ public class MockDatabase {
 		nhaXeDAO.save(nhaXe);
 
 		nhaXe = new NhaXe();
-		nhaXe.setTenNhaXe("Phương Trang");
+		nhaXe.setTenNhaXe("PhÆ°Æ¡ng Trang");
 		nhaXeDAO.save(nhaXe);
 
 		// /////////////////////////////////////////////
@@ -203,18 +204,18 @@ public class MockDatabase {
 		BenXeDAO benXeDAO = new BenXeDAOImpl();
 
 		BenXe bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quảng Nam", "Thăng Bình", ""));
-		bx.setTenBenXe("Bến xe miền đông");
+		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
+		bx.setTenBenXe("Báº¿n xe miá»�n Ä‘Ã´ng");
 		benXeDAO.save(bx);
 
 		bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quảng Nam", "Thăng Bình", ""));
-		bx.setTenBenXe("Bến xe Đà Nẵng");
+		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
+		bx.setTenBenXe("Báº¿n xe Ä�Ã  Náºµng");
 		benXeDAO.save(bx);
 
 		bx = new BenXe();
-		bx.setDiaChi(new DiaChi("Quảng Nam", "Thăng Bình", ""));
-		bx.setTenBenXe("Bến xe nước ngầm");
+		bx.setDiaChi(new DiaChi("Quáº£ng Nam", "ThÄƒng BÃ¬nh", ""));
+		bx.setTenBenXe("Báº¿n xe nÆ°á»›c ngáº§m");
 		benXeDAO.save(bx);
 
 		// /////////////////////////////////////////////
@@ -225,21 +226,21 @@ public class MockDatabase {
 		tx.setBenDi(benXeDAO.getById(2));
 		tx.setBenDen(benXeDAO.getById(3));
 		tx.setDoDai(10000);
-		tx.setMoTa("Mô tả tuyến");
+		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
 		tuyenXeDAO.save(tx);
 
 		tx = new TuyenXe();
 		tx.setBenDi(benXeDAO.getById(3));
 		tx.setBenDen(benXeDAO.getById(1));
 		tx.setDoDai(10000);
-		tx.setMoTa("Mô tả tuyến");
+		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
 		tuyenXeDAO.save(tx);
 
 		tx = new TuyenXe();
 		tx.setBenDi(benXeDAO.getById(1));
 		tx.setBenDen(benXeDAO.getById(3));
 		tx.setDoDai(10000);
-		tx.setMoTa("Mô tả tuyến");
+		tx.setMoTa("MÃ´ táº£ tuyáº¿n");
 		tuyenXeDAO.save(tx);
 
 		// /////////////////////////////////////////////
@@ -248,14 +249,14 @@ public class MockDatabase {
 
 		Xe xe = new Xe();
 		xe.setBienSoXe("12345");
-		xe.setLoaiXe("Giường nằm 40 chỗ");
+		xe.setLoaiXe("GiÆ°á»�ng náº±m 40 chá»—");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(1));
 		xeDAO.save(xe);
 
 		xe = new Xe();
 		xe.setBienSoXe("22345");
-		xe.setLoaiXe("Giường nằm 40 chỗ");
+		xe.setLoaiXe("GiÆ°á»�ng náº±m 40 chá»—");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(2));
 		xeDAO.save(xe);

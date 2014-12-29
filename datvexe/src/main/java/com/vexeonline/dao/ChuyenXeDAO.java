@@ -3,7 +3,6 @@
  */
 package com.vexeonline.dao;
 
-import java.sql.Date;
 import java.util.List;
 
 import com.vexeonline.domain.ChuyenXe;
@@ -42,13 +41,5 @@ public interface ChuyenXeDAO {
 	 * @param benXe
 	 */
 	public void update(ChuyenXe chuyenXe);
-	
-	/**
-	 * 
-	 * @param idLichTuyen
-	 * @param ngayDi
-	 * @return
-	 */
-	public ChuyenXe getChuyenXeByNgayDiLichTuyen(int idLichTuyen, Date ngayDi);
 	
 }

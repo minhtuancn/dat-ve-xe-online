@@ -95,40 +95,37 @@
 	</tfoot>
 
 	<tbody>
-		<s:iterator value="list" var="tuyenXe">
-			<s:iterator value="#tuyenXe.lichTuyens" var="lichTuyen">
-				<s:iterator value="#lichTuyen.giaVes" var="giaVe">
-					<%-- <s:iterator value="#lichTuyen.chuyenXes" var="chuyenXe"> --%>
+		<s:iterator value="list">
 						<tr>
-							<td><s:property value="#lichTuyen.xe.nhaXe.tenNhaXe" /></td>
+							<td><s:property value="tenNhaXe" /></td>
 							<td>
 								<div>
 									<div>
-										<s:iterator var="item" value="lichTuyen.xe.tienIchs">
-											<s:if test="%{#item.tenTienIch == 'DRINK'}">
+										<s:iterator value="tienIchs" var="tienIch">
+											<s:if test="%{#tienIch.tenTienIch == 'DRINK'}">
 												<span class="benefit benefit-drink fl-l" title="Nước uống"></span>
 											</s:if>
-											<s:elseif test="%{#item.tenTienIch == 'TISSUE'}">
+											<s:elseif test="%{#tienIch.tenTienIch == 'TISSUE'}">
 												<span class="benefit benefit-tissue fl-l" title="Khăn lạnh"></span>
 											</s:elseif>
-											<s:elseif test="%{#item.tenTienIch == 'TOILET'}">
+											<s:elseif test="%{#tienIch.tenTienIch == 'TOILET'}">
 												<span class="benefit benefit-toilet fl-l" title="Điều hòa"></span>
 											</s:elseif>
-											<s:elseif test="%{#item.tenTienIch == 'DVD'}">
+											<s:elseif test="%{#tienIch.tenTienIch == 'DVD'}">
 												<span class="benefit benefit-dvd fl-l" title="DVD"></span>
 											</s:elseif>
-											<s:elseif test="%{#item.tenTienIch == 'AIRCON'}">
+											<s:elseif test="%{#tienIch.tenTienIch == 'AIRCON'}">
 												<span class="benefit benefit-aircon fl-l" title="Điều hòa"></span>
 											</s:elseif>
-											<s:elseif test="%{#item.tenTienIch == 'BLANKET'}">
+											<s:elseif test="%{#tienIch.tenTienIch == 'BLANKET'}">
 												<span class="benefit benefit-blanket fl-l" title="Chăn, mền"></span>
 											</s:elseif>
 										</s:iterator>
 									</div>
 									<div style="clear: both;">
-										<s:property value="#lichTuyen.xe.loaiXe" />
+										<s:property value="loaiXe" />
 										&nbsp;
-										<s:property value="#lichTuyen.xe.soCho" />
+										<s:property value="soCho" />
 										&nbsp;chỗ
 									</div>
 								</div>
@@ -136,13 +133,13 @@
 							<td>
 								<div>
 									<div>
-										<s:property value="#tuyenXe.benDi.tenBenXe" />
+										<s:property value="tenBenDi" />
 									</div>
 									<div>
 										Khởi hành:
-										<s:property value="#lichTuyen.gioDi.getHours()" />
+										<s:property value="gioDi.getHours()" />
 										Giờ
-										<s:property value="#lichTuyen.gioDi.getMinutes()" />
+										<s:property value="gioDi.getMinutes()" />
 										Phút
 									</div>
 								</div>
@@ -150,27 +147,24 @@
 							<td>
 								<div>
 									<div>
-										<s:property value="#tuyenXe.benDen.tenBenXe" />
+										<s:property value="tenBenDen" />
 									</div>
 									<div>
 										Tồng thời gian:
-										<s:property value="#lichTuyen.tongThoiGian" /> h
+										<s:property value="tongThoiGian" /> h
 									</div>
 								</div>
 							</td>
-							<td>Còn	<s:if test="%{#lichTuyen.chuyenXes.size() == 0}">
-										<s:property value="#lichTuyen.xe.soCho" />
-									</s:if> 
-									<%-- <s:else>
-										<s:property	value="#lichTuyen.xe.soCho - #chuyenXe.veXes.size()" />
-									</s:else>  --%>Chỗ
+							<td>Còn	
+										<s:property value="soChoConLai" />
+									Chỗ
 							</td>
 							<td>
 								<div>
-									<input value='<s:property value="#lichTuyen.xe.nhaXe.rate" />' class="rating input-rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" 
+									<input value='<s:property value="rating" />' class="rating input-rating" data-min="0" data-max="5" data-step="0.1" data-size="xs" 
 											data-show-clear="false" data-show-caption="false" data-readonly="true"  >
 									<a href="" style="font-size: small; text-decoration: underline; color: orange;" 
-										data-toggle="modal" class="openListDanhGia" data-id='<s:property value="#lichTuyen.xe.nhaXe.idNhaXe" />' data-target="#myModal_listDanhGia">Xem đánh giá</a>
+										data-toggle="modal" class="openListDanhGia" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listDanhGia">Xem đánh giá</a>
 									<br/>
 									<button type="button" class="btn btn-primary"
 										data-toggle="modal" data-target="#myModal">Viết đánh giá</button>
@@ -179,25 +173,18 @@
 							<td>
 								<div>
 									<div>
-										<s:property value="#giaVe.giaVe" />
+										<s:property value="giaVe" />
 										VNĐ
 									</div>
 									<div>
-									<s:if test="#session.user != null">
-										<a class="btn btn-info" href='coachcp/chonghe?idLichTuyen=<s:property value="#lichTuyen.idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
-									</s:if>
-									<s:else>
-										<button class="btn btn-info openListSdt"  data-toggle="modal" data-id='<s:property value="#lichTuyen.xe.nhaXe.idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</button>
-									</s:else>
+									
+										<a class="btn btn-info" href='coachcp/chonghe?idLichTuyen=<s:property value="idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
 									</div>
 								</div>
 							</td>
 						</tr>
 						
-					<%-- </s:iterator> --%>
 				</s:iterator>
-			</s:iterator>
-		</s:iterator>
 	</tbody>
 
 </table>

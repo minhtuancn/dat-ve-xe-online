@@ -50,7 +50,6 @@ public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 			hkDTO.setIdVeXe(ve.getIdVeXe());
 			hkDTO.setSoDienThoai(hk.getSdt());
 			hkDTO.setViTri(ve.getChoNgoi());
-			hkDTO.setThanhToan(ve.isThanhToan());
 			hanhKhachs.add(hkDTO);
 		}
 

@@ -3,10 +3,8 @@
  */
 package com.vexeonline.dao;
 
-import java.util.Date;
 import java.util.List;
 
-import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.TuyenXe;
 
 /**
@@ -44,15 +42,5 @@ public interface TuyenXeDAO {
 	 */
 	public void update(TuyenXe tuyenXe);
 
-	 /**
-	  * get list TuyenXe where tinhDi , TinhDen, ngayDi
-	  * @param tinhDi
-	  * @param tinhDen
-	  * @param ngayDi
-	  * @param thu
-	  * @return
-	  */
-	public List<TuyenXe> getListTuyenXe(String tinhDi, String tinhDen,
-			Date ngayDi, NgayCuaTuan thu);
 }
 

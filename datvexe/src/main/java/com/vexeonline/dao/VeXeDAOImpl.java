@@ -1,5 +1,7 @@
 package com.vexeonline.dao;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 
 import com.vexeonline.domain.VeXe;
@@ -9,8 +11,7 @@ public class VeXeDAOImpl implements VeXeDAO {
 
 	public VeXe getInfoVeXe(int maVeXe) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		String sql = "from VeXe as v " 
-				+ "left join fetch v.hanhKhach "
+		String sql = "from VeXe as v " + "left join fetch v.hanhKhach "
 				+ "left join fetch v.chuyenXe as c "
 				+ "left join fetch c.lichTuyen as l "
 				+ "left join fetch l.giaVes as g "
@@ -33,6 +34,18 @@ public class VeXeDAOImpl implements VeXeDAO {
 
 	public void delete(VeXe veXe) {
 		HibernateUtil.getSessionFactory().getCurrentSession().delete(veXe);
+	}
+
+	public int laySoVeXeTheoLichTuyenVaNgayDi(int idLichTuyen, Date ngayDi) {
+		// TODO 
+		/*
+		 * return (ChuyenXe) HibernateUtil.getSessionFactory()
+		 * .getCurrentSession() .createQuery("from ChuyenXe as c " +
+		 * "left join fetch c.veXes " + "where c.ngayDi = :ngayDi " +
+		 * "and c.lichTuyen.idLichTuyen = :idLichTuyen") .setDate("ngayDi",
+		 * ngayDi) .setInteger("idLichTuyen", idLichTuyen) .uniqueResult();
+		 */
+		return 0;
 	}
 
 }

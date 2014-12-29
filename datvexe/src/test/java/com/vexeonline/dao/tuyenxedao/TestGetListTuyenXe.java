@@ -46,7 +46,7 @@ public class TestGetListTuyenXe {
 	public void test1() throws ParseException {
 		addData();
 
-		Session session = sessionFactory.openSession();
+		/*Session session = sessionFactory.openSession();
 		sessionFactory.getCurrentSession().beginTransaction();
 		//??? not understand
 		//session.beginTransaction();
@@ -59,7 +59,7 @@ public class TestGetListTuyenXe {
 		//??? not understand
 		//session.getTransaction().commit();
 		sessionFactory.getCurrentSession().getTransaction().commit();  
-		session.close();
+		session.close();*/
 	}
 
 	private void addData() {

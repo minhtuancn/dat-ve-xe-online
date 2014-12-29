@@ -128,7 +128,7 @@ public class TestGetListInfoDanhGiaByIdNhaXe {
 		session.save(veXe);
 		
 		DanhGia danhGia = new DanhGia();
-		danhGia.setChuyenXe(chuyenXe);
+		//danhGia.setChuyenXe(chuyenXe);
 		danhGia.setDiem(4.9f);
 		danhGia.setNoiDung("tung nguyen");
 		danhGia.setHanhKhach(hanhKhach);

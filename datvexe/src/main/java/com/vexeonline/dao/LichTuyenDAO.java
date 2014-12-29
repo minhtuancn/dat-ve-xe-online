@@ -6,6 +6,7 @@ package com.vexeonline.dao;
 import java.util.List;
 
 import com.vexeonline.domain.LichTuyen;
+import com.vexeonline.domain.NgayCuaTuan;
 
 /**
  * @author Tung
@@ -41,4 +42,16 @@ public interface LichTuyenDAO {
 	 * @param lichTuyen
 	 */
 	public void update(LichTuyen lichTuyen);
+	
+	/**
+	 * return info lich tuyen follow order :
+	 * idLichTuyen, idNhaXe, idXe, tenNhaXe, loaiXe, SoCho, 
+	 * tenBenDi, tenBenDen, gioDi, tongThoiGian
+	 * @param tinhDi
+	 * @param tinhDen
+	 * @param thu
+	 * @return
+	 */
+	public List<Object[]> getListInfo(String tinhDi, String tinhDen, NgayCuaTuan thu);
+	
 }

@@ -124,7 +124,7 @@ public class TestListDanhGia {
 		session.save(veXe);
 		
 		DanhGia danhGia = new DanhGia();
-		danhGia.setChuyenXe(chuyenXe);
+		//danhGia.setChuyenXe(chuyenXe);
 		danhGia.setDiem(4.2f);
 		danhGia.setHanhKhach(hanhKhach);
 		danhGia.setNoiDung("12321");

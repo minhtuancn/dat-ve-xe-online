@@ -30,8 +30,8 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 	@SuppressWarnings("unchecked")
 	public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe) {
 		return HibernateUtil.getSessionFactory().getCurrentSession()
-			.createQuery("from DanhGia as d "
-					+ "where d.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe = :idNhaXe")
+			.createQuery("from NhaXe as n "
+					+ "where d.nhaXe.idNhaXe = :idNhaXe")
 					.setInteger("idNhaXe", idNhaXe)
 					.list();
 	}
@@ -56,6 +56,11 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 						+ "where n.idNhaXe = :idNhaXe")
 						.setInteger("idNhaXe", idNhaXe)
 						.list();
+	}
+
+	public double ratingByNhaXe(int idNhaXe) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

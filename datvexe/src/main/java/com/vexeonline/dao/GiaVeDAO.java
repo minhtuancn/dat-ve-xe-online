@@ -3,6 +3,7 @@
  */
 package com.vexeonline.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vexeonline.domain.GiaVe;
@@ -41,4 +42,12 @@ public interface GiaVeDAO {
 	 * @param giaVe
 	 */
 	public void update(GiaVe giaVe);
+	
+	/**
+	 * 
+	 * @param idLichTuyen
+	 * @param ngayDi
+	 * @return
+	 */
+	public int getGiaVe(int idLichTuyen, Date ngayDi);
 }
