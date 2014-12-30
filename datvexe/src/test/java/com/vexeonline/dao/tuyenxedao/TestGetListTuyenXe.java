@@ -128,7 +128,7 @@ public class TestGetListTuyenXe {
 		session.save(hanhKhach);
 		
 		VeXe veXe = new VeXe();
-		veXe.setChoNgoi(3);
+		veXe.setChoNgoi("B3");
 		veXe.setChuyenXe(chuyenXe);
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
