@@ -38,8 +38,8 @@ public class VeXeDAOImpl implements VeXeDAO {
 	}
 
 	@SuppressWarnings("deprecation")
-	public int laySoVeXeTheoLichTuyenVaNgayDi(int idLichTuyen, Date ngayDi, Time gioDi) {
-		return (int) HibernateUtil.getSessionFactory().getCurrentSession()
+	public long laySoVeXeTheoLichTuyenVaNgayDi(int idLichTuyen, Date ngayDi, Time gioDi) {
+		return (long) HibernateUtil.getSessionFactory().getCurrentSession()
 				.createQuery("SELECT\r\n" + 
 							"  COUNT(*) \r\n" + 
 							" FROM\r\n" + 

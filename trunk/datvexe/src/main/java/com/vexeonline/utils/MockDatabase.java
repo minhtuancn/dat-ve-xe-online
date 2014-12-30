@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import com.vexeonline.dao.BenXeDAO;
 import com.vexeonline.dao.BenXeDAOImpl;
@@ -45,13 +44,14 @@ public class MockDatabase {
 	public static void mockData() throws ParseException {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
+		session.beginTransaction();
+		
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
 		session.save(diaChi1);
 
 		DiaChi diaChi2 = new DiaChi();
-		diaChi2.setTinh("HCM");
+		diaChi2.setTinh("Hồ Chí Minh");
 		session.save(diaChi2);
 
 		BenXe benXe1 = new BenXe();
@@ -139,19 +139,23 @@ public class MockDatabase {
 		tienIch.setTenTienIch("DRINK");
 		tienIch.getXes().add(xe);
 		session.save(tienIch);
-
+		xe.getTienIchs().add(tienIch);
+		
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("TISSUE");
 		session.save(tienIch);
-
+		xe.getTienIchs().add(tienIch);
+		
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("DVD");
 		session.save(tienIch);
-
+		xe.getTienIchs().add(tienIch);
+		
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("TOILET");
 		session.save(tienIch);
-
+		xe.getTienIchs().add(tienIch);
+		
 		tienIch = new TienIch();
 		tienIch.setTenTienIch("AIRCON");
 		session.save(tienIch);
@@ -162,6 +166,7 @@ public class MockDatabase {
 		danhGia.setDiem(4.2f);
 		danhGia.setHanhKhach(hanhKhach);
 		danhGia.setNoiDung("12321");
+		danhGia.setNhaXe(nhaXe);
 		session.save(danhGia);
 
 		User user = new User();
@@ -177,6 +182,9 @@ public class MockDatabase {
 		user2.setRole(RoleOfUser.NHAXE);
 		user2.setNhaXe(nhaXe);
 		session.save(user2);
+		
+		session.getTransaction().commit();
+		
 	}
 
 	public static void generateMockData() throws ParseException {
@@ -300,18 +308,4 @@ public class MockDatabase {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			//mockData();
-			generateMockData();
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			e.printStackTrace();
-		} finally {
-			HibernateUtil.close();
-		}
-	}
 }

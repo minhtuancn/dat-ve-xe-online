@@ -24,6 +24,6 @@ public interface VeXeDAO {
      * @param ngayDi
      * @return int
      */
-    public int laySoVeXeTheoLichTuyenVaNgayDi (int idLichTuyen, Date ngayDi, Time gioDi);
+    public long laySoVeXeTheoLichTuyenVaNgayDi (int idLichTuyen, Date ngayDi, Time gioDi);
     
 }

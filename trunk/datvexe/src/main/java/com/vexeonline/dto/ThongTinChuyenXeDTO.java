@@ -13,7 +13,7 @@ public class ThongTinChuyenXeDTO implements Serializable {
 	private String tenBenDen;
 	private Time gioDi;
 	private double tongThoiGian;
-	private int soChoConLai;
+	private long soChoConLai;
 	private int soCho;
 	private double rating;
 	private int idNhaXe;
@@ -77,12 +77,12 @@ public class ThongTinChuyenXeDTO implements Serializable {
 		this.tongThoiGian = tongThoiGian;
 	}
 
-	public int getSoChoConLai() {
+	public long getSoChoConLai() {
 		return soChoConLai;
 	}
 
-	public void setSoChoConLai(int soChoConLai) {
-		this.soChoConLai = soChoConLai;
+	public void setSoChoConLai(long l) {
+		this.soChoConLai = l;
 	}
 
 	public double getRating() {

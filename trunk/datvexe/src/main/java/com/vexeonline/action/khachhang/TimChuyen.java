@@ -37,8 +37,10 @@ public class TimChuyen extends ActionSupport {
 	@Action(value = "timchuyenxe", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String getListChuyenXe() {
 		try {
+			logger.info(tinhDi + " " + tinhDen + " " + ngayDi);
 			list = khanhHangService.getListChuyenXe(tinhDi, tinhDen, ngayDi,
 					soCho);
+			logger.info(list.size());
 		} catch (Exception e) {
 			logger.error("Error", e);
 			return INPUT;

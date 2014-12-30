@@ -19,6 +19,8 @@ import com.vexeonline.dao.HanhKhachDAO;
 import com.vexeonline.dao.HanhKhachDAOImpl;
 import com.vexeonline.dao.LichTuyenDAO;
 import com.vexeonline.dao.LichTuyenDAOImpl;
+import com.vexeonline.dao.TienIchDAO;
+import com.vexeonline.dao.TienIchDAOImpl;
 import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
@@ -40,6 +42,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
+	private static TienIchDAO tienIchDAO = new TienIchDAOImpl();
 	private static ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
 	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
@@ -59,9 +62,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 			}
 			
 			ThongTinChuyenXeDTO temp;
+			List<String> tenTienIchs = new ArrayList<String>(0);
 			double rating;
 			int giaVe;
-			int soChoDaDat;
+			long soChoDaDat;
 			for (Object[] row : list) {
 				temp = new ThongTinChuyenXeDTO();
 				temp.setIdLichTuyen((int) row[0]);
@@ -74,6 +78,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 				temp.setTenBenDen((String) row[7]);
 				temp.setGioDi((Time) row[8]);
 				temp.setTongThoiGian((double) row[9]);
+				
+				tenTienIchs = tienIchDAO.getByXe(temp.getIdXe());
+				temp.setTienIchs(tenTienIchs);
+				logger.info(tenTienIchs.size());
 				
 				rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
 				temp.setRating(rating);
@@ -88,7 +96,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				if (temp.getSoCho() < (soChoDaDat + soCho)) {
 					continue;
 				}
-				temp.setSoChoConLai(temp.getSoCho() - soChoDaDat);
+				temp.setSoChoConLai((temp.getSoCho() - soChoDaDat));
 				
 				listData.add(temp);
 			}
