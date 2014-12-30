@@ -1,6 +1,9 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.vexeonline.domain.GiaVe;
 
 public class PriceDTO implements Serializable {
 	
@@ -8,16 +11,19 @@ public class PriceDTO implements Serializable {
 	
 	private Integer id;
 	private Integer giaVe;
-	private String ngayBatDau;
-	private String ngayKetThuc;
+	private Date ngayBatDau;
+	private Date ngayKetThuc;
 	
-	public PriceDTO(Integer id, Integer giaVe, String ngayBatDau, String ngayKetThuc) {
-		this.id = id;
-		this.giaVe = giaVe;
-		this.ngayBatDau = ngayBatDau;
-		this.ngayKetThuc = ngayKetThuc;
+	public PriceDTO() {
 	}
-
+	
+	public PriceDTO(GiaVe giaVe) {
+		this.id = giaVe.getIdGiaVe();
+		this.giaVe = giaVe.getGiaVe();
+		this.ngayBatDau = giaVe.getNgayBatDau();
+		this.ngayKetThuc = giaVe.getNgayKetThuc();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -34,19 +40,19 @@ public class PriceDTO implements Serializable {
 		this.giaVe = giaVe;
 	}
 
-	public String getNgayBatDau() {
+	public Date getNgayBatDau() {
 		return ngayBatDau;
 	}
 
-	public void setNgayBatDau(String ngayBatDau) {
+	public void setNgayBatDau(Date ngayBatDau) {
 		this.ngayBatDau = ngayBatDau;
 	}
 
-	public String getNgayKetThuc() {
+	public Date getNgayKetThuc() {
 		return ngayKetThuc;
 	}
 
-	public void setNgayKetThuc(String ngayKetThuc) {
+	public void setNgayKetThuc(Date ngayKetThuc) {
 		this.ngayKetThuc = ngayKetThuc;
 	}
 

@@ -134,7 +134,8 @@ public class Xe implements Serializable {
 	@Override
 	public String toString() {
 		return "Xe [idXe=" + idXe + ", bienSoXe=" + bienSoXe + ", loaiXe="
-				+ loaiXe + ", soCho=" + soCho + ", isActive=" + isActive
-				+ ", nhaXe=" + nhaXe + ", tienIchs=" + tienIchs + "]";
+				+ loaiXe + ", soCho=" + soCho + ", hinhAnh=" + hinhAnh
+				+ ", isActive=" + isActive + ", nhaXe=" + nhaXe + ", tienIchs="
+				+ tienIchs + "]";
 	}
 }
