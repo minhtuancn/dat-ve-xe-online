@@ -101,23 +101,23 @@
 							<td>
 								<div>
 									<div>
-										<s:iterator value="tienIchs" var="tienIch">
-											<s:if test="%{#tienIch.tenTienIch == 'DRINK'}">
+										<s:iterator value="tienIchs" var="name" >
+											<s:if test="%{#name == 'DRINK'}">
 												<span class="benefit benefit-drink fl-l" title="Nước uống"></span>
 											</s:if>
-											<s:elseif test="%{#tienIch.tenTienIch == 'TISSUE'}">
+											<s:elseif test="%{#name == 'TISSUE'}">
 												<span class="benefit benefit-tissue fl-l" title="Khăn lạnh"></span>
 											</s:elseif>
-											<s:elseif test="%{#tienIch.tenTienIch == 'TOILET'}">
-												<span class="benefit benefit-toilet fl-l" title="Điều hòa"></span>
+											<s:elseif test="%{#name == 'TOILET'}">
+												<span class="benefit benefit-toilet fl-l" title="Toilet"></span>
 											</s:elseif>
-											<s:elseif test="%{#tienIch.tenTienIch == 'DVD'}">
+											<s:elseif test="%{#name == 'DVD'}">
 												<span class="benefit benefit-dvd fl-l" title="DVD"></span>
 											</s:elseif>
-											<s:elseif test="%{#tienIch.tenTienIch == 'AIRCON'}">
+											<s:elseif test="%{#name == 'AIRCON'}">
 												<span class="benefit benefit-aircon fl-l" title="Điều hòa"></span>
 											</s:elseif>
-											<s:elseif test="%{#tienIch.tenTienIch == 'BLANKET'}">
+											<s:elseif test="%{#name == 'BLANKET'}">
 												<span class="benefit benefit-blanket fl-l" title="Chăn, mền"></span>
 											</s:elseif>
 										</s:iterator>
