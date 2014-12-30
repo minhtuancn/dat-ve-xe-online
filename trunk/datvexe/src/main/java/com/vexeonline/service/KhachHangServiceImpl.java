@@ -242,14 +242,13 @@ public class KhachHangServiceImpl implements KhachHangService {
 	}
 
 	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe) {
+		logger.info(idNhaXe);
 		List<ThongTinDanhGiaDTO> listThongTinDanhGia = new ArrayList<ThongTinDanhGiaDTO>(0);
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-
 			List<Object[]> listData = danhGiaDAO.getListInfoDanhGiaByIdNhaXe(idNhaXe);
-			System.out.println(idNhaXe);
 			if (listData == null) {
 				return null;
 			}
