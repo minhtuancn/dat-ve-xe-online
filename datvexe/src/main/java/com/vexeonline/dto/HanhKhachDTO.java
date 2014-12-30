@@ -10,7 +10,7 @@ public class HanhKhachDTO implements Serializable {
 	private String tenHanhKhach;
 	private Integer idVeXe;
 	private String soDienThoai;
-	private Integer viTri;
+	private String viTri;
 	private boolean thanhToan;
 	
 	public Integer getIdHanhKhach() {
@@ -45,11 +45,11 @@ public class HanhKhachDTO implements Serializable {
 		this.soDienThoai = soDienThoai;
 	}
 
-	public Integer getViTri() {
+	public String getViTri() {
 		return viTri;
 	}
 
-	public void setViTri(Integer viTri) {
+	public void setViTri(String viTri) {
 		this.viTri = viTri;
 	}
 

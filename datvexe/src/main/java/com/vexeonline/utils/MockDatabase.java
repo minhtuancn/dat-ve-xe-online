@@ -130,7 +130,8 @@ public class MockDatabase {
 
 		VeXe veXe = new VeXe();
 		veXe.setChuyenXe(chuyenXe);
-		veXe.setChoNgoi(1);
+		veXe.setChoNgoi("A1");
+		veXe.setMaVe("AB3223AV");
 		veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);

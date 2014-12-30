@@ -9,6 +9,7 @@ public class ThongTinDanhGiaDTO implements Serializable {
 	private String tenNguoiDanhGia;
 	private float diem;
 	private Date ngayDi;
+	private Date ngayDanhGia;
 
 	public String getNoiDung() {
 		return noiDung;
@@ -40,6 +41,14 @@ public class ThongTinDanhGiaDTO implements Serializable {
 
 	public void setNgayDi(Date ngayDi) {
 		this.ngayDi = ngayDi;
+	}
+
+	public Date getNgayDanhGia() {
+		return ngayDanhGia;
+	}
+
+	public void setNgayDanhGia(Date ngayDanhGia) {
+		this.ngayDanhGia = ngayDanhGia;
 	}
 
 }

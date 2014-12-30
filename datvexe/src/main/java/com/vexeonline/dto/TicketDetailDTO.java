@@ -11,7 +11,7 @@ public class TicketDetailDTO implements Serializable {
 	private String startDate;
 	private String startTime;
 	private String vehicleType;
-	private Integer seatId;
+	private String seatId;
 	private String customerName;
 	private String customerPhoneNumber;
 	private String customerEmail;
@@ -57,11 +57,11 @@ public class TicketDetailDTO implements Serializable {
 		this.vehicleType = vehicleType;
 	}
 
-	public Integer getSeatId() {
+	public String getSeatId() {
 		return seatId;
 	}
 
-	public void setSeatId(Integer seatId) {
+	public void setSeatId(String seatId) {
 		this.seatId = seatId;
 	}
 
