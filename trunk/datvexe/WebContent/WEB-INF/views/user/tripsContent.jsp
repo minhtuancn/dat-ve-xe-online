@@ -212,9 +212,9 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="sdt"  class="control-label col-xs-2">Số điện thoại</label>
+						<label for="maVe"  class="control-label col-xs-2">Mã vé</label>
 						<div class="col-xs-10">
-							<input name="sdt" class="form-control" required="required" placeholder="Số điện thoại">
+							<input name="maVe" class="form-control" required="required" placeholder="mã vé">
 						</div>
 					</div>
 					
@@ -353,8 +353,9 @@
 	}
 
 	function formatDate(date) {
-		var myDate = new Date(date);
-		return  myDate.getDate() + "-" + (myDate.getMonth() + 1)+ "-" + myDate.getFullYear();
+		var today = new Date(date);
+		return today.toLocaleDateString(); // 30-Dec-2011
+		//return  myDate.getDate() + "-" + myDate.getMonth() + "-" + myDate.getFullYear();
 	}
 </script>
 
@@ -404,11 +405,12 @@ $(document).on("click", ".openListSdt", function() {
 				event.preventDefault();
 
 				// Get some values from elements on the page:
-				var $form = $(this), noiDung_ = $form.find(
-						"textarea[name='noiDung']").val(), diem_ = $form.find(
-						"input[name='diem']").val(), ngayDi_ = $form.find(
-						"input[name='ngayDi']").val(), sdt_ = $form.find(
-						"input[name='sdt']").val(), url = $form.attr("action");
+				var $form = $(this), 
+					noiDung_ = $form.find("textarea[name='noiDung']").val(), 
+					diem_ = $form.find("input[name='diem']").val(), 
+					ngayDi_ = $form.find("input[name='ngayDi']").val(), 
+					sdt_ = $form.find("input[name='maVe']").val(), 
+					url = $form.attr("action");
 
 				// Send the data using post
 				var posting = $.post(url, {
