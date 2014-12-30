@@ -17,6 +17,12 @@ public class PriceDTO implements Serializable {
 	public PriceDTO() {
 	}
 	
+	public PriceDTO(Integer giaVe, Date ngayBatDau, Date ngayKetThuc) {
+		this.giaVe = giaVe;
+		this.ngayBatDau = ngayBatDau;
+		this.ngayKetThuc = ngayKetThuc;
+	}
+
 	public PriceDTO(GiaVe giaVe) {
 		this.id = giaVe.getIdGiaVe();
 		this.giaVe = giaVe.getGiaVe();

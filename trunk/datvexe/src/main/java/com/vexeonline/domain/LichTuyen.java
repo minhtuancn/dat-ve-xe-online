@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -62,7 +63,7 @@ public class LichTuyen implements Serializable {
 	@JoinColumn(nullable = false)
 	private Xe xe;
 
-	@OneToMany(mappedBy = "lichTuyen")
+	@OneToMany(mappedBy = "lichTuyen", cascade = CascadeType.ALL)
 	private Set<GiaVe> giaVes = new HashSet<GiaVe>(0);
 	
 	private boolean active;

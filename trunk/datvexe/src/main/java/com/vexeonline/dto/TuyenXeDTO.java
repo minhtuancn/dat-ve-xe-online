@@ -17,6 +17,10 @@ public class TuyenXeDTO implements Serializable {
 	public TuyenXeDTO() {
 	}
 	
+	public TuyenXeDTO(Integer id) {
+		this.id = id;
+	}
+
 	public TuyenXeDTO(TuyenXe tuyenXe) {
 		this.id = tuyenXe.getIdTuyenXe();
 		this.benDi = new BenXeDTO(tuyenXe.getBenDi());

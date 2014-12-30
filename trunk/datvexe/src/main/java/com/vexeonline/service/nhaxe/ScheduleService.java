@@ -7,7 +7,7 @@ import com.vexeonline.dto.ScheduleDTO;
 
 public interface ScheduleService {
 	
-	public List<ScheduleDTO> getById(Integer scheduleId) throws Exception;
+	public ScheduleDTO getById(Integer scheduleId) throws Exception;
 
 	public List<ScheduleDTO> getAll() throws Exception;
 

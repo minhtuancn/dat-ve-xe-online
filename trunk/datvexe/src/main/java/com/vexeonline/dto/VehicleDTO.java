@@ -25,6 +25,10 @@ public class VehicleDTO implements Serializable {
 	public VehicleDTO() {
 	}
 	
+	public VehicleDTO(Integer id) {
+		this.id = id;
+	}
+
 	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<TienIchDTO> tienIchs) {
 		this.id = id;
 		this.idNhaXe = idNhaXe;

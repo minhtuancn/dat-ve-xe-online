@@ -6,6 +6,7 @@ package com.vexeonline.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class GiaVe implements Serializable {
 	@Column(nullable = false, unique = true)
 	private Integer idGiaVe;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private LichTuyen lichTuyen;
 
