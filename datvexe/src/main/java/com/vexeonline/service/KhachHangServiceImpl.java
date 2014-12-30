@@ -135,7 +135,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
-			user = userDAO.getUserByUserName(userName);
+			user = userDAO.get(userName);
 			if (user == null || !user.getPassword().equals(password)) {
 				user = null;
 			}

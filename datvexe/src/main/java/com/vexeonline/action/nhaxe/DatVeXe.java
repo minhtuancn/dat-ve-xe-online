@@ -14,7 +14,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
-import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.service.nhaxe.DatVeService;
 import com.vexeonline.service.nhaxe.DatVeServiceImpl;
 
@@ -24,9 +23,13 @@ import com.vexeonline.service.nhaxe.DatVeServiceImpl;
 		"execute" })
 @Results({ @Result(name = "input", location = "coach.book", type = "tiles") })
 public class DatVeXe extends ActionSupport implements SessionAware {
+	
 	private static final long serialVersionUID = 6453306615485591423L;
+	
 	private static Logger logger = Logger.getLogger(DatVeXe.class);
+	
 	private static DatVeService datVeXeService = new DatVeServiceImpl();
+	
 	Map<String, Object> session;
 	private String tenHanhKhach;
 	private String sdt;
@@ -44,11 +47,7 @@ public class DatVeXe extends ActionSupport implements SessionAware {
 			int idChuyenXe = (int) session.get("idChuyenXe");
 			logger.info(idChuyenXe);
 
-			if (session.get("user") == null
-					|| session.get("role") == null
-					|| !session.get("role").toString()
-							.equals(RoleOfUser.NHAXE.toString())) {
-				logger.info("sadsadsa");
+			if (session.get("user") == null) {
 				return INPUT;
 			}
 

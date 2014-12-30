@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 
 import com.vexeonline.dao.XeDAOImpl;
 import com.vexeonline.domain.Xe;
+import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.VehicleDTO;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -27,9 +28,9 @@ public class VehicleServiceTest {
 		vehicle1.setLoaiXe("Giường nằm");
 		vehicle1.setSoCho(40);
 		vehicle1.setActive(true);
-		vehicle1.getTienIchs().add("DRINK");
-		vehicle1.getTienIchs().add("DVD");
-		vehicle1.getTienIchs().add("AIRCON");
+		vehicle1.getTienIchs().add(new TienIchDTO("DRINK"));
+		vehicle1.getTienIchs().add(new TienIchDTO("DVD"));
+		vehicle1.getTienIchs().add(new TienIchDTO("AIRCON"));
 		service.insertVehicle(vehicle1);
 		
 		VehicleDTO vehicle2 = new VehicleDTO();
@@ -38,10 +39,10 @@ public class VehicleServiceTest {
 		vehicle2.setLoaiXe("Giường nằm");
 		vehicle2.setSoCho(40);
 		vehicle2.setActive(true);
-		vehicle2.getTienIchs().add("DRINK");
-		vehicle2.getTienIchs().add("DVD");
-		vehicle2.getTienIchs().add("AIRCON");
-		vehicle2.getTienIchs().add("TOILET");
+		vehicle2.getTienIchs().add(new TienIchDTO("DRINK"));
+		vehicle2.getTienIchs().add(new TienIchDTO("DVD"));
+		vehicle2.getTienIchs().add(new TienIchDTO("AIRCON"));
+		vehicle2.getTienIchs().add(new TienIchDTO("TOILET"));
 		service.insertVehicle(vehicle2);
 		
 		VehicleDTO vehicle3 = new VehicleDTO();
@@ -50,28 +51,35 @@ public class VehicleServiceTest {
 		vehicle3.setLoaiXe("Giường nằm");
 		vehicle3.setSoCho(40);
 		vehicle3.setActive(true);
-		vehicle3.getTienIchs().add("DRINK");
-		vehicle3.getTienIchs().add("DVD");
-		vehicle3.getTienIchs().add("AIRCON");
-		vehicle3.getTienIchs().add("TOILET");
+		vehicle3.getTienIchs().add(new TienIchDTO("DRINK"));
+		vehicle3.getTienIchs().add(new TienIchDTO("DVD"));
+		vehicle3.getTienIchs().add(new TienIchDTO("AIRCON"));
+		vehicle3.getTienIchs().add(new TienIchDTO("TOILET"));
 		service.insertVehicle(vehicle3);
 	}
 	
 	public static void update() throws Exception {
 		VehicleDTO vehicle1 = service.getVehicle(1, 1);
-		vehicle1.getTienIchs().add("TISSUE");
-		vehicle1.getTienIchs().add("DRINK");
+		vehicle1.getTienIchs().add(new TienIchDTO("TISSUE"));
+		vehicle1.getTienIchs().add(new TienIchDTO("DRINK"));
 		service.updateVehicle(vehicle1);
 		
 		VehicleDTO vehicle2 = service.getVehicle(1, 2);
-		vehicle2.getTienIchs().add("TISSUE");
-		vehicle2.getTienIchs().add("DVD");
+		vehicle2.getTienIchs().add(new TienIchDTO("TISSUE"));
+		vehicle2.getTienIchs().add(new TienIchDTO("DVD"));
 		service.updateVehicle(vehicle2);
 		
 		VehicleDTO vehicle3 = service.getVehicle(1, 3);
-		vehicle3.getTienIchs().add("TISSUE");
-		vehicle3.getTienIchs().add("TOILET");
+		vehicle3.getTienIchs().add(new TienIchDTO("TISSUE"));
+		vehicle3.getTienIchs().add(new TienIchDTO("TOILET"));
 		service.updateVehicle(vehicle3);
+	}
+	
+	public static void tienIch() throws Exception {
+		List<TienIchDTO> tienIchs = service.getTienIchs();
+		for (TienIchDTO tienIch : tienIchs) {
+			System.out.println(tienIch);
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -82,10 +90,15 @@ public class VehicleServiceTest {
 			//update();
 			//list();
 			
-			List<Xe> vehicles = new  XeDAOImpl().list(1);
+			//tienIch();
+			
+			Xe xe = new XeDAOImpl().getById(2, 3);
+			System.out.println(xe);
+		
+			/*List<Xe> vehicles = new  XeDAOImpl().list(1);
 			for (Xe vehicle : vehicles) {
 				System.out.println(vehicle);
-			}
+			}*/
 			
 			tx.commit();
 		} catch (Exception e) {

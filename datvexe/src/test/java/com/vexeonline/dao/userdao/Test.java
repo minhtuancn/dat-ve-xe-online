@@ -11,7 +11,7 @@ public class Test {
 	public static void main(String[] args) {
 		UserDAO userDAO = new UserDAOImpl();
 		Transaction tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-		User user = userDAO.getUserById(1);
+		User user = userDAO.get(1);
 		tx.commit();
 		
 		System.out.println(user);

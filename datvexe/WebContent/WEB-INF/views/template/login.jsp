@@ -11,9 +11,9 @@
 }
 -->
 </style>
-<s:form action="logging" method="post" theme="bootstrap" cssClass="well form-vertical">
-	<s:actionerror/>
-	<s:textfield name="user.userName" label="Tên người dùng" />
+<s:form action="logging" method="post" theme="bootstrap" cssClass="well form-vertical" validate="true">
+	<s:actionerror theme="bootstrap"/>
+	<s:textfield name="user.userName" label="Tên người dùng"/>
 	<s:password name="user.password" label="Mật khẩu" />
 	<s:submit value="Đăng nhập" cssClass="btn btn-primary" />
 	<s:reset value="Đặt lại" cssClass="btn btn-danger" />
