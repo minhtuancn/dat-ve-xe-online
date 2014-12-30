@@ -3,53 +3,56 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <style>
 <!--
-#tienIchList {
-	display: inline-block;
-	list-style-type: none;
-	padding: 0;
+#vehicle_detail {
+	border: 1px gray dashed;
+	background-color: white;
+	padding: 50px 50px 50px 50px;
+	width: 1000px;
+	margin: 100px auto;
+}
+
+#vehicle_detail legend {
+	text-transform: uppercase;
 }
 -->
 </style>
-<form id="vehicleForm" action="${pageContext.request.contextPath}/coachcp/saveVehicle" method="post" class="round-5">
-	<input type="hidden" name="id" value="${xe.id}">
-	<div class="input-group">
-		<label class="input-label" for="bienSo">Biến số xe</label>
-		<input class="textbox" type="text" name="xe.bienSo" value="${xe.bienSo}" required/>
-	</div>
-	<div class="input-group">
-		<label class="input-label" for="loaiXe">Loại xe</label>
-		<input class="textbox" type="text" name="xe.loaiXe" value="${xe.loaiXe}" required/>
-	</div>
-	<div class="input-group">
-		<label class="input-label" for="soCho">Số chỗ</label>
-		<input class="textbox" type="number" min="4" name="xe.soCho" value="${xe.soCho}" />
-	</div>
-	<!-- <div class="input-group">
-		<label for="image">Hình ảnh</label>
-		<img name="image" src="" />
-	</div> -->
-	<div class="input-group">
-		<label class="input-label" for="active">Còn hoạt động</label>
-		<s:if test="%{xe.active}">
-			<input type="checkbox" name="xe.active" checked="checked"/>
-		</s:if>
-		<s:else>
-			<input type="checkbox" name="xe.active"/>
-		</s:else>
-	</div>
-	<div class="input-group">
-		<label class="input-label">Tiện ích</label>
-		<ul id="tienIchList" class="input-control">
-			<s:iterator var="tienIch" value="tienIchs" status="stat">
-				<li>
-					<input type="checkbox" name="maTienIchs" value="${tienIch.tenTienIch}" />
-					<s:property value="#tienIch.TenTienIch" />
-				</li>
-			</s:iterator>
-		</ul>
-	</div>
-	<div class="input-group">
-		<label>&nbsp;</label>
-		<input class="input-control btn btn-primary" type="submit" value="Lưu" />
-	</div>
-</form>
+<s:div id="vehicle_detail_wrapper">
+	<s:form id="vehicle_detail" action="saveVehicle" method="post"
+	theme="bootstrap" cssClass="form-horizontal" label="Thông tin xe">
+		<s:hidden name="vehicle.id" />
+		<s:textfield name="vehicle.bienSo" label="Biển số" />
+		<s:textfield name="vehicle.loaiXe" label="Loại xe" />
+		<s:textfield type="numeric" name="vehicle.soCho" label="Số chỗ" />
+		<div class="form-group ">
+			<label class="col-sm-3 control-label">Tiện ích</label>
+			<div class="col-sm-9 controls">
+				<s:div id="tien_ich" cssClass="form-control"></s:div>
+			</div>
+		</div>
+		<s:checkbox name="vehicle.active" label="Hoạt động" />
+		<s:submit cssClass="btn btn-primary pull-right" />
+		<input id="vehicleTienIchsJson" name="vehicleTienIchsJson"
+			type="hidden">
+	</s:form> 
+</s:div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/magicsuggest/magicsuggest.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/magicsuggest/magicsuggest.css" />
+<script type="text/javascript">
+$(document).ready(function() {
+	var ms = $('#tien_ich').magicSuggest({
+		data: ${tienIchsJson},
+		valueField: 'id',
+		renderer: function(data) {
+			return data.name;
+		}
+	});
+	
+	ms.setSelection(${vehicleTienIchsJson});
+	
+	$('#vehicleTienIchsJson').val(JSON.stringify(ms.getSelection()));
+	
+	$(ms).on('selectionchange', function(e,m) {
+        $('#vehicleTienIchsJson').val(JSON.stringify(ms.getSelection()));
+    });
+});
+</script>

@@ -75,7 +75,7 @@
 			<artifactId>struts2-bootstrap-plugin</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-json-plugin</artifactId>
@@ -99,13 +99,19 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
 			<version>1.1.7</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -143,5 +149,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

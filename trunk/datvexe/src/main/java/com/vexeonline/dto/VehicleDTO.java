@@ -17,12 +17,12 @@ public class VehicleDTO implements Serializable {
 	private String loaiXe;
 	private Integer soCho;
 	private boolean active;
-	private List<String> tienIchs = new ArrayList<String>();
+	private List<TienIchDTO> tienIchs = new ArrayList<TienIchDTO>();
 
 	public VehicleDTO() {
 	}
 	
-	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<String> tienIchs) {
+	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<TienIchDTO> tienIchs) {
 		this.id = id;
 		this.idNhaXe = idNhaXe;
 		this.bienSo = bienSo;
@@ -40,7 +40,7 @@ public class VehicleDTO implements Serializable {
 		this.soCho = vehicle.getSoCho();
 		this.active = vehicle.isActive();
 		for (TienIch tienIch : vehicle.getTienIchs()) {
-			this.tienIchs.add(tienIch.getTenTienIch());
+			this.tienIchs.add(new TienIchDTO(tienIch));
 		}
 	}
 	
@@ -92,18 +92,11 @@ public class VehicleDTO implements Serializable {
 		this.active = active;
 	}
 
-	public List<String> getTienIchs() {
+	public List<TienIchDTO> getTienIchs() {
 		return tienIchs;
 	}
 
-	public void setTienIchs(List<String> tienIchs) {
+	public void setTienIchs(List<TienIchDTO> tienIchs) {
 		this.tienIchs = tienIchs;
-	}
-
-	@Override
-	public String toString() {
-		return "VehicleDTO [id=" + id + ", idNhaXe=" + idNhaXe + ", bienSo="
-				+ bienSo + ", loaiXe=" + loaiXe + ", soCho=" + soCho
-				+ ", active=" + active + ", tienIchs=" + tienIchs + "]";
 	}
 }

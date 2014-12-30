@@ -41,7 +41,7 @@ $(document).ready(function() {
 			</tr>
 		</tfoot>
 		<tbody>
-			<s:iterator value="xes">
+			<s:iterator value="vehicles">
 				<tr>
 					<td><s:property value="id"/></td>
 					<td><s:property value="bienSo"/></td>

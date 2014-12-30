@@ -48,7 +48,7 @@ public class QuanLyTaiKhoanServiceImpl implements QuanLyTaiKhoanService {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
-			userDAO.save(User);
+			userDAO.insert(User);
 
 			tx.commit();
 		} catch (Exception ex) {

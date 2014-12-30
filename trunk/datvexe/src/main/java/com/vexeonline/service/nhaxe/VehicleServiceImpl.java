@@ -14,6 +14,7 @@ import com.vexeonline.dao.XeDAOImpl;
 import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.Xe;
+import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.VehicleDTO;
 
 public class VehicleServiceImpl implements VehicleService {
@@ -55,25 +56,53 @@ public class VehicleServiceImpl implements VehicleService {
 			result = new Xe();
 		}
 		
-		result.setBienSoXe(vehicleDTO.getBienSo());
-		result.setActive(vehicleDTO.isActive());
-		result.setLoaiXe(vehicleDTO.getLoaiXe());
-		
-		NhaXe nhaXe = nhaXeDAO.getById(vehicleDTO.getIdNhaXe());
-		if (nhaXe != null) {
-			result.setNhaXe(nhaXe);
-		}
-		
-		result.setSoCho(vehicleDTO.getSoCho());
-		Set<TienIch> tienIchs = new HashSet<TienIch>();
-		for (String tenTienIch : vehicleDTO.getTienIchs()) {
-			TienIch tienIch = tienIchDAO.get(tenTienIch);
-			if (tienIch != null) {
-				tienIchs.add(tienIch);
+		if (result != null) {
+			result.setBienSoXe(vehicleDTO.getBienSo());
+			result.setActive(vehicleDTO.isActive());
+			result.setLoaiXe(vehicleDTO.getLoaiXe());
+			
+			NhaXe nhaXe = nhaXeDAO.getById(vehicleDTO.getIdNhaXe());
+			if (nhaXe != null) {
+				result.setNhaXe(nhaXe);
 			}
+			
+			result.setSoCho(vehicleDTO.getSoCho());
+			Set<TienIch> tienIchs = new HashSet<TienIch>();
+			for (TienIchDTO tienIch : vehicleDTO.getTienIchs()) {
+				tienIchs.add(TienIchDTO2TienIch(tienIch));
+			}
+			result.setTienIchs(tienIchs);
 		}
-		result.setTienIchs(tienIchs);
 		
+		return result;
+	}
+	
+	private TienIch TienIchDTO2TienIch(TienIchDTO tienIchDTO) {
+		TienIch result = null;
+		
+		if (tienIchDTO.getId() != null) {
+			result = tienIchDAO.getById(tienIchDTO.getId());
+		} else {
+			result = new TienIch();
+			result.setTenTienIch(tienIchDTO.getName());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public TienIchDTO getTienIch(Integer tienIchId) throws Exception {
+		TienIch tienIch = tienIchDAO.getById(tienIchId);
+		return tienIch == null ? null : new TienIchDTO(tienIch);
+	}
+
+	@Override
+	public List<TienIchDTO> getTienIchs() throws Exception {
+		List<TienIchDTO> result = new ArrayList<TienIchDTO>();
+		List<TienIch> tienIchs = tienIchDAO.list();
+		for (TienIch tienIch : tienIchs ) {
+			result.add(new TienIchDTO(tienIch));
+		}
 		return result;
 	}
 }
