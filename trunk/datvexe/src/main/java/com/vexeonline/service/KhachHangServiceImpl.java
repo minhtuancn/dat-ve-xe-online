@@ -157,7 +157,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return user;
 	}
 
-	public boolean datVe(int soCho, int idChuyenXe, HanhKhach hanhKhach) {
+	public boolean datVe(String soCho, int idChuyenXe, HanhKhach hanhKhach) {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -250,15 +250,16 @@ public class KhachHangServiceImpl implements KhachHangService {
 					.beginTransaction();
 			List<Object[]> listData = danhGiaDAO.getListInfoDanhGiaByIdNhaXe(idNhaXe);
 			if (listData == null) {
-				return null;
+				return listThongTinDanhGia;
 			}
 			ThongTinDanhGiaDTO thongTin;
 			for (Object[] row : listData) {
 			    thongTin = new ThongTinDanhGiaDTO();
 			    thongTin.setDiem((float) row[0]);
 			    thongTin.setTenNguoiDanhGia((String)row[1]);
-			    thongTin.setNgayDi((Date)row[2]);
-			    thongTin.setNoiDung((String)row[3]);
+			    thongTin.setNoiDung((String)row[2]);
+			    thongTin.setNgayDi((Date)row[3]);
+			    thongTin.setNgayDanhGia((Date) row[4]);
 			    listThongTinDanhGia.add(thongTin);
 			}
 

@@ -53,14 +53,14 @@ public class DatVeServiceImpl implements DatVeService{
 				seats.add(false);
 			}
 			
-			for (int i = 0; i < soCho; ++i) {
+			/*for (int i = 0; i < soCho; ++i) {
 				for (VeXe veXe : chuyenXe.getVeXes()) {
 					if (veXe.getChoNgoi() == (i + 1)) {
 						seats.set(i, true);
 						break;
 					}
 				}
-			}
+			}*/
 	
 			tx.commit();
 		} catch (Exception ex) {
@@ -94,7 +94,7 @@ public class DatVeServiceImpl implements DatVeService{
 			
 			for (String choNgoi : seatings) {
 				VeXe veXe = new VeXe();
-				veXe.setChoNgoi(Integer.parseInt(choNgoi));
+				veXe.setChoNgoi(choNgoi);
 				veXe.setChuyenXe(chuyenXe);
 				veXe.setHanhKhach(hanhKhach);
 				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);

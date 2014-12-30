@@ -24,8 +24,11 @@ public class VeXe implements Serializable {
 	@Column(unique = true, nullable = false)
 	private int idVeXe;
 
-	@Column(nullable = false)
-	private int choNgoi;
+	@Column(unique = true, nullable = false, length = 8)
+	private String maVe;
+
+	@Column(nullable = false, length = 5)
+	private String choNgoi;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 10)
@@ -48,11 +51,11 @@ public class VeXe implements Serializable {
 	}
 
 	@RequiredFieldValidator(key = "require.choNgoi")
-	public int getChoNgoi() {
+	public String getChoNgoi() {
 		return choNgoi;
 	}
 
-	public void setChoNgoi(int choNgoi) {
+	public void setChoNgoi(String choNgoi) {
 		this.choNgoi = choNgoi;
 	}
 
@@ -79,4 +82,13 @@ public class VeXe implements Serializable {
 	public void setHanhKhach(HanhKhach hanhKhach) {
 		this.hanhKhach = hanhKhach;
 	}
+
+	public String getMaVe() {
+		return maVe;
+	}
+
+	public void setMaVe(String maVe) {
+		this.maVe = maVe;
+	}
+
 }

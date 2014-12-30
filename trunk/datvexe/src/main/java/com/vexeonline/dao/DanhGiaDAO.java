@@ -9,7 +9,13 @@ public interface DanhGiaDAO {
     public List<DanhGia> list();
     public void delete(DanhGia danhGia);
     public DanhGia getById(int idDanhGia);
-    public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe);
+    
+    /**
+     * Get info in table DanhGia with column follow order :
+     * diem, tenHanhKhach, noiDung, ngayDi, ngayDanhGia
+     * @param idNhaXe
+     * @return
+     */
     public List<Object[]> getListInfoDanhGiaByIdNhaXe(int idNhaXe);
     public List<Object[]> getListSDTNhaXe(int idNhaXe);
     

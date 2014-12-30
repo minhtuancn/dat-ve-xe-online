@@ -28,20 +28,20 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<DanhGia> getListDanhGiaByIdNhaXe(int idNhaXe) {
-		return HibernateUtil.getSessionFactory().getCurrentSession()
-			.createQuery("from NhaXe as n "
-					+ "where d.nhaXe.idNhaXe = :idNhaXe")
-					.setInteger("idNhaXe", idNhaXe)
-					.list();
-	}
-
-	@SuppressWarnings("unchecked")
 	public List<Object[]> getListInfoDanhGiaByIdNhaXe(int idNhaXe) {
 		return HibernateUtil.getSessionFactory().getCurrentSession()
-				.createQuery("select d.diem, d.hanhKhach.tenHanhKhach, d.chuyenXe.ngayDi, d.noiDung "
-						+ " from DanhGia as d "
-						+ "where d.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe = :idNhaXe")
+				.createQuery("SELECT\r\n" + 
+							"  d.diem,\r\n" + 
+							"  d.hanhKhach.tenHanhKhach,\r\n" + 
+							"  d.noiDung,\r\n" + 
+							"  d.ngayDi,\r\n" + 
+							"  d.ngayDanhGia \r\n" + 
+							" FROM\r\n" + 
+							"  DanhGia as d \r\n" + 
+							" INNER JOIN\r\n" + 
+							"  d.nhaXe as n \r\n" + 
+							" WHERE\r\n" + 
+							"  n.idNhaXe = :idNhaXe")
 						.setInteger("idNhaXe", idNhaXe)
 						.list();
 	}

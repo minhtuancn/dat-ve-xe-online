@@ -48,10 +48,9 @@ public class DanhGia extends ActionSupport {
 	@Action(value = "listdanhgia", results = @Result(type = "json", name = SUCCESS, params = {
 			"root", "list" }))
 	public String getListInfoDanhGia() {
-		try {
-			logger.error("tung sadsad");
+		try {		
 			list = khachHangService.getListInfoDanhGiaByNhaXe(idNhaXe);
-
+			logger.info("size of list " + list.size() + " with idNhaXe = " + idNhaXe);
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}

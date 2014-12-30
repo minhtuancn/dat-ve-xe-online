@@ -51,7 +51,7 @@ public interface KhachHangService {
 	 * @param hanhKhach
 	 * @return true if success otherwise fasle
 	 */
-	public boolean datVe(int soCho, int idChuyenXe, HanhKhach hanhKhach);
+	public boolean datVe(String soCho, int idChuyenXe, HanhKhach hanhKhach);
 
 	/**
 	 * 
