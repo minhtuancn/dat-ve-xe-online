@@ -16,9 +16,9 @@ public interface TienIchDAO {
 	public TienIch update(TienIch tienIch);
 	
 	/**
-	 * return tienIchs of xe
+	 * return list ten tien ich of xe
 	 * @param idXe
 	 * @return
 	 */
-	public List<TienIch> getByXe(int idXe);
+	public List<String> getByXe(int idXe);
 }
