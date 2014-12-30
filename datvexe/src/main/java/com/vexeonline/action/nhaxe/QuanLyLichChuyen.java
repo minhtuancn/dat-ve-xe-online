@@ -1,6 +1,5 @@
 package com.vexeonline.action.nhaxe;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.dto.ScheduleDTO;
 import com.vexeonline.utils.HibernateUtil;
 

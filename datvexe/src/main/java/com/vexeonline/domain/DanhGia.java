@@ -1,6 +1,7 @@
 package com.vexeonline.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,12 @@ public class DanhGia implements Serializable {
 	private float diem;
 
 	private boolean trangThai;
+	
+	@Column(nullable = false)
+	private Date ngayDi;
+	
+	@Column(nullable = false)
+	private Date ngayDanhGia;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -87,6 +94,22 @@ public class DanhGia implements Serializable {
 
 	public void setNhaXe(NhaXe nhaXe) {
 		this.nhaXe = nhaXe;
+	}
+
+	public Date getNgayDi() {
+		return ngayDi;
+	}
+
+	public void setNgayDi(Date ngayDi) {
+		this.ngayDi = ngayDi;
+	}
+
+	public Date getNgayDanhGia() {
+		return ngayDanhGia;
+	}
+
+	public void setNgayDanhGia(Date ngayDanhGia) {
+		this.ngayDanhGia = ngayDanhGia;
 	}
 
 }

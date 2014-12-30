@@ -165,7 +165,9 @@ public class MockDatabase {
 		DanhGia danhGia = new DanhGia();
 		danhGia.setDiem(4.2f);
 		danhGia.setHanhKhach(hanhKhach);
-		danhGia.setNoiDung("12321");
+		danhGia.setNoiDung("Very Good");
+		danhGia.setNgayDanhGia(new SimpleDateFormat("dd/mm/yyyy").parse("12/12/2014"));
+		danhGia.setNgayDi(new SimpleDateFormat("dd/mm/yyyy").parse("22/12/2014"));
 		danhGia.setNhaXe(nhaXe);
 		session.save(danhGia);
 
