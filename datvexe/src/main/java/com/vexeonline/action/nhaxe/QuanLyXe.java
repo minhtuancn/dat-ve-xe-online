@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
 import com.google.gson.Gson;
@@ -32,28 +33,22 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private Map<String,Object> session;
 	
-	private Integer id;
 	private List<VehicleDTO> vehicles = null;
 	private VehicleDTO vehicle = null;
 	
-	private String tienIchsJson;
+	private List<TienIchDTO> tienIchs;
+
 	private String vehicleTienIchsJson;
 	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
 	}
 	
-	@Action(value = "vehicles", results = @Result(name = "success", location = "coach.vehicles", type = "tiles"))
+	@SkipValidation
+	@Action(value = "vehicle", results = @Result(name = "vehicles", location = "coach.vehicles", type = "tiles"))
 	public String showVehiclesPage() {
+		String result = "vehicles";
 		UserDTO user = (UserDTO) session.get("user");
 		Transaction tx = null;
 		try {
@@ -64,28 +59,19 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		}
-		return SUCCESS;
+		return result;
 	}
 
-	@Action(value = "newVehicle",results = {
+	@SkipValidation
+	@Action(value = "vehicle/new",results = {
 			@Result(name = "success", location = "coach.newVehicle", type = "tiles")	
 	})
 	public String showNewVehiclePage() {
-		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			List<TienIchDTO> tienIchs = vehicleService.getTienIchs();
-			tienIchsJson = new Gson().toJson(tienIchs);
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			e.printStackTrace();
-		}
 		return SUCCESS;
 	}
 	
-	@Action(value = "saveVehicle", results = {
-		@Result(name = "success", location = "vehicles", type = "redirect"),
+	@Action(value = "vehicle/save", results = {
+		@Result(name = "success", location = "vehicle", type = "redirect"),
 		@Result(name = "input", location = "coach.newVehicle", type = "tiles")
 	})
 	public String saveVehicle() {
@@ -116,16 +102,51 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "vehicleDetail", results = @Result(name = "success", location = "coach.vehicleDetail", type = "tiles"))
+	@SkipValidation
+	@Action(value = "vehicle/*",
+		params = {"vehicle.id", "{1}"},
+		results = @Result(name = "success", location = "coach.vehicleDetail", type = "tiles"))
 	public String showVehicleDetailPage() {
 		UserDTO user = (UserDTO) session.get("user");
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			vehicle = vehicleService.getVehicle(user.getNhaXeId(), id);
-			List<TienIchDTO> tienIchs = vehicleService.getTienIchs();
-			tienIchsJson = new Gson().toJson(tienIchs);
-			vehicleTienIchsJson = new Gson().toJson(vehicle.getTienIchs());
+			vehicle = vehicleService.getVehicle(user.getNhaXeId(), vehicle.getId());
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	@Action(value = "tien_ichs_json",
+			results = @Result(name = "success",
+				type = "json",
+				params = {"root", "tienIchs"}))
+	public String tienIchs() {
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			tienIchs = vehicleService.getTienIchs();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	@Action(value = "vehicle_tien_ichs_json",
+			results = @Result(name = "success",
+				type = "json",
+				params = {"root", "tienIchs"}))
+	public String vehicleTienIchs() {
+		UserDTO user = (UserDTO) session.get("user");
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			tienIchs = vehicleService.getVehicle(user.getNhaXeId(), vehicle.getId()).getTienIchs();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
@@ -150,19 +171,19 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		this.vehicle = vehicle;
 	}
 
-	public String getTienIchsJson() {
-		return tienIchsJson;
-	}
-
-	public void setTienIchsJson(String tienIchsJson) {
-		this.tienIchsJson = tienIchsJson;
-	}
-
 	public String getVehicleTienIchsJson() {
 		return vehicleTienIchsJson;
 	}
 
 	public void setVehicleTienIchsJson(String vehicleTienIchsJson) {
 		this.vehicleTienIchsJson = vehicleTienIchsJson;
+	}
+
+	public List<TienIchDTO> getTienIchs() {
+		return tienIchs;
+	}
+
+	public void setTienIchs(List<TienIchDTO> tienIchs) {
+		this.tienIchs = tienIchs;
 	}
 }

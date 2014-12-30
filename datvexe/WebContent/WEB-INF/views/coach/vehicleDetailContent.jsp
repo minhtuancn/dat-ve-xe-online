@@ -17,8 +17,8 @@
 -->
 </style>
 <s:div id="vehicle_detail_wrapper">
-	<s:form id="vehicle_detail" action="saveVehicle" method="post"
-	theme="bootstrap" cssClass="form-horizontal" label="Thông tin xe">
+	<s:form id="vehicle_detail" action="vehicle/save" method="post"
+	theme="bootstrap" cssClass="form-horizontal" validate="true" label="Thông tin xe">
 		<s:hidden name="vehicle.id" />
 		<s:textfield name="vehicle.bienSo" label="Biển số" />
 		<s:textfield name="vehicle.loaiXe" label="Loại xe" />
@@ -40,14 +40,26 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var ms = $('#tien_ich').magicSuggest({
-		data: ${tienIchsJson},
+		data: '${pageContext.request.contextPath}/coachcp/tien_ichs_json',
+		editable: false,
 		valueField: 'id',
 		renderer: function(data) {
 			return data.name;
 		}
 	});
 	
-	ms.setSelection(${vehicleTienIchsJson});
+	$.ajax( {
+		url: '${pageContext.request.contextPath}/coachcp/vehicle_tien_ichs_json',
+		data: {
+			'vehicle.id': ${vehicle.id}
+		}
+	}).success(function(data, textStatus, jqXHR) {
+		try {
+			ms.setSelection(data);	
+		} catch (e) {
+			
+		}
+	});
 	
 	$('#vehicleTienIchsJson').val(JSON.stringify(ms.getSelection()));
 	

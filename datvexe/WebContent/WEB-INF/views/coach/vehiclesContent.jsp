@@ -54,7 +54,7 @@ $(document).ready(function() {
 					<s:else>
 						<td>Không hoạt động</td>
 					</s:else>
-					<td><a class="btn btn-primary" href="${pageContext.request.contextPath}/coachcp/vehicleDetail?id=${id}">Chi tiết</a></td>
+					<td><a class="btn btn-primary" href="${pageContext.request.contextPath}/coachcp/vehicle/${id}">Chi tiết</a></td>
 				</tr>
 			</s:iterator>
 		</tbody>
