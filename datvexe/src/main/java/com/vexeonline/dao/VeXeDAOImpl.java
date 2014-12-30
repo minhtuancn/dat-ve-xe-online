@@ -60,4 +60,18 @@ public class VeXeDAOImpl implements VeXeDAO {
 						.uniqueResult();
 	}
 
+	public Object[] getInfoByMaVe(String maVe) {
+		return (Object[]) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  v.chuyenXe.ngayDi,\r\n" + 
+							"  v.hanhKhach.idHanhKhach,\r\n" + 
+							"  v.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe \r\n" + 
+							" FROM\r\n" + 
+							"  VeXe as v  \r\n" + 
+							" WHERE\r\n" + 
+							"  v.maVe like :maVe")
+				.setString("maVe", maVe)
+				.uniqueResult();
+	}
+
 }

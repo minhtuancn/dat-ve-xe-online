@@ -30,7 +30,7 @@ public class DanhGia extends ActionSupport {
 	private static Logger logger = Logger.getLogger(DanhGia.class);
 	private static KhachHangService khachHangService = new KhachHangServiceImpl();
 	private Date ngayDi;
-	private String sdt;
+	private String maVe;
 	private String noiDung;
 	private float diem;
 	private int idNhaXe;
@@ -39,7 +39,9 @@ public class DanhGia extends ActionSupport {
 	@Action(value = "danhgia")
 	public void getListChuyenXe() {
 		try {
-			khachHangService.danhGiaChuyenXe(ngayDi, sdt, noiDung, diem);
+			logger.info("ngayDi = " + ngayDi + " idNhaXe = " + idNhaXe);
+			
+			khachHangService.danhGiaChuyenXe(ngayDi, maVe, noiDung, diem, idNhaXe);
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
@@ -67,13 +69,13 @@ public class DanhGia extends ActionSupport {
 		this.ngayDi = ngayDi;
 	}
 
-	@StringLengthFieldValidator(message = "Số điện thoại có 10 hoặc 11 kí tự!", minLength = "10", maxLength = "11", trim = true)
-	public String getSdt() {
-		return sdt;
+	@StringLengthFieldValidator(message = "Mã vé có 8 kí tự!", minLength = "8", maxLength = "8", trim = true)
+	public String getMaVe() {
+		return maVe;
 	}
 
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
+	public void setMaVe(String maVe) {
+		this.maVe = maVe;
 	}
 
 	@RequiredStringValidator(message = "Nội dung không được để trống!", trim = true)
