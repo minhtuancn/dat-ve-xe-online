@@ -55,16 +55,15 @@ public interface KhachHangService {
 
 	/**
 	 * 
+	 * @param ngayDi
 	 * @param maVe
 	 * @param noiDung
-	 * @param maLichTuyen
 	 * @param diem
-	 * @return false if maVe not correct, otherwise success
-	 * @throws Exception
-	 *             if exception
+	 * @param idNhaXe
+	 * @return
 	 */
-	public boolean danhGiaChuyenXe(Date ngayDi, String sdt, String noiDung,
-			float diem) ;
+	public boolean danhGiaChuyenXe(Date ngayDi, String maVe, String noiDung,
+			float diem, int idNhaXe) ;
 	
 	/**
 	 * 

@@ -29,6 +29,7 @@ import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.NgayCuaTuan;
+import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
@@ -184,29 +185,39 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return true;
 	}
 
-	public boolean danhGiaChuyenXe(Date ngayDi, String sdt, String noiDung,
-			float diem){
+	public boolean danhGiaChuyenXe(Date ngayDi, String maVe, String noiDung,
+			float diem, int idNhaXe){
 		
 		Transaction tx = null;
 		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			boolean flag = false;
-			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
-			if (hanhKhach == null) {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Object[] info = veXeDAO.getInfoByMaVe(maVe);
+			if (info == null) {
 				return false;
 			}
 			
-			if (flag == true) {
-				DanhGia danhGia = new DanhGia();
-				//danhGia.setChuyenXe(chuyenXe);
-				danhGia.setDiem(diem);
-				danhGia.setHanhKhach(hanhKhach);
-				danhGia.setNoiDung(noiDung);
-				//
-				danhGia.setTrangThai(true);
-				danhGiaDAO.save(danhGia);
+			Date ngayDi_ = (Date) info[0];
+			int idHanhKhach_ = (int) info[1];
+			int idNhaXe_ = (int) info[2];
+			
+			//check info ngayDi, nhaXe fit with info got from maVe
+			if (!ngayDi.equals(ngayDi_) || idNhaXe != idNhaXe_) {
+				return false;
 			}
+			
+			NhaXe nhaXe = (NhaXe) session.load(NhaXe.class, idNhaXe);
+			HanhKhach hanhKhach = (HanhKhach) session.load(HanhKhach.class, idHanhKhach_);
+			
+			DanhGia danhGia = new DanhGia();
+			danhGia.setDiem(diem);
+			danhGia.setNoiDung(noiDung);
+			danhGia.setNgayDi(ngayDi);
+			danhGia.setNgayDanhGia(new Date());
+			danhGia.setTrangThai(true);		//only display when ADMIN change trangThai to true
+			danhGia.setHanhKhach(hanhKhach);
+			danhGia.setNhaXe(nhaXe);
+			danhGiaDAO.save(danhGia);
 			
 			tx.commit();
 		} catch (Exception ex) {

@@ -26,4 +26,11 @@ public interface VeXeDAO {
      */
     public long laySoVeXeTheoLichTuyenVaNgayDi (int idLichTuyen, Date ngayDi, Time gioDi);
     
+    /**
+     * get follow order ngayDi, idHanhKhach, idNhaXe
+     * @param maVe
+     * @return
+     */
+    public Object[] getInfoByMaVe(String maVe);
+    
 }
