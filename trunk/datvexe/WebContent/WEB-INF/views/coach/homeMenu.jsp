@@ -6,8 +6,8 @@
 		<li>
 			<a>Quản lý xe</a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/coachcp/vehicles">Danh sách xe</a></li>
-				<li><a href="${pageContext.request.contextPath}/coachcp/newVehicle">Thêm xe</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/vehicle">Danh sách xe</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/vehicle/new">Thêm xe</a></li>
 			</ul>
 		</li>
 		<li>

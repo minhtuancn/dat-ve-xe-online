@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.Xe;
 
@@ -60,6 +63,7 @@ public class VehicleDTO implements Serializable {
 		this.id = id;
 	}
 
+	@RequiredStringValidator(trim = true, key = "vehicle.require.bienSo")
 	public String getBienSo() {
 		return bienSo;
 	}
@@ -67,7 +71,8 @@ public class VehicleDTO implements Serializable {
 	public void setBienSo(String bienSo) {
 		this.bienSo = bienSo;
 	}
-
+	
+	@RequiredStringValidator(trim = true, key = "vehicle.require.loaiXe")
 	public String getLoaiXe() {
 		return loaiXe;
 	}
@@ -76,6 +81,8 @@ public class VehicleDTO implements Serializable {
 		this.loaiXe = loaiXe;
 	}
 
+	@RequiredFieldValidator(key = "vehicle.require.soCho1")
+	@IntRangeFieldValidator(min = "0", key = "vehicle.require.soCho2")
 	public Integer getSoCho() {
 		return soCho;
 	}
