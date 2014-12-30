@@ -119,7 +119,7 @@ public class TestListDanhGia {
 		
 		VeXe veXe = new VeXe();
 		veXe.setChuyenXe(chuyenXe);
-		veXe.setChoNgoi(1);
+		veXe.setChoNgoi("B3");
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
 		

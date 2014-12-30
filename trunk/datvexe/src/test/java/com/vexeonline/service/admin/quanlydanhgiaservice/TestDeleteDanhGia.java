@@ -125,7 +125,7 @@ public class TestDeleteDanhGia {
 
 		VeXe veXe = new VeXe();
 		veXe.setChuyenXe(chuyenXe);
-		veXe.setChoNgoi(1);
+		veXe.setChoNgoi("B4");
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
 

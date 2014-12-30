@@ -122,7 +122,7 @@ public class TestGetListInfoDanhGiaByIdNhaXe {
 		session.save(hanhKhach);
 		
 		VeXe veXe = new VeXe();
-		veXe.setChoNgoi(3);
+		veXe.setChoNgoi("B4");
 		veXe.setChuyenXe(chuyenXe);
 		veXe.setHanhKhach(hanhKhach);
 		session.save(veXe);
