@@ -102,4 +102,11 @@ public class ScheduleDTO implements Serializable {
 	public void setPrices(List<PriceDTO> prices) {
 		this.prices = prices;
 	}
+
+	@Override
+	public String toString() {
+		return "ScheduleDTO [id=" + id + ", ngayTrongTuan=" + ngayTrongTuan
+				+ ", gioChay=" + gioChay + ", tongThoiGian=" + tongThoiGian
+				+ ", active=" + active + "]";
+	}
 }

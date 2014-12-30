@@ -82,6 +82,10 @@ public class VehicleServiceImpl implements VehicleService {
 		
 		if (tienIchDTO.getId() != null) {
 			result = tienIchDAO.getById(tienIchDTO.getId());
+		}
+		
+		if (result == null && tienIchDTO.getName() != null) {
+			result = tienIchDAO.get(tienIchDTO.getName());
 		} else {
 			result = new TienIch();
 			result.setTenTienIch(tienIchDTO.getName());

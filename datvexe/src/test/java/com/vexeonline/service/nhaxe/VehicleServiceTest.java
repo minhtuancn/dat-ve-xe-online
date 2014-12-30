@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.Transaction;
 
-import com.vexeonline.dao.XeDAOImpl;
-import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.VehicleDTO;
 import com.vexeonline.utils.HibernateUtil;
@@ -23,7 +21,7 @@ public class VehicleServiceTest {
 	public static void insert() throws Exception {
 		
 		VehicleDTO vehicle1 = new VehicleDTO();
-		vehicle1.setIdNhaXe(1);
+		vehicle1.setIdNhaXe(2);
 		vehicle1.setBienSo("92H-29093");
 		vehicle1.setLoaiXe("Giường nằm");
 		vehicle1.setSoCho(40);
@@ -34,7 +32,7 @@ public class VehicleServiceTest {
 		service.insertVehicle(vehicle1);
 		
 		VehicleDTO vehicle2 = new VehicleDTO();
-		vehicle2.setIdNhaXe(1);
+		vehicle2.setIdNhaXe(2);
 		vehicle2.setBienSo("92H-29092");
 		vehicle2.setLoaiXe("Giường nằm");
 		vehicle2.setSoCho(40);
@@ -46,7 +44,7 @@ public class VehicleServiceTest {
 		service.insertVehicle(vehicle2);
 		
 		VehicleDTO vehicle3 = new VehicleDTO();
-		vehicle3.setIdNhaXe(1);
+		vehicle3.setIdNhaXe(2);
 		vehicle3.setBienSo("92H-29091");
 		vehicle3.setLoaiXe("Giường nằm");
 		vehicle3.setSoCho(40);
@@ -86,15 +84,10 @@ public class VehicleServiceTest {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			//insert();
+			insert();
 			//update();
 			//list();
 			
-			//tienIch();
-			
-			Xe xe = new XeDAOImpl().getById(2, 3);
-			System.out.println(xe);
-		
 			/*List<Xe> vehicles = new  XeDAOImpl().list(1);
 			for (Xe vehicle : vehicles) {
 				System.out.println(vehicle);
