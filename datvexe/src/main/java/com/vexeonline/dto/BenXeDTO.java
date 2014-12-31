@@ -87,7 +87,6 @@ public class BenXeDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BenXeDTO [id=" + id + ", name=" + name + ", province="
-				+ province + ", active=" + active + "]";
+		return name + " - " + district + ", " + province;
 	}
 }

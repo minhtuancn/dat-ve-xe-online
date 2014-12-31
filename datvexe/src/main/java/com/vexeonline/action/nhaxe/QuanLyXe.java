@@ -144,13 +144,15 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	public String vehicleTienIchs() {
 		UserDTO user = (UserDTO) session.get("user");
 		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			tienIchs = vehicleService.getVehicle(user.getNhaXeId(), vehicle.getId()).getTienIchs();
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			e.printStackTrace();
+		if (vehicle.getId() != -1) {
+			try {
+				tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+				tienIchs = vehicleService.getVehicle(user.getNhaXeId(), vehicle.getId()).getTienIchs();
+				tx.commit();
+			} catch (Exception e) {
+				if (tx != null) tx.rollback();
+				e.printStackTrace();
+			}
 		}
 		return SUCCESS;
 	}

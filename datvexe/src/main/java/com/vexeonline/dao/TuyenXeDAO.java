@@ -12,6 +12,9 @@ import com.vexeonline.domain.TuyenXe;
  *
  */
 public interface TuyenXeDAO {
+	
+	public TuyenXe get(Integer benDiId,Integer benDenId);
+	
 	/**
 	 * @author Tung
 	 * @param session

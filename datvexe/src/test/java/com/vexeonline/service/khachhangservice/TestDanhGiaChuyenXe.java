@@ -46,7 +46,7 @@ public class TestDanhGiaChuyenXe {
 	public void test1() {
 		addData();
 		
-		khachHangService.danhGiaChuyenXe(Date.valueOf("2014-11-24"), "012212132", "hay hay hay", 4.9f);
+		//khachHangService.danhGiaChuyenXe(Date.valueOf("2014-11-24"), "012212132", "hay hay hay", 4.9f);
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		sessionFactory.getCurrentSession().beginTransaction();
