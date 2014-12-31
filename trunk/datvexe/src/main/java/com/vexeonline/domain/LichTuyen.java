@@ -46,7 +46,7 @@ public class LichTuyen implements Serializable {
 	@Column(nullable = false)
 	private Date gioDi;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private TuyenXe tuyenXe;
 

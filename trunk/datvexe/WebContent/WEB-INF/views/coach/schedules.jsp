@@ -49,43 +49,43 @@ $(document).ready(function() {
 		</tr>
 	</tfoot>
 	<tbody>
-		<s:iterator var="schedule" value="schedules">
+		<s:iterator value="schedules">
 			<tr>
-				<td><s:property value="#schedule.id"/></td>
-				<td><s:property value="#schedule.tenTuyenXe"/></td>
-				<%-- <td><s:property value="#schedule.ngayTrongTuan"/></td> --%>
-				
-				<s:if test="%{#schedule.ngayTrongTuan.toString() == 'MONDAY'}">
+				<td><s:property value="id"/></td>
+				<td>
+					<s:property value="tuyenXe.benDi.province"/>&nbsp;-&nbsp;<s:property value="tuyenXe.benDen.province"/>
+				</td>
+				<s:if test="%{ngayTrongTuan.toString() == 'MONDAY'}">
 					<td>Thứ hai</td>
 				</s:if>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'TUESDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'TUESDAY'}">
 					<td>Thứ ba</td>
 				</s:elseif>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'WEDNESDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'WEDNESDAY'}">
 					<td>Thứ tư</td>
 				</s:elseif>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'THURSDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'THURSDAY'}">
 					<td>Thứ năm</td>
 				</s:elseif>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'FRIDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'FRIDAY'}">
 					<td>Thứ sáu</td>
 				</s:elseif>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'SATUREDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'SATUREDAY'}">
 					<td>Thứ bảy</td>
 				</s:elseif>
-				<s:elseif test="%{#schedule.ngayTrongTuan.toString() == 'SUNDAY'}">
+				<s:elseif test="%{ngayTrongTuan.toString() == 'SUNDAY'}">
 					<td>Chủ nhật</td>
 				</s:elseif>
 				
-				<td><s:property value="#schedule.gioChay"/></td>
-				<s:if test="%{#schedule.active}">
+				<td><s:property value="gioChay"/></td>
+				<s:if test="%{active}">
 					<td>Còn hoạt động</td>
 				</s:if>
 				<s:else>
 					<td>Không hoạt động</td>
 				</s:else>
 				<td>
-					<a href="${pageContext.request.contextPath}/coachcp/scheduleDetail?id=${schedule.id}" class="btn btn-primary">Chi tiết</a>
+					<a href="${pageContext.request.contextPath}/coachcp/schedule/${id}" class="btn btn-primary">Chi tiết</a>
 				</td>
 			</tr>
 		</s:iterator>

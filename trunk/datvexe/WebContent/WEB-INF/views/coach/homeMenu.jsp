@@ -13,15 +13,15 @@
 		<li>
 			<a>Lịch chuyến</a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/coachcp/schedules">Danh sách lịch chuyến</a></li>
-				<li><a href="${pageContext.request.contextPath}/coachcp/newSchedule">Thêm lịch chuyến</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/schedule">Danh sách lịch chuyến</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/schedule/new">Thêm lịch chuyến</a></li>
 			</ul>
 		</li>
 		<li>
 			<a>Văn phòng</a>
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/coachcp/offices">Danh sách văn phòng</a></li>
-				<li><a href="${pageContext.request.contextPath}/coachcp/newOffice">Thêm văn phòng</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/office">Danh sách văn phòng</a></li>
+				<li><a href="${pageContext.request.contextPath}/coachcp/office/new">Thêm văn phòng</a></li>
 			</ul>
 		</li>
 		<li><a href="${pageContext.request.contextPath}/coachcp/trips">Chuyến xe</a></li>

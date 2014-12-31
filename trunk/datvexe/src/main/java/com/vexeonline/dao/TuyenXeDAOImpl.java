@@ -5,6 +5,8 @@ package com.vexeonline.dao;
 
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
+
 import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -49,4 +51,20 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(tuyenXe);
 	}
 
+	@Override
+	public TuyenXe get(Integer benDiId, Integer benDenId) {
+		/*
+		 * return (TuyenXe)
+		 * HibernateUtil.getSessionFactory().getCurrentSession()
+		 * .createCriteria(TuyenXe.class).createCriteria("benDi")
+		 * .add(Restrictions.eq("idBenXe", benDenId)).createCriteria("benDen")
+		 * .add(Restrictions.eqOrIsNull("idBenXe", benDenId)).uniqueResult();
+		 */
+		return (TuyenXe) HibernateUtil
+				.getSessionFactory()
+				.getCurrentSession()
+				.createCriteria(TuyenXe.class)
+				.add(Restrictions.and(Restrictions.eq("benDi.idBenXe", benDiId),
+						Restrictions.eq("benDen.idBenXe", benDenId))).uniqueResult();
+	}
 }

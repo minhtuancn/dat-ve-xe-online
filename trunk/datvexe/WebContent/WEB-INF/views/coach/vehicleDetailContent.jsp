@@ -4,14 +4,14 @@
 <style>
 <!--
 #vehicle_detail {
-	border: 1px gray dashed;
-	background-color: white;
-	padding: 50px 50px 50px 50px;
 	width: 1000px;
-	margin: 100px auto;
+	margin: 50px auto;
+	padding: 50px 50px 50px 0;
+	background-color: white;
+	border: 1px gray dashed;
 }
-
 #vehicle_detail legend {
+	margin-left: 50px;
 	text-transform: uppercase;
 }
 -->
@@ -48,18 +48,18 @@ $(document).ready(function() {
 		}
 	});
 	
-	$.ajax( {
-		url: '${pageContext.request.contextPath}/coachcp/vehicle_tien_ichs_json',
-		data: {
-			'vehicle.id': ${vehicle.id}
-		}
-	}).success(function(data, textStatus, jqXHR) {
-		try {
-			ms.setSelection(data);	
-		} catch (e) {
-			
-		}
-	});
+	try {
+		$.ajax( {
+			url: '${pageContext.request.contextPath}/coachcp/vehicle_tien_ichs_json',
+			data: {
+				'vehicle.id': ${vehicle.id != null ? vehicle.id : -1}
+			}
+		}).success(function(data, textStatus, jqXHR) {
+			ms.setSelection(data);
+		});	
+	} catch (e) {
+		
+	}
 	
 	$('#vehicleTienIchsJson').val(JSON.stringify(ms.getSelection()));
 	

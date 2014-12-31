@@ -110,4 +110,9 @@ public class VehicleDTO implements Serializable {
 	public void setTienIchs(List<TienIchDTO> tienIchs) {
 		this.tienIchs = tienIchs;
 	}
+	
+	@Override
+	public String toString() {
+		return bienSo + " - " + loaiXe + " - " + soCho;
+	}
 }

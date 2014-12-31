@@ -62,8 +62,6 @@ public class ScheduleServiceTest {
 		SimpleDateFormat tf = new SimpleDateFormat("kk:mm");
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
-		//////////////////////////////////////////////////////
-		
 		ScheduleDTO schedule1 = new ScheduleDTO();
 		schedule1.setActive(true);
 		schedule1.setGioChay(tf.parse("6:30"));
@@ -78,25 +76,23 @@ public class ScheduleServiceTest {
 		schedule1.setActive(true);
 		service.insert(schedule1);
 		
-		//////////////////////////////////////////////////////
 		
-		/*ScheduleDTO schedule2 = new ScheduleDTO();
+		ScheduleDTO schedule2 = new ScheduleDTO();
 		schedule2.setActive(true);
 		schedule2.setGioChay(tf.parse("11:30"));
 		schedule2.setNgayTrongTuan(NgayCuaTuan.SUNDAY);
-		schedule2.setTongThoiGian(20.0);
+		schedule2.setTongThoiGian(25.0);
 		List<PriceDTO> prices2 = new ArrayList<PriceDTO>();
 		prices2.add(new PriceDTO(123000, df.parse("01/01/2015"), df.parse("01/02/2015")));
 		prices2.add(new PriceDTO(234000, df.parse("02/02/2015"), df.parse("01/03/2015")));
 		schedule2.setPrices(prices2);
-		schedule2.setTuyenXe(new TuyenXeDTO(1));
+		schedule2.setTuyenXe(new TuyenXeDTO(2));
 		schedule2.setVehicle(new VehicleDTO(3));
 		schedule2.setActive(true);
-		service.insert(schedule2);*/
+		service.insert(schedule2);
 		
-		//////////////////////////////////////////////////////
 		
-		/*ScheduleDTO schedule3 = new ScheduleDTO();
+		ScheduleDTO schedule3 = new ScheduleDTO();
 		schedule3.setActive(true);
 		schedule3.setGioChay(tf.parse("15:30"));
 		schedule3.setNgayTrongTuan(NgayCuaTuan.THURSDAY);
@@ -108,7 +104,7 @@ public class ScheduleServiceTest {
 		schedule3.setTuyenXe(new TuyenXeDTO(1));
 		schedule3.setVehicle(new VehicleDTO(7));
 		schedule3.setActive(true);
-		service.insert(schedule3);*/
+		service.insert(schedule3);
 	}
 	
 	public static void main(String[] args) {

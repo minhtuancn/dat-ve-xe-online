@@ -1,6 +1,8 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +60,15 @@ public class ScheduleDTO implements Serializable {
 	public Date getGioChay() {
 		return gioChay;
 	}
-
+	
+	public void setGioChay(String gioChay) {
+		try {
+			this.gioChay = new SimpleDateFormat("kk:mm").parse(gioChay);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setGioChay(Date gioChay) {
 		this.gioChay = gioChay;
 	}
