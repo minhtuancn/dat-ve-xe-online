@@ -29,8 +29,8 @@ import com.vexeonline.utils.HibernateUtil;
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
 @Conversion(conversions = {
-		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.action.converter.TimeConverter"),
-		@TypeConversion(key = "schedule.ngayTrongTuan", converter = "com.vexeonline.action.converter.DateOfWeekConverter")
+		@TypeConversion(key = "schedule.ngayTrongTuan", converter = "com.vexeonline.converter.DateOfWeekConverter"),
+		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter")
 })
 public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 
@@ -74,7 +74,7 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 					.beginTransaction();
 			UserDTO user = (UserDTO) session.get("user");
 			benXes = benXeService.listBenXe();
-			vehicles = vehicleService.getVehicles(user.getNhaXeId());
+			vehicles = vehicleService.getActiveVehicles(user.getNhaXeId());
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
@@ -102,7 +102,8 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 				result = ERROR;
 			}
 			benXes = benXeService.listBenXe();
-			vehicles = vehicleService.getVehicles(user.getNhaXeId());
+			vehicles = vehicleService.getActiveVehicles(user.getNhaXeId());
+			vehicles.add(vehicleService.getVehicle(user.getNhaXeId(), schedule.getVehicle().getId()));
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)

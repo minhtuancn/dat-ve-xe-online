@@ -9,6 +9,8 @@ public interface VehicleService {
 	
 	public VehicleDTO getVehicle(Integer nhaXeId,Integer vehicleId) throws Exception;
 
+	public List<VehicleDTO> getActiveVehicles(Integer nhaXeId) throws Exception;
+	
 	public List<VehicleDTO> getVehicles(Integer nhaXeId) throws Exception;
 	
 	public void insertVehicle(VehicleDTO vehicleDTO) throws Exception;

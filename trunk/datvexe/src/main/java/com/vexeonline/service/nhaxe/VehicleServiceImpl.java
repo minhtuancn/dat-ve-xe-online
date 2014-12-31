@@ -78,6 +78,7 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 	
 	private TienIch TienIchDTO2TienIch(TienIchDTO tienIchDTO) {
+		
 		TienIch result = null;
 		
 		if (tienIchDTO.getId() != null) {
@@ -86,7 +87,7 @@ public class VehicleServiceImpl implements VehicleService {
 		
 		if (result == null && tienIchDTO.getName() != null) {
 			result = tienIchDAO.get(tienIchDTO.getName());
-		} else {
+		} else if (result == null) {
 			result = new TienIch();
 			result.setTenTienIch(tienIchDTO.getName());
 		}
@@ -106,6 +107,16 @@ public class VehicleServiceImpl implements VehicleService {
 		List<TienIch> tienIchs = tienIchDAO.list();
 		for (TienIch tienIch : tienIchs ) {
 			result.add(new TienIchDTO(tienIch));
+		}
+		return result;
+	}
+
+	@Override
+	public List<VehicleDTO> getActiveVehicles(Integer nhaXeId) throws Exception {
+		List<VehicleDTO> result = new ArrayList<VehicleDTO>();
+		List<Xe> vehicles = xeDAO.listActive(nhaXeId);
+		for (Xe vehicle : vehicles) {
+			result.add(new VehicleDTO(vehicle));
 		}
 		return result;
 	}

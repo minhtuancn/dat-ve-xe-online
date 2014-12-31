@@ -41,7 +41,7 @@ public class XeDAOImpl implements XeDAO {
 
 	@Override
 	public List<Xe> list(Integer nhaXeId) {
-		return ((NhaXe)HibernateUtil.getSessionFactory().getCurrentSession()
+		return ((NhaXe) HibernateUtil.getSessionFactory().getCurrentSession()
 				.load(NhaXe.class, nhaXeId)).getXes();
 	}
 
@@ -58,5 +58,26 @@ public class XeDAOImpl implements XeDAO {
 	 */
 	public void update(Xe xe) {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(xe);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Xe> listActive() {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createCriteria(Xe.class)
+				.add(Restrictions.eq("isActive", true)).list();
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Xe> listActive(Integer nhaXeId) {
+		return HibernateUtil
+				.getSessionFactory()
+				.getCurrentSession()
+				.createCriteria(Xe.class)
+				.add(Restrictions.and(
+						Restrictions.eq("nhaXe.idNhaXe", nhaXeId),
+						Restrictions.eq("isActive", true))).list();
 	}
 }
