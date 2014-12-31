@@ -1,69 +1,38 @@
 package com.vexeonline.action;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.dto.OfficeDTO;
+import com.vexeonline.dto.UserDTO;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
-public class CoachAction extends ActionSupport {
+public class CoachAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private List<Boolean> seats = new ArrayList<Boolean>();
-	private List<OfficeDTO> offices = new ArrayList<OfficeDTO>();
+	private Map<String, Object> sesison;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public List<Boolean> getSeats() {
-		return seats;
-	}
-
-	public void setSeats(List<Boolean> seats) {
-		this.seats = seats;
-	}
-
-	public List<OfficeDTO> getOffices() {
-		return offices;
-	}
-
-	public void setOffices(List<OfficeDTO> offices) {
-		this.offices = offices;
-	}
-
-	@Action(value = "home", results = @Result(name = "success", location = "coach.home", type = "tiles"))
+	@Action(value = "home", results = {
+			@Result(name = "success", location = "coach.home", type = "tiles"),
+			@Result(name = "error", location = "home", type = "redirect")
+	})
 	public String showAdminHomePage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "newVehicle", results = @Result(name = "success", location = "coach.newVehicle", type = "tiles"))
-	public String showNewVehiclePage() {
+		UserDTO user = (UserDTO) sesison.get("user");
+		if (user.getRole().equals("NHAXE")) {
+			return ERROR;
+		}
 		return SUCCESS;
 	}
 
 	@Action(value = "book", results = @Result(name = "success", location = "coach.book", type = "tiles"))
 	public String showTicketBookingPage() {
-		for (int i = 0; i < 40; i++) {
-			if (i % 3 == 0) {
-				seats.add(true);
-			} else {
-				seats.add(false);
-			}
-		}
 		return SUCCESS;
 	}
 
@@ -80,5 +49,10 @@ public class CoachAction extends ActionSupport {
 	@Action(value = "officeDetail", results = @Result(name = "success", location = "coach.officeDetail", type = "tiles"))
 	public String showOfficeDetailPage() {
 		return SUCCESS;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.sesison = session;
 	}
 }

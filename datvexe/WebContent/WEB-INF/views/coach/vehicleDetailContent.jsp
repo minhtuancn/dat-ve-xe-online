@@ -31,7 +31,7 @@
 		</div>
 		<s:checkbox name="vehicle.active" label="Hoạt động" />
 		<s:submit cssClass="btn btn-primary pull-right" />
-		<input id="vehicleTienIchsJson" name="vehicleTienIchsJson"
+		<input id="vehicleTienIchsJson" name="vehicle.tienIchs"
 			type="hidden">
 	</s:form> 
 </s:div>

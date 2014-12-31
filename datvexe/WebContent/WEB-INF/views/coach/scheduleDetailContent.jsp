@@ -26,22 +26,9 @@
 	<s:select
 		list="#{'SUNDAY':'Chủ nhật', 'MONDAY':'Thứ hai', 'TUESDAY':'Thứ ba', 'WEDNESDAY':'Thứ tư', 'THURSDAY':'Thứ năm', 'FRIDAY':'Thứ sáu', 'SATUREDAY':'Thứ bảy'}"
 		name="schedule.ngayTrongTuan" label="Thứ" />
-	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDi.id"
-		label="Bến đi" />
-	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDen.id"
-		label="Bến đến" />
-	<s:select list="vehicles" listKey="id" name="schedule.vehicle.id"
-		label="Xe" />
-
-	<%-- <s:url var="ben_xe_json" action="ben_xe_json" />
-	<sj:select name="schedule.tuyenXe.benDi.id" href="%{ben_xe_json}" list="benXes" listKey="id"
-		listValue="name" label="Bến đi" parentTheme="bootstrap" cssClass="form-control" />
-	<sj:select name="schedule.tuyenXe.benDen.id" href="%{ben_xe_json}" list="benXes" listKey="id"
-		listValue="name" label="Bến đến" parentTheme="bootstrap" cssClass="form-control" />
-	<s:url var="vehicles_json" action="vehicles_json" />
-	<sj:select href="%{vehicles_json}" list="vehicles" listKey="id"
-		listValue="bienSo" label="Xe" parentTheme="bootstrap" cssClass="form-control" /> --%>
-		
+	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDi.id" label="Bến đi" />
+	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDen.id" label="Bến đến" />
+	<s:select list="vehicles" listKey="id" name="schedule.vehicle.id" label="Xe" />		
 	<s:textfield type="time" name="schedule.gioChay" label="Giờ xuất bến" />
 	<s:textfield name="schedule.tongThoiGian" label="Tổng thời gian" />
 	<s:checkbox name="schedule.active" label="Active" />

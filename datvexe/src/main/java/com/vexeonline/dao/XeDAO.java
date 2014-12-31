@@ -19,7 +19,11 @@ public interface XeDAO {
 	
 	public List<Xe> list();
 	
+	public List<Xe> listActive();
+	
 	public List<Xe> list(Integer nhaXeId);
+	
+	public List<Xe> listActive(Integer nhaXeId);
 
 	public Integer save(Xe xe);
 
