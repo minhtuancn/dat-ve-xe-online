@@ -26,6 +26,7 @@ import com.vexeonline.utils.HibernateUtil;
 @Conversion(conversions = {
 		@TypeConversion(key = "vehicle.tienIchs", converter = "com.vexeonline.converter.TienIchArrayConverter")
 })
+@Result(name = "login", location = "login", type = "redirect")
 public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 1003544484121846277L;
@@ -46,8 +47,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 	
 	@SkipValidation
 	@Action(value = "vehicle", results = {
-			@Result(name = "success", location = "coach.vehicles", type = "tiles"),
-			@Result(name = "login", location = "/login", type = "redirect")
+			@Result(name = "success", location = "coach.vehicles", type = "tiles")
 	})
 	public String showVehiclesPage() {
 		UserDTO user = (UserDTO) session.get("user");
@@ -71,6 +71,10 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 			@Result(name = "success", location = "coach.newVehicle", type = "tiles")	
 	})
 	public String showNewVehiclePage() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		return SUCCESS;
 	}
 	
@@ -79,12 +83,12 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		@Result(name = "input", location = "coach.newVehicle", type = "tiles")
 	})
 	public String saveVehicle() {
-		
-		Transaction tx = null;
-		
 		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
+		Transaction tx = null;
 		vehicle.setIdNhaXe(user.getNhaXeId());
-		
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();	
 			if (vehicle.getId() != null) {
@@ -106,6 +110,9 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		results = @Result(name = "success", location = "coach.vehicleDetail", type = "tiles"))
 	public String showVehicleDetailPage() {
 		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
@@ -123,6 +130,10 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 				type = "json",
 				params = {"root", "tienIchs"}))
 	public String tienIchs() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
@@ -141,6 +152,9 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 				params = {"root", "tienIchs"}))
 	public String vehicleTienIchs() {
 		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		if (vehicle.getId() != -1) {
 			try {
