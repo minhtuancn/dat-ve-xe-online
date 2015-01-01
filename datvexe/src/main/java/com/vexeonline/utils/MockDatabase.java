@@ -48,14 +48,16 @@ public class MockDatabase {
 
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
+		diaChi1.setHuyen("An Khê");
 		session.save(diaChi1);
 
 		DiaChi diaChi2 = new DiaChi();
-		diaChi2.setTinh("HCM");
+		diaChi2.setTinh("Hồ Chí Minh");
+		diaChi2.setHuyen("Bình Thạnh");
 		session.save(diaChi2);
 
 		BenXe benXe1 = new BenXe();
-		benXe1.setTenBenXe("Bến xe An Khên");
+		benXe1.setTenBenXe("Bến xe An Khê");
 		benXe1.setDiaChi(diaChi1);
 		session.save(benXe1);
 
@@ -174,12 +176,16 @@ public class MockDatabase {
 		user.setRole(RoleOfUser.NHAXE);
 		user.setNhaXe(nhaXe);
 		session.save(user);
-
+		
+		NhaXe nhaXe2 = new NhaXe();
+		nhaXe2.setTenNhaXe("Mai Linh");
+		session.save(nhaXe2);
+		
 		User user2 = new User();
 		user2.setUserName("hungdq");
 		user2.setPassword("123456");
 		user2.setRole(RoleOfUser.NHAXE);
-		user2.setNhaXe(nhaXe);
+		user2.setNhaXe(nhaXe2);
 		session.save(user2);
 	}
 
@@ -190,7 +196,7 @@ public class MockDatabase {
 		NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 
 		NhaXe nhaXe = new NhaXe();
-		nhaXe.setTenNhaXe("Mai Linh");
+		nhaXe.setTenNhaXe("Hoàng Long");
 		nhaXeDAO.save(nhaXe);
 
 		nhaXe = new NhaXe();
@@ -247,14 +253,14 @@ public class MockDatabase {
 
 		Xe xe = new Xe();
 		xe.setBienSoXe("12345");
-		xe.setLoaiXe("Giường nằm 40 chỗ");
+		xe.setLoaiXe("Giường nằm");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(1));
 		xeDAO.save(xe);
 
 		xe = new Xe();
 		xe.setBienSoXe("22345");
-		xe.setLoaiXe("Giường nằm 40 chỗ");
+		xe.setLoaiXe("Giường nằm");
 		xe.setSoCho(40);
 		xe.setNhaXe(nhaXeDAO.getById(2));
 		xeDAO.save(xe);

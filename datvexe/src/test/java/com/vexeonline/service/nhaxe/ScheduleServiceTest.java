@@ -25,7 +25,7 @@ public class ScheduleServiceTest {
 	}
 	
 	public static void test001() throws Exception {
-		for (ScheduleDTO schedule : service.getAll()) {
+		for (ScheduleDTO schedule : service.getSchedules()) {
 			System.out.println(schedule);
 		}
 	}
@@ -33,7 +33,7 @@ public class ScheduleServiceTest {
 	public static void test002() throws Exception {
 		for (NgayCuaTuan n : NgayCuaTuan.values()) {
 			System.out.println("===== " + n + " =====");
-			for (ScheduleDTO schedule : service.getBy(n)) {
+			for (ScheduleDTO schedule : service.getScheduleByDateOfWeek(n)) {
 				System.out.println(schedule);
 			}
 		}
@@ -42,7 +42,7 @@ public class ScheduleServiceTest {
 	public static void test003() throws Exception {
 		for (int i=1; i<=5; i++) {
 			System.out.println("===== Nha xe: " + i + " =====");
-			for (ScheduleDTO schedule : service.getByNhaXe(i)) {
+			for (ScheduleDTO schedule : service.getScheduleByNhaXe(i)) {
 				System.out.println(schedule);
 			}
 		}
@@ -51,7 +51,7 @@ public class ScheduleServiceTest {
 	public static void test004() throws Exception {
 		for (int i=1; i<=10; i++) {
 			System.out.println("===== Tuyen xe: " + i + " =====");
-			for (ScheduleDTO schedule : service.getByTuyenXe(i)) {
+			for (ScheduleDTO schedule : service.getScheduleByTuyenXe(i)) {
 				System.out.println(schedule);
 			}
 		}
@@ -74,7 +74,7 @@ public class ScheduleServiceTest {
 		schedule1.setTuyenXe(new TuyenXeDTO(1));
 		schedule1.setVehicle(new VehicleDTO(1));
 		schedule1.setActive(true);
-		service.insert(schedule1);
+		service.insertSchedule(schedule1);
 		
 		
 		ScheduleDTO schedule2 = new ScheduleDTO();
@@ -89,7 +89,7 @@ public class ScheduleServiceTest {
 		schedule2.setTuyenXe(new TuyenXeDTO(2));
 		schedule2.setVehicle(new VehicleDTO(3));
 		schedule2.setActive(true);
-		service.insert(schedule2);
+		service.insertSchedule(schedule2);
 		
 		
 		ScheduleDTO schedule3 = new ScheduleDTO();
@@ -102,16 +102,45 @@ public class ScheduleServiceTest {
 		prices3.add(new PriceDTO(234000, df.parse("02/02/2015"), df.parse("01/03/2015")));
 		schedule3.setPrices(prices3);
 		schedule3.setTuyenXe(new TuyenXeDTO(1));
-		schedule3.setVehicle(new VehicleDTO(7));
+		schedule3.setVehicle(new VehicleDTO(4));
 		schedule3.setActive(true);
-		service.insert(schedule3);
+		service.insertSchedule(schedule3);
+	}
+	
+	public static void test006() throws Exception {
+		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		
+		System.out.println(service.getPrice(2, 4));
+		
+		for(PriceDTO price : service.getPrices(2, 6)) {
+			System.out.println(price);
+		};
+		
+		/*PriceDTO newPrice = new PriceDTO();
+		newPrice.setGiaVe(3450000);
+		newPrice.setNgayBatDau(df.parse("02/03/2015"));
+		newPrice.setNgayKetThuc(df.parse("01/04/2015"));
+		service.insertPrice(2, 6, newPrice);*/
+		
+		/*PriceDTO newPrice2 = new PriceDTO();
+		newPrice2.setGiaVe(4450000);
+		newPrice2.setNgayBatDau(null);
+		newPrice2.setNgayKetThuc(df.parse("01/06/2015"));
+		service.insertPrice(2, 6, newPrice2);*/
+		
+		PriceDTO newPrice3 = new PriceDTO();
+		newPrice3.setGiaVe(4550000);
+		newPrice3.setNgayBatDau(null);
+		newPrice3.setNgayKetThuc(df.parse("01/08/2015"));
+		service.insertPrice(2, 6, newPrice3);
 	}
 	
 	public static void main(String[] args) {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			test005();
+			test006();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
