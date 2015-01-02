@@ -41,6 +41,19 @@
 		<put-attribute name="main" value="/WEB-INF/views/user/tripsContent.jsp" />
 	</definition>
 	
+	<definition name="book" extends="baseLayout">
+		<put-attribute name="title" value="Đặt vé" />
+		<put-attribute name="main" value="/WEB-INF/views/coach/bookContent.jsp" />
+	</definition>
+	
+	<definition name="ketquadatve" extends="baseLayout">
+		<put-attribute name="title" value="Kết quả đặt vé" />
+		<put-attribute name="main" value="/WEB-INF/views/user/ketquadatve.jsp" />
+	</definition>
+	<definition name="xacnhanve" extends="baseLayout">
+		<put-attribute name="title" value="Xác nhận vé xe" />
+		<put-attribute name="main" value="/WEB-INF/views/user/xacnhanve.jsp" />
+	</definition>
 	
 	<!-- Admin -->
 	
@@ -122,10 +135,7 @@
 		<put-attribute name="title" value="Thông tin lịch chuyến" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/scheduleDetailContent.jsp" />
 	</definition>
-	<definition name="coach.book" extends="coach.home">
-		<put-attribute name="title" value="Đặt vé" />
-		<put-attribute name="main" value="/WEB-INF/views/coach/bookContent.jsp" />
-	</definition>
+	
 	<definition name="coach.trips" extends="coach.home">
 		<put-attribute name="title" value="Danh sách chuyến xe" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/tripsContent.jsp" />
