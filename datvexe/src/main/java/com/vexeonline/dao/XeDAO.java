@@ -28,4 +28,6 @@ public interface XeDAO {
 	public Integer save(Xe xe);
 
 	public void update(Xe xe);
+	
+	public List<String> getListChoByidXe(int idXe);
 }

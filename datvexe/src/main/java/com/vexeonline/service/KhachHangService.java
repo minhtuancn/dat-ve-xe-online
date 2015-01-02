@@ -1,9 +1,9 @@
 package com.vexeonline.service;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
-import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
@@ -46,12 +46,17 @@ public interface KhachHangService {
 
 	/**
 	 * 
-	 * @param soCho
-	 * @param idChuyenXe
-	 * @param hanhKhach
-	 * @return true if success otherwise fasle
+	 * @param viTris
+	 * @param idLichTuyen
+	 * @param ngayDi
+	 * @param gioDi
+	 * @param tenHanhKhach
+	 * @param email
+	 * @param sdt
+	 * @return
 	 */
-	public boolean datVe(String soCho, int idChuyenXe, HanhKhach hanhKhach);
+	public boolean datVe(String viTris, int idLichTuyen, Date ngayDi, Time gioDi, String tenHanhKhach,
+			String email, String sdt);
 
 	/**
 	 * 
@@ -76,4 +81,19 @@ public interface KhachHangService {
 	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe);
 	
 	public List<SDTNhaXeDTO> getListSDTNhaXe(int idNhaXe);
+	
+	/**
+	 * return file name sodoViTri
+	 * listA -> seats column A ,...
+	 * @param idXe
+	 * @param listA
+	 * @param listB
+	 * @param listC
+	 * @param listD
+	 * @param listE
+	 */
+	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
+			List<String> listB, List<String> listC, List<String> listD, List<String> listE);
+	
+	public void xacNhanVe(String maVe);
 }

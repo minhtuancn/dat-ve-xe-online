@@ -11,11 +11,20 @@ public class HanhKhachDAOImpl implements HanhKhachDAO {
 				.save(hanhKhach);
 	}
 
+	public HanhKhach getByEmail(String email) {
+		return (HanhKhach) HibernateUtil.getSessionFactory()
+				.getCurrentSession()
+				.createQuery("from HanhKhach as h "
+						+ " where h.email = :email ")
+				.setString("email", email)
+				.uniqueResult();
+	}
+
+	@Override
 	public HanhKhach getBySDT(String sdt) {
 		return (HanhKhach) HibernateUtil.getSessionFactory()
 				.getCurrentSession()
 				.createQuery("from HanhKhach as h "
-						+ "left join fetch h.veXes as v "
 						+ " where h.sdt = :sdt ")
 				.setString("sdt", sdt)
 				.uniqueResult();

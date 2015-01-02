@@ -61,7 +61,6 @@ public class XeDAOImpl implements XeDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Xe> listActive() {
 		return HibernateUtil.getSessionFactory().getCurrentSession()
 				.createCriteria(Xe.class)
@@ -70,7 +69,6 @@ public class XeDAOImpl implements XeDAO {
 
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Xe> listActive(Integer nhaXeId) {
 		return HibernateUtil
 				.getSessionFactory()
@@ -79,5 +77,20 @@ public class XeDAOImpl implements XeDAO {
 				.add(Restrictions.and(
 						Restrictions.eq("nhaXe.idNhaXe", nhaXeId),
 						Restrictions.eq("isActive", true))).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<String> getListChoByidXe(int idXe) {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  vt \r\n" + 
+							" FROM\r\n" + 
+							"  Xe AS x \r\n" + 
+							" INNER JOIN\r\n" + 
+							"  x.viTris as vt \r\n" + 
+							" WHERE\r\n" + 
+							"  x.idXe = :idXe")
+				.setInteger("idXe", idXe)
+				.list();
 	}
 }

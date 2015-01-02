@@ -21,9 +21,7 @@ import com.vexeonline.utils.HibernateUtil;
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
 public class QuanLyChuyen extends ActionSupport {
-
 	private static final long serialVersionUID = 3504062148823438857L;
-
 	private Integer id;
 	private List<ChuyenXeDTO> chuyenxes;
 	private ChuyenXeDTO chuyenXe;
@@ -97,8 +95,8 @@ public class QuanLyChuyen extends ActionSupport {
 			tx.commit();
 			
 			trangThais = new HashMap<String, String>();
-			trangThais.put(TrangThaiChuyenXe.BINHTHUONG.toString(), "Đang hoạt động");
-			trangThais.put(TrangThaiChuyenXe.HUY.toString(), "Đã hủy chuyến");
+			trangThais.put(TrangThaiChuyenXe.BINHTHUONG.toString(), "Ä�ang hoáº¡t Ä‘á»™ng");
+			trangThais.put(TrangThaiChuyenXe.HUY.toString(), "Ä�Ã£ há»§y chuyáº¿n");
 			
 		} catch (Exception e) {
 			if (tx != null)

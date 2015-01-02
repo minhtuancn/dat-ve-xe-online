@@ -11,10 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"idChuyenXe", "choNgoi" }) })
 public class VeXe implements Serializable {
 
 	private static final long serialVersionUID = 2052803547818468572L;
@@ -27,7 +31,7 @@ public class VeXe implements Serializable {
 	@Column(unique = true, nullable = false, length = 8)
 	private String maVe;
 
-	@Column(nullable = false, length = 5)
+	@Column(nullable = false, length = 5, name = "choNgoi")
 	private String choNgoi;
 
 	@Enumerated(EnumType.STRING)
@@ -35,7 +39,7 @@ public class VeXe implements Serializable {
 	private TrangThaiVeXe trangThai;
 
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = false, name = "idChuyenXe")
 	private ChuyenXe chuyenXe;
 
 	@ManyToOne

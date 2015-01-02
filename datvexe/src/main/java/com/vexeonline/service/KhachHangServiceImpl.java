@@ -2,8 +2,10 @@ package com.vexeonline.service;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -25,20 +27,26 @@ import com.vexeonline.dao.UserDAO;
 import com.vexeonline.dao.UserDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
+import com.vexeonline.dao.XeDAO;
+import com.vexeonline.dao.XeDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.DanhGia;
 import com.vexeonline.domain.HanhKhach;
+import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
 import com.vexeonline.domain.NhaXe;
+import com.vexeonline.domain.TrangThaiChuyenXe;
+import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
 import com.vexeonline.utils.HibernateUtil;
+import com.vexeonline.utils.SendEmail;
 
 public class KhachHangServiceImpl implements KhachHangService {
-
 	private final Logger logger = Logger.getLogger(getClass());
 	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
@@ -48,6 +56,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 	private static GiaVeDAO giaVeDAO = new GiaVeDAOImpl();
+	private static XeDAO xeDAO = new XeDAOImpl();
 	
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho) {
@@ -158,22 +167,62 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return user;
 	}
 
-	public boolean datVe(String soCho, int idChuyenXe, HanhKhach hanhKhach) {
+	@SuppressWarnings("deprecation")
+	public boolean datVe(String viTris, int idLichTuyen, Date ngayDi, Time gioDi, String tenHanhKhach,
+			String email, String sdt) {
 		Transaction tx = null;
+		Session session = null;
 		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
 
-			hanhKhachDAO.save(hanhKhach);
-
-			ChuyenXe chuyenXe = chuyenXeDAO.getById(idChuyenXe);
-
-			VeXe veXe = new VeXe();
-			veXe.setChoNgoi(soCho);
-			veXe.setChuyenXe(chuyenXe);
-			veXe.setHanhKhach(hanhKhach);
-			veXeDAO.save(veXe);
-
+			//check khach hang da ton tai chua
+			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
+			if (hanhKhach == null) { 	//create new hanhKhach
+				hanhKhach = new HanhKhach();
+				hanhKhach.setEmail(email);
+				hanhKhach.setSdt(sdt);
+				hanhKhach.setTenHanhKhach(tenHanhKhach);
+				session.save(hanhKhach);
+			}
+			
+			ChuyenXe chuyenXe = chuyenXeDAO.getChuyenXeIdLichTuyenAndNgayDiGioDi(idLichTuyen, ngayDi, gioDi);
+			logger.info(idLichTuyen + " " + ngayDi + " " + gioDi + " "  +ngayDi.getMonth() );
+			if (chuyenXe == null) {
+				chuyenXe = new ChuyenXe();
+				chuyenXe.setLichTuyen((LichTuyen) session.load(LichTuyen.class, idLichTuyen));
+				
+				// Những tuyến ngắn thì 1 ngày có thể có nhiều lịch tuyến
+				Date ngayDiVaGioDi = ngayDi;
+				ngayDiVaGioDi.setHours(gioDi.getHours());
+				ngayDiVaGioDi.setMinutes(gioDi.getMinutes());
+				chuyenXe.setNgayDi(ngayDiVaGioDi);
+				chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
+				session.save(chuyenXe);
+			}
+			
+			String body = "";
+			String[] listViTri = viTris.split(",");
+			for (String viTri : listViTri) {
+				VeXe veXe = new VeXe();
+				veXe.setChoNgoi(viTri);
+				veXe.setChuyenXe(chuyenXe);
+				veXe.setHanhKhach(hanhKhach);
+				veXe.setMaVe(randomVeXe());
+				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
+				session.save(veXe);
+				body += "<p>Ghế " + viTri + " : <a href='http://localhost:8080/datvexe/xacnhanve?maVe=" + veXe.getMaVe() + "'/>Click Here!</a>";
+			}
+			
+			body = "<h3>Hello, Chúng tôi đến từ website đặt vé xe online,</h3>"
+					+ "<p>Bạn hãy hoàn thành việc kích hoạt các vé xe đã đăng ký "
+					+ "bằng cách click vào các link bên dưới</p>" + body + 
+					"<br/><p>Cảm ơn bạn đã đặt vé xe của chúng tôi!</p><i>Chào bạn</i>";
+			
+			SendEmail.sendEmail(email, "Xác nhận vé xe", body);
+			
+			//bat dau timer
+			
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
@@ -313,6 +362,76 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return listSDTNhaXe;
 	}
 
+	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
+			List<String> listB, List<String> listC, List<String> listD, List<String> listE) {
+		
+		List<String> viTris = new ArrayList<String>(0);
+		List<String> choDaDat = new ArrayList<String>(0);
+		String soDoViTri = "";
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			viTris = xeDAO.getListChoByidXe(idXe);
+			choDaDat = veXeDAO.getListSeated(idLichTuyen, ngayDi, gioDi);
+			Xe xe = xeDAO.getById(idXe);
+			soDoViTri = xe.getHinhAnh();
+			
+			logger.info(viTris.size() + " " + choDaDat.size());
+			for (String viTri : viTris) {
+				if (choDaDat.contains(viTri)) {
+					continue;
+				}
+				if (viTri.indexOf("A") != -1) {
+					listA.add(viTri);
+				} else if (viTri.indexOf("B") != -1) {
+					listB.add(viTri);
+				}  else if (viTri.indexOf("C") != -1) {
+					listC.add(viTri);
+				}  else if (viTri.indexOf("D") != -1) {
+					listD.add(viTri);
+				}  else if (viTri.indexOf("E") != -1) {
+					listE.add(viTri);
+				}			
+			}
+			Collections.sort(listA);
+			Collections.sort(listB);
+			Collections.sort(listC);
+			Collections.sort(listD);
+			Collections.sort(listE);
+			
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error(e);
+		}
+		return soDoViTri;
+	}
+	
+	@Override
+	public void xacNhanVe(String maVe) {
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			
+			VeXe veXe = veXeDAO.getVeXeByMaVe(maVe);
+			if (veXe != null && veXe.getTrangThai().equals(TrangThaiVeXe.GIUCHO)) {
+				veXe.setTrangThai(TrangThaiVeXe.DAKICHHOAT);
+				session.update(veXe);
+			}
+			
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error("Error", ex);
+		} 
+	}
+	
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
 		NgayCuaTuan day = null;
@@ -342,4 +461,15 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return day;
 	}
+	
+	private String randomVeXe() {
+		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		Random random = new Random();
+		String result = "";
+		for (int i = 0; i < 8; ++i) {
+			result += s.charAt(random.nextInt(s.length()));
+		}
+		return result;
+	}
+
 }

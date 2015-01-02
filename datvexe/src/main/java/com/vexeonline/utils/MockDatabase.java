@@ -3,6 +3,8 @@ package com.vexeonline.utils;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -45,7 +47,8 @@ public class MockDatabase {
 	public static void mockData() throws ParseException {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
+		session.getTransaction().begin();
+		
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
 		diaChi1.setHuyen("An Khê");
@@ -94,6 +97,15 @@ public class MockDatabase {
 		xe.setLoaiXe("Ghế Ngồi");
 		xe.setSoCho(45);
 		xe.setNhaXe(nhaXe);
+		xe.setHinhAnh("GheNgoi45Cho.png");
+		Set<String> viTris = new HashSet<String>(0);
+		viTris.add("A1");
+		viTris.add("A2");
+		viTris.add("B1");
+		viTris.add("B2");
+		viTris.add("C1");
+		viTris.add("C2");
+		xe.setViTris(viTris);
 		session.save(xe);
 
 		LichTuyen lichTuyen = new LichTuyen();
@@ -187,6 +199,8 @@ public class MockDatabase {
 		user2.setRole(RoleOfUser.NHAXE);
 		user2.setNhaXe(nhaXe2);
 		session.save(user2);
+		
+		session.getTransaction().commit();
 	}
 
 	public static void generateMockData() throws ParseException {
