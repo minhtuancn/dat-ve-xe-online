@@ -91,7 +91,8 @@ public class DatVeXe extends ActionSupport  {
 			HttpServletRequest request = ServletActionContext.getRequest();
 			String maVe = request.getParameter("maVe");
 
-			khachHangService.xacNhanVe(maVe);
+			boolean result = khachHangService.xacNhanVe(maVe);
+			request.setAttribute("result", result);
 
 		} catch (Exception e) {
 			logger.error("Error", e);

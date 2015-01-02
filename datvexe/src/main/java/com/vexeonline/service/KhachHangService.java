@@ -95,5 +95,5 @@ public interface KhachHangService {
 	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
 			List<String> listB, List<String> listC, List<String> listD, List<String> listE);
 	
-	public void xacNhanVe(String maVe);
+	public boolean xacNhanVe(String maVe);
 }

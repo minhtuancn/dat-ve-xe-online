@@ -28,7 +28,7 @@ public class HanhKhach implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String tenHanhKhach;
 	
-	@Column(nullable = false, length = 11, unique = true)
+	@Column(nullable = false, length = 11)
 	private String sdt;
 
 	@Column(length = 50, unique = true)
