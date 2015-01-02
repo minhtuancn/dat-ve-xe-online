@@ -31,7 +31,7 @@ public class SendEmail {
 		message.setFrom(new InternetAddress("tungnt620@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(emailRecive));
-		message.setSubject(subject);
+		message.setSubject(subject, "utf-8");
 		message.setText(body, "utf-8", "html");
 		Transport.send(message);
 	}
