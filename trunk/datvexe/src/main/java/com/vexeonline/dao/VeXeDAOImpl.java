@@ -2,6 +2,7 @@ package com.vexeonline.dao;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Session;
 
@@ -52,8 +53,8 @@ public class VeXeDAOImpl implements VeXeDAO {
 							"  AND HOUR(v.chuyenXe.ngayDi) = :hour \r\n" + 
 							"  AND MINUTE(v.chuyenXe.ngayDi) = :minute")
 						.setInteger("idLichTuyen", idLichTuyen)
-						.setInteger("year", ngayDi.getYear())
-						.setInteger("month", ngayDi.getMonth())
+						.setInteger("year", ngayDi.getYear() + 1900)
+						.setInteger("month", ngayDi.getMonth() + 1)
 						.setInteger("day", ngayDi.getDate())
 						.setInteger("hour", gioDi.getHours())
 						.setInteger("minute", gioDi.getMinutes())
@@ -72,6 +73,35 @@ public class VeXeDAOImpl implements VeXeDAO {
 							"  v.maVe like :maVe")
 				.setString("maVe", maVe)
 				.uniqueResult();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public List<String> getListSeated(int idLichTuyen, Date ngayDi, Time gioDi) {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  v.choNgoi \r\n" + 
+							" FROM\r\n" + 
+							"  VeXe as v  \r\n" + 
+							" WHERE\r\n" + 
+							"  v.chuyenXe.lichTuyen.idLichTuyen = :idLichTuyen \r\n" + 
+							"  AND YEAR(v.chuyenXe.ngayDi) = :year   \r\n" + 
+							"  AND MONTH(v.chuyenXe.ngayDi) = :month \r\n" + 
+							"  AND DAY(v.chuyenXe.ngayDi) = :day   \r\n" + 
+							"  AND HOUR(v.chuyenXe.ngayDi) = :hour \r\n" + 
+							"  AND MINUTE(v.chuyenXe.ngayDi) = :minute")
+						.setInteger("idLichTuyen", idLichTuyen)
+						.setInteger("year", ngayDi.getYear() + 1900)
+						.setInteger("month", ngayDi.getMonth() + 1)
+						.setInteger("day", ngayDi.getDate())
+						.setInteger("hour", gioDi.getHours())
+						.setInteger("minute", gioDi.getMinutes())
+						.list();
+	}
+
+	public VeXe getVeXeByMaVe(String maVe) {
+		return (VeXe) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("from VeXe as v where v.maVe like :maVe")
+				.setString("maVe", maVe).uniqueResult();
 	}
 
 }

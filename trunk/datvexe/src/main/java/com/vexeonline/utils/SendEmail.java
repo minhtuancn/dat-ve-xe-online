@@ -10,7 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
-	public void sendEmail(String emailRecive, String subject, String body)
+	public static void sendEmail(String emailRecive, String subject, String body)
 			throws Exception {
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -27,12 +27,12 @@ public class SendEmail {
 								"tungnt620@gmail.com", "y15V4S3#WwH#pkE5e692");
 					}
 				});
-		Message message = new MimeMessage(sessionMail);
+		MimeMessage message = new MimeMessage(sessionMail);
 		message.setFrom(new InternetAddress("tungnt620@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(emailRecive));
 		message.setSubject(subject);
-		message.setText(body);
+		message.setText(body, "utf-8", "html");
 		Transport.send(message);
 	}
 }

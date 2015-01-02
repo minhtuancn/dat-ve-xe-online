@@ -31,7 +31,7 @@ public class HanhKhach implements Serializable {
 	@Column(nullable = false, length = 11, unique = true)
 	private String sdt;
 
-	@Column(length = 50)
+	@Column(length = 50, unique = true)
 	private String email;
 
 	@OneToMany(mappedBy = "hanhKhach")

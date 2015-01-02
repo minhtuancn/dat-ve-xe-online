@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,7 +47,13 @@ public class Xe implements Serializable {
 
 	@Column(length = 50)
 	private String hinhAnh;
-	
+
+	@ElementCollection
+	@CollectionTable(joinColumns = @JoinColumn(name = "idXe"))
+	@Column(length = 3)
+	private Set<String> viTris = new HashSet<String>(0);
+
+	@Column(nullable = false)
 	private boolean isActive;
 
 	@ManyToOne
@@ -128,6 +136,14 @@ public class Xe implements Serializable {
 
 	public void setTienIchs(Set<TienIch> tienIchs) {
 		this.tienIchs = tienIchs;
+	}
+
+	public Set<String> getViTris() {
+		return viTris;
+	}
+
+	public void setViTris(Set<String> viTris) {
+		this.viTris = viTris;
 	}
 
 	@Override
