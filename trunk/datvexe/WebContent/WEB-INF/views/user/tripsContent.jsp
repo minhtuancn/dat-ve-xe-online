@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/Resources/datatable/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet"
@@ -23,7 +25,6 @@
 	src="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.js"></script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.css" />
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/datepicker.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
 
@@ -46,20 +47,43 @@
 		$('#dienThoai').DataTable();
 	}); 
 	
-	/* function centerModal() {
-		$(this).css('display', 'block');
-		var $dialog = $(this).find(".modal-dialog");
-		var offset = ($(window).height() - $dialog.height()) / 2;
-		// Center modal vertically in window
-		$dialog.css("margin-top", offset);
+ 	
+ 	
+ 	function datve(idLichTuyen, gioDi, benDi, benDen, tongThoiGian, giaVe, idXe) {
+ 		
+		ngayDi = '${ngayDi}';
+		tuyenXe = '${tinhDi}' + " - " + '${tinhDen}';
+		
+		//alert(formatDate(ngayDi));
+		
+ 	 	post('${pageContext.request.contextPath}/chonchongoi', {ngayDi: ngayDi, tuyenXe : tuyenXe,
+ 	 		idLichTuyen : idLichTuyen, gioDi : gioDi, tenBenDi : benDi, tenBenDen : benDen, 
+ 	 		gioDi : gioDi, giaVe : giaVe, tongThoiGian : tongThoiGian, idXe : idXe});
 	}
+ 	
+ 	function post(path, params, method) {
+ 	    method = method || "post"; // Set method to post by default if not specified.
 
-	$('.modal').on('show.bs.modal', centerModal);
+ 	    // The rest of this code assumes you are not using a library.
+ 	    // It can be made less wordy if you use one.
+ 	    var form = document.createElement("form");
+ 	    form.setAttribute("method", method);
+ 	    form.setAttribute("action", path);
 
-	$(window).on("resize", function() {
-		$('.modal:visible').each(centerModal);
-	}); */
-	
+ 	    for(var key in params) {
+ 	        if(params.hasOwnProperty(key)) {
+ 	            var hiddenField = document.createElement("input");
+ 	            hiddenField.setAttribute("type", "hidden");
+ 	            hiddenField.setAttribute("name", key);
+ 	            hiddenField.setAttribute("value", params[key]);
+
+ 	            form.appendChild(hiddenField);
+ 	         }
+ 	    }
+
+ 	    document.body.appendChild(form);
+ 	    form.submit();
+ 	}
 </script>
 
 <center>
@@ -69,7 +93,7 @@
 	</h3>
 </center>
 
-<hr />
+<hr /> 
 <table id="trips" class="display">
 	<thead>
 		<tr>
@@ -140,7 +164,7 @@
 										<s:property value="gioDi.getHours()" />
 										Giờ
 										<s:property value="gioDi.getMinutes()" />
-										Phút
+										Phút 
 									</div>
 								</div>
 							</td>
@@ -155,8 +179,7 @@
 									</div>
 								</div>
 							</td>
-							<td>Còn	
-										<s:property value="soChoConLai" />
+							<td>Còn	<s:property value="soChoConLai" />
 									Chỗ
 							</td>
 							<td>
@@ -166,8 +189,8 @@
 									<a href="" style="font-size: small; text-decoration: underline; color: orange;" 
 										data-toggle="modal" class="openListDanhGia" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listDanhGia">Xem đánh giá</a>
 									<br/>
-									<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#myModal">Viết đánh giá</button>
+									<button type="button" class="btn btn-primary openFormDanhGia"
+										data-toggle="modal" data-id='<s:property value="idNhaXe" />' data-target="#myModal">Viết đánh giá</button>
 								</div>
 							</td>
 							<td>
@@ -178,7 +201,10 @@
 									</div>
 									<div>
 									
-										<a class="btn btn-info" href='coachcp/chonghe?idLichTuyen=<s:property value="idLichTuyen" />&ngayDi=<s:property value="ngayDi" />' >Đặt vé</a>
+										<a class="btn btn-info"  onclick='datve(<s:property value="idLichTuyen"/>,
+											"<s:property value="gioDi"/>" ,"<s:property value="tenBenDi"/>", 
+											"<s:property value="tenBenDen"/>", "<s:property value="tongThoiGian"/>", 
+											"<s:property value="giaVe"/>", "<s:property value="idXe"/>")'>Đặt vé</a>
 									</div>
 								</div>
 							</td>
@@ -299,6 +325,7 @@
 	<!-- /.modal-dialog -->
 </div>
 
+
 <script type="text/javascript">
 
 	 $(document).on("click", ".openListDanhGia", function() {
@@ -392,49 +419,50 @@ $(document).on("click", ".openListSdt", function() {
 	 return '<p style="font-size : 20px; color : #99CC66;">' + value +'</p>'; 
  }
  
+ 
+ var idNhaXe ;
+ $(document).on("click", ".openFormDanhGia", function() {
+		idNhaXe = $(this).data('id');
+});
+ 
+ /*Attach a submit handler to the form */
+ $("#formDanhGia").submit(
+		function(event) {
+			// Stop form from submitting normally
+			event.preventDefault();
 
-/* 	$("#table-listDanhGia").ready(function() {
-		$(".rateColumn").addClass("rating");
-	});
-	 */
-	//Attach a submit handler to the form
-	$("#formDanhGia").submit(
-			function(event) {
+			// Get some values from elements on the page:
+			var $form = $(this), 
+				noiDung_ = $form.find("textarea[name='noiDung']").val(), 
+				diem_ = $form.find("input[name='diem']").val(), 
+				ngayDi_ = $form.find("input[name='ngayDi']").val(), 
+				maVe_ = $form.find("input[name='maVe']").val(), 
+				url = $form.attr("action");
 
-				// Stop form from submitting normally
-				event.preventDefault();
-
-				// Get some values from elements on the page:
-				var $form = $(this), 
-					noiDung_ = $form.find("textarea[name='noiDung']").val(), 
-					diem_ = $form.find("input[name='diem']").val(), 
-					ngayDi_ = $form.find("input[name='ngayDi']").val(), 
-					sdt_ = $form.find("input[name='maVe']").val(), 
-					url = $form.attr("action");
-
-				// Send the data using post
-				var posting = $.post(url, {
-					sdt : sdt_,
-					diem : diem_,
-					ngayDi : ngayDi_,
-					noiDung : noiDung_
-				});
-
-				$('#myModal').modal('hide');
-
-				// Put the results in a div
-				posting.done(function() {
-					$("#modal_danhGiaSuccess").modal("show");
-				});
+			// Send the data using post
+			var posting = $.post(url, {
+				maVe : maVe_,
+				diem : diem_,
+				ngayDi : ngayDi_,
+				noiDung : noiDung_,
+				idNhaXe : idNhaXe
 			});
 
-	$("#trips tbody").delegate("tr", "click", function() {
-		var tenNhaXe = $("td:first", this).text();
-		//var rate = $(".input-rating", this).val();
+			$('#myModal').modal('hide');
 
-		document.getElementById("nhaXeSDT").innerHTML = tenNhaXe;
-		document.getElementById("nhaXeDanhGia").innerHTML = tenNhaXe;
-		//alert(document.getElementById("tenNhaXe").innerHTML);
-		/* var fourthCellText = $("td:eq(5)", this).text(); */
-	});
+			// Put the results in a div
+			posting.done(function() {
+				$("#modal_danhGiaSuccess").modal("show");
+			});
+		}); 
+
+$("#trips tbody").delegate("tr", "click", function() {
+	var tenNhaXe = $("td:first", this).text();
+	//var rate = $(".input-rating", this).val();
+
+	document.getElementById("nhaXeSDT").innerHTML = tenNhaXe;
+	document.getElementById("nhaXeDanhGia").innerHTML = tenNhaXe;
+	//alert(document.getElementById("tenNhaXe").innerHTML);
+	/* var fourthCellText = $("td:eq(5)", this).text(); */
+});
 </script>
