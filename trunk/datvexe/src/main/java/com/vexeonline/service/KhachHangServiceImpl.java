@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -210,8 +212,25 @@ public class KhachHangServiceImpl implements KhachHangService {
 				veXe.setHanhKhach(hanhKhach);
 				veXe.setMaVe(randomVeXe());
 				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
-				session.save(veXe);
-				body += "<p>Ghế " + viTri + " : <a href='http://localhost:8080/datvexe/xacnhanve?maVe=" + veXe.getMaVe() + "'/>Click Here!</a>";
+				int idVeXe = (int) session.save(veXe);
+				body += "<p>Ghế " + viTri + " Mã vé : " + veXe.getMaVe() + 
+						" : <a href='http://localhost:8080/datvexe/xacnhanve?maVe=" + 
+						veXe.getMaVe() + "'/>Click Here!</a>";
+				
+				//bat dau timer
+				Runnable r = new Runnable() {
+			         public void run() {
+			        	 	deleteVeXe task = new deleteVeXe();
+			        		task.setIdVeXe(idVeXe);
+			        	    Timer timer = new Timer();
+			        	    //timer.schedule(task, nextDate(new Date()));
+			        	    //test
+			        	    Date date = new Date();
+			        	    date.setMinutes(date.getMinutes() + 1);
+			        	    timer.schedule(task, date);
+			         }
+			     };
+			     new Thread(r).start();
 			}
 			
 			body = "<h3>Hello, Chúng tôi đến từ website đặt vé xe online,</h3>"
@@ -221,7 +240,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			
 			SendEmail.sendEmail(email, "Xác nhận vé xe", body);
 			
-			//bat dau timer
+			
 			
 			tx.commit();
 		} catch (Exception ex) {
@@ -411,17 +430,32 @@ public class KhachHangServiceImpl implements KhachHangService {
 	}
 	
 	@Override
-	public void xacNhanVe(String maVe) {
+	public boolean xacNhanVe(String maVe) {
 		Transaction tx = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
 			
 			VeXe veXe = veXeDAO.getVeXeByMaVe(maVe);
+			if (veXe == null) {
+				return false;
+			}
 			if (veXe != null && veXe.getTrangThai().equals(TrangThaiVeXe.GIUCHO)) {
 				veXe.setTrangThai(TrangThaiVeXe.DAKICHHOAT);
 				session.update(veXe);
 			}
+
+			// bat dau timer
+			Runnable r = new Runnable() {
+				public void run() {
+					deleteVeXe task = new deleteVeXe();
+					task.setIdVeXe(veXe.getIdVeXe());
+					Timer timer = new Timer();
+					timer.schedule(task, previousDate(veXe.getChuyenXe()
+							.getNgayDi()));
+				}
+			};
+			new Thread(r).start();
 			
 			tx.commit();
 		} catch (Exception ex) {
@@ -430,6 +464,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			}
 			logger.error("Error", ex);
 		} 
+		return true;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -468,8 +503,72 @@ public class KhachHangServiceImpl implements KhachHangService {
 		String result = "";
 		for (int i = 0; i < 8; ++i) {
 			result += s.charAt(random.nextInt(s.length()));
-		}
+		}	
 		return result;
 	}
-
+	
+	@SuppressWarnings({"deprecation" })
+	private Date previousDate(Date date) {
+		int[] dateOfMonth = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30};
+		if (date.getDate() == 1) {			//neu la ngay 1 
+			if (date.getMonth() == 0) {		//neu la thang 1
+				date.setDate(31);
+				date.setMonth(11);
+				date.setYear(date.getDate() - 1);
+			} else	if (date.getMonth() == 2) {		//neu la thang 3
+				if ( (date.getYear() % 400 == 0) || (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { 	//neu la nam nhuan
+					date.setDate(29);
+				} else {
+					date.setDate(28);
+				}
+			} else {
+				date.setDate(dateOfMonth[date.getMonth()]);
+				date.setMonth(date.getMonth() - 1);
+			}
+		} else {
+			date.setDate(date.getDate() - 1);
+		}
+		return date;
+	}
+	
+	@SuppressWarnings({"deprecation" })
+	private Date nextDate(Date date) {
+		int[] dateOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
+		if ( (date.getYear() % 400 == 0) || (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { 	//neu la nam nhuan
+			dateOfMonth[1] = 29;
+		}
+		
+		if (date.getDate() == dateOfMonth[date.getMonth()]) {			//neu la ngay cuoi thang
+			if (date.getMonth() == 11) {			//neu la thang 12
+				date.setMonth(0);
+				date.setYear(date.getDate() + 1);
+			}  else {
+				date.setMonth(date.getMonth() + 1);
+			}
+			date.setDate(1);
+		} else {
+			date.setDate(date.getDate() + 1);
+		}
+		return date;
+	}
+}
+class deleteVeXe extends TimerTask
+{
+	private int idVeXe;
+	
+	@Override
+	public void run() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		VeXe veXe = (VeXe) session.get(VeXe.class, idVeXe);
+		if (veXe.getTrangThai().equals(TrangThaiVeXe.GIUCHO)) {
+			new VeXeDAOImpl().delete(veXe);
+		}
+		session.getTransaction().commit();
+	}
+	
+	public void setIdVeXe(int idVeXe) {
+		this.idVeXe = idVeXe;
+	}
+	
 }
