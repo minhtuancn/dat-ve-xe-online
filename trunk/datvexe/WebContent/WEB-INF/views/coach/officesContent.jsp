@@ -7,18 +7,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/datatable/js/dataTables.bootstrap.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/dataTables.bootstrap.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/coach.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.css" />
-<script type="text/javascript">
-<!--
-$(document).ready(function() {
-    $('#offices').DataTable();
-});
-//-->
-</script>
 <style>
 <!--
-	#offices_wrapper {
+	#office_wrapper {
 		width: 1024px;
 		margin-left: auto;
 		margin-right: auto;
@@ -26,38 +17,52 @@ $(document).ready(function() {
 	}
 -->
 </style>
-<div id="offices_wrapper">
-<table id="offices" class="display">
-	<thead>
-		<tr>
-			<td>Mã văn phòng</td>
-			<td>Tên văn phòng</td>
-			<td>Địa chỉ</td>
-			<td>Số điện thoại</td>
-			<td></td>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<td>Mã văn phòng</td>
-			<td>Tên văn phòng</td>
-			<td>Địa chỉ</td>
-			<td>Số điện thoại</td>
-			<td></td>
-		</tr>
-	</tfoot>
-	<tbody>
-		<s:iterator var="office" value="offices">
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#offices').DataTable({
+    	"ajax": '${pageContext.request.contextPath}/coachcp/office_json',
+    	"aoColumns": [
+			{"mData": "id"},
+			{"mData": "name"},
+			{'mData': null, 'mRender': function(o) {
+					return o.address.district + ", " + o.address.province; 
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					if (o.active == true) {
+						return "Hoạt động";				    				
+					} else {
+						return "Không hoạt động";
+					}
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return '<a data-toggle="modal" class="btn btn-info" href="${pageContext.request.contextPath}/coachcp/office/' + o.id + '">Detail</a>';				    				
+				}
+			}
+		]
+    });
+});
+</script>
+<div id="office_wrapper">
+	<table id="offices" class="display">
+		<thead>
 			<tr>
-				<td><s:property value="#office.id"/></td>
-				<td><s:property value="#office.name"/></td>
-				<td><s:property value="#office.address"/></td>
-				<td><s:property value="#office.phoneNumber"/></td>
-				<td>
-					<a href="${pageContext.request.contextPath}/coachcp/officeDetail?id=${office.id}" class="btn btn-primary">Detail</a>
-				</td>
+				<td>Mã văn phòng</td>
+				<td>Tên văn phòng</td>
+				<td>Địa chỉ</td>
+				<td>Trạng thái</td>
+				<td></td>
 			</tr>
-		</s:iterator>
-	</tbody>
-</table>
+		</thead>
+		<tfoot>
+			<tr>
+				<td>Mã văn phòng</td>
+				<td>Tên văn phòng</td>
+				<td>Địa chỉ</td>
+				<td>Trạng thái</td>
+				<td></td>
+			</tr>
+		</tfoot>
+	</table>
 </div>

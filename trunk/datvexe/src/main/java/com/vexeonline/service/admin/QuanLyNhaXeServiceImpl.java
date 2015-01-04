@@ -11,6 +11,7 @@ import com.vexeonline.dao.NhaXeDAOImpl;
 import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.SDTVanPhong;
 import com.vexeonline.domain.VanPhong;
+import com.vexeonline.dto.AddressDTO;
 import com.vexeonline.dto.NhaXeDTO;
 import com.vexeonline.dto.OfficeDTO;
 import com.vexeonline.dto.PhoneNumberDTO;
@@ -76,7 +77,7 @@ public class QuanLyNhaXeServiceImpl implements QuanLyNhaXeService {
 		OfficeDTO result = new OfficeDTO();
 		result.setId(office.getIdVanPhong());
 		result.setName(office.getTenVanPhong());
-		result.setAddress(office.getDiaChi().getChiTiet());
+		result.setAddress(new AddressDTO(office.getDiaChi()));
 		List<PhoneNumberDTO> phoneNumbers = new ArrayList<PhoneNumberDTO>();
 		for (SDTVanPhong phoneNumber : office.getSDTVanPhongs()) {
 			phoneNumbers.add(PhoneNumber2PhoneNumberDTO(phoneNumber));

@@ -1,19 +1,44 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.vexeonline.domain.SDTVanPhong;
+import com.vexeonline.domain.VanPhong;
 
 public class OfficeDTO implements Serializable {
 	
 	private static final long serialVersionUID = -7456827416746463571L;
 	
 	private Integer id;
+	private Integer nhaXeId;
 	private String name;
-	private String address;
+	private AddressDTO address;
 	private List<PhoneNumberDTO> phoneNumber;
 	private boolean active;
 
 	public OfficeDTO() {
+	}
+	
+	public OfficeDTO(VanPhong office) {
+		
+		this.id = office.getIdVanPhong();
+		this.nhaXeId = office.getNhaXe().getIdNhaXe();
+		this.name = office.getTenVanPhong();
+		
+		if (office.getDiaChi() != null) {
+			this.address = new AddressDTO(office.getDiaChi());
+		}
+		
+		if (office.getSDTVanPhongs() != null) {
+			this.phoneNumber = new ArrayList<PhoneNumberDTO>();
+			for (SDTVanPhong phone : office.getSDTVanPhongs()) {
+				this.phoneNumber.add(new PhoneNumberDTO(phone));
+			}
+		}
+		
+		this.active = office.isActive();
 	}
 	
 	public Integer getId() {
@@ -24,6 +49,14 @@ public class OfficeDTO implements Serializable {
 		this.id = id;
 	}
 
+	public Integer getNhaXeId() {
+		return nhaXeId;
+	}
+
+	public void setNhaXeId(Integer nhaXeId) {
+		this.nhaXeId = nhaXeId;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -32,11 +65,11 @@ public class OfficeDTO implements Serializable {
 		this.name = name;
 	}
 
-	public String getAddress() {
+	public AddressDTO getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
 
@@ -58,8 +91,7 @@ public class OfficeDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "OfficeDTO [id=" + id + ", name=" + name + ", address="
-				+ address + ", phoneNumber=" + phoneNumber + ", active="
-				+ active + "]";
+		return "OfficeDTO [id=" + id + ", nhaXeId=" + nhaXeId + ", name="
+				+ name + ", address=" + address + ", active=" + active + "]";
 	}
 }

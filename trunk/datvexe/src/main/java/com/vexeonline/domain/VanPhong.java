@@ -3,6 +3,7 @@ package com.vexeonline.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,11 +29,11 @@ public class VanPhong {
 	@JoinColumn(nullable = false)
 	private NhaXe nhaXe;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private DiaChi diaChi;
 
-	@OneToMany(mappedBy = "vanPhong")
+	@OneToMany(mappedBy = "vanPhong", cascade = CascadeType.ALL)
 	private Set<SDTVanPhong> SDTVanPhongs = new HashSet<SDTVanPhong>(0);
 
 	public int getIdVanPhong() {
