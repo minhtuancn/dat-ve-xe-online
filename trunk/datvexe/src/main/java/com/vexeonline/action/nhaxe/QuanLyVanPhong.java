@@ -105,7 +105,8 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 	}
 	
 	@Action(value = "office/save", results = {
-		@Result(name = "success", location = "office", type = "redirect")
+		@Result(name = "success", location = "office", type = "redirect"),
+		@Result(name = "input", location = "coach.newOffice", type = "tiles")
 	})
 	public String saveOffice() {
 		UserDTO user = (UserDTO) session.get("user");
@@ -116,7 +117,8 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			if (office.getId() != null) {
+			office.setNhaXeId(user.getNhaXeId());
+			if (office.getId() == null) {
 				officeService.insert(office);
 			} else {
 				officeService.update(office);
