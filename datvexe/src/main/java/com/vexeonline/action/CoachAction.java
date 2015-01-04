@@ -45,7 +45,10 @@ public class CoachAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "logging")
+	@Action(value = "logging", results = {
+			@Result(name = "success", location = "coach.home", type = "tiles"),
+			@Result(name = "error", location = "login", type = "tiles")
+	})
 	public String doLogin() {
 		Transaction tx = null;
 		try {
@@ -55,6 +58,9 @@ public class CoachAction extends ActionSupport implements SessionAware {
 			tx.commit();
 			if (user != null) {
 				session.put("user", user);
+			} else {
+				addActionMessage("Sai tên đăng nhập hoặc mật khẩu");
+				return ERROR;
 			}
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
