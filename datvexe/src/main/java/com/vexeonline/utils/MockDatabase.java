@@ -47,7 +47,6 @@ public class MockDatabase {
 	public static void mockData() throws ParseException {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
 		
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
@@ -199,8 +198,6 @@ public class MockDatabase {
 		user2.setRole(RoleOfUser.NHAXE);
 		user2.setNhaXe(nhaXe2);
 		session.save(user2);
-		
-		session.getTransaction().commit();
 	}
 
 	public static void generateMockData() throws ParseException {

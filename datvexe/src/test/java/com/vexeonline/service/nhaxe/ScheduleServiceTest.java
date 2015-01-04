@@ -117,17 +117,17 @@ public class ScheduleServiceTest {
 			System.out.println(price);
 		};
 		
-		/*PriceDTO newPrice = new PriceDTO();
+		PriceDTO newPrice = new PriceDTO();
 		newPrice.setGiaVe(3450000);
 		newPrice.setNgayBatDau(df.parse("02/03/2015"));
 		newPrice.setNgayKetThuc(df.parse("01/04/2015"));
-		service.insertPrice(2, 6, newPrice);*/
+		service.insertPrice(2, 6, newPrice);
 		
-		/*PriceDTO newPrice2 = new PriceDTO();
+		PriceDTO newPrice2 = new PriceDTO();
 		newPrice2.setGiaVe(4450000);
 		newPrice2.setNgayBatDau(null);
 		newPrice2.setNgayKetThuc(df.parse("01/06/2015"));
-		service.insertPrice(2, 6, newPrice2);*/
+		service.insertPrice(2, 6, newPrice2);
 		
 		PriceDTO newPrice3 = new PriceDTO();
 		newPrice3.setGiaVe(4550000);
@@ -140,6 +140,7 @@ public class ScheduleServiceTest {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			test005();
 			test006();
 			tx.commit();
 		} catch (Exception e) {

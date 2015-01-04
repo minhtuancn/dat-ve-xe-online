@@ -30,7 +30,7 @@ import com.vexeonline.service.nhaxe.VehicleServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
 /**
- * @author Đặng Quang Hưng
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
  *
  */
 @Namespace(value = "/coachcp")
@@ -40,7 +40,7 @@ import com.vexeonline.utils.HibernateUtil;
 		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter"),
 		@TypeConversion(key = "price.ngayBatDau", converter = "com.vexeonline.converter.DateConverter"),
 		@TypeConversion(key = "price.ngayKetThuc", converter = "com.vexeonline.converter.DateConverter")})
-@Result(name = "login",location="login", type = "redirect")
+@Result(name = "login", location="login", type = "redirect")
 public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = -7283156740983672101L;

@@ -1,5 +1,6 @@
 package com.vexeonline.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,13 +20,13 @@ public class SDTVanPhong {
 	@Column(nullable = false, unique = true)
 	private int idSDTVanPhong;
 	
-	@Column(unique = true, nullable = false, length = 11)
+	@Column(unique = true, nullable = false, length = 24)
 	private String SDT;
 	
 	@Column(length = 100)
 	private String ghiChu;
 	
-	@ManyToOne
+	@ManyToOne(cascade =  CascadeType.PERSIST)
 	@JoinColumn(nullable = false)
 	private VanPhong vanPhong;
 

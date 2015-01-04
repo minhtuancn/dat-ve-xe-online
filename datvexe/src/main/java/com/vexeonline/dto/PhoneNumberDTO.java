@@ -2,6 +2,8 @@ package com.vexeonline.dto;
 
 import java.io.Serializable;
 
+import com.vexeonline.domain.SDTVanPhong;
+
 public class PhoneNumberDTO implements Serializable {
 	
 	private static final long serialVersionUID = -7864788585198254398L;
@@ -13,6 +15,17 @@ public class PhoneNumberDTO implements Serializable {
 	public PhoneNumberDTO() {
 	}
 	
+	public PhoneNumberDTO(SDTVanPhong phone) {
+		this.id = phone.getIdSDTVanPhong();
+		this.phoneNumber = phone.getSDT();
+		this.description = phone.getGhiChu();
+	}
+	
+	public PhoneNumberDTO(String phoneNumber, String description) {
+		this.phoneNumber = phoneNumber;
+		this.description = description;
+	}
+
 	public PhoneNumberDTO(Integer id, String phoneNumber, String description) {
 		this.id = id;
 		this.phoneNumber = phoneNumber;
