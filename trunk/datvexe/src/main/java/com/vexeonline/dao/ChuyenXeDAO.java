@@ -14,6 +14,11 @@ import com.vexeonline.domain.ChuyenXe;
  *
  */
 public interface ChuyenXeDAO {
+	
+	public ChuyenXe get(Integer nhaXeId,Integer chuyenXeId);
+	
+	public List<ChuyenXe> get(Integer nhaXeId);
+	
 	/**
 	 * @author Tung
 	 * @param session
@@ -35,7 +40,7 @@ public interface ChuyenXeDAO {
 	 * @param chuyenXe
 	 * @return
 	 */
-	public Integer save(ChuyenXe chuyenXe);
+	public Integer insert(ChuyenXe chuyenXe);
 
 	/**
 	 * @author Tung

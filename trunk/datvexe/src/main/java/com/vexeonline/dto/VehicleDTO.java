@@ -86,7 +86,7 @@ public class VehicleDTO implements Serializable {
 	}
 
 	@RequiredFieldValidator(key = "vehicle.require.socho")
-	@IntRangeFieldValidator(min = "0", key = "vehicle.range.socho")
+	@IntRangeFieldValidator(min = "4", key = "vehicle.range.socho")
 	public Integer getSoCho() {
 		return soCho;
 	}

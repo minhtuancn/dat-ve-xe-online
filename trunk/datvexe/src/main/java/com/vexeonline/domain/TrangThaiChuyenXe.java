@@ -8,5 +8,5 @@ package com.vexeonline.domain;
  *
  */
 public enum TrangThaiChuyenXe {
-    BINHTHUONG, HUY
+    BINHTHUONG, HUY	
 }

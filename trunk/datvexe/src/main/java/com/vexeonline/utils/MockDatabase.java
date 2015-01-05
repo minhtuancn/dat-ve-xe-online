@@ -38,9 +38,6 @@ import com.vexeonline.domain.User;
 import com.vexeonline.domain.VanPhong;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.domain.Xe;
-import com.vexeonline.dto.ChuyenXeDTO;
-import com.vexeonline.service.nhaxe.QuanLyChuyenXeService;
-import com.vexeonline.service.nhaxe.QuanLyChuyenXeServiceImpl;
 
 public class MockDatabase {
 
@@ -300,25 +297,6 @@ public class MockDatabase {
 		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(1));
 		lichChuyenDAO.save(lichChuyen);
-
-		ChuyenXeDTO chuyenXe = new ChuyenXeDTO();
-		chuyenXe.setIdLichChuyen(1);
-		chuyenXe.setIdTuyen(1);
-		chuyenXe.setNgayDi("22/12/2014");
-		chuyenXe.setGioKhoiHanh("11:30");
-		chuyenXe.setTenTaiXe("Nguyen Van A");
-		chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
-
-		QuanLyChuyenXeService service = new QuanLyChuyenXeServiceImpl();
-		try {
-			System.out
-					.println("<====================================================================>");
-			service.addNew(chuyenXe);
-			System.out
-					.println("<====================================================================>");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public static void main(String[] args) {

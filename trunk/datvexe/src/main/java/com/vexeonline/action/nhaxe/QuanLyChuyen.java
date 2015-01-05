@@ -1,6 +1,5 @@
 package com.vexeonline.action.nhaxe;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,106 +7,156 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.TrangThaiChuyenXe;
+import com.opensymphony.xwork2.conversion.annotations.Conversion;
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+
 import com.vexeonline.dto.ChuyenXeDTO;
-import com.vexeonline.service.nhaxe.QuanLyChuyenXeService;
-import com.vexeonline.service.nhaxe.QuanLyChuyenXeServiceImpl;
+import com.vexeonline.dto.TicketDTO;
+import com.vexeonline.dto.UserDTO;
+import com.vexeonline.service.nhaxe.ChuyenXeService;
+import com.vexeonline.service.nhaxe.ChuyenXeServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
-public class QuanLyChuyen extends ActionSupport {
+@Result(name = "login", location="login", type = "redirect")
+@Conversion(conversions = {
+		@TypeConversion(key = "chuyenXe.departDate", converter = "com.vexeonline.converter.DateConverter")
+})
+public class QuanLyChuyen extends ActionSupport implements SessionAware {
 	
 	private static final long serialVersionUID = 3504062148823438857L;
+	private static final ChuyenXeService chuyenXeService = new ChuyenXeServiceImpl();
 	
-	private Integer id;
-	private List<ChuyenXeDTO> chuyenxes;
+	private Map<String, Object> session;
+	
+	private List<ChuyenXeDTO> chuyenXes;
 	private ChuyenXeDTO chuyenXe;
-	private List<HanhKhach> hanhKhachs;
-	private Map<String,String> trangThais;
-
+	private List<TicketDTO> tickets;
+	
 	@SkipValidation
-	@Action(value = "trips", results = @Result(name = "success", location = "coach.trips", type = "tiles"))
+	@Action(value = "trip", results = @Result(name = "success", location = "coach.trips", type = "tiles"))
 	public String showTripsPage() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
+		return SUCCESS;
+	}
+	
+	@SkipValidation
+	@Action(value = "trips_json", results = {
+			@Result(name = "success",
+					type = "json",
+					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}","root", "chuyenXes"})
+	})
+	public String getTripsJson() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			QuanLyChuyenXeService chuyenXeService = new QuanLyChuyenXeServiceImpl();
-			chuyenxes = chuyenXeService.listChuyenXe();
+			chuyenXes = chuyenXeService.getChuyenXes(user.getNhaXeId());
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	@SkipValidation
+	@Action(value = "tickets_json/*", params = {"chuyenXe.id", "{1}"}, results = {
+			@Result(name = "success",
+					type = "json",
+					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}","root", "tickets"})
+	})
+	public String getTicketsJson() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			tickets = chuyenXeService.getChuyenXe(user.getNhaXeId(), chuyenXe.getId()).getTickets();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
 
 	@SkipValidation
-	@Action(value = "tripDetail", results = @Result(name = "success", location = "coach.tripDetail", type = "tiles"))
+	@Action(value = "trip/*", params = {"chuyenXe.id", "{1}"}, results = {
+			@Result(name = "success", location = "coach.tripDetail", type = "tiles")
+	})
 	public String showTripDetailPage() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			QuanLyChuyenXeService chuyenXeService = new QuanLyChuyenXeServiceImpl();
-			chuyenXe = chuyenXeService.getById(id);
+			chuyenXe = chuyenXeService.getChuyenXe(user.getNhaXeId(), chuyenXe.getId());
 			tx.commit();
-			
-			trangThais = new HashMap<String, String>();
-			trangThais.put(TrangThaiChuyenXe.BINHTHUONG.toString(), "Ä�ang hoáº¡t Ä‘á»™ng");
-			trangThais.put(TrangThaiChuyenXe.HUY.toString(), "Ä�Ã£ há»§y chuyáº¿n");
-			
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
 	
-	@Action(value = "saveTrip", results = @Result(name = "success", location = "trips", type = "redirect"))
+	@Action(value = "trip/save", results = {
+			@Result(name = "success", location = "trip", type = "redirect")
+	})
 	public String saveTrip() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			return LOGIN;
+		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			QuanLyChuyenXeService chuyenXeService = new QuanLyChuyenXeServiceImpl();
-			chuyenXeService.update(chuyenXe);
+			if (chuyenXe.getId() != null) {
+				chuyenXeService.updateChuyenXe(chuyenXe);
+			}
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
-	
-	public Map<String, String> getTrangThais() {
-		return trangThais;
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 
-	public void setTrangThais(Map<String, String> trangThais) {
-		this.trangThais = trangThais;
+	public List<ChuyenXeDTO> getChuyenXes() {
+		return chuyenXes;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public List<ChuyenXeDTO> getChuyenxes() {
-		return chuyenxes;
-	}
-
-	public void setChuyenxes(List<ChuyenXeDTO> chuyenxes) {
-		this.chuyenxes = chuyenxes;
+	public void setChuyenXes(List<ChuyenXeDTO> chuyenXes) {
+		this.chuyenXes = chuyenXes;
 	}
 
 	public ChuyenXeDTO getChuyenXe() {
@@ -118,11 +167,11 @@ public class QuanLyChuyen extends ActionSupport {
 		this.chuyenXe = chuyenXe;
 	}
 
-	public List<HanhKhach> getHanhKhachs() {
-		return hanhKhachs;
+	public List<TicketDTO> getTickets() {
+		return tickets;
 	}
 
-	public void setHanhKhachs(List<HanhKhach> hanhKhachs) {
-		this.hanhKhachs = hanhKhachs;
+	public void setTickets(List<TicketDTO> tickets) {
+		this.tickets = tickets;
 	}
 }

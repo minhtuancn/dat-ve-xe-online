@@ -1,31 +1,23 @@
 package com.vexeonline.service.nhaxe;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.vexeonline.dao.ChuyenXeDAO;
 import com.vexeonline.dao.ChuyenXeDAOImpl;
 import com.vexeonline.dao.LichTuyenDAO;
 import com.vexeonline.dao.LichTuyenDAOImpl;
-import com.vexeonline.domain.ChuyenXe;
-import com.vexeonline.domain.HanhKhach;
-import com.vexeonline.domain.TrangThaiChuyenXe;
-import com.vexeonline.domain.TuyenXe;
-import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.ChuyenXeDTO;
-import com.vexeonline.dto.HanhKhachDTO;
-import com.vexeonline.utils.HibernateUtil;
 
 public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 
+	@SuppressWarnings("unused")
 	private static final ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
 	@SuppressWarnings("unused")
 	private static final LichTuyenDAO lichChuyenDAO = new LichTuyenDAOImpl();
 
 	@Override
 	public ChuyenXeDTO getById(Integer id) throws Exception {
-		ChuyenXe tmp = chuyenXeDAO.getById(id);
+		/*ChuyenXe tmp = chuyenXeDAO.getById(id);
 		List<HanhKhachDTO> hanhKhachs = new ArrayList<HanhKhachDTO>();
 
 		ChuyenXeDTO result = new ChuyenXeDTO();
@@ -55,11 +47,12 @@ public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 
 		result.setHanhKhachs(hanhKhachs);
 
-		return result;
+		return result;*/
+		return null;
 	}
 
 	public List<ChuyenXeDTO> listChuyenXe() {
-		List<ChuyenXeDTO> result = new ArrayList<ChuyenXeDTO>();
+		/*List<ChuyenXeDTO> result = new ArrayList<ChuyenXeDTO>();
 		List<ChuyenXe> list = chuyenXeDAO.list();
 
 		ChuyenXeDTO tmp = null;
@@ -81,11 +74,12 @@ public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 			result.add(tmp);
 		}
 
-		return result;
+		return result;*/ 
+		return null;
 	}
 
 	public void addNew(ChuyenXeDTO chuyenXe) throws Exception {
-		ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
+		/*ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
 		LichTuyenDAO lichChuyenDAO = new LichTuyenDAOImpl();
 
 		ChuyenXe tmp = new ChuyenXe();
@@ -94,17 +88,17 @@ public class QuanLyChuyenXeServiceImpl implements QuanLyChuyenXeService {
 		tmp.setNgayDi(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(chuyenXe
 				.getNgayDi() + " " + chuyenXe.getGioKhoiHanh()));
 		tmp.setTaiXe(chuyenXe.getTenTaiXe());
-		chuyenXeDAO.save(tmp);
+		chuyenXeDAO.insert(tmp);*/
 	}
 
 	public void update(ChuyenXeDTO chuyenXe) throws Exception {
-		ChuyenXe tmp = chuyenXeDAO.getById(chuyenXe.getId());
+		/*ChuyenXe tmp = chuyenXeDAO.getById(chuyenXe.getId());
 		tmp.setTaiXe(chuyenXe.getTenTaiXe());
 		tmp.setNgayDi(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(chuyenXe.getNgayDi() + " " + chuyenXe.getGioKhoiHanh()));
 		tmp.setTrangThai(chuyenXe.getTrangThai());
-		/*LichTuyen lichChuyen = lichChuyenDAO
+		LichTuyen lichChuyen = lichChuyenDAO
 				.getById(chuyenXe.getIdLichChuyen());
-		tmp.setLichTuyen(lichChuyen);*/
-		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);
+		tmp.setLichTuyen(lichChuyen);
+		HibernateUtil.getSessionFactory().getCurrentSession().update(tmp);*/
 	}
 }
