@@ -15,4 +15,6 @@ public interface ChuyenXeService {
 	public void insertChuyenXe(ChuyenXeDTO chuyenXeDTO) throws Exception;
 	
 	public void updateChuyenXe(ChuyenXeDTO chuyenXeDTO) throws Exception;
+	
+	public void huyVeXe(Integer ticketId) throws Exception;
 }

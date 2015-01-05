@@ -3,6 +3,7 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/datepicker.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootbox.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/datatable/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
@@ -50,14 +51,40 @@ $(document).ready(function() {
 				}
 			},
 			{'mData': null, 'mRender': function(o) {
-					return o.status;
+					if (o.status == 'GIUCHO') {
+						return "Đang giữ chỗ";
+					} else if (o.status == 'DAKICHHOAT') {
+						return "Vé đã kích hoạt";
+					} else {
+						return "Đã xuất vé";
+					}
 				}
 			},
 			{'mData': null, 'mRender': function(o) {
-					return o.status;
+					return "<button id='" + o.id + "' class='btn btn-default btn-huyve'>Hủy vé</button>";
 				}
 			}
 		]	
+    });
+    
+    $('#customersForm').on('click', '.btn-huyve', function(e) {
+    	e.preventDefault();
+    	var ticketId = $(this).attr('id');
+    	bootbox.confirm("Có chắc chắn hủy vé ?", function(result) {
+    		if (result == true) {
+    			$.ajax({
+    				type: "POST",
+    				url: '${pageContext.request.contextPath}/coachcp/huyve',
+    				data: {
+    					'ticketId': ticketId	
+    				}
+    			}).success(function(data) {
+					bootbox.alert('Hủy vé thành công');
+    			}).error(function() {
+    				bootbox.alert('Hủy vé thất bại');
+    			});
+    		}
+    	});
     });
     
     /* $('#ngayDi').datepicker({
