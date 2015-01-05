@@ -2,17 +2,33 @@ package com.vexeonline.dto;
 
 import java.io.Serializable;
 
+import com.vexeonline.domain.HanhKhach;
+
 public class HanhKhachDTO implements Serializable {
 	
 	private static final long serialVersionUID = 8134035739691083295L;
 	
 	private Integer idHanhKhach;
 	private String tenHanhKhach;
-	private Integer idVeXe;
 	private String soDienThoai;
-	private String viTri;
-	private boolean thanhToan;
+	private String email;
 	
+	public HanhKhachDTO() {
+	}
+	
+	public HanhKhachDTO(HanhKhach customer) {
+		this.idHanhKhach = customer.getIdHanhKhach();
+		this.tenHanhKhach = customer.getTenHanhKhach();
+		this.soDienThoai = customer.getSdt();
+		this.email = customer.getEmail();
+	}
+	
+	public HanhKhachDTO(String tenHanhKhach, String soDienThoai, String email) {
+		this.tenHanhKhach = tenHanhKhach;
+		this.soDienThoai = soDienThoai;
+		this.email = email;
+	}
+
 	public Integer getIdHanhKhach() {
 		return idHanhKhach;
 	}
@@ -28,15 +44,7 @@ public class HanhKhachDTO implements Serializable {
 	public void setIdHanhKhach(Integer idHanhKhach) {
 		this.idHanhKhach = idHanhKhach;
 	}
-
-	public Integer getIdVeXe() {
-		return idVeXe;
-	}
-
-	public void setIdVeXe(Integer idVeXe) {
-		this.idVeXe = idVeXe;
-	}
-
+	
 	public String getSoDienThoai() {
 		return soDienThoai;
 	}
@@ -45,19 +53,11 @@ public class HanhKhachDTO implements Serializable {
 		this.soDienThoai = soDienThoai;
 	}
 
-	public String getViTri() {
-		return viTri;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setViTri(String viTri) {
-		this.viTri = viTri;
-	}
-
-	public boolean isThanhToan() {
-		return thanhToan;
-	}
-
-	public void setThanhToan(boolean thanhToan) {
-		this.thanhToan = thanhToan;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

@@ -8,6 +8,8 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.Restrictions;
+
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -23,7 +25,7 @@ public class ChuyenXeDAOImpl implements ChuyenXeDAO {
 				.createQuery("from ChuyenXe").list();
 	}
 
-	public Integer save(ChuyenXe chuyenXe) {
+	public Integer insert(ChuyenXe chuyenXe) {
 		return (Integer) HibernateUtil.getSessionFactory().getCurrentSession()
 				.save(chuyenXe);
 	}
@@ -35,26 +37,47 @@ public class ChuyenXeDAOImpl implements ChuyenXeDAO {
 	@SuppressWarnings("deprecation")
 	public ChuyenXe getChuyenXeIdLichTuyenAndNgayDiGioDi(int idLichTuyen,
 			Date ngayDi, Time gioDi) {
-		System.out.println(idLichTuyen + " " + ngayDi.getYear() + " " + (ngayDi.getMonth() + 1) + " " + ngayDi.getDate());
-		return (ChuyenXe) HibernateUtil.getSessionFactory().getCurrentSession()
-				.createQuery("SELECT\r\n" + 
-							"  c  \r\n" + 
-							" FROM\r\n" + 
-							"  ChuyenXe as c  \r\n" + 
-							" WHERE\r\n" + 
-							"  c.lichTuyen.idLichTuyen = :idLichTuyen            \r\n" + 
-							"  AND YEAR(c.ngayDi) = :year              \r\n" + 
-							"  AND MONTH(c.ngayDi) = :month            \r\n" + 
-							"  AND DAY(c.ngayDi) = :day             \r\n" + 
-							"  AND HOUR(c.ngayDi) = :hour            \r\n" + 
-							"  AND MINUTE(c.ngayDi) = :minute")
+		System.out.println(idLichTuyen + " " + ngayDi.getYear() + " "
+				+ (ngayDi.getMonth() + 1) + " " + ngayDi.getDate());
+		return (ChuyenXe) HibernateUtil
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"SELECT\r\n"
+								+ "  c  \r\n"
+								+ " FROM\r\n"
+								+ "  ChuyenXe as c  \r\n"
+								+ " WHERE\r\n"
+								+ "  c.lichTuyen.idLichTuyen = :idLichTuyen            \r\n"
+								+ "  AND YEAR(c.ngayDi) = :year              \r\n"
+								+ "  AND MONTH(c.ngayDi) = :month            \r\n"
+								+ "  AND DAY(c.ngayDi) = :day             \r\n"
+								+ "  AND HOUR(c.ngayDi) = :hour            \r\n"
+								+ "  AND MINUTE(c.ngayDi) = :minute")
 				.setInteger("idLichTuyen", idLichTuyen)
 				.setInteger("year", ngayDi.getYear() + 1900)
 				.setInteger("month", ngayDi.getMonth() + 1)
 				.setInteger("day", ngayDi.getDate())
 				.setInteger("hour", gioDi.getHours())
-				.setInteger("minute", gioDi.getMinutes())
+				.setInteger("minute", gioDi.getMinutes()).uniqueResult();
+	}
+
+	@Override
+	public ChuyenXe get(Integer nhaXeId, Integer chuyenXeId) {
+		return (ChuyenXe) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createCriteria(ChuyenXe.class)
+				.add(Restrictions.eq("idChuyenXe", chuyenXeId))
+				.createCriteria("lichTuyen").createCriteria("xe")
+				.createCriteria("nhaXe").add(Restrictions.eq("idNhaXe", nhaXeId))
 				.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ChuyenXe> get(Integer nhaXeId) {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createCriteria(ChuyenXe.class).createCriteria("lichTuyen")
+				.createCriteria("xe").createCriteria("nhaXe")
+				.add(Restrictions.eq("idNhaXe", nhaXeId)).list();
+	}
 }

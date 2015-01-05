@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class HanhKhach implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private int idHanhKhach;
+	private Integer idHanhKhach;
 
 	@Column(nullable = false, length = 100)
 	private String tenHanhKhach;
@@ -34,7 +35,7 @@ public class HanhKhach implements Serializable {
 	@Column(length = 50, unique = true)
 	private String email;
 
-	@OneToMany(mappedBy = "hanhKhach")
+	@OneToMany(mappedBy = "hanhKhach", cascade = CascadeType.ALL)	
 	private Set<VeXe> veXes = new HashSet<VeXe>(0);
 
 	public HanhKhach() {
@@ -47,11 +48,11 @@ public class HanhKhach implements Serializable {
 		this.email = email;
 	}
 	
-	public int getIdHanhKhach() {
+	public Integer getIdHanhKhach() {
 		return idHanhKhach;
 	}
 
-	public void setIdHanhKhach(int idHanhKhach) {
+	public void setIdHanhKhach(Integer idHanhKhach) {
 		this.idHanhKhach = idHanhKhach;
 	}
 
@@ -90,5 +91,4 @@ public class HanhKhach implements Serializable {
 	public void setVeXes(Set<VeXe> veXes) {
 		this.veXes = veXes;
 	}
-
 }

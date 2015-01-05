@@ -43,7 +43,7 @@ public class DatVeServiceImpl implements DatVeService{
 				chuyenXe.setLichTuyen(lichTuyen);
 				chuyenXe.setNgayDi(ngayDi);
 				chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
-				chuyenXeDAO.save(chuyenXe);
+				chuyenXeDAO.insert(chuyenXe);
 				
 			}
 			int soCho = chuyenXe.getLichTuyen().getXe().getSoCho();
@@ -85,7 +85,7 @@ public class DatVeServiceImpl implements DatVeService{
 				hanhKhach = new HanhKhach();
 				hanhKhach.setSdt(sdt);
 				hanhKhach.setTenHanhKhach(tenHanhKhach);
-				hanhKhachDAO.save(hanhKhach);
+				hanhKhachDAO.insert(hanhKhach);
 			}
 			int soChoConLai = chuyenXe.getLichTuyen().getXe().getSoCho() - chuyenXe.getVeXes().size();
 			if (soChoConLai < seatings.length) {  //số chỗ không đủ

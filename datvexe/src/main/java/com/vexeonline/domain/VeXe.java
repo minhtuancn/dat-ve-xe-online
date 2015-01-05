@@ -2,6 +2,7 @@ package com.vexeonline.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,7 +27,7 @@ public class VeXe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
-	private int idVeXe;
+	private Integer idVeXe;
 
 	@Column(unique = true, nullable = false, length = 8)
 	private String maVe;
@@ -42,15 +43,15 @@ public class VeXe implements Serializable {
 	@JoinColumn(nullable = false, name = "idChuyenXe")
 	private ChuyenXe chuyenXe;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private HanhKhach hanhKhach;
 
-	public int getIdVeXe() {
+	public Integer getIdVeXe() {
 		return idVeXe;
 	}
 
-	public void setIdVeXe(int idVeXe) {
+	public void setIdVeXe(Integer idVeXe) {
 		this.idVeXe = idVeXe;
 	}
 
@@ -95,4 +96,9 @@ public class VeXe implements Serializable {
 		this.maVe = maVe;
 	}
 
+	@Override
+	public String toString() {
+		return "VeXe [idVeXe=" + idVeXe + ", maVe=" + maVe + ", choNgoi="
+				+ choNgoi + ", trangThai=" + trangThai + "]";
+	}
 }

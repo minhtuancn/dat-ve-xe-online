@@ -8,19 +8,17 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
 <style>
 <!--
-#tripDetailWrapper {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 50px;
-	border: 1px dashed blue;
-	padding: 20px;
-	background-color: white;
+#trip_detail {
 	width: 1024px;
+	margin: 50px auto;
+	padding: 50px 50px 50px 0;
+	background-color: white;
+	border: 1px gray dashed;
 }
 
-#tripDetailWrapper form {
-	width: 450px;
+#trip_detail legend {
+	margin-left: 50px;
+	text-transform: uppercase;
 }
 
 #customersForm {
@@ -36,86 +34,71 @@
 -->
 </style>
 <script type="text/javascript">
-<!--
 $(document).ready(function() {
-    $('#customers').DataTable();
-    $('#ngayDi').datepicker({
+    $('#customers').DataTable({
+    	"ajax": '${pageContext.request.contextPath}/coachcp/tickets_json/${chuyenXe.id}',
+    	"aoColumns": [
+			{"mData": "ticketId"},
+			{"mData": "seat"},
+			{"mData": "customer.tenHanhKhach"},
+			{'mData': null, 'mRender': function(o) {
+					if (o.customer.soDienThoai != null) {
+						return o.customer.soDienThoai;
+					} else {
+						return o.customer.email;	
+					}
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return o.status;
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return o.status;
+				}
+			}
+		]	
+    });
+    
+    /* $('#ngayDi').datepicker({
         format: "dd/mm/yyyy",
         todayHighlight: true,
         language: 'vi',
         autoclose: true
-    });
+    }); */
 });
-//-->
 </script>
-<div id="tripDetailWrapper">
-	<form action="saveTrip" method="post" class="form-horizontal" role="form">
-	<div class="form-group">
-		<label class="control-label col-sm-4" for="chuyenXe.id">Mã chuyến</label>
-		<div class="col-sm-8">
-			<%-- <input class="form-control" type="text" name="chuyenXe.id" disabled="disabled" value="${chuyenXe.id}"/> --%>
-			<s:textfield name="chuyenXe.id" cssClass="form-control" readonly="true"/>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-4" for="chuyenXe.tenTaiXe">Tài xế</label>
-		<div class="col-sm-8">
-			<input class="form-control" type="text" name="chuyenXe.tenTaiXe" value="${chuyenXe.tenTaiXe}"/>
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-4" for="chuyenXe.ngayDi">Ngày đi</label>
-		<div class="col-sm-8">
-			<s:textfield name="chuyenXe.ngayDi" readonly="true" cssClass="form-control" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-4" for="chuyenXe.gioKhoiHanh">Giời khởi hành</label>
-		<div class="col-sm-8">
-			<s:textfield name="chuyenXe.gioKhoiHanh" readonly="true" cssClass="form-control" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-4">SL hành khách</label>
-		<div class="col-sm-8">
-			<input class="form-control" type="text" disabled="disabled" value="${chuyenXe.soHanhKhach}">
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-4" for="chuyenXe.trangThai">Trạng thái</label>
-		<div class="col-sm-8">
-			<s:select name="chuyenXe.trangThai" list="trangThais" cssClass="form-control">
-			</s:select>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-4 col-sm-8">
-			<input class="form-control btn btn-primary" type="submit" value="Lưu" />
-		</div>
-	</div>
-</form>
-</div>
+<s:form id="trip_detail" action="trip/save" method="post" theme="bootstrap" cssClass="form-horizontal" label="Thông tin chuyến xe">
+	<s:hidden name="chuyenXe.id" />
+	<s:textfield name="chuyenXe.schedule.tuyenXe" label="Tuyến xe" disabled="true"/>
+	<s:textfield name="chuyenXe.departDate" label="Ngày đi" disabled="true"/>
+	<s:textfield name="chuyenXe.tenTaiXe" label="Tài xế" disabled="true"/>
+	<s:select list="@com.vexeonline.domain.TrangThaiChuyenXe@values()" value="chuyenXe.trangThai" label="Trạng Thái"/>
+	<s:submit cssClass="btn btn-primary pull-right" />
+</s:form>
 <form id="customersForm">
 	<table id="customers" class="display">
 		<thead>
 			<tr>
-				<td>Mã hành khách</td>
-				<td>Họ tên</td>
-				<td>Số điện thoại</td>
+				<td>Mã vé</td>
 				<td>Vị trí</td>
-				<td>Thanh toán</td>
+				<td>Tên hành khách</td>
+				<td>SĐT/Email</td>
+				<td>Trạng thái</td>
+				<td></td>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td>Mã hành khách</td>
-				<td>Họ tên</td>
-				<td>Số điện thoại</td>
+				<td>Mã vé</td>
 				<td>Vị trí</td>
-				<td>Thanh toán</td>
+				<td>Tên hành khách</td>
+				<td>SĐT/Email</td>
+				<td>Trạng thái</td>
+				<td></td>
 			</tr>
 		</tfoot>
-		<tbody>
+		<%-- <tbody>
 			<s:iterator var="hk" value="chuyenXe.hanhKhachs">
 				<tr>
 					<td><s:property value="#hk.idHanhKhach"/></td>
@@ -130,6 +113,6 @@ $(document).ready(function() {
 					</s:else>
 				</tr>
 			</s:iterator>
-		</tbody>
+		</tbody> --%>
 	</table>
 </form>

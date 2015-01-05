@@ -24,7 +24,7 @@
 				<li><a href="${pageContext.request.contextPath}/coachcp/office/new">Thêm văn phòng</a></li>
 			</ul>
 		</li>
-		<li><a href="${pageContext.request.contextPath}/coachcp/trips">Chuyến xe</a></li>
+		<li><a href="${pageContext.request.contextPath}/coachcp/trip">Chuyến xe</a></li>
 		<li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
 	</ul>
 </div>

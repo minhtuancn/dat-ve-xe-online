@@ -114,11 +114,11 @@
 		<put-attribute name="title" value="Thêm mới xe" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/vehicleDetailContent.jsp" />
 	</definition>
-	<definition name="coach.trip" extends="baseLayout">
+	<!-- <definition name="coach.trip" extends="baseLayout">
 		<put-attribute name="title" value="Danh sách chuyến xe" />
 		<put-attribute name="menu" value="/WEB-INF/views/coach/homeMenu.jsp" />
 		<put-attribute name="main" value="/WEB-INF/views/user/tripsContent.jsp" />
-	</definition>
+	</definition> -->
 	<definition name="coach.vehicleDetail" extends="coach.home">
 		<put-attribute name="title" value="Thông tin xe" />
 		<put-attribute name="main" value="/WEB-INF/views/coach/vehicleDetailContent.jsp" />

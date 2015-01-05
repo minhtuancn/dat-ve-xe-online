@@ -9,13 +9,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/coach.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/jRating/jRating.jquery.css" />
-<script type="text/javascript">
-<!--
-$(document).ready(function() {
-    $('#trip').DataTable();
-});
-//-->
-</script>
 <style>
 <!--
 	#trip_wrapper {
@@ -26,50 +19,58 @@ $(document).ready(function() {
 	}
 -->
 </style>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#trip').DataTable({
+    	"ajax": '${pageContext.request.contextPath}/coachcp/trips_json',
+    	"aoColumns": [
+			{'mData': null, 'mRender': function(o) {
+					return o.schedule.tuyenXe.benDi.province + " - " + o.schedule.tuyenXe.benDen.province;  
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return o.departDate.substr(0, 10);  
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return o.schedule.gioChay.substr(11, 5);  
+				}
+			},
+			{"mData": "tenTaiXe"},
+			{'mData': null, 'mRender': function(o) {
+					return o.tickets.length; 
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
+					return '<a data-toggle="modal" class="btn btn-info" href="${pageContext.request.contextPath}/coachcp/trip/' + o.id + '">Detail</a>'; 
+				}
+			}
+		]
+    });
+});
+</script>
 <div id="trip_wrapper">
-<table id="trip" class="display">
-	<thead>
-		<tr>
-			<td>Mã chuyến</td>
-			<td>Tuyến</td>
-			<td>Ngày đi</td>
-			<td>Giờ khởi hành</td>
-			<td>Số hành khách</td>
-			<td>Trạng thái</td>
-			<td></td>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<td>Mã chuyến</td>
-			<td>Tuyến</td>
-			<td>Ngày đi</td>
-			<td>Giờ khởi hành</td>
-			<td>Số hành khách</td>
-			<td>Trạng thái</td>
-			<td></td>
-		</tr>
-	</tfoot>
-	<tbody>
-		<s:iterator var="cx" value="chuyenxes">
+	<table id="trip" class="display">
+		<thead>
 			<tr>
-				<td><s:property value="#cx.id"/></td>
-				<td><s:property value="#cx.tuyen"/></td>
-				<td><s:property value="#cx.ngayDi"/></td>
-				<td><s:property value="#cx.gioKhoiHanh"/></td>
-				<td><s:property value="#cx.soHanhKhach"/></td>
-				<%-- <td><s:property value="#cx.trangThai"/></td> --%>
-				<s:if test='#cx.trangThai.toString() == "BINHTHUONG"'>
-					<td>Bình thường</td>
-				</s:if>
-				<s:elseif test='#cx.trangThai.toString() == "HUY"'>
-					<td>Đã hủy</td>
-				</s:elseif>
-				<td>
-					<a href="${pageContext.request.contextPath}/coachcp/tripDetail?id=${cx.id}" class="btn btn-primary">Detail</a>
-				</td>
+				<td>Tuyến xe</td>
+				<td>Ngày đi</td>
+				<td>Giờ khởi hành</td>
+				<td>Tên tài xế</td>
+				<td>Số hành khách</td>
+				<td></td>
 			</tr>
-		</s:iterator>
-	</tbody>
-</table>
+		</thead>
+		<tfoot>
+			<tr>
+				<td>Tuyến xe</td>
+				<td>Ngày đi</td>
+				<td>Giờ khởi hành</td>
+				<td>Tên tài xế</td>
+				<td>Số hành khách</td>
+				<td></td>
+			</tr>
+		</tfoot>
+		</tbody>
+	</table>
 </div>

@@ -1,35 +1,55 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.TrangThaiChuyenXe;
+import com.vexeonline.domain.VeXe;
 
-public class ChuyenXeDTO implements Serializable{
-	
+public class ChuyenXeDTO implements Serializable {
+
 	private static final long serialVersionUID = -5895438306191748301L;
-	
+
 	private Integer id;
-	private Integer idLichChuyen;
-	private Integer idTuyen;
-	private String tuyen;
-	private String ngayDi;
-	private String gioKhoiHanh;
-	private Integer soHanhKhach;
+	private ScheduleDTO schedule;
+	private Date departDate;
 	private String tenTaiXe;
 	private TrangThaiChuyenXe trangThai;
-	private List<HanhKhachDTO> hanhKhachs;
-	
-	public ChuyenXeDTO() {
+	private List<TicketDTO> tickets = new ArrayList<TicketDTO>();
+
+	public String getRoute() {
+		return schedule.getTuyenXe().getBenDi().getProvince() + " - "
+				+ schedule.getTuyenXe().getBenDen().getProvince();
 	}
-	
-	public ChuyenXeDTO(Integer id,String tuyen,String ngayDi, String gioKhoiHanh,
-			Integer soHanhKhach) {
-		this.id = id;
-		this.tuyen = tuyen;
-		this.ngayDi = ngayDi;
-		this.gioKhoiHanh = gioKhoiHanh;
-		this.soHanhKhach = soHanhKhach;
+
+	public ChuyenXeDTO() {
+
+	}
+
+	public ChuyenXeDTO(ChuyenXe chuyenXe, boolean includeScheduleInfo,
+			boolean includeTicketsInfo) {
+		this.id = chuyenXe.getIdChuyenXe();
+		this.departDate = chuyenXe.getNgayDi();
+		this.tickets = new ArrayList<TicketDTO>();
+		this.tenTaiXe = chuyenXe.getTaiXe();
+		this.trangThai = chuyenXe.getTrangThai();
+		
+		if (includeScheduleInfo) {
+			this.schedule = new ScheduleDTO(chuyenXe.getLichTuyen());
+		}
+
+		if (includeTicketsInfo) {
+			for (VeXe ticket : chuyenXe.getVeXes()) {
+				this.tickets.add(new TicketDTO(ticket));
+			}
+		}
+	}
+
+	public ChuyenXeDTO(ChuyenXe chuyenXe) {
+		this(chuyenXe, false, false);
 	}
 
 	public Integer getId() {
@@ -40,52 +60,20 @@ public class ChuyenXeDTO implements Serializable{
 		this.id = id;
 	}
 
-	public Integer getIdTuyen() {
-		return idTuyen;
+	public ScheduleDTO getSchedule() {
+		return schedule;
 	}
 
-	public void setIdTuyen(Integer idTuyen) {
-		this.idTuyen = idTuyen;
+	public void setSchedule(ScheduleDTO schedule) {
+		this.schedule = schedule;
 	}
 
-	public String getTuyen() {
-		return tuyen;
+	public Date getDepartDate() {
+		return departDate;
 	}
 
-	public void setTuyen(String tuyen) {
-		this.tuyen = tuyen;
-	}
-
-	public Integer getIdLichChuyen() {
-		return idLichChuyen;
-	}
-
-	public void setIdLichChuyen(Integer idLichChuyen) {
-		this.idLichChuyen = idLichChuyen;
-	}
-
-	public String getNgayDi() {
-		return ngayDi;
-	}
-
-	public void setNgayDi(String ngayDi) {
-		this.ngayDi = ngayDi;
-	}
-
-	public String getGioKhoiHanh() {
-		return gioKhoiHanh;
-	}
-
-	public void setGioKhoiHanh(String gioKhoiHanh) {
-		this.gioKhoiHanh = gioKhoiHanh;
-	}
-
-	public Integer getSoHanhKhach() {
-		return soHanhKhach;
-	}
-
-	public void setSoHanhKhach(Integer soHanhKhach) {
-		this.soHanhKhach = soHanhKhach;
+	public void setDepartDate(Date departDate) {
+		this.departDate = departDate;
 	}
 
 	public String getTenTaiXe() {
@@ -104,11 +92,17 @@ public class ChuyenXeDTO implements Serializable{
 		this.trangThai = trangThai;
 	}
 
-	public List<HanhKhachDTO> getHanhKhachs() {
-		return hanhKhachs;
+	public List<TicketDTO> getTickets() {
+		return tickets;
 	}
 
-	public void setHanhKhachs(List<HanhKhachDTO> hanhKhachs) {
-		this.hanhKhachs = hanhKhachs;
+	public void setTickets(List<TicketDTO> tickets) {
+		this.tickets = tickets;
+	}
+
+	@Override
+	public String toString() {
+		return "ChuyenXeDTO [id=" + id + ", departDate=" + departDate
+				+ ", tenTaiXe=" + tenTaiXe + ", trangThai=" + trangThai + "]";
 	}
 }
