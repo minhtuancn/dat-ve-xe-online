@@ -531,7 +531,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return date;
 	}
 	
-	@SuppressWarnings({"deprecation" })
+	@SuppressWarnings({"deprecation", "unused" })
 	private Date nextDate(Date date) {
 		int[] dateOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
 		if ( (date.getYear() % 400 == 0) || (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { 	//neu la nam nhuan

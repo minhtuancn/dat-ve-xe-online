@@ -16,6 +16,7 @@ import org.hibernate.Transaction;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.dto.BenXeDTO;
 import com.vexeonline.dto.PriceDTO;
 import com.vexeonline.dto.ScheduleDTO;
@@ -266,6 +267,7 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		this.session = session;
 	}
 
+	@VisitorFieldValidator(appendPrefix = true)
 	public ScheduleDTO getSchedule() {
 		return schedule;
 	}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.domain.SDTVanPhong;
 import com.vexeonline.domain.VanPhong;
 
@@ -57,6 +59,7 @@ public class OfficeDTO implements Serializable {
 		this.nhaXeId = nhaXeId;
 	}
 
+	@RequiredStringValidator(trim = true, key = "office.require.name")
 	public String getName() {
 		return name;
 	}
@@ -69,6 +72,7 @@ public class OfficeDTO implements Serializable {
 		return address;
 	}
 
+	@VisitorFieldValidator(appendPrefix = true)
 	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
@@ -81,6 +85,7 @@ public class OfficeDTO implements Serializable {
 		this.active = active;
 	}
 
+	@VisitorFieldValidator(appendPrefix = true)
 	public List<PhoneNumberDTO> getPhoneNumber() {
 		return phoneNumber;
 	}

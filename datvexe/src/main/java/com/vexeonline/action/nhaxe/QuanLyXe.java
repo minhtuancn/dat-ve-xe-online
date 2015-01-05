@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.dto.VehicleDTO;
@@ -125,6 +126,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	@Action(value = "tien_ichs_json",
 			results = @Result(name = "success",
 				type = "json",
@@ -146,6 +148,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	@Action(value = "vehicle_tien_ichs_json",
 			results = @Result(name = "success",
 				type = "json",
@@ -177,6 +180,7 @@ public class QuanLyXe extends ActionSupport implements SessionAware {
 		this.vehicles = vehicles;
 	}
 
+	@VisitorFieldValidator(appendPrefix = true)
 	public VehicleDTO getVehicle() {
 		return vehicle;
 	}

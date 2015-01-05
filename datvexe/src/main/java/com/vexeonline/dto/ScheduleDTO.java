@@ -1,12 +1,11 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
@@ -61,6 +60,7 @@ public class ScheduleDTO implements Serializable {
 		this.id = id;
 	}
 
+	@RequiredFieldValidator(key = "schedule.require.dateofweek")
 	public NgayCuaTuan getNgayTrongTuan() {
 		return ngayTrongTuan;
 	}
@@ -69,22 +69,16 @@ public class ScheduleDTO implements Serializable {
 		this.ngayTrongTuan = ngayTrongTuan;
 	}
 
+	@RequiredFieldValidator(key = "schedule.require.departtime")
 	public Date getGioChay() {
 		return gioChay;
-	}
-	
-	public void setGioChay(String gioChay) {
-		try {
-			this.gioChay = new SimpleDateFormat("kk:mm").parse(gioChay);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void setGioChay(Date gioChay) {
 		this.gioChay = gioChay;
 	}
-
+	
+	@RequiredFieldValidator(key = "schedule.require.route")
 	public TuyenXeDTO getTuyenXe() {
 		return tuyenXe;
 	}
@@ -101,6 +95,7 @@ public class ScheduleDTO implements Serializable {
 		this.tongThoiGian = tongThoiGian;
 	}
 
+	@RequiredFieldValidator(key = "schedule.require.vehicle")
 	public VehicleDTO getVehicle() {
 		return vehicle;
 	}

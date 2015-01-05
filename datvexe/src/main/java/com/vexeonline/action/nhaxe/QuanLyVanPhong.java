@@ -8,9 +8,11 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.dto.OfficeDTO;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.service.nhaxe.QuanLyVanPhongService;
@@ -35,6 +37,7 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 	private List<OfficeDTO> offices;
 	private OfficeDTO office;
 	
+	@SkipValidation
 	@Action(value = "office", results = {
 			@Result(name = "success", location = "coach.offices", type = "tiles")
 	})
@@ -46,6 +49,7 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	@Action(value = "office_json", results = {
 			@Result(name = "success",
 					type = "json",
@@ -69,6 +73,7 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	@Action(value = "office/*", params = {"office.id", "{1}"}, results = {
 			@Result(name = "success", location = "coach.officeDetail", type = "tiles")
 	})
@@ -93,6 +98,7 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	@Action(value = "office/new", results = {
 			@Result(name = "success", location = "coach.newOffice", type = "tiles")
 	})
@@ -145,6 +151,7 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		this.offices = offices;
 	}
 
+	@VisitorFieldValidator(appendPrefix = true)
 	public OfficeDTO getOffice() {
 		return office;
 	}
