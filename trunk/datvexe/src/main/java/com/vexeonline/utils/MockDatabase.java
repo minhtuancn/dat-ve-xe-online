@@ -11,10 +11,10 @@ import org.hibernate.Transaction;
 
 import com.vexeonline.dao.BenXeDAO;
 import com.vexeonline.dao.BenXeDAOImpl;
-import com.vexeonline.dao.LichTuyenDAO;
-import com.vexeonline.dao.LichTuyenDAOImpl;
 import com.vexeonline.dao.NhaXeDAO;
 import com.vexeonline.dao.NhaXeDAOImpl;
+import com.vexeonline.dao.ScheduleDAO;
+import com.vexeonline.dao.ScheduleDAOImpl;
 import com.vexeonline.dao.TuyenXeDAO;
 import com.vexeonline.dao.TuyenXeDAOImpl;
 import com.vexeonline.dao.XeDAO;
@@ -197,7 +197,7 @@ public class MockDatabase {
 		session.save(user2);
 	}
 
-	public static void generateMockData() throws ParseException {
+	public static void generateMockData() throws Exception {
 
 		// /////////////////////////////////////////////
 		
@@ -275,28 +275,28 @@ public class MockDatabase {
 
 		// /////////////////////////////////////////////
 
-		LichTuyenDAO lichChuyenDAO = new LichTuyenDAOImpl();
+		ScheduleDAO lichChuyenDAO = new ScheduleDAOImpl();
 
 		LichTuyen lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.MONDAY);
 		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(1));
-		lichChuyenDAO.save(lichChuyen);
+		lichChuyenDAO.insert(lichChuyen);
 
 		lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.SUNDAY);
 		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(2));
-		lichChuyenDAO.save(lichChuyen);
+		lichChuyenDAO.insert(lichChuyen);
 
 		lichChuyen = new LichTuyen();
 		lichChuyen.setTuyenXe(tuyenXeDAO.getById(1));
 		lichChuyen.setThu(NgayCuaTuan.THURSDAY);
 		lichChuyen.setGioDi(new SimpleDateFormat("kk:mm").parse("10:30"));
 		lichChuyen.setXe(xeDAO.getById(1));
-		lichChuyenDAO.save(lichChuyen);
+		lichChuyenDAO.insert(lichChuyen);
 	}
 	
 	public static void main(String[] args) {

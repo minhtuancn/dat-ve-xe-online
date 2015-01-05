@@ -21,8 +21,8 @@ import com.vexeonline.dao.GiaVeDAO;
 import com.vexeonline.dao.GiaVeDAOImpl;
 import com.vexeonline.dao.HanhKhachDAO;
 import com.vexeonline.dao.HanhKhachDAOImpl;
-import com.vexeonline.dao.LichTuyenDAO;
-import com.vexeonline.dao.LichTuyenDAOImpl;
+import com.vexeonline.dao.ScheduleDAO;
+import com.vexeonline.dao.ScheduleDAOImpl;
 import com.vexeonline.dao.TienIchDAO;
 import com.vexeonline.dao.TienIchDAOImpl;
 import com.vexeonline.dao.UserDAO;
@@ -50,7 +50,7 @@ import com.vexeonline.utils.SendEmail;
 
 public class KhachHangServiceImpl implements KhachHangService {
 	private final Logger logger = Logger.getLogger(getClass());
-	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
+	private static ScheduleDAO lichTuyenDAO = new ScheduleDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
 	private static TienIchDAO tienIchDAO = new TienIchDAOImpl();

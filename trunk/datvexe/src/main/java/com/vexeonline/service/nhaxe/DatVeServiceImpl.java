@@ -9,8 +9,8 @@ import com.vexeonline.dao.ChuyenXeDAO;
 import com.vexeonline.dao.ChuyenXeDAOImpl;
 import com.vexeonline.dao.HanhKhachDAO;
 import com.vexeonline.dao.HanhKhachDAOImpl;
-import com.vexeonline.dao.LichTuyenDAO;
-import com.vexeonline.dao.LichTuyenDAOImpl;
+import com.vexeonline.dao.ScheduleDAO;
+import com.vexeonline.dao.ScheduleDAOImpl;
 import com.vexeonline.dao.VeXeDAO;
 import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
@@ -24,7 +24,7 @@ import com.vexeonline.utils.HibernateUtil;
 public class DatVeServiceImpl implements DatVeService{
 	//private static Logger logger = Logger.getLogger(DatVeServiceImpl.class);
 	private static ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();
-	private static LichTuyenDAO lichTuyenDAO = new LichTuyenDAOImpl();
+	private static ScheduleDAO lichTuyenDAO = new ScheduleDAOImpl();
 	private static HanhKhachDAO hanhKhachDAO = new HanhKhachDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
 	
