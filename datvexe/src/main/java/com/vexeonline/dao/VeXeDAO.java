@@ -14,6 +14,8 @@ public interface VeXeDAO {
 	 */
     public VeXe getInfoVeXe(int maVeXe);
     
+    public VeXe get(Integer nhaXeId,Integer ticketId);
+    
     public int save(VeXe veXe);
     
     public void delete(VeXe veXe);

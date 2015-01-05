@@ -17,6 +17,7 @@ import com.vexeonline.dao.VeXeDAOImpl;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.HanhKhach;
 import com.vexeonline.domain.LichTuyen;
+import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.ChuyenXeDTO;
@@ -29,7 +30,7 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 	private static final ScheduleDAO scheduleDAO = new ScheduleDAOImpl();
 	private static final VeXeDAO ticketDAO = new VeXeDAOImpl();
 	private static final HanhKhachDAO customerDAO = new HanhKhachDAOImpl();
-	
+
 	@Override
 	public List<ChuyenXeDTO> getChuyenXes() throws Exception {
 		List<ChuyenXeDTO> result = new ArrayList<ChuyenXeDTO>();
@@ -52,7 +53,8 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 	public ChuyenXeDTO getChuyenXe(Integer nhaXeId, Integer chuyenXeId)
 			throws Exception {
 		ChuyenXe chuyenXe = chuyenXeDAO.get(nhaXeId, chuyenXeId);
-		return (chuyenXe != null) ? (new ChuyenXeDTO(chuyenXe, true, true)) : null;
+		return (chuyenXe != null) ? (new ChuyenXeDTO(chuyenXe, true, true))
+				: null;
 	}
 
 	@Override
@@ -64,35 +66,40 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 	}
 
 	@Override
-	public void updateChuyenXe(ChuyenXeDTO chuyenXeDTO) throws Exception {
-		ChuyenXe chuyenXe = ChuyenXeDTO2ChuyenXe(chuyenXeDTO);
+	public void updateChuyenXe(Integer nhaXeId, Integer chuyenXeId,
+			String tenTaiXe, TrangThaiChuyenXe status) throws Exception {
+		ChuyenXe chuyenXe = chuyenXeDAO.get(nhaXeId, chuyenXeId);
 		if (chuyenXe != null) {
+			chuyenXe.setTaiXe(tenTaiXe);
+			chuyenXe.setTrangThai(status);
 			chuyenXeDAO.update(chuyenXe);
 		}
 	}
-	
-	private ChuyenXe ChuyenXeDTO2ChuyenXe(ChuyenXeDTO chuyenXeDTO) throws Exception {
+
+	private ChuyenXe ChuyenXeDTO2ChuyenXe(ChuyenXeDTO chuyenXeDTO)
+			throws Exception {
 		ChuyenXe result = null;
-		
+
 		if (chuyenXeDTO != null) {
-			
+
 			if (chuyenXeDTO.getId() != null) {
 				result = chuyenXeDAO.getById(chuyenXeDTO.getId());
 			}
-			
+
 			if (result == null) {
 				result = new ChuyenXe();
 			}
-			
-			LichTuyen schedule = scheduleDAO.getById(chuyenXeDTO.getSchedule().getId());
+
+			LichTuyen schedule = scheduleDAO.getById(chuyenXeDTO.getSchedule()
+					.getId());
 			if (schedule != null) {
 				result.setLichTuyen(schedule);
 			}
-			
+
 			result.setNgayDi(chuyenXeDTO.getDepartDate());
 			result.setTaiXe(chuyenXeDTO.getTenTaiXe());
 			result.setTrangThai(chuyenXeDTO.getTrangThai());
-			
+
 			if (chuyenXeDTO.getTickets() != null) {
 				if (result.getVeXes() == null) {
 					result.setVeXes(new HashSet<VeXe>());
@@ -106,72 +113,85 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private VeXe TicketDTO2Ticket(TicketDTO ticketDTO) {
-		
+
 		VeXe result = null;
-		
-		if (ticketDTO == null) return null;
+
+		if (ticketDTO == null)
+			return null;
 		HanhKhach hanhKhach = HanhKhachDTO2HanhKhach(ticketDTO.getCustomer());
-		if (hanhKhach == null) return null;
-		
+		if (hanhKhach == null)
+			return null;
+
 		if (ticketDTO.getId() != null) {
 			result = ticketDAO.getInfoVeXe(ticketDTO.getId());
 		}
-		
+
 		if (result == null) {
 			result = new VeXe();
 		}
-		
+
 		result.setChoNgoi(ticketDTO.getSeat());
 		result.setHanhKhach(hanhKhach);
 		result.setIdVeXe(ticketDTO.getId());
-		if (ticketDTO.getTicketId() == null || ticketDTO.getTicketId().trim().length() == 0) {
+		if (ticketDTO.getTicketId() == null
+				|| ticketDTO.getTicketId().trim().length() == 0) {
 			result.setMaVe(new SimpleDateFormat("yyyyMMdd").format(new Date()));
 		} else {
 			result.setMaVe(ticketDTO.getTicketId());
 		}
-		
-		result.setTrangThai(ticketDTO.getStatus() != null ? ticketDTO.getStatus() : TrangThaiVeXe.GIUCHO);
-		
+
+		result.setTrangThai(ticketDTO.getStatus() != null ? ticketDTO
+				.getStatus() : TrangThaiVeXe.GIUCHO);
+
 		return result;
 	}
-	
+
 	private HanhKhach HanhKhachDTO2HanhKhach(HanhKhachDTO hanhKhachDTO) {
 		HanhKhach result = null;
-		
-		if (hanhKhachDTO == null) return null;
-		
+
+		if (hanhKhachDTO == null)
+			return null;
+
 		if (hanhKhachDTO.getIdHanhKhach() != null) {
 			result = customerDAO.getById(hanhKhachDTO.getIdHanhKhach());
 		}
-		
+
 		if (result == null && hanhKhachDTO.getSoDienThoai() != null) {
 			result = customerDAO.getBySDT(hanhKhachDTO.getSoDienThoai());
 		}
-		
+
 		if (result == null && hanhKhachDTO.getEmail() != null) {
 			result = customerDAO.getByEmail(hanhKhachDTO.getEmail());
 		}
-		
+
 		if (result == null) {
 			result = new HanhKhach();
 			result.setTenHanhKhach(hanhKhachDTO.getTenHanhKhach());
 			result.setSdt(hanhKhachDTO.getSoDienThoai());
 			result.setEmail(hanhKhachDTO.getEmail());
 		}
-		
+
 		return result;
 	}
 
 	@Override
-	public void huyVeXe(Integer ticketId) throws Exception {
-		VeXe ticket = ticketDAO.getInfoVeXe(ticketId);
+	public void huyVeXe(Integer nhaXeId, Integer ticketId) throws Exception {
+		VeXe ticket = ticketDAO.get(nhaXeId, ticketId);
 		if (ticket != null) {
 			ticketDAO.delete(ticket);
+		}
+	}
+
+	@Override
+	public void daNhanXe(Integer nhaXeId, Integer ticketId) throws Exception {
+		VeXe ticket = ticketDAO.get(nhaXeId, ticketId);
+		if (ticket != null) {
+			ticket.setTrangThai(TrangThaiVeXe.DALAYVE);
 		}
 	}
 }

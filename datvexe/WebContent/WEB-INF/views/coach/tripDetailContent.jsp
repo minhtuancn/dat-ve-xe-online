@@ -36,7 +36,7 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#customers').DataTable({
+    var table = $('#customers').DataTable({
     	"ajax": '${pageContext.request.contextPath}/coachcp/tickets_json/${chuyenXe.id}',
     	"aoColumns": [
 			{"mData": "ticketId"},
@@ -61,7 +61,12 @@ $(document).ready(function() {
 				}
 			},
 			{'mData': null, 'mRender': function(o) {
-					return "<button id='" + o.id + "' class='btn btn-default btn-huyve'>Hủy vé</button>";
+					if (o.status == 'DALAYVE') {
+						return "<button id='" + o.id + "' class='btn btn-default btn-xs btn-huyve'>Hủy vé</button>"
+					} else if (o.status == 'GIUCHO') {
+						return "<button id='" + o.id + "' class='btn btn-default btn-xs btn-huyve'>Hủy vé</button>&nbsp;" + 
+						"<button id='" + o.id + "' class='btn btn-default btn-xs btn-danhanve'>Đã nhận vé</button>";	
+					}
 				}
 			}
 		]	
@@ -69,7 +74,10 @@ $(document).ready(function() {
     
     $('#customersForm').on('click', '.btn-huyve', function(e) {
     	e.preventDefault();
+    	
     	var ticketId = $(this).attr('id');
+    	var tmp = $(this);
+    	
     	bootbox.confirm("Có chắc chắn hủy vé ?", function(result) {
     		if (result == true) {
     			$.ajax({
@@ -79,7 +87,10 @@ $(document).ready(function() {
     					'ticketId': ticketId	
     				}
     			}).success(function(data) {
-					bootbox.alert('Hủy vé thành công');
+    				if (data == 'success') {
+    					bootbox.alert('Hủy vé thành công');
+    					table.row(tmp.parents('tr')).remove().draw();
+    				}
     			}).error(function() {
     				bootbox.alert('Hủy vé thất bại');
     			});
@@ -87,20 +98,42 @@ $(document).ready(function() {
     	});
     });
     
-    /* $('#ngayDi').datepicker({
-        format: "dd/mm/yyyy",
-        todayHighlight: true,
-        language: 'vi',
-        autoclose: true
-    }); */
+    $('#customersForm').on('click', '.btn-danhanve', function(e) {
+		e.preventDefault();
+    	
+    	var ticketId = $(this).attr('id');
+    	
+    	bootbox.confirm("Chắc chắn đã nhận vé ?", function(result) {
+    		if (result == true) {
+    			$.ajax({
+    				type: "POST",
+    				url: '${pageContext.request.contextPath}/coachcp/danhanve',
+    				data: {
+    					'ticketId': ticketId	
+    				}
+    			}).success(function(data) {
+    				if (data == 'error') {
+    					bootbox.alert('Lỗi !');
+    				}
+    			}).error(function() {
+    				
+    			});
+    		}
+    	});
+    });
 });
 </script>
-<s:form id="trip_detail" action="trip/save" method="post" theme="bootstrap" cssClass="form-horizontal" label="Thông tin chuyến xe">
+<s:form id="trip_detail" action="trip/save" method="post"
+	theme="bootstrap" cssClass="form-horizontal"
+	label="Thông tin chuyến xe">
 	<s:hidden name="chuyenXe.id" />
-	<s:textfield name="chuyenXe.schedule.tuyenXe" label="Tuyến xe" disabled="true"/>
-	<s:textfield name="chuyenXe.departDate" label="Ngày đi" disabled="true"/>
-	<s:textfield name="chuyenXe.tenTaiXe" label="Tài xế" disabled="true"/>
-	<s:select list="@com.vexeonline.domain.TrangThaiChuyenXe@values()" value="chuyenXe.trangThai" label="Trạng Thái"/>
+	<s:textfield name="chuyenXe.schedule.tuyenXe" label="Tuyến xe"
+		disabled="true" />
+	<s:textfield name="chuyenXe.departDate" label="Ngày đi" disabled="true" />
+	<s:textfield name="chuyenXe.tenTaiXe" label="Tài xế" />
+	<s:select name="chuyenXe.trangThai"
+		list="@com.vexeonline.domain.TrangThaiChuyenXe@values()"
+		label="Trạng Thái" />
 	<s:submit cssClass="btn btn-primary pull-right" />
 </s:form>
 <form id="customersForm">
@@ -125,21 +158,5 @@ $(document).ready(function() {
 				<td></td>
 			</tr>
 		</tfoot>
-		<%-- <tbody>
-			<s:iterator var="hk" value="chuyenXe.hanhKhachs">
-				<tr>
-					<td><s:property value="#hk.idHanhKhach"/></td>
-					<td><s:property value="#hk.tenHanhKhach"/></td>
-					<td><s:property value="#hk.soDienThoai"/></td>
-					<td><s:property value="#hk.viTri"/></td>
-					<s:if test="%{#hk.thanhToan}">
-						<td>Đã thanh toán</td>
-					</s:if>
-					<s:else>
-						<td>Chưa thanh toán</td>
-					</s:else>
-				</tr>
-			</s:iterator>
-		</tbody> --%>
 	</table>
 </form>

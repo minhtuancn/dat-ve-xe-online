@@ -14,8 +14,6 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.conversion.annotations.Conversion;
-import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.vexeonline.dto.ChuyenXeDTO;
 import com.vexeonline.dto.TicketDTO;
 import com.vexeonline.dto.UserDTO;
@@ -25,24 +23,21 @@ import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
-@Result(name = "login", location="login", type = "redirect")
-@Conversion(conversions = {
-		@TypeConversion(key = "chuyenXe.departDate", converter = "com.vexeonline.converter.DateConverter")
-})
+@Result(name = "login", location = "login", type = "redirect")
 public class QuanLyChuyen extends ActionSupport implements SessionAware {
-	
+
 	private static final long serialVersionUID = 3504062148823438857L;
 	private static final ChuyenXeService chuyenXeService = new ChuyenXeServiceImpl();
-	
+
 	private Map<String, Object> session;
-	
+
 	private List<ChuyenXeDTO> chuyenXes;
 	private ChuyenXeDTO chuyenXe;
 	private List<TicketDTO> tickets;
-	
+
 	private InputStream inputStream;
 	private Integer ticketId;
-	
+
 	@SkipValidation
 	@Action(value = "trip", results = @Result(name = "success", location = "coach.trips", type = "tiles"))
 	public String showTripsPage() {
@@ -52,13 +47,10 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-	
+
 	@SkipValidation
-	@Action(value = "trips_json", results = {
-			@Result(name = "success",
-					type = "json",
-					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}","root", "chuyenXes"})
-	})
+	@Action(value = "trips_json", results = { @Result(name = "success", type = "json", params = {
+			"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "chuyenXes" }) })
 	public String getTripsJson() {
 		UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
@@ -77,13 +69,10 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-	
+
 	@SkipValidation
-	@Action(value = "tickets_json/*", params = {"chuyenXe.id", "{1}"}, results = {
-			@Result(name = "success",
-					type = "json",
-					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}","root", "tickets"})
-	})
+	@Action(value = "tickets_json/*", params = { "chuyenXe.id", "{1}" }, results = { @Result(name = "success", type = "json", params = {
+			"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "tickets" }) })
 	public String getTicketsJson() {
 		UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
@@ -93,7 +82,8 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			tickets = chuyenXeService.getChuyenXe(user.getNhaXeId(), chuyenXe.getId()).getTickets();
+			tickets = chuyenXeService.getChuyenXe(user.getNhaXeId(),
+					chuyenXe.getId()).getTickets();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
@@ -104,9 +94,7 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 	}
 
 	@SkipValidation
-	@Action(value = "trip/*", params = {"chuyenXe.id", "{1}"}, results = {
-			@Result(name = "success", location = "coach.tripDetail", type = "tiles")
-	})
+	@Action(value = "trip/*", params = { "chuyenXe.id", "{1}" }, results = { @Result(name = "success", location = "coach.tripDetail", type = "tiles") })
 	public String showTripDetailPage() {
 		UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
@@ -116,7 +104,8 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			chuyenXe = chuyenXeService.getChuyenXe(user.getNhaXeId(), chuyenXe.getId());
+			chuyenXe = chuyenXeService.getChuyenXe(user.getNhaXeId(),
+					chuyenXe.getId());
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
@@ -125,10 +114,8 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-	
-	@Action(value = "trip/save", results = {
-			@Result(name = "success", location = "trip", type = "redirect")
-	})
+
+	@Action(value = "trip/save", results = { @Result(name = "success", location = "trip", type = "redirect") })
 	public String saveTrip() {
 		UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
@@ -139,7 +126,9 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 			if (chuyenXe.getId() != null) {
-				chuyenXeService.updateChuyenXe(chuyenXe);
+				chuyenXeService.updateChuyenXe(user.getNhaXeId(),
+						chuyenXe.getId(), chuyenXe.getTenTaiXe(),
+						chuyenXe.getTrangThai());
 			}
 			tx.commit();
 		} catch (Exception e) {
@@ -149,9 +138,9 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-	
+
 	@Action(value = "huyve", results = {
-			@Result(name = "success", type = "stream", params = {"", ""})
+			@Result(name = "success", type = "stream")
 	})
 	public String huyVeXe() {
 		UserDTO user = (UserDTO) session.get("user");
@@ -163,6 +152,7 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
+			chuyenXeService.huyVeXe(user.getNhaXeId(), ticketId);
 			tx.commit();
 			inputStream = new ByteArrayInputStream(SUCCESS.getBytes());
 		} catch (Exception e) {
@@ -174,6 +164,31 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	@Action(value = "danhanve", results = {
+			@Result(name = "success", type = "stream")
+	})
+	public String daNhanVe() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			inputStream = new ByteArrayInputStream(LOGIN.getBytes());
+			return SUCCESS;
+		}
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			chuyenXeService.daNhanXe(user.getNhaXeId(), ticketId);
+			tx.commit();
+			inputStream = new ByteArrayInputStream(SUCCESS.getBytes());
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			inputStream = new ByteArrayInputStream(ERROR.getBytes());
+		}
+		return SUCCESS;
+	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;

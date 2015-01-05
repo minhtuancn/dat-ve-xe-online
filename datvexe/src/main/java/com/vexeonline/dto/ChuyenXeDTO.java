@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.vexeonline.domain.ChuyenXe;
 import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.VeXe;
@@ -68,6 +69,7 @@ public class ChuyenXeDTO implements Serializable {
 		this.schedule = schedule;
 	}
 
+	@TypeConversion(converter = "com.vexeonline.converter.DateConverter")
 	public Date getDepartDate() {
 		return departDate;
 	}
