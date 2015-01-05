@@ -2,6 +2,7 @@ package com.vexeonline.dto;
 
 import java.io.Serializable;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.domain.DiaChi;
 
 public class AddressDTO implements Serializable {
@@ -37,6 +38,7 @@ public class AddressDTO implements Serializable {
 		this.id = id;
 	}
 
+	@RequiredStringValidator(trim = true, key = "address.require.province")
 	public String getProvince() {
 		return province;
 	}

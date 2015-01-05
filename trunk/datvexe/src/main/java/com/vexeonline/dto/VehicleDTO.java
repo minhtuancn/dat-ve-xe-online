@@ -67,7 +67,7 @@ public class VehicleDTO implements Serializable {
 		this.id = id;
 	}
 
-	@RequiredStringValidator(trim = true, key = "vehicle.require.bienSo")
+	@RequiredStringValidator(trim = true, key = "vehicle.require.bienso")
 	public String getBienSo() {
 		return bienSo;
 	}
@@ -76,7 +76,7 @@ public class VehicleDTO implements Serializable {
 		this.bienSo = bienSo;
 	}
 	
-	@RequiredStringValidator(trim = true, key = "vehicle.require.loaiXe")
+	@RequiredStringValidator(trim = true, key = "vehicle.require.loaixe")
 	public String getLoaiXe() {
 		return loaiXe;
 	}
@@ -85,8 +85,8 @@ public class VehicleDTO implements Serializable {
 		this.loaiXe = loaiXe;
 	}
 
-	@RequiredFieldValidator(key = "vehicle.require.soCho1")
-	@IntRangeFieldValidator(min = "0", key = "vehicle.require.soCho2")
+	@RequiredFieldValidator(key = "vehicle.require.socho")
+	@IntRangeFieldValidator(min = "0", key = "vehicle.range.socho")
 	public Integer getSoCho() {
 		return soCho;
 	}

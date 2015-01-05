@@ -2,6 +2,7 @@ package com.vexeonline.dto;
 
 import java.io.Serializable;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.domain.SDTVanPhong;
 
 public class PhoneNumberDTO implements Serializable {
@@ -40,6 +41,7 @@ public class PhoneNumberDTO implements Serializable {
 		this.id = id;
 	}
 
+	@RequiredStringValidator(trim = true, key = "phonenumber.require.phonenumber")
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
