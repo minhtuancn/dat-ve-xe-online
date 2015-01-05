@@ -22,4 +22,15 @@ public interface ScheduleDAO {
 	public void insert(LichTuyen lichTuyen) throws Exception;
 
 	public void update(LichTuyen lichTuyen) throws Exception;
+	
+	/**
+	 * return info lich tuyen follow order :
+	 * idLichTuyen, idNhaXe, idXe, tenNhaXe, loaiXe, SoCho, 
+	 * tenBenDi, tenBenDen, gioDi, tongThoiGian
+	 * @param tinhDi
+	 * @param tinhDen
+	 * @param thu
+	 * @return
+	 */
+	public List<Object[]> getListInfo(String tinhDi, String tinhDen, NgayCuaTuan thu);
 }
