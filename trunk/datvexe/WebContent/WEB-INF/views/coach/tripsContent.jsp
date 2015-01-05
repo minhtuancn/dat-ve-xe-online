@@ -21,7 +21,7 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#trip').DataTable({
+    var table = $('#trip').DataTable({
     	"ajax": '${pageContext.request.contextPath}/coachcp/trips_json',
     	"aoColumns": [
 			{'mData': null, 'mRender': function(o) {
@@ -42,10 +42,22 @@ $(document).ready(function() {
 				}
 			},
 			{'mData': null, 'mRender': function(o) {
+					if (o.trangThai == 'BINHTHUONG') {
+						return 'Hoạt động';	
+					} else {
+						return 'Đã hủy';
+					}
+				}
+			},
+			{'mData': null, 'mRender': function(o) {
 					return '<a data-toggle="modal" class="btn btn-info" href="${pageContext.request.contextPath}/coachcp/trip/' + o.id + '">Detail</a>'; 
 				}
 			}
 		]
+    });
+    
+    table.on('draw.dt', function () {
+        
     });
 });
 </script>
@@ -58,6 +70,7 @@ $(document).ready(function() {
 				<td>Giờ khởi hành</td>
 				<td>Tên tài xế</td>
 				<td>Số hành khách</td>
+				<td>Trạng thái</td>
 				<td></td>
 			</tr>
 		</thead>
@@ -68,6 +81,7 @@ $(document).ready(function() {
 				<td>Giờ khởi hành</td>
 				<td>Tên tài xế</td>
 				<td>Số hành khách</td>
+				<td>Trạng thái</td>
 				<td></td>
 			</tr>
 		</tfoot>
