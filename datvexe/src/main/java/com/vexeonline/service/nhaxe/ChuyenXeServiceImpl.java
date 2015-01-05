@@ -166,4 +166,12 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 		
 		return result;
 	}
+
+	@Override
+	public void huyVeXe(Integer ticketId) throws Exception {
+		VeXe ticket = ticketDAO.getInfoVeXe(ticketId);
+		if (ticket != null) {
+			ticketDAO.delete(ticket);
+		}
+	}
 }

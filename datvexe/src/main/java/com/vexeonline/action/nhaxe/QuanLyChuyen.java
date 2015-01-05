@@ -1,5 +1,7 @@
 package com.vexeonline.action.nhaxe;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,6 @@ import org.hibernate.Transaction;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
-
 import com.vexeonline.dto.ChuyenXeDTO;
 import com.vexeonline.dto.TicketDTO;
 import com.vexeonline.dto.UserDTO;
@@ -38,6 +39,9 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 	private List<ChuyenXeDTO> chuyenXes;
 	private ChuyenXeDTO chuyenXe;
 	private List<TicketDTO> tickets;
+	
+	private InputStream inputStream;
+	private Integer ticketId;
 	
 	@SkipValidation
 	@Action(value = "trip", results = @Result(name = "success", location = "coach.trips", type = "tiles"))
@@ -145,7 +149,31 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-
+	
+	@Action(value = "huyve", results = {
+			@Result(name = "success", type = "stream", params = {"", ""})
+	})
+	public String huyVeXe() {
+		UserDTO user = (UserDTO) session.get("user");
+		if (user == null || !user.getRole().equals("NHAXE")) {
+			inputStream = new ByteArrayInputStream(LOGIN.getBytes());
+			return SUCCESS;
+		}
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			tx.commit();
+			inputStream = new ByteArrayInputStream(SUCCESS.getBytes());
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			inputStream = new ByteArrayInputStream(ERROR.getBytes());
+		}
+		return SUCCESS;
+	}
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -173,5 +201,17 @@ public class QuanLyChuyen extends ActionSupport implements SessionAware {
 
 	public void setTickets(List<TicketDTO> tickets) {
 		this.tickets = tickets;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public Integer getTicketId() {
+		return ticketId;
+	}
+
+	public void setTicketId(Integer ticketId) {
+		this.ticketId = ticketId;
 	}
 }
