@@ -10,18 +10,17 @@ $(document).ready(function () {
         format: "dd/mm/yyyy",
         todayHighlight: true,
         language: 'vi',
-        autoclose: true/* ,
-        startDate : getCurrentDate() */
+        autoclose: true ,
+        startDate : getCurrentDate() 
     });  
 });
 
 function getCurrentDate() {
 	var d = new Date();
-	var month = d.getMonth();
+	var month = d.getMonth() + 1;
 	var day = d.getDate();
 
 	var output = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' + d.getFullYear();
-	
 	return output;
 } 
 </script>
