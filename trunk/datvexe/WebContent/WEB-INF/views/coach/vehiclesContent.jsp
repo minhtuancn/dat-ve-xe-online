@@ -19,7 +19,7 @@ $(document).ready(function() {
 //-->
 </script>
 <div id="vehicles_wrapper">
-	<table id="vehicles">
+	<table id="vehicles" class="display">
 		<thead>
 			<tr>
 				<td>Id</td>
@@ -54,7 +54,7 @@ $(document).ready(function() {
 					<s:else>
 						<td>Không hoạt động</td>
 					</s:else>
-					<td><a class="btn btn-primary" href="${pageContext.request.contextPath}/coachcp/vehicle/${id}">Chi tiết</a></td>
+					<td><a class="btn btn-info btn-xs" href="${pageContext.request.contextPath}/coachcp/vehicle/${id}">Chi tiết</a></td>
 				</tr>
 			</s:iterator>
 		</tbody>

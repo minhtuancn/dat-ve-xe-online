@@ -54,7 +54,7 @@ public class UserDTO implements Serializable {
 		this.nhaXeId = nhaXeId;
 	}
 
-	@RequiredStringValidator(trim = true, message = "username must not empty")
+	@RequiredStringValidator(trim = true, key = "user.require.username")
 	public String getUserName() {
 		return userName;
 	}
@@ -63,7 +63,7 @@ public class UserDTO implements Serializable {
 		this.userName = userName;
 	}
 	
-	@RequiredStringValidator(trim = true, message = "password must not empty")
+	@RequiredStringValidator(trim = true, key = "user.require.password")
 	public String getPassword() {
 		return password;
 	}

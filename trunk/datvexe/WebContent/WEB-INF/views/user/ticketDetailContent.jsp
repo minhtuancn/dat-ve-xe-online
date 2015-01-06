@@ -5,7 +5,7 @@
 
 	<s:iterator value="tickets">
 		<div class="input-group">
-			<label>Mã vé:</label>${id}
+			<label>Mã vé:</label>${ticketId}
 		</div>
 		<%-- <div class="input-group">
 			<label>Ngày mua:</label>${purchaseDate}

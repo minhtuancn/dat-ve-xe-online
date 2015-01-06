@@ -54,6 +54,9 @@ public class AuthenticationAction extends ActionSupport implements SessionAware 
 			tx.commit();
 			if (user != null) {
 				session.put("user", user);
+			} else {
+				addActionError(getText("login.wrong"));
+				return INPUT;
 			}
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();

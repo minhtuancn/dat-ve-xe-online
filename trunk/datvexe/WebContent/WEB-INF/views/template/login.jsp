@@ -5,9 +5,10 @@
 <!--
 #logging {
 	width: 400px;
+	border: 1px gray dashed;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 100px;
+	margin-top: 150px;
 }
 -->
 </style>
@@ -15,6 +16,8 @@
 	<s:actionerror theme="bootstrap"/>
 	<s:textfield name="user.userName" label="Tên người dùng"/>
 	<s:password name="user.password" label="Mật khẩu" />
-	<s:submit value="Đăng nhập" cssClass="btn btn-primary" />
-	<s:reset value="Đặt lại" cssClass="btn btn-danger" />
+	<s:div cssClass="pull-right">
+		<s:reset value="Đặt lại" cssClass="btn btn-danger" />
+		<s:submit value="Đăng nhập" cssClass="btn btn-primary" />
+	</s:div>
 </s:form>
