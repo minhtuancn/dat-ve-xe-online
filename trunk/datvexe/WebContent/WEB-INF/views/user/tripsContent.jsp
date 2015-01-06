@@ -203,6 +203,9 @@
 											"<s:property value="gioDi"/>" ,"<s:property value="tenBenDi"/>", 
 											"<s:property value="tenBenDen"/>", "<s:property value="tongThoiGian"/>", 
 											"<s:property value="giaVe"/>", "<s:property value="idXe"/>")'>Đặt vé</a>
+										
+										<a href="" data-toggle="modal" 
+										class="btn btn-info openListSdt" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</a>
 									</div>
 								</div>
 							</td>
