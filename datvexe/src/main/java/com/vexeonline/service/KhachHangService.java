@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import com.vexeonline.domain.User;
-import com.vexeonline.domain.VeXe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
+import com.vexeonline.dto.TicketDetailDTO;
 
 /**
  * 
@@ -32,9 +32,9 @@ public interface KhachHangService {
 	 * 
 	 * @param SDT
 	 * @param maSoVe
-	 * @return VeXe null if maSoVe not exist or SDT hanhKhach not same
+	 * @return TicketDetailDTO null if maVe not exist 
 	 */
-	public VeXe kiemTraVe(String SDT, int maSoVe);
+	public TicketDetailDTO kiemTraVe(String maVe);
 
 	/**
 	 * 
@@ -76,7 +76,7 @@ public interface KhachHangService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public boolean huyVe(int maVe) throws Exception;
+	public boolean huyVe(String maVe) ;
 	
 	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe);
 	

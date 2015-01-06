@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.EnumType;
 
+import org.apache.log4j.Logger;
+
 import com.vexeonline.dao.NhaXeDAO;
 import com.vexeonline.dao.NhaXeDAOImpl;
 import com.vexeonline.dao.UserDAO;
@@ -15,7 +17,7 @@ import com.vexeonline.domain.User;
 import com.vexeonline.dto.UserDTO;
 
 public class UserServiceImpl implements UserService {
-	
+	private static Logger logger = Logger.getLogger(UserServiceImpl.class); 
 	private static final UserDAO userDAO = new UserDAOImpl();
 	private static final NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 	
@@ -54,7 +56,14 @@ public class UserServiceImpl implements UserService {
 		UserDTO result = null;
 		User user = userDAO.get(userName);
 		if (user != null && user.getPassword().equals(password)) {
-			result = new UserDTO(user);
+			logger.info("ADMIN".equals(RoleOfUser.ADMIN.toString()));
+			if ( user.getRole().equals(RoleOfUser.ADMIN)) {
+				result = new UserDTO();
+				result.setUserName(userName);
+				result.setRole(user.getRole().toString());
+			} else {
+				result = new UserDTO(user);
+			}
 		}
 		return result;
 	}
@@ -94,5 +103,9 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		logger.info("ADMIN".equals(RoleOfUser.ADMIN.toString()));
 	}
 }

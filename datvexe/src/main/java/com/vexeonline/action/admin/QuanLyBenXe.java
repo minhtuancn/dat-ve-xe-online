@@ -103,13 +103,4 @@ public class QuanLyBenXe extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
-	public static void main(String[] args) {
-		QuanLyBenXe qlbx = new QuanLyBenXe();
-		qlbx.showStationsPage();
-		
-		for (BenXeDTO benXe : qlbx.getBenXes()) {
-			System.out.println(benXe);
-		}
-	}
 }

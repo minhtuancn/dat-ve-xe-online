@@ -2,7 +2,6 @@ package com.vexeonline.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,7 +22,6 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 public class VeXe implements Serializable {
 
 	private static final long serialVersionUID = 2052803547818468572L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
@@ -43,7 +41,7 @@ public class VeXe implements Serializable {
 	@JoinColumn(nullable = false, name = "idChuyenXe")
 	private ChuyenXe chuyenXe;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(nullable = false)
 	private HanhKhach hanhKhach;
 
