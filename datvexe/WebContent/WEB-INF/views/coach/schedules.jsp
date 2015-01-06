@@ -85,7 +85,7 @@ $(document).ready(function() {
 					<td>Không hoạt động</td>
 				</s:else>
 				<td>
-					<a href="${pageContext.request.contextPath}/coachcp/schedule/${id}" class="btn btn-primary">Chi tiết</a>
+					<a href="${pageContext.request.contextPath}/coachcp/schedule/${id}" class="btn btn-info btn-xs">Chi tiết</a>
 				</td>
 			</tr>
 		</s:iterator>

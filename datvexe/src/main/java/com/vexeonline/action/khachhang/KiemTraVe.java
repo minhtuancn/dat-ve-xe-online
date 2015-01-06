@@ -6,9 +6,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.dto.TicketDetailDTO;
 import com.vexeonline.service.customer.TicketService;
 import com.vexeonline.service.customer.TicketServiceImpl;
@@ -24,6 +26,7 @@ public class KiemTraVe extends ActionSupport {
 	private String phoneNumber;
 	private List<TicketDetailDTO> tickets;
 	
+	@RequiredStringValidator(trim = true, key = "ticketinfo.require.phonenumber")
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -40,12 +43,18 @@ public class KiemTraVe extends ActionSupport {
 		this.tickets = tickets;
 	}
 
-	@Action(value = "ticketInfo", results = @Result(name = "success", location = "ticketInfo", type = "tiles"))
+	@SkipValidation
+	@Action(value = "ticketInfo", results = {
+			@Result(name = "success", location = "ticketInfo", type = "tiles"),
+	})
 	public String showTicketInfoPage() {
 		return SUCCESS;
 	}
 	
-	@Action(value = "ticketDetail", results = @Result(name = "success", location = "ticketDetail", type = "tiles"))
+	@Action(value = "ticketDetail", results = {
+			@Result(name = "success", location = "ticketDetail", type = "tiles"),
+			@Result(name = "input", location = "ticketInfo", type = "tiles")
+	})
 	public String showTicketDetailPage() {
 		Transaction tx = null;
 		try {

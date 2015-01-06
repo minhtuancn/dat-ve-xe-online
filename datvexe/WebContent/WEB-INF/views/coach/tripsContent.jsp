@@ -50,7 +50,7 @@ $(document).ready(function() {
 				}
 			},
 			{'mData': null, 'mRender': function(o) {
-					return '<a data-toggle="modal" class="btn btn-info" href="${pageContext.request.contextPath}/coachcp/trip/' + o.id + '">Detail</a>'; 
+					return '<a data-toggle="modal" class="btn btn-info btn-xs" href="${pageContext.request.contextPath}/coachcp/trip/' + o.id + '">Detail</a>'; 
 				}
 			}
 		]
