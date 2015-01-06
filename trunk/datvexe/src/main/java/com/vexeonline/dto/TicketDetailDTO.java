@@ -1,139 +1,93 @@
 package com.vexeonline.dto;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.sql.Time;
 import java.util.Date;
-import java.util.Set;
-
-import com.vexeonline.domain.GiaVe;
-import com.vexeonline.domain.VeXe;
 
 public class TicketDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = -5282181709947490322L;
-	private static final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-	private static final SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
-	
-	private Integer id;
-	private String ticketId;
-	private String purchaseDate;
-	private String startDate;
-	private String startTime;
-	private String vehicleType;
-	private String seatId;
-	private String customerName;
-	private String customerPhoneNumber;
-	private String customerEmail;
-	private Integer price;
+	private String maVe;
+	private Date ngayDi;
+	private Time gioDi;
+	private String loaiXe;
+	private String soGhe;
+	private int giaVe;
+	private String tenHanhKhach;
+	private String sdt;
+	private String email;
 
-	public TicketDetailDTO() {
-	}
-	
-	public TicketDetailDTO(VeXe ticket) {
-		this.id = ticket.getIdVeXe();
-		this.ticketId = ticket.getMaVe();
-		Date start = ticket.getChuyenXe().getNgayDi();
-		this.startDate = df.format(start);
-		this.startTime = tf.format(start);
-		this.vehicleType = ticket.getChuyenXe().getLichTuyen().getXe().getLoaiXe();
-		this.seatId = ticket.getChoNgoi();
-		this.customerName = ticket.getHanhKhach().getTenHanhKhach();
-		this.customerPhoneNumber = ticket.getHanhKhach().getSdt();
-		this.customerEmail = ticket.getHanhKhach().getEmail();
-		Set<GiaVe> giaVes = ticket.getChuyenXe().getLichTuyen().getGiaVes();
-		for (GiaVe giaVe : giaVes) {
-			if (giaVe.getNgayBatDau().before(start) && giaVe.getNgayKetThuc().after(start)) {
-				this.setPrice(giaVe.getGiaVe());
-				break;
-			}
-		}
-	}
-	
-	public Integer getId() {
-		return id;
+
+	public String getMaVe() {
+		return maVe;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setMaVe(String maVe) {
+		this.maVe = maVe;
 	}
 
-	public String getTicketId() {
-		return ticketId;
+	public Date getNgayDi() {
+		return ngayDi;
 	}
 
-	public void setTicketId(String ticketId) {
-		this.ticketId = ticketId;
+	public void setNgayDi(Date ngayDi) {
+		this.ngayDi = ngayDi;
 	}
 
-	public String getPurchaseDate() {
-		return purchaseDate;
+	public Time getGioDi() {
+		return gioDi;
 	}
 
-	public void setPurchaseDate(String purchaseDate) {
-		this.purchaseDate = purchaseDate;
+	public void setGioDi(Time gioDi) {
+		this.gioDi = gioDi;
 	}
 
-	public String getStartDate() {
-		return startDate;
+	public String getLoaiXe() {
+		return loaiXe;
 	}
 
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setLoaiXe(String loaiXe) {
+		this.loaiXe = loaiXe;
 	}
 
-	public String getStartTime() {
-		return startTime;
+	public String getSoGhe() {
+		return soGhe;
 	}
 
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setSoGhe(String soGhe) {
+		this.soGhe = soGhe;
 	}
 
-	public String getVehicleType() {
-		return vehicleType;
+	public int getGiaVe() {
+		return giaVe;
 	}
 
-	public void setVehicleType(String vehicleType) {
-		this.vehicleType = vehicleType;
+	public void setGiaVe(int giaVe) {
+		this.giaVe = giaVe;
 	}
 
-	public String getSeatId() {
-		return seatId;
+	public String getTenHanhKhach() {
+		return tenHanhKhach;
 	}
 
-	public void setSeatId(String seatId) {
-		this.seatId = seatId;
+	public void setTenHanhKhach(String tenHanhKhach) {
+		this.tenHanhKhach = tenHanhKhach;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getSdt() {
+		return sdt;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
 	}
 
-	public String getCustomerPhoneNumber() {
-		return customerPhoneNumber;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCustomerPhoneNumber(String customerPhoneNumber) {
-		this.customerPhoneNumber = customerPhoneNumber;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getCustomerEmail() {
-		return customerEmail;
-	}
-
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
-	}
-
-	public Integer getPrice() {
-		return price;
-	}
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
 }

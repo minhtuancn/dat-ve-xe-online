@@ -1,46 +1,39 @@
 package com.vexeonline.action.khachhang;
 
-import java.util.List;
-
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.dto.TicketDetailDTO;
-import com.vexeonline.service.customer.TicketService;
-import com.vexeonline.service.customer.TicketServiceImpl;
-import com.vexeonline.utils.HibernateUtil;
+import com.vexeonline.service.KhachHangService;
+import com.vexeonline.service.KhachHangServiceImpl;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
 public class KiemTraVe extends ActionSupport {
-
-	private static final long serialVersionUID = 1L;
-	private static final TicketService ticketService = new TicketServiceImpl();
+	private static final long serialVersionUID = -9065358490206667897L;
+	private static Logger logger = Logger.getLogger(KiemTraVe.class);
+	private String maVe;
+	private TicketDetailDTO ticket;
+	private KhachHangService khachHangService = new KhachHangServiceImpl();
 	
-	private String phoneNumber;
-	private List<TicketDetailDTO> tickets;
-	
-	@RequiredStringValidator(trim = true, key = "ticketinfo.require.phonenumber")
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getMaVe() {
+		return maVe;
+	}
+	public void setMaVe(String maVe) {
+		this.maVe = maVe;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public TicketDetailDTO getTicket() {
+		return ticket;
 	}
 
-	public List<TicketDetailDTO> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<TicketDetailDTO> tickets) {
-		this.tickets = tickets;
+	public void setTicket(TicketDetailDTO ticket) {
+		this.ticket = ticket;
 	}
 
 	@SkipValidation
@@ -56,25 +49,25 @@ public class KiemTraVe extends ActionSupport {
 			@Result(name = "input", location = "ticketInfo", type = "tiles")
 	})
 	public String showTicketDetailPage() {
-		Transaction tx = null;
 		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			tickets = ticketService.getTicketByPhoneNumber(phoneNumber);
-			tx.commit();
+			ticket = khachHangService.kiemTraVe(maVe);
+			logger.info(ticket == null);
+			
 		} catch (Exception e) {
-			if (tx != null) tx.rollback();
-			e.printStackTrace();
+			logger.error(e);
 		}
 		return SUCCESS;
 	}
 	
-	public static void main(String[] args) {
-		KiemTraVe ktv = new KiemTraVe();
-		ktv.setPhoneNumber("01662488323");
-		ktv.showTicketDetailPage();
-		List<TicketDetailDTO> tickets = ktv.getTickets();
-		for (TicketDetailDTO t : tickets) {
-			System.out.println(t);
+	@Action(value = "destroyticket", results = @Result(name = "success", location = "home", type = "redirect"))
+	public String detroyTicket() {
+		try {
+			logger.info(maVe);
+			khachHangService.huyVe(maVe);
+		} catch (Exception e) {
+			logger.error(e);
 		}
+		return SUCCESS;
 	}
+	
 }

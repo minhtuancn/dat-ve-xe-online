@@ -55,7 +55,7 @@ public class TimChuyen extends ActionSupport {
 		this.list = list;
 	}
 
-	@IntRangeFieldValidator(message = "Số chỗ phải lớn hơn 0", min = "1", max = "40")
+	@IntRangeFieldValidator(message = "Số chỗ phải lớn hơn 0 nhỏ hơn 4", min = "1", max = "4")
 	public int getSoCho() {
 		return soCho;
 	}

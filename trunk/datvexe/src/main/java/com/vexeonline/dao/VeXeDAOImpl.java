@@ -12,22 +12,29 @@ import com.vexeonline.utils.HibernateUtil;
 
 public class VeXeDAOImpl implements VeXeDAO {
 
-	public VeXe getInfoVeXe(int maVeXe) {
+	public Object[] getInfoVeXe(String maVe) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		String sql = "from VeXe as v " + "left join fetch v.hanhKhach "
-				+ "left join fetch v.chuyenXe as c "
-				+ "left join fetch c.lichTuyen as l "
-				+ "left join fetch l.giaVes as g "
-				+ "left join fetch l.tuyenXe as t "
-				+ "left join fetch t.benDi as di "
-				+ "left join fetch t.benDen as de "
-				+ "left join fetch di.diaChi " + "left join fetch de.diaChi "
-				+ "where v.idVeXe = :idVeXe "
-				+ "and  c.ngayDi between g.ngayBatDau and g.ngayKetThuc ";
+		String sql = "select\r\n" + 
+				"  v.maVe,\r\n" + 
+				"  DATE(v.chuyenXe.ngayDi),\r\n" + 
+				"  TIme(v.chuyenXe.ngayDi),\r\n" + 
+				"  v.chuyenXe.lichTuyen.xe.loaiXe,\r\n" + 
+				"  v.choNgoi,\r\n" + 
+				"  g.giaVe,\r\n" + 
+				"  v.hanhKhach.tenHanhKhach,\r\n" + 
+				"  v.hanhKhach.sdt,\r\n" + 
+				"  v.hanhKhach.email     \r\n" + 
+				" from\r\n" + 
+				"  VeXe as v \r\n" + 
+				" inner join\r\n" + 
+				"  v.chuyenXe.lichTuyen.giaVes as g    \r\n" + 
+				" where\r\n" + 
+				"  v.maVe = :maVe and v.chuyenXe.ngayDi <= g.ngayKetThuc and v.chuyenXe.ngayDi >= g.ngayBatDau\r\n";
 
-		VeXe veXe = (VeXe) session.createQuery(sql)
-				.setInteger("idVeXe", maVeXe).uniqueResult();
-		return veXe;
+		Object[] list = (Object[]) session.createQuery(sql)
+				.setString("maVe", maVe)
+				.uniqueResult();
+		return list;
 	}
 
 	public int save(VeXe veXe) {
@@ -66,17 +73,18 @@ public class VeXeDAOImpl implements VeXeDAO {
 	}
 
 	public Object[] getInfoByMaVe(String maVe) {
-		return (Object[]) HibernateUtil
-				.getSessionFactory()
-				.getCurrentSession()
-				.createQuery(
-						"SELECT\r\n"
-								+ "  v.chuyenXe.ngayDi,\r\n"
-								+ "  v.hanhKhach.idHanhKhach,\r\n"
-								+ "  v.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe \r\n"
-								+ " FROM\r\n" + "  VeXe as v  \r\n"
-								+ " WHERE\r\n" + "  v.maVe like :maVe")
-				.setString("maVe", maVe).uniqueResult();
+		return (Object[]) HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("SELECT\r\n" + 
+							"  v.chuyenXe.ngayDi,\r\n" + 
+							"  v.hanhKhach.idHanhKhach,\r\n" + 
+							"  v.chuyenXe.lichTuyen.xe.nhaXe.idNhaXe \r\n" + 
+							" FROM\r\n" + 
+							"  VeXe as v  \r\n" + 
+							" WHERE\r\n" + 
+							"  v.maVe = :maVe")
+				.setString("maVe", maVe)
+				.uniqueResult();
+
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
@@ -106,8 +114,22 @@ public class VeXeDAOImpl implements VeXeDAO {
 
 	public VeXe getVeXeByMaVe(String maVe) {
 		return (VeXe) HibernateUtil.getSessionFactory().getCurrentSession()
-				.createQuery("from VeXe as v where v.maVe like :maVe")
+				.createQuery("from VeXe as v where v.maVe = :maVe")
 				.setString("maVe", maVe).uniqueResult();
+	}
+
+	@Override
+	public void deleteByMaVe(String maVe) {
+		HibernateUtil.getSessionFactory().getCurrentSession()
+		.createQuery("delete from VeXe  where maVe = :maVe")
+		.setString("maVe", maVe)
+		.executeUpdate();
+	}
+
+	@Override
+	public VeXe getInfoVeXe(Integer ticketId) {
+		return (VeXe) HibernateUtil.getSessionFactory().getCurrentSession()
+				.get(VeXe.class, ticketId);
 	}
 
 	@Override

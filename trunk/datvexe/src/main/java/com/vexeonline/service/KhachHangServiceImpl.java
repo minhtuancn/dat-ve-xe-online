@@ -45,6 +45,7 @@ import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
+import com.vexeonline.dto.TicketDetailDTO;
 import com.vexeonline.utils.HibernateUtil;
 import com.vexeonline.utils.SendEmail;
 
@@ -59,99 +60,113 @@ public class KhachHangServiceImpl implements KhachHangService {
 	private static DanhGiaDAO danhGiaDAO = new DanhGiaDAOImpl();
 	private static GiaVeDAO giaVeDAO = new GiaVeDAOImpl();
 	private static XeDAO xeDAO = new XeDAOImpl();
-	
-	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
-			Date ngayDi, int soCho) {
-		List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(0); 
+
+	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi,
+			String tinhDen, Date ngayDi, int soCho) {
+		List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(
+				0);
 		List<Object[]> list;
 		Transaction tx = null;
-		
+
 		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			logger.info(tinhDi + " " + tinhDen + " " + ngayDi + " "
+					+ dayOfWeek(ngayDi));
 			list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi));
-			if (list == null) {
-				return listData;
-			}
-			
-			ThongTinChuyenXeDTO temp;
-			List<String> tenTienIchs = new ArrayList<String>(0);
-			double rating;
-			int giaVe;
-			long soChoDaDat;
-			for (Object[] row : list) {
-				temp = new ThongTinChuyenXeDTO();
-				temp.setIdLichTuyen((int) row[0]);
-				temp.setIdNhaXe((int) row[1]);
-				temp.setIdXe((int) row[2]);
-				temp.setTenNhaXe((String) row[3]);
-				temp.setLoaiXe((String) row[4]);
-				temp.setSoCho((int)row[5]);
-				temp.setTenBenDi((String) row[6]);
-				temp.setTenBenDen((String) row[7]);
-				temp.setGioDi((Time) row[8]);
-				temp.setTongThoiGian((double) row[9]);
-				
-				tenTienIchs = tienIchDAO.getByXe(temp.getIdXe());
-				temp.setTienIchs(tenTienIchs);
-				logger.info(tenTienIchs.size());
-				
-				rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
-				temp.setRating(rating);
-				
-				giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
-				temp.setGiaVe(giaVe);
-				
-				/* When user book, they only choose date not hour and minute,
-				It not enough determined chuyenXe => more parameter gioDi to determined soCho booked 
-				*/
-				soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
-				if (temp.getSoCho() < (soChoDaDat + soCho)) {
-					continue;
+
+			if (list != null) {
+				logger.info(list.size());
+
+				ThongTinChuyenXeDTO temp;
+				List<String> tenTienIchs = new ArrayList<String>(0);
+				double rating;
+				int giaVe;
+				long soChoDaDat;
+				for (Object[] row : list) {
+					temp = new ThongTinChuyenXeDTO();
+					temp.setIdLichTuyen((int) row[0]);
+					temp.setIdNhaXe((int) row[1]);
+					temp.setIdXe((int) row[2]);
+					temp.setTenNhaXe((String) row[3]);
+					temp.setLoaiXe((String) row[4]);
+					temp.setSoCho((int) row[5]);
+					temp.setTenBenDi((String) row[6]);
+					temp.setTenBenDen((String) row[7]);
+					temp.setGioDi((Time) row[8]);
+					temp.setTongThoiGian((double) row[9]);
+
+					tenTienIchs = tienIchDAO.getByXe(temp.getIdXe());
+					temp.setTienIchs(tenTienIchs);
+					logger.info(tenTienIchs.size());
+
+					rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
+					temp.setRating(rating);
+
+					giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
+					temp.setGiaVe(giaVe);
+
+					/*
+					 * When user book, they only choose date not hour and
+					 * minute, It not enough determined chuyenXe => more
+					 * parameter gioDi to determined soCho booked
+					 */
+					soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(
+							temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
+					if (temp.getSoCho() < (soChoDaDat + soCho)) {
+						continue;
+					}
+					temp.setSoChoConLai((temp.getSoCho() - soChoDaDat));
+
+					listData.add(temp);
 				}
-				temp.setSoChoConLai((temp.getSoCho() - soChoDaDat));
-				
-				listData.add(temp);
 			}
 			tx.commit();
 		} catch (Exception ex) {
-			if (tx != null) tx.rollback();
+			if (tx != null)
+				tx.rollback();
 			logger.error("Error", ex);
-		} 
+		}
 		return listData;
 	}
 
-	public VeXe kiemTraVe(String SDT, int maSoVe) {
-		VeXe veXe = null;
-		Session session = null;
+	public TicketDetailDTO kiemTraVe(String maVe) {
+		TicketDetailDTO result = null;
 		Transaction tx = null;
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
-			veXe = veXeDAO.getInfoVeXe(maSoVe);
-			if (veXe == null || !veXe.getHanhKhach().getSdt().equals(SDT)) {
-				return null;
+			Object[] ticket = veXeDAO.getInfoVeXe(maVe);
+			logger.info(ticket == null);
+			if (ticket != null) {
+				result = new TicketDetailDTO();
+				result.setMaVe((String) ticket[0]);
+				result.setNgayDi((Date) ticket[1]);
+				result.setGioDi((Time) ticket[2]);
+				result.setLoaiXe((String) ticket[3]);
+				result.setSoGhe((String) ticket[4]);
+				result.setGiaVe((int) ticket[5]);
+				result.setTenHanhKhach((String) ticket[6]);
+				result.setSdt((String) ticket[7]);
+				result.setEmail((String) ticket[8]);
 			}
-
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} finally {
-			session.close();
 		}
-		return veXe;
+		return result;
 	}
 
 	public User login(String userName, String password) {
-		//password = EncodeMD5.encodeMD5(password);
+		// password = EncodeMD5.encodeMD5(password);
 		User user = null;
 		Transaction tx = null;
 		try {
-			
+
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
@@ -164,36 +179,40 @@ public class KhachHangServiceImpl implements KhachHangService {
 			if (tx != null) {
 				tx.rollback();
 			}
-			logger.error("Error", ex);	
+			logger.error("Error", ex);
 		}
 		return user;
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean datVe(String viTris, int idLichTuyen, Date ngayDi, Time gioDi, String tenHanhKhach,
-			String email, String sdt) {
+	public boolean datVe(String viTris, int idLichTuyen, Date ngayDi,
+			Time gioDi, String tenHanhKhach, String email, String sdt) {
 		Transaction tx = null;
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
 
-			//check khach hang da ton tai chua
+			// check khach hang da ton tai chua
 			HanhKhach hanhKhach = hanhKhachDAO.getBySDT(sdt);
-			if (hanhKhach == null) { 	//create new hanhKhach
+			if (hanhKhach == null) { // create new hanhKhach
 				hanhKhach = new HanhKhach();
 				hanhKhach.setEmail(email);
 				hanhKhach.setSdt(sdt);
 				hanhKhach.setTenHanhKhach(tenHanhKhach);
 				session.save(hanhKhach);
 			}
-			
-			ChuyenXe chuyenXe = chuyenXeDAO.getChuyenXeIdLichTuyenAndNgayDiGioDi(idLichTuyen, ngayDi, gioDi);
-			logger.info(idLichTuyen + " " + ngayDi + " " + gioDi + " "  +ngayDi.getMonth() );
+
+			ChuyenXe chuyenXe = chuyenXeDAO
+					.getChuyenXeIdLichTuyenAndNgayDiGioDi(idLichTuyen, ngayDi,
+							gioDi);
+			logger.info(idLichTuyen + " " + ngayDi + " " + gioDi + " "
+					+ ngayDi.getMonth());
 			if (chuyenXe == null) {
 				chuyenXe = new ChuyenXe();
-				chuyenXe.setLichTuyen((LichTuyen) session.load(LichTuyen.class, idLichTuyen));
-				
+				chuyenXe.setLichTuyen((LichTuyen) session.load(LichTuyen.class,
+						idLichTuyen));
+
 				// Những tuyến ngắn thì 1 ngày có thể có nhiều lịch tuyến
 				Date ngayDiVaGioDi = ngayDi;
 				ngayDiVaGioDi.setHours(gioDi.getHours());
@@ -202,7 +221,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				chuyenXe.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
 				session.save(chuyenXe);
 			}
-			
+
 			String body = "";
 			String[] listViTri = viTris.split(",");
 			for (String viTri : listViTri) {
@@ -213,35 +232,37 @@ public class KhachHangServiceImpl implements KhachHangService {
 				veXe.setMaVe(randomVeXe());
 				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
 				int idVeXe = (int) session.save(veXe);
-				body += "<p>Ghế " + viTri + " Mã vé : " + veXe.getMaVe() + 
-						" : <a href='http://localhost:8080/datvexe/xacnhanve?maVe=" + 
-						veXe.getMaVe() + "'/>Click Here!</a>";
-				
-				//bat dau timer
+				body += "<p>Ghế "
+						+ viTri
+						+ " Mã vé : "
+						+ veXe.getMaVe()
+						+ " : <a href='http://localhost:8080/datvexe/xacnhanve?maVe="
+						+ veXe.getMaVe() + "'/>Click Here!</a>";
+
+				// bat dau timer
 				Runnable r = new Runnable() {
-			         public void run() {
-			        	 	deleteVeXe task = new deleteVeXe();
-			        		task.setIdVeXe(idVeXe);
-			        	    Timer timer = new Timer();
-			        	    //timer.schedule(task, nextDate(new Date()));
-			        	    //test
-			        	    Date date = new Date();
-			        	    date.setMinutes(date.getMinutes() + 1);
-			        	    timer.schedule(task, date);
-			         }
-			     };
-			     new Thread(r).start();
+					public void run() {
+						deleteVeXe task = new deleteVeXe();
+						task.setIdVeXe(idVeXe);
+						Timer timer = new Timer();
+						// timer.schedule(task, nextDate(new Date()));
+						// test
+						Date date = new Date();
+						date.setMinutes(date.getMinutes() + 1);
+						timer.schedule(task, date);
+					}
+				};
+				new Thread(r).start();
 			}
-			
+
 			body = "<h3>Hello, Chúng tôi đến từ website đặt vé xe online,</h3>"
 					+ "<p>Bạn hãy hoàn thành việc kích hoạt các vé xe đã đăng ký "
-					+ "bằng cách click vào các link bên dưới</p>" + body + 
-					"<br/><p>Cảm ơn bạn đã đặt vé xe của chúng tôi!</p><i>Chào bạn</i>";
-			
+					+ "bằng cách click vào các link bên dưới</p>"
+					+ body
+					+ "<br/><p>Cảm ơn bạn đã đặt vé xe của chúng tôi!</p><i>Chào bạn</i>";
+
 			SendEmail.sendEmail(email, "Xác nhận vé xe", body);
-			
-			
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
@@ -249,97 +270,97 @@ public class KhachHangServiceImpl implements KhachHangService {
 			}
 			logger.error("Error", ex);
 			return false;
-		} 
+		}
 		return true;
 	}
 
 	public boolean danhGiaChuyenXe(Date ngayDi, String maVe, String noiDung,
-			float diem, int idNhaXe){
-		
+			float diem, int idNhaXe) {
+
 		Transaction tx = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			Session session = HibernateUtil.getSessionFactory()
+					.getCurrentSession();
 			tx = session.beginTransaction();
 			Object[] info = veXeDAO.getInfoByMaVe(maVe);
 			if (info == null) {
 				return false;
 			}
-			
+
 			Date ngayDi_ = (Date) info[0];
 			int idHanhKhach_ = (int) info[1];
 			int idNhaXe_ = (int) info[2];
-			
-			//check info ngayDi, nhaXe fit with info got from maVe
+
+			// check info ngayDi, nhaXe fit with info got from maVe
 			if (!ngayDi.equals(ngayDi_) || idNhaXe != idNhaXe_) {
 				return false;
 			}
-			
+
 			NhaXe nhaXe = (NhaXe) session.load(NhaXe.class, idNhaXe);
-			HanhKhach hanhKhach = (HanhKhach) session.load(HanhKhach.class, idHanhKhach_);
-			
+			HanhKhach hanhKhach = (HanhKhach) session.load(HanhKhach.class,
+					idHanhKhach_);
+
 			DanhGia danhGia = new DanhGia();
 			danhGia.setDiem(diem);
 			danhGia.setNoiDung(noiDung);
 			danhGia.setNgayDi(ngayDi);
 			danhGia.setNgayDanhGia(new Date());
-			danhGia.setTrangThai(true);		//only display when ADMIN change trangThai to true
+			danhGia.setTrangThai(true); // only display when ADMIN change
+										// trangThai to true
 			danhGia.setHanhKhach(hanhKhach);
 			danhGia.setNhaXe(nhaXe);
 			danhGiaDAO.save(danhGia);
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} 
+		}
 		return true;
 	}
 
-	public boolean huyVe(int maVe) throws Exception {
+	public boolean huyVe(String maVe) {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
 
-			VeXe veXe = veXeDAO.getInfoVeXe(maVe);
-			if (veXe == null) {
-				return false;
-			}
-			veXeDAO.delete(veXe);
-
+			veXeDAO.deleteByMaVe(maVe);
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-			throw new Exception("Error");
+			return false;
 		}
 		return true;
 	}
 
 	public List<ThongTinDanhGiaDTO> getListInfoDanhGiaByNhaXe(int idNhaXe) {
 		logger.info(idNhaXe);
-		List<ThongTinDanhGiaDTO> listThongTinDanhGia = new ArrayList<ThongTinDanhGiaDTO>(0);
+		List<ThongTinDanhGiaDTO> listThongTinDanhGia = new ArrayList<ThongTinDanhGiaDTO>(
+				0);
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			List<Object[]> listData = danhGiaDAO.getListInfoDanhGiaByIdNhaXe(idNhaXe);
+			List<Object[]> listData = danhGiaDAO
+					.getListInfoDanhGiaByIdNhaXe(idNhaXe);
 			if (listData == null) {
 				return listThongTinDanhGia;
 			}
 			ThongTinDanhGiaDTO thongTin;
 			for (Object[] row : listData) {
-			    thongTin = new ThongTinDanhGiaDTO();
-			    thongTin.setDiem((float) row[0]);
-			    thongTin.setTenNguoiDanhGia((String)row[1]);
-			    thongTin.setNoiDung((String)row[2]);
-			    thongTin.setNgayDi((Date)row[3]);
-			    thongTin.setNgayDanhGia((Date) row[4]);
-			    listThongTinDanhGia.add(thongTin);
+				thongTin = new ThongTinDanhGiaDTO();
+				thongTin.setDiem((float) row[0]);
+				thongTin.setTenNguoiDanhGia((String) row[1]);
+				thongTin.setNoiDung((String) row[2]);
+				thongTin.setNgayDi((Date) row[3]);
+				thongTin.setNgayDanhGia((Date) row[4]);
+				listThongTinDanhGia.add(thongTin);
 			}
 
 			tx.commit();
@@ -348,10 +369,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} 
+		}
 		return listThongTinDanhGia;
 	}
-	
+
 	public List<SDTNhaXeDTO> getListSDTNhaXe(int idNhaXe) {
 		List<SDTNhaXeDTO> listSDTNhaXe = new ArrayList<SDTNhaXeDTO>(0);
 		Transaction tx = null;
@@ -360,16 +381,16 @@ public class KhachHangServiceImpl implements KhachHangService {
 					.beginTransaction();
 
 			List<Object[]> listData = danhGiaDAO.getListSDTNhaXe(idNhaXe);
-			
+
 			if (listData == null) {
 				return null;
 			}
 			SDTNhaXeDTO thongTin;
 			for (Object[] row : listData) {
-			    thongTin = new SDTNhaXeDTO();
-			    thongTin.setTenVanPhong((String) row[0]);
-			    thongTin.setSdt((String)row[1]);
-			    listSDTNhaXe.add(thongTin);
+				thongTin = new SDTNhaXeDTO();
+				thongTin.setTenVanPhong((String) row[0]);
+				thongTin.setSdt((String) row[1]);
+				listSDTNhaXe.add(thongTin);
 			}
 			tx.commit();
 		} catch (Exception ex) {
@@ -377,13 +398,14 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} 
+		}
 		return listSDTNhaXe;
 	}
 
-	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
-			List<String> listB, List<String> listC, List<String> listD, List<String> listE) {
-		
+	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi,
+			Time gioDi, List<String> listA, List<String> listB,
+			List<String> listC, List<String> listD, List<String> listE) {
+
 		List<String> viTris = new ArrayList<String>(0);
 		List<String> choDaDat = new ArrayList<String>(0);
 		String soDoViTri = "";
@@ -395,7 +417,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			choDaDat = veXeDAO.getListSeated(idLichTuyen, ngayDi, gioDi);
 			Xe xe = xeDAO.getById(idXe);
 			soDoViTri = xe.getHinhAnh();
-			
+
 			logger.info(viTris.size() + " " + choDaDat.size());
 			for (String viTri : viTris) {
 				if (choDaDat.contains(viTri)) {
@@ -405,20 +427,20 @@ public class KhachHangServiceImpl implements KhachHangService {
 					listA.add(viTri);
 				} else if (viTri.indexOf("B") != -1) {
 					listB.add(viTri);
-				}  else if (viTri.indexOf("C") != -1) {
+				} else if (viTri.indexOf("C") != -1) {
 					listC.add(viTri);
-				}  else if (viTri.indexOf("D") != -1) {
+				} else if (viTri.indexOf("D") != -1) {
 					listD.add(viTri);
-				}  else if (viTri.indexOf("E") != -1) {
+				} else if (viTri.indexOf("E") != -1) {
 					listE.add(viTri);
-				}			
+				}
 			}
 			Collections.sort(listA);
 			Collections.sort(listB);
 			Collections.sort(listC);
 			Collections.sort(listD);
 			Collections.sort(listE);
-			
+
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) {
@@ -428,19 +450,21 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return soDoViTri;
 	}
-	
+
 	@Override
 	public boolean xacNhanVe(String maVe) {
 		Transaction tx = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			Session session = HibernateUtil.getSessionFactory()
+					.getCurrentSession();
 			tx = session.beginTransaction();
-			
+
 			VeXe veXe = veXeDAO.getVeXeByMaVe(maVe);
 			if (veXe == null) {
 				return false;
 			}
-			if (veXe != null && veXe.getTrangThai().equals(TrangThaiVeXe.GIUCHO)) {
+			if (veXe != null
+					&& veXe.getTrangThai().equals(TrangThaiVeXe.GIUCHO)) {
 				veXe.setTrangThai(TrangThaiVeXe.DAKICHHOAT);
 				session.update(veXe);
 			}
@@ -456,17 +480,17 @@ public class KhachHangServiceImpl implements KhachHangService {
 				}
 			};
 			new Thread(r).start();
-			
+
 			tx.commit();
 		} catch (Exception ex) {
 			if (tx != null) {
 				tx.rollback();
 			}
 			logger.error("Error", ex);
-		} 
+		}
 		return true;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
 		NgayCuaTuan day = null;
@@ -496,27 +520,31 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return day;
 	}
-	
+
 	private String randomVeXe() {
 		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		Random random = new Random();
 		String result = "";
 		for (int i = 0; i < 8; ++i) {
 			result += s.charAt(random.nextInt(s.length()));
-		}	
+		}
 		return result;
 	}
-	
-	@SuppressWarnings({"deprecation" })
+
+	@SuppressWarnings({ "deprecation" })
 	private Date previousDate(Date date) {
-		int[] dateOfMonth = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30};
-		if (date.getDate() == 1) {			//neu la ngay 1 
-			if (date.getMonth() == 0) {		//neu la thang 1
+		int[] dateOfMonth = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 };
+		if (date.getDate() == 1) { // neu la ngay 1
+			if (date.getMonth() == 0) { // neu la thang 1
 				date.setDate(31);
 				date.setMonth(11);
 				date.setYear(date.getDate() - 1);
-			} else	if (date.getMonth() == 2) {		//neu la thang 3
-				if ( (date.getYear() % 400 == 0) || (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { 	//neu la nam nhuan
+			} else if (date.getMonth() == 2) { // neu la thang 3
+				if ((date.getYear() % 400 == 0)
+						|| (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { // neu
+																						// la
+																						// nam
+																						// nhuan
 					date.setDate(29);
 				} else {
 					date.setDate(28);
@@ -530,19 +558,24 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return date;
 	}
-	
-	@SuppressWarnings({"deprecation", "unused" })
+
+	@SuppressWarnings({ "deprecation", "unused" })
 	private Date nextDate(Date date) {
-		int[] dateOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30};
-		if ( (date.getYear() % 400 == 0) || (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { 	//neu la nam nhuan
+		int[] dateOfMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30 };
+		if ((date.getYear() % 400 == 0)
+				|| (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { // neu
+																				// la
+																				// nam
+																				// nhuan
 			dateOfMonth[1] = 29;
 		}
-		
-		if (date.getDate() == dateOfMonth[date.getMonth()]) {			//neu la ngay cuoi thang
-			if (date.getMonth() == 11) {			//neu la thang 12
+
+		if (date.getDate() == dateOfMonth[date.getMonth()]) { // neu la ngay
+																// cuoi thang
+			if (date.getMonth() == 11) { // neu la thang 12
 				date.setMonth(0);
 				date.setYear(date.getDate() + 1);
-			}  else {
+			} else {
 				date.setMonth(date.getMonth() + 1);
 			}
 			date.setDate(1);
@@ -551,11 +584,12 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return date;
 	}
+
 }
-class deleteVeXe extends TimerTask
-{
+
+class deleteVeXe extends TimerTask {
 	private int idVeXe;
-	
+
 	@Override
 	public void run() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -566,9 +600,9 @@ class deleteVeXe extends TimerTask
 		}
 		session.getTransaction().commit();
 	}
-	
+
 	public void setIdVeXe(int idVeXe) {
 		this.idVeXe = idVeXe;
 	}
-	
+
 }

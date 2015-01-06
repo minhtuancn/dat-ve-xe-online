@@ -8,11 +8,14 @@ import com.vexeonline.domain.VeXe;
 
 public interface VeXeDAO {
 	/**
-	 * get all information of VeXe
+	 * get all information of VeXe by maVe
+	 * follow order : maVe-ngayDi-gioDi-loaiXe-soGhe-giaVe-tenHanhKhach-sdt-email
 	 * @param maVeXe
 	 * @return
 	 */
-    public VeXe getInfoVeXe(int maVeXe);
+    public Object[] getInfoVeXe(String maVeXe);
+    
+    public void deleteByMaVe(String maVe);
     
     public VeXe get(Integer nhaXeId,Integer ticketId);
     
@@ -49,4 +52,6 @@ public interface VeXeDAO {
      * @param maVe
      */
     public VeXe getVeXeByMaVe(String maVe);
+
+	public VeXe getInfoVeXe(Integer ticketId);
 }
