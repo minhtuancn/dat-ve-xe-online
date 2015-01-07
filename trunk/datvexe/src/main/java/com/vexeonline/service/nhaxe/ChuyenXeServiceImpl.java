@@ -1,10 +1,10 @@
 package com.vexeonline.service.nhaxe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
+import org.apache.commons.lang.RandomStringUtils;
 
 import com.vexeonline.dao.ChuyenXeDAO;
 import com.vexeonline.dao.ChuyenXeDAOImpl;
@@ -140,7 +140,7 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 		result.setIdVeXe(ticketDTO.getId());
 		if (ticketDTO.getTicketId() == null
 				|| ticketDTO.getTicketId().trim().length() == 0) {
-			result.setMaVe(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+			result.setMaVe(RandomStringUtils.random(8, true, true));
 		} else {
 			result.setMaVe(ticketDTO.getTicketId());
 		}
@@ -174,6 +174,7 @@ public class ChuyenXeServiceImpl implements ChuyenXeService {
 			result.setTenHanhKhach(hanhKhachDTO.getTenHanhKhach());
 			result.setSdt(hanhKhachDTO.getSoDienThoai());
 			result.setEmail(hanhKhachDTO.getEmail());
+			customerDAO.insert(result);
 		}
 
 		return result;

@@ -26,8 +26,60 @@
 .inactive {
 	color: graytext;
 }
+
+#template {
+	visibility: hidden;
+}
 -->
 </style>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Resources/js/moment.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	var count = $('#prices hr').length;
+	
+	$('#add_price').click(function(e) {
+		e.preventDefault();
+		
+		var element = $('#template').html().replace(/##index##/g, count.toString());
+		
+		var maxtime;
+		
+		if ($('#prices .enddate').length > 0) {
+			maxtime = moment('29/09/1993', 'DD/MM/YYYY');
+		} else {
+			maxtime = moment();
+		}
+		
+		$('#prices .enddate').each(function(i, e) {
+			var d = moment($(e).val(), 'DD/MM/YYYY');
+			if (d >= maxtime) {
+				maxtime = d;
+			}
+		});
+		
+		console.log('maxdate: ' + maxtime);
+		
+		$('#prices').prepend(element.replace(/##enddate##/g, maxtime.add(1, 'day').format('DD/MM/YYYY')));
+		
+		count++;
+		
+		$('.enddate').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true
+		});
+	});
+	
+	$('#prices').on('click', '.glyphicon-remove-circle', function() {
+		$(this).parent('.price').remove();
+	});
+	
+	$('#prices').on('change', '.datepicker', function() {
+		
+	});
+});
+</script>
 <s:form id="schedule_detail" action="schedule/save" method="post"
 	theme="bootstrap" cssClass="form-horizontal"
 	label="Thông tin lịch chuyến">
@@ -41,10 +93,35 @@
 	<s:textfield type="time" name="schedule.gioChay" label="Giờ xuất bến" />
 	<s:textfield name="schedule.tongThoiGian" label="Tổng thời gian" />
 	<s:checkbox name="schedule.active" label="Active" />
+	<div class="form-group">
+		<label class="col-sm-3 control-label">&nbsp;</label>
+		<div class="col-sm-9 controls">
+			<button class="btn btn-default pull-right" id="add_price">Thêm giá vé</button>
+		</div>
+	</div>
+	<s:div id="prices">
+		<s:iterator value="schedule.prices" status="incr">
+			<hr>
+			<s:hidden name="schedule.prices[%{#incr.index}].id" />
+			<s:textfield name="schedule.prices[%{#incr.index}].giaVe" label="Giá vé" disabled="true" />
+			<s:textfield name="schedule.prices[%{#incr.index}].ngayBatDau" label="Từ ngày" disabled="true" />
+			<s:textfield cssClass="enddate" name="schedule.prices[%{#incr.index}].ngayKetThuc" label="Đến ngày" disabled="true" />
+		</s:iterator>
+	</s:div>
 	<s:submit cssClass="btn btn-primary pull-right" />
+	<s:div id="template">
+		<s:div cssClass="price">
+			<hr>
+			<span class="remove-icon glyphicon glyphicon-remove-circle pull-right" aria-hidden="true"></span>
+			<s:hidden name="schedule.prices[##index##].id" />
+			<s:textfield name="schedule.prices[##index##].giaVe" value="%{null}" label="Giá vé"/>
+			<s:textfield cssClass="datepicker startdate" name="schedule.prices[##index##].ngayBatDau" value="##enddate##" label="Từ ngày" disabled="true"/>
+			<s:textfield cssClass="datepicker enddate" name="schedule.prices[##index##].ngayKetThuc" label="Đến ngày" readonly="true"/>
+		</s:div>
+	</s:div>
 </s:form>
 
-<s:if test="%{schedule.id != null}">
+<%-- <s:if test="%{schedule.id != null}">
 <script type="text/javascript" src="${pageContext.request.contextPath}/Resources/datatable/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Resources/datatable/css/jquery.dataTables_themeroller.css" />
@@ -183,4 +260,4 @@
 		</div>
 	</form>
 </div>
-</s:if>
+</s:if> --%>

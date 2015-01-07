@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 public class DateConverter extends StrutsTypeConverter {
 
-	private static final SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+	private static final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@SuppressWarnings("rawtypes")
 	@Override

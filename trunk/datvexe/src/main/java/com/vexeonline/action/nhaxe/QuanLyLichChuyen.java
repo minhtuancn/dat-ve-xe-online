@@ -1,7 +1,5 @@
 package com.vexeonline.action.nhaxe;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,6 @@ import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.dto.BenXeDTO;
-import com.vexeonline.dto.PriceDTO;
 import com.vexeonline.dto.ScheduleDTO;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.dto.VehicleDTO;
@@ -38,9 +35,8 @@ import com.vexeonline.utils.HibernateUtil;
 @ParentPackage(value = "default")
 @Conversion(conversions = {
 		@TypeConversion(key = "schedule.ngayTrongTuan", converter = "com.vexeonline.converter.DateOfWeekConverter"),
-		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter"),
-		@TypeConversion(key = "price.ngayBatDau", converter = "com.vexeonline.converter.DateConverter"),
-		@TypeConversion(key = "price.ngayKetThuc", converter = "com.vexeonline.converter.DateConverter")})
+		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter")
+})
 @Result(name = "login", location="login", type = "redirect")
 public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 
@@ -56,12 +52,7 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 
 	private List<BenXeDTO> benXes;
 	private List<VehicleDTO> vehicles;
-	
-	private PriceDTO price;
-	private List<PriceDTO> prices;
 
-	private InputStream inputStream;
-	
 	@SkipValidation
 	@Action(value = "schedule", results = {
 			@Result(name = "success", location = "coach.schedules", type = "tiles")
@@ -123,7 +114,9 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
+			scheduleService.setIncludePrices(true);
 			schedule = scheduleService.getById(schedule.getId());
+			scheduleService.setIncludePrices(false);
 			if (schedule == null
 					|| !schedule.getVehicle().getIdNhaXe()
 							.equals(user.getNhaXeId())) {
@@ -169,30 +162,6 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "price/save", results = {
-			@Result(name = "success", type = "stream", params = {"inputName", "inputStream"})
-	})
-	public String savePrice() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}
-		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			scheduleService.insertPrice(user.getNhaXeId(), schedule.getId(), price);
-			tx.commit();
-			inputStream = new ByteArrayInputStream("success".getBytes());
-		} catch (Exception e) {
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-			inputStream = new ByteArrayInputStream(("error: " + e.getMessage()).getBytes());
-		}
-		return SUCCESS;
-	}
-
 	@SkipValidation
 	@Action(value = "ben_xe_json", results = {
 			@Result(name = "success", type = "json", params = {"wrapPrefix", "{\"benXes\":", "wrapSuffix", "}", "root", "benXes" })
@@ -238,30 +207,7 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
-
-	@SkipValidation
-	@Action(value = "prices_json", results = {
-			@Result(name = "success", type = "json", params = {"root", "prices" })
-	})
-	public String getPricesJson() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}
-		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			prices = scheduleService.getPrices(user.getNhaXeId(), schedule.getId());
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		}
-		return SUCCESS;
-	}
-
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -298,30 +244,6 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 
 	public void setVehicles(List<VehicleDTO> vehicles) {
 		this.vehicles = vehicles;
-	}
-
-	public PriceDTO getPrice() {
-		return price;
-	}
-
-	public void setPrice(PriceDTO price) {
-		this.price = price;
-	}
-
-	public List<PriceDTO> getPrices() {
-		return prices;
-	}
-
-	public void setPrices(List<PriceDTO> prices) {
-		this.prices = prices;
-	}
-
-	public InputStream getInputStream() {
-		return inputStream;
-	}
-
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
 	}
 
 	@Override
