@@ -56,6 +56,7 @@
 	theme="bootstrap" cssClass="form-horizontal"
 	label="Thông tin văn phòng">
 	<s:hidden name="office.id" />
+	<s:hidden name="office.address.id" />
 	<s:div>
 		<s:textfield name="office.name" label="Tên văn phòng" />
 	</s:div>
@@ -69,6 +70,7 @@
 			<button class="btn btn-default pull-right" id="add_phone_number">Thêm số điện thoại</button>
 		</div>
 	</div>
+	
 	<s:div id="phoneNumbers">
 		<s:iterator value="office.phoneNumber" status="incr">
 			<hr>

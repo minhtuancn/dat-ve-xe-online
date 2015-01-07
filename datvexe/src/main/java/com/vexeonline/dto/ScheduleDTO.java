@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.domain.GiaVe;
 import com.vexeonline.domain.LichTuyen;
 import com.vexeonline.domain.NgayCuaTuan;
@@ -44,6 +45,7 @@ public class ScheduleDTO implements Serializable {
 		this.tongThoiGian = schedule.getTongThoiGian();
 		this.vehicle = new VehicleDTO(schedule.getXe());
 		this.active = schedule.isActive();
+		
 		if (includePrices) {
 			this.prices = new ArrayList<PriceDTO>();
 			for (GiaVe giaVe : schedule.getGiaVes()) {
@@ -112,6 +114,7 @@ public class ScheduleDTO implements Serializable {
 		this.active = active;
 	}
 
+	@VisitorFieldValidator
 	public List<PriceDTO> getPrices() {
 		return prices;
 	}

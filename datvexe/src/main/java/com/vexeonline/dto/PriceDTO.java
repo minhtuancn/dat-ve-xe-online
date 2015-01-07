@@ -3,6 +3,9 @@ package com.vexeonline.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.vexeonline.domain.GiaVe;
 
 public class PriceDTO implements Serializable {
@@ -37,7 +40,9 @@ public class PriceDTO implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
+	@RequiredFieldValidator(key = "price.require.price")
+	@IntRangeFieldValidator(min = "0", key = "price.range.price")
 	public Integer getGiaVe() {
 		return giaVe;
 	}
@@ -45,7 +50,8 @@ public class PriceDTO implements Serializable {
 	public void setGiaVe(Integer giaVe) {
 		this.giaVe = giaVe;
 	}
-
+	
+	@TypeConversion(converter = "com.vexeonline.converter.DateConverter")
 	public Date getNgayBatDau() {
 		return ngayBatDau;
 	}
@@ -53,7 +59,9 @@ public class PriceDTO implements Serializable {
 	public void setNgayBatDau(Date ngayBatDau) {
 		this.ngayBatDau = ngayBatDau;
 	}
-
+	
+	@RequiredFieldValidator(key = "price.require.enddate")
+	@TypeConversion(converter = "com.vexeonline.converter.DateConverter")
 	public Date getNgayKetThuc() {
 		return ngayKetThuc;
 	}

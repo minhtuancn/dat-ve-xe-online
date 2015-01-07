@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
+import org.apache.commons.lang.NotImplementedException;
+
+import com.vexeonline.domain.VeXe;
+
 public class TicketDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = -5282181709947490322L;
@@ -16,7 +20,13 @@ public class TicketDetailDTO implements Serializable {
 	private String tenHanhKhach;
 	private String sdt;
 	private String email;
-
+	
+	public TicketDetailDTO() {
+	}
+	
+	public TicketDetailDTO(VeXe ticket) {
+		throw new NotImplementedException("Not implemented");
+	}
 
 	public String getMaVe() {
 		return maVe;

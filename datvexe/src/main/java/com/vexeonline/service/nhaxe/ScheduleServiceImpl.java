@@ -3,7 +3,6 @@ package com.vexeonline.service.nhaxe;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -159,22 +158,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 		result.setXe(vehicle);
 
 		if (scheduleDTO.getPrices() != null) {
-			Set<GiaVe> prices = new HashSet<GiaVe>();
+			Set<GiaVe> prices = result.getGiaVes();
 			GiaVe tmp = null;
 			for (PriceDTO price : scheduleDTO.getPrices()) {
-				if (price.getId() != null) {
-					tmp = priceDAO.getById(price.getId());
-				} else {
-					tmp = new GiaVe();
+				if (price.getId() == null) {
+					tmp = PriceDTO2Price(result, price);
+					tmp.setLichTuyen(result);
+					prices.add(tmp);
 				}
-
-				tmp.setGiaVe(price.getGiaVe());
-				tmp.setNgayBatDau(price.getNgayBatDau());
-				tmp.setNgayKetThuc(price.getNgayKetThuc());
-				tmp.setLichTuyen(result);
-				prices.add(tmp);
 			}
-			result.setGiaVes(prices);
 		}
 
 		result.setActive(scheduleDTO.isActive());
@@ -271,7 +263,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 			}
 
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(maxDate);
+			if (maxDate != null) {
+				cal.setTime(maxDate);
+			}
 			cal.add(Calendar.DATE, 1);
 
 			priceDTO.setNgayBatDau(cal.getTime());

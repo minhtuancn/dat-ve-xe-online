@@ -140,8 +140,13 @@ public class ScheduleServiceTest {
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
-			test005();
-			test006();
+			/*test005();
+			test006();*/
+			
+			service.setIncludePrices(true);
+			ScheduleDTO s = service.getById(18);
+			System.out.println(s.getPrices());
+			
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();

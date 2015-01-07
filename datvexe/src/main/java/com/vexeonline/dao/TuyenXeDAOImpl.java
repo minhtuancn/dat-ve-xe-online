@@ -5,6 +5,7 @@ package com.vexeonline.dao;
 
 import java.util.List;
 
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.vexeonline.domain.TuyenXe;
@@ -66,5 +67,22 @@ public class TuyenXeDAOImpl implements TuyenXeDAO {
 				.createCriteria(TuyenXe.class)
 				.add(Restrictions.and(Restrictions.eq("benDi.idBenXe", benDiId),
 						Restrictions.eq("benDen.idBenXe", benDenId))).uniqueResult();
+	}
+	
+	public static void main(String[] args) {
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			TuyenXe txe = new TuyenXeDAOImpl().get(1, 2);
+			System.out.println(txe);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close();
+		}
 	}
 }

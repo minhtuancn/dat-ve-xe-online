@@ -36,18 +36,24 @@ public class ChuyenXeServiceTest {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		
-		ScheduleDTO schedule6 = scheduleService.getById(6);
+		ScheduleDTO schedule19 = scheduleService.getById(19);
 		
 		ChuyenXeDTO chuyenXe1 = new ChuyenXeDTO();
 		chuyenXe1.setDepartDate(df.parse("10/01/2015"));
-		chuyenXe1.setSchedule(schedule6);
+		chuyenXe1.setSchedule(schedule19);
 		chuyenXe1.setTenTaiXe("Nguyễn Văn Ba");
 		chuyenXe1.setTrangThai(TrangThaiChuyenXe.BINHTHUONG);
 		
 		HanhKhachDTO hanhKhach = new HanhKhachDTO("Đặng Quang Hưng", "01662488323", "dqhspcr@gmail.com");
 		
-		TicketDTO ticket = new TicketDTO("A1", hanhKhach);
-		chuyenXe1.getTickets().add(ticket);
+		TicketDTO ticket1 = new TicketDTO("A1", hanhKhach);
+		chuyenXe1.getTickets().add(ticket1);
+		
+		TicketDTO ticket2 = new TicketDTO("A2", hanhKhach);
+		chuyenXe1.getTickets().add(ticket2);
+		
+		TicketDTO ticket3 = new TicketDTO("A3", hanhKhach);
+		chuyenXe1.getTickets().add(ticket3);
 		
 		service.insertChuyenXe(chuyenXe1);
 	}
