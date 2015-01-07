@@ -41,4 +41,8 @@ public interface BenXeDAO {
 	 * @param benXe
 	 */
 	public void update(BenXe benXe);
+	
+	public List<Integer> listIdBenXe(); 
+	
+	public List<Object[]> listTenBenXe(); 
 }

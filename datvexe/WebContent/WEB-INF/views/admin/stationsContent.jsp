@@ -53,7 +53,7 @@ $(document).ready(function() {
 						<td>Không hoạt động</td>
 					</s:else>
 					<td>
-						<a href="${pageContext.request.contextPath}/admincp/stationDetail?id=${benXe.id}" class="btn btn-primary">Chi tiết</a>
+						<a href="${pageContext.request.contextPath}/admincp/stationDetail?id=<s:property value="#benXe.id"/>" class="btn btn-primary">Chi tiết</a>
 					</td>
 				</tr>
 			</s:iterator>

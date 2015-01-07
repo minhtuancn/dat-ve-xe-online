@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
@@ -19,7 +20,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, unique = true)
 	private int idUser;
-	
+
 	@Column(unique = true, nullable = false, length = 30)
 	private String userName;
 
@@ -29,11 +30,13 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private RoleOfUser role;
-	
+
 	@ManyToOne
 	private NhaXe nhaXe;
-	
+
 	private boolean isActive;
+
+	private String email;
 
 	public int getIdUser() {
 		return idUser;
@@ -87,4 +90,14 @@ public class User {
 	public void setNhaXe(NhaXe nhaXe) {
 		this.nhaXe = nhaXe;
 	}
+
+	@EmailValidator(message = "Email không hợp lệ")
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }

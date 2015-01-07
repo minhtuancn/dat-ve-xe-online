@@ -6,19 +6,21 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.domain.User;
 
 public class UserDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 2611619592744405278L;
-	
+
 	private Integer id;
 	private Integer nhaXeId;
 	private String userName;
 	private String password;
+	private String tenNhaXe;
 	private boolean active;
 	private String role;
+	private String email;
 
 	public UserDTO() {
 	}
-	
+
 	public UserDTO(User user) {
 		this.id = user.getIdUser();
 		this.nhaXeId = user.getNhaXe().getIdNhaXe();
@@ -27,7 +29,7 @@ public class UserDTO implements Serializable {
 		this.active = user.isActive();
 		this.role = user.getRole().toString();
 	}
-	
+
 	public UserDTO(Integer id, Integer nhaXeId, String userName,
 			String password, boolean active, String role) {
 		this.id = id;
@@ -37,7 +39,7 @@ public class UserDTO implements Serializable {
 		this.active = active;
 		this.role = role;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -62,7 +64,7 @@ public class UserDTO implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	@RequiredStringValidator(trim = true, key = "user.require.password")
 	public String getPassword() {
 		return password;
@@ -72,7 +74,7 @@ public class UserDTO implements Serializable {
 		this.password = password;
 	}
 
-	public boolean isActive() {
+	public boolean getActive() {
 		return active;
 	}
 
@@ -86,6 +88,22 @@ public class UserDTO implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTenNhaXe() {
+		return tenNhaXe;
+	}
+
+	public void setTenNhaXe(String tenNhaXe) {
+		this.tenNhaXe = tenNhaXe;
 	}
 
 	@Override

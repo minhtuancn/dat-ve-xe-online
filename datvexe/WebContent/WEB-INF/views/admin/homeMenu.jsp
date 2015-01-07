@@ -19,7 +19,22 @@
 				<li></li>
 			</ul>
 		</li>
-		<li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+		<li>
+			<a>Quản lý tuyến xe</a>
+			<ul>
+				<li><a href="${pageContext.request.contextPath}/admincp/tuyenxes">Danh sách tuyến xe</a></li>
+				<li><a href="${pageContext.request.contextPath}/admincp/tuyenxe">Thêm tuyến xe</a></li>
+				<li></li>
+			</ul>
+		</li>
+		<li>
+			<a>Quản lý tài khoản</a>
+			<ul>
+				<li><a href="${pageContext.request.contextPath}/admincp/users">Danh sách tài khoản</a></li>
+				<li><a href="${pageContext.request.contextPath}/admincp/user">Thêm tài khoản</a></li>
+				<li></li>
+			</ul>
+		</li>
 		<li><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
 	</ul>
 </div>

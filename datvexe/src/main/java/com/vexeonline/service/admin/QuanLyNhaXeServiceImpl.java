@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.vexeonline.dao.NhaXeDAO;
@@ -20,8 +21,6 @@ import com.vexeonline.utils.HibernateUtil;
 public class QuanLyNhaXeServiceImpl implements QuanLyNhaXeService {
 
 	private static final NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
-
-	@SuppressWarnings("unused")
 	private static Logger logger = Logger
 			.getLogger(QuanLyNhaXeServiceImpl.class);
 
@@ -49,13 +48,46 @@ public class QuanLyNhaXeServiceImpl implements QuanLyNhaXeService {
 
 	@Override
 	public void addNew(NhaXeDTO nhaXeDTO) throws Exception {
-		
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			
+			NhaXe nhaXe = new NhaXe();
+			nhaXe.setActive(true);
+			nhaXe.setTenNhaXe(nhaXeDTO.getName());
+			nhaXe.setMoTa(nhaXeDTO.getDescription());
+			session.save(nhaXe);
+			
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error(e);
+		}
 	}
 
 	@Override
 	public void editInfo(NhaXeDTO nhaXeDTO) throws Exception {
-		// TODO Auto-generated method stub
-
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			
+			NhaXe nhaXe = (NhaXe) session.load(NhaXe.class, nhaXeDTO.getId());
+			nhaXe.setActive(true);
+			nhaXe.setTenNhaXe(nhaXeDTO.getName());
+			nhaXe.setMoTa(nhaXeDTO.getDescription());
+			session.update(nhaXe);
+			
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			logger.error(e);
+		}
 	}
 
 	private NhaXeDTO nhaXe2NhaXeDTO(NhaXe nhaXe) {

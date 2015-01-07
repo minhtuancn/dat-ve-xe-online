@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 			result.setUserName(userDTO.getUserName());
 			result.setPassword(userDTO.getPassword());
 			result.setRole(EnumType.valueOf(RoleOfUser.class, userDTO.getRole()));
-			result.setActive(userDTO.isActive());
+			result.setActive(userDTO.getActive());
 			NhaXe nhaXe = nhaXeDAO.getById(userDTO.getNhaXeId());
 			if (nhaXe != null) result.setNhaXe(nhaXe);
 		}

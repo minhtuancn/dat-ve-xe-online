@@ -2,6 +2,7 @@ package com.vexeonline.action.admin;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -21,12 +22,12 @@ import com.vexeonline.utils.HibernateUtil;
 @Namespace(value = "/admincp")
 @ParentPackage(value = "default")
 public class QuanLyBenXe extends ActionSupport {
-
+	private static Logger logger = Logger.getLogger(QuanLyBenXe.class);
 	private static final long serialVersionUID = -3670407619096614673L;
 	private static final QuanLyBenXeService benXeService = new QuanLyBenXeServiceImpl();
 	
 	private Integer id;
-	private BenXeDTO benXe;
+	private BenXeDTO benXe = new BenXeDTO();
 	private List<BenXeDTO> benXes;
 	
 	public Integer getId() {
@@ -90,6 +91,8 @@ public class QuanLyBenXe extends ActionSupport {
 	public String saveStation() {
 		Transaction tx = null;
 		try {
+			logger.info(id);
+			logger.info("active " + benXe.getActive());
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			if (id == null) {
 				benXeService.addNew(benXe);
@@ -103,4 +106,5 @@ public class QuanLyBenXe extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+
 }

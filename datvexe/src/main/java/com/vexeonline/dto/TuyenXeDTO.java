@@ -15,6 +15,7 @@ public class TuyenXeDTO implements Serializable {
 	private String description;
 	
 	public TuyenXeDTO() {
+		
 	}
 	
 	public TuyenXeDTO(Integer id) {

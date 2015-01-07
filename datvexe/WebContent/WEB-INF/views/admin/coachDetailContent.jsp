@@ -18,5 +18,7 @@
 		<s:textarea name="coach.description" label="Mô tả" />
 		<s:checkbox name="coach.active" label="Còn hoạt đông ?" />
 		<s:submit value="Lưu" cssClass="btn btn-primary" />
+		
+		<input type="hidden" name="id" value="<s:property value="id" />" />
 	</s:form>
 </div>

@@ -98,7 +98,22 @@
 		<put-attribute name="title" value="Thông tin vé" />
 		<put-attribute name="main" value="/WEB-INF/views/user/ticketInfoContent.jsp" />
 	</definition>
-	
+	<definition name="admin.tuyenxe" extends="admin.home">
+		<put-attribute name="title" value="Thông tin tuyến xe" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/add_or_update_tuyenxe.jsp" />
+	</definition>
+	<definition name="admin.listtuyenxe" extends="admin.home">
+		<put-attribute name="title" value="Danh sách tuyến xe" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/listtuyenxe.jsp" />
+	</definition>
+	<definition name="admin.user" extends="admin.home">
+		<put-attribute name="title" value="Thông tin tài khoản" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/add_or_update_user.jsp" />
+	</definition>
+	<definition name="admin.listuser" extends="admin.home">
+		<put-attribute name="title" value="Danh sách tài khoản" />
+		<put-attribute name="main" value="/WEB-INF/views/admin/listuser.jsp" />
+	</definition>
 	
 	<!-- Coach -->
 	<definition name="coach.home" extends="baseLayout">

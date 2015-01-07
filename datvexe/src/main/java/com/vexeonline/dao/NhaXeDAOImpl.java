@@ -49,4 +49,12 @@ public class NhaXeDAOImpl implements NhaXeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(nhaXe);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> listTenNhaXe() {
+		return HibernateUtil.getSessionFactory().getCurrentSession()
+				.createQuery("select n.idNhaXe, n.tenNhaXe from NhaXe as n")
+				.list();
+	}
+
 }

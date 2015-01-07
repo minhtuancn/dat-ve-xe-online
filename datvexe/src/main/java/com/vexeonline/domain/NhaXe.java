@@ -40,13 +40,11 @@ public class NhaXe implements Serializable {
 	@Column(length = 50)
 	private String hinhAnh;
 
-	private float rate;
-
 	@OneToMany(mappedBy = "nhaXe")
 	private Set<VanPhong> vanPhongs = new HashSet<VanPhong>(0);
 	private boolean isActive;
 
-	@OneToMany
+	@OneToMany(mappedBy = "nhaXe")
 	private List<User> users = new ArrayList<User>();
 
 	@OneToMany(mappedBy = "nhaXe")
@@ -109,14 +107,6 @@ public class NhaXe implements Serializable {
 
 	public void setVanPhongs(Set<VanPhong> vanPhongs) {
 		this.vanPhongs = vanPhongs;
-	}
-
-	public float getRate() {
-		return rate;
-	}
-
-	public void setRate(float rate) {
-		this.rate = rate;
 	}
 
 	public List<User> getUsers() {
