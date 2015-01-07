@@ -17,9 +17,8 @@ import com.vexeonline.utils.HibernateUtil;
 @Namespace(value = "/admincp")
 @ParentPackage(value = "default")
 public class QuanLyNhaXe extends ActionSupport {
+	private static final long serialVersionUID = 4381814030611900241L;
 
-	private static final long serialVersionUID = 1L;
-	
 	private static final QuanLyNhaXeService coachService = new QuanLyNhaXeServiceImpl();
 	
 	private Integer id;
@@ -78,6 +77,21 @@ public class QuanLyNhaXe extends ActionSupport {
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
+		return SUCCESS;
+	}
+	
+	@Action(value = "saveCoach", results = @Result(name = "success", location="/admincp/coachs", type = "redirect"))
+	public String saveStation() {
+		try {
+			if (id == null) {
+				coachService.addNew(coach);
+			} else {
+				coachService.editInfo(coach);
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;

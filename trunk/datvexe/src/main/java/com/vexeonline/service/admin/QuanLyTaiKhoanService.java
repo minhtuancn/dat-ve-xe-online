@@ -2,12 +2,17 @@ package com.vexeonline.service.admin;
 
 import java.util.List;
 
-import com.vexeonline.domain.User;
+import com.vexeonline.dto.NhaXeDTO;
+import com.vexeonline.dto.UserDTO;
 
 public interface QuanLyTaiKhoanService {
-	public List<User> listUser();
+	public List<UserDTO> listUser();
 
-	public void addNew(User user) throws Exception;
+	public void addNew(UserDTO user) ;
 
-	public void update(User user) throws Exception;
+	public void update(UserDTO user) ;
+	
+	public List<NhaXeDTO> listTenNhaXe();
+	
+	public UserDTO getById(Integer idUser);
 }

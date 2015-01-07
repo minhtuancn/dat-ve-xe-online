@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<form id="ticketInfo" action="ticketInfo" method="post" class="round-5">
+<form id="ticketInfo" action="ticketDetail" method="post" class="round-5">
 	<label>Vui lòng nhập mã vé </label>
 	<div class="input-group">
 

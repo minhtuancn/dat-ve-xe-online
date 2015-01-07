@@ -224,6 +224,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 			String body = "";
 			String[] listViTri = viTris.split(",");
+			logger.info(listViTri);
 			for (String viTri : listViTri) {
 				VeXe veXe = new VeXe();
 				veXe.setChoNgoi(viTri);

@@ -41,4 +41,6 @@ public interface NhaXeDAO {
      * @param nhaXe
      */
     public void update(NhaXe nhaXe);
+    
+    public List<Object[]> listTenNhaXe() ;
 }

@@ -19,6 +19,16 @@
 	}
 -->
 </style>
+<script>
+$(document).ready(function() {
+	var flag = document.getElementById("active_").value;
+	 document.getElementById("active").checked = (boolean)flag;
+});
+
+
+
+</script>
+
 <div id="station_wrapper">
 	<s:form action="saveStation" method="post" theme="bootstrap" cssClass="form-horizontal">
 		<s:hidden name="benXe.id" />
@@ -27,7 +37,9 @@
 		<s:textfield name="benXe.province" label="Tỉnh" />
 		<s:textfield name="benXe.district" label="Huyện" />
 		<s:textfield name="benXe.detailAddress" label="Địa chỉ chi tiết" />
-		<s:checkbox name="benXe.active" label="Còn hoạt động ?" />
+		<s:checkbox name="benXe.active" id="active" label="Còn hoạt động ?" onchange='function1();' />
+		
+		<input type="hidden" name="id" value="<s:property value="id" />" />
 		<s:submit value="Lưu" cssClass="btn btn-primary col-sm-offset-3" />
 	</s:form>
 </div>

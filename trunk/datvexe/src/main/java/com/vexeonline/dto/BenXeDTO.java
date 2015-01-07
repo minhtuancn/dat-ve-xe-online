@@ -77,7 +77,7 @@ public class BenXeDTO implements Serializable {
 		this.detailAddress = detail;
 	}
 
-	public boolean isActive() {
+	public boolean getActive() {
 		return active;
 	}
 

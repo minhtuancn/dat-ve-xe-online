@@ -51,6 +51,7 @@ public class QuanLyBenXeServiceImpl implements QuanLyBenXeService {
 		BenXe benXe = benXeDAO.getById(benXeDTO.getId());
 		benXe.setTenBenXe(benXeDTO.getName());
 		benXe.setMoTa(benXeDTO.getDescription());
+		benXe.setActive(benXeDTO.getActive());
 		DiaChi address = benXe.getDiaChi();
 		address.setTinh(benXeDTO.getProvince());
 		address.setHuyen(benXeDTO.getDistrict());
