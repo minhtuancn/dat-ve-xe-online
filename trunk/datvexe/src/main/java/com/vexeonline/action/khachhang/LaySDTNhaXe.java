@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -15,6 +16,7 @@ import com.vexeonline.service.KhachHangService;
 import com.vexeonline.service.KhachHangServiceImpl;
 @Namespace(value = "/")
 @ParentPackage(value = "default")
+@InterceptorRef(value = "defaultStack")
 @Results({ @Result(name = "input", location = "trips", type = "tiles") })
 public class LaySDTNhaXe extends ActionSupport {
 	private static final long serialVersionUID = -4071189766079727799L;

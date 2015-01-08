@@ -2,6 +2,7 @@ package com.vexeonline.action.khachhang;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -13,6 +14,7 @@ import com.vexeonline.service.KhachHangServiceImpl;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
+@InterceptorRef(value = "defaultStack")
 public class KiemTraVe extends ActionSupport {
 	private static final long serialVersionUID = -9065358490206667897L;
 	private static Logger logger = Logger.getLogger(KiemTraVe.class);
