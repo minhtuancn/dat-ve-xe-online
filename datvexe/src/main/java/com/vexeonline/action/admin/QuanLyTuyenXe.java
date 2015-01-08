@@ -18,9 +18,13 @@ import com.vexeonline.service.admin.QuanLyTuyenXeServiceImpl;
 @Namespace(value = "/admincp")
 @ParentPackage(value = "default")
 public class QuanLyTuyenXe extends ActionSupport implements ModelDriven<TuyenXeDTO>{
+	
 	private static final long serialVersionUID = -5890541323760076046L;
+	
 	private static Logger logger = Logger.getLogger(QuanLyTuyenXe.class);
+	
 	private static QuanLyTuyenXeService tuyenXeService = new QuanLyTuyenXeServiceImpl();
+	
 	private List<TuyenXeDTO> listTuyenXe;
 	private Integer idTuyenXe;
 	private Integer idBenDi;
@@ -126,5 +130,4 @@ public class QuanLyTuyenXe extends ActionSupport implements ModelDriven<TuyenXeD
 	public TuyenXeDTO getModel() {
 		return tuyenXe;
 	}
-
 }
