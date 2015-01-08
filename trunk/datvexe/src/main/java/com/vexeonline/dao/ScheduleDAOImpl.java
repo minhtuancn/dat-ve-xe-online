@@ -87,7 +87,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 					"		 WHERE\r\n" + 
 					"		  l.tuyenXe.benDi.diaChi.tinh LIKE :tinhDi\r\n" + 
 					"		 AND l.tuyenXe.benDen.diaChi.tinh LIKE :tinhDen\r\n" + 
-					"		 AND l.thu like :thu")
+					"		 AND l.thu like :thu AND l.active = true")
 			.setString("tinhDi", tinhDi)
 			.setString("tinhDen", tinhDen)
 			.setString("thu", thu.toString())

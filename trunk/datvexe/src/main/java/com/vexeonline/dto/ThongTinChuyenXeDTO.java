@@ -5,21 +5,23 @@ import java.sql.Time;
 import java.util.List;
 
 public class ThongTinChuyenXeDTO implements Serializable {
+	
 	private static final long serialVersionUID = 2596991614311901006L;
+	
 	private String tenNhaXe;
 	private List<String> tienIchs;
 	private String loaiXe;
 	private String tenBenDi;
 	private String tenBenDen;
 	private Time gioDi;
-	private double tongThoiGian;
-	private long soChoConLai;
-	private int soCho;
-	private double rating;
-	private int idNhaXe;
-	private int idLichTuyen;
-	private int giaVe;
-	private int idXe;
+	private Double tongThoiGian;
+	private Long soChoConLai;
+	private Integer soCho;
+	private Double rating;
+	private Integer idNhaXe;
+	private Integer idLichTuyen;
+	private Integer giaVe;
+	private Integer idXe;
 
 	public String getTenNhaXe() {
 		return tenNhaXe;
@@ -69,68 +71,67 @@ public class ThongTinChuyenXeDTO implements Serializable {
 		this.gioDi = gioDi;
 	}
 
-	public double getTongThoiGian() {
+	public Double getTongThoiGian() {
 		return tongThoiGian;
 	}
 
-	public void setTongThoiGian(double tongThoiGian) {
+	public void setTongThoiGian(Double tongThoiGian) {
 		this.tongThoiGian = tongThoiGian;
 	}
 
-	public long getSoChoConLai() {
+	public Long getSoChoConLai() {
 		return soChoConLai;
 	}
 
-	public void setSoChoConLai(long l) {
+	public void setSoChoConLai(Long l) {
 		this.soChoConLai = l;
 	}
 
-	public double getRating() {
+	public Double getRating() {
 		return rating;
 	}
 
-	public void setRating(double rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 
-	public int getIdNhaXe() {
+	public Integer getIdNhaXe() {
 		return idNhaXe;
 	}
 
-	public void setIdNhaXe(int idNhaXe) {
+	public void setIdNhaXe(Integer idNhaXe) {
 		this.idNhaXe = idNhaXe;
 	}
 
-	public int getGiaVe() {
+	public Integer getGiaVe() {
 		return giaVe;
 	}
 
-	public void setGiaVe(int giaVe) {
+	public void setGiaVe(Integer giaVe) {
 		this.giaVe = giaVe;
 	}
 
-	public int getIdLichTuyen() {
+	public Integer getIdLichTuyen() {
 		return idLichTuyen;
 	}
 
-	public void setIdLichTuyen(int idLichTuyen) {
+	public void setIdLichTuyen(Integer idLichTuyen) {
 		this.idLichTuyen = idLichTuyen;
 	}
 
-	public int getIdXe() {
+	public Integer getIdXe() {
 		return idXe;
 	}
 
-	public void setIdXe(int idXe) {
+	public void setIdXe(Integer idXe) {
 		this.idXe = idXe;
 	}
 
-	public int getSoCho() {
+	public Integer getSoCho() {
 		return soCho;
 	}
 
-	public void setSoCho(int soCho) {
+	public void setSoCho(Integer soCho) {
 		this.soCho = soCho;
 	}
-
 }

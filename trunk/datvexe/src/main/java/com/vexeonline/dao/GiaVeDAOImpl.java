@@ -35,8 +35,8 @@ public class GiaVeDAOImpl implements GiaVeDAO {
 		HibernateUtil.getSessionFactory().getCurrentSession().update(giaVe);
 	}
 
-	public int getGiaVe(int idLichTuyen, Date ngayDi) {
-		return (int) HibernateUtil.getSessionFactory().getCurrentSession()
+	public Integer getGiaVe(int idLichTuyen, Date ngayDi) {
+		return (Integer) HibernateUtil.getSessionFactory().getCurrentSession()
 				.createQuery("SELECT\r\n" + 
 							"  g.giaVe\r\n" + 
 							" FROM\r\n" + 

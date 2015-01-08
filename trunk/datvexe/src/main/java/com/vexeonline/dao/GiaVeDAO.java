@@ -48,5 +48,5 @@ public interface GiaVeDAO {
 	 * @param ngayDi
 	 * @return
 	 */
-	public int getGiaVe(int idLichTuyen, Date ngayDi);
+	public Integer getGiaVe(int idLichTuyen, Date ngayDi);
 }

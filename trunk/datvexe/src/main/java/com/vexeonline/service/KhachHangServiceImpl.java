@@ -50,7 +50,9 @@ import com.vexeonline.utils.HibernateUtil;
 import com.vexeonline.utils.SendEmail;
 
 public class KhachHangServiceImpl implements KhachHangService {
+
 	private final Logger logger = Logger.getLogger(getClass());
+
 	private static ScheduleDAO lichTuyenDAO = new ScheduleDAOImpl();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static VeXeDAO veXeDAO = new VeXeDAOImpl();
@@ -80,9 +82,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 				ThongTinChuyenXeDTO temp;
 				List<String> tenTienIchs = new ArrayList<String>(0);
-				double rating;
-				int giaVe;
-				long soChoDaDat;
+				
+				Double rating;
+				Integer giaVe;
+				Long soChoDaDat;
+				
 				for (Object[] row : list) {
 					temp = new ThongTinChuyenXeDTO();
 					temp.setIdLichTuyen((int) row[0]);

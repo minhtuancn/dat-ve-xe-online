@@ -58,8 +58,8 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 						.list();
 	}
 
-	public double ratingByNhaXe(int idNhaXe) {
-		return (double) HibernateUtil.getSessionFactory().getCurrentSession()
+	public Double ratingByNhaXe(int idNhaXe) {
+		return (Double) HibernateUtil.getSessionFactory().getCurrentSession()
 				.createQuery("SELECT\r\n" + 
 							"  ROUND(SUM(d.diem) / COUNT(*), 2)  \r\n" + 
 							" FROM\r\n" + 
@@ -69,5 +69,4 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 				.setInteger("idNhaXe", idNhaXe)
 				.uniqueResult();
 	}
-
 }
