@@ -362,7 +362,6 @@
 					 $(".rateColumn").rating();
 				}
 			});
-			//alert();
 		});
 
 	 
@@ -388,10 +387,9 @@
 </script>
 
 <script type="text/javascript">
-
 $(document).on("click", ".openListSdt", function() {
 	var idNhaXe = $(this).data('id');
-	$('#table-listSdt').bootstrapTable({
+	var table = $('#table-listSdt').bootstrapTable({
 		method : 'get',
 		url : 'listsdt?idNhaXe=' + idNhaXe,
 		striped : true,
@@ -410,6 +408,10 @@ $(document).on("click", ".openListSdt", function() {
 			formatter: SDTFormatter
 		} ]
 	});
+	
+	table.bootstrapTable('refresh', {
+		url: 'listsdt?idNhaXe=' + idNhaXe
+    });
 });
 
  function SDTFormatter(value, row) {
@@ -465,5 +467,10 @@ $("#trips tbody").delegate("tr", "click", function() {
 	document.getElementById("nhaXeDanhGia").innerHTML = tenNhaXe;
 	//alert(document.getElementById("tenNhaXe").innerHTML);
 	/* var fourthCellText = $("td:eq(5)", this).text(); */
+});
+
+$('body').on('hidden.bs.modal', '.modal', function() {
+	// TODO chuc nang xem so dien thoai hoat dong sai => xoa du lieu tren model
+	$(this).removeData('modal');
 });
 </script>

@@ -46,7 +46,7 @@ public class QuanLyVanPhongServiceTest {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			test001();
+			test002();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
