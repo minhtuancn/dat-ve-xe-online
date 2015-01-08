@@ -10,11 +10,30 @@
 	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
 	
 	<package name="default" extends="struts-default, json-default">
+	
+	
+	
 		<result-types>
 			<result-type name="tiles"
 				class="org.apache.struts2.views.tiles.TilesResult" />
 		</result-types>
-		 <default-action-ref name="home" /> 
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.vexeonline.utils.AuthenticationInterceptor"></interceptor>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+	
+	<default-interceptor-ref name="authStack"></default-interceptor-ref>
+	
+		<default-action-ref name="home" />
+
+		<global-results>
+			<result name="login" type="redirect">home</result>
+		</global-results>
+		
 	</package>
 
 </struts>
