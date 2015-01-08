@@ -196,7 +196,20 @@ public class MockDatabase {
 		user2.setNhaXe(nhaXe2);
 		session.save(user2);
 	}
-
+	
+	private static Set<String> generateViTri(int socho) {
+		Set<String> vt = new HashSet<String>();
+		for (int i=1; i<=socho/3; i++) {
+			vt.add("A" + i);
+			vt.add("B" + i);
+			vt.add("C" + i);
+		}
+		for (int i=1; i<=socho%3; i++) {
+			vt.add("D" + i);
+		}
+		return vt;
+	}
+	
 	public static void generateMockData() throws Exception {
 
 		// /////////////////////////////////////////////
@@ -293,13 +306,14 @@ public class MockDatabase {
 		// /////////////////////////////////////////////
 
 		XeDAO xeDAO = new XeDAOImpl();
-
+		
 		Xe xe0 = new Xe();
 		xe0.setBienSoXe("81C-11111");
 		xe0.setLoaiXe("Giường nằm");
 		xe0.setSoCho(40);
 		xe0.setNhaXe(nhaXeDAO.getById(1));
 		xe0.setActive(true);
+		xe0.setViTris(generateViTri(40));
 		xeDAO.save(xe0);
 		
 		Xe xe1 = new Xe();
@@ -308,6 +322,7 @@ public class MockDatabase {
 		xe1.setSoCho(40);
 		xe1.setNhaXe(nhaXeDAO.getById(1));
 		xe1.setActive(true);
+		xe1.setViTris(generateViTri(40));
 		xeDAO.save(xe1);
 
 		Xe xe2 = new Xe();
@@ -316,6 +331,7 @@ public class MockDatabase {
 		xe2.setSoCho(40);
 		xe2.setNhaXe(nhaXeDAO.getById(1));
 		xe2.setActive(true);
+		xe2.setViTris(generateViTri(40));
 		xeDAO.save(xe2);
 		
 		Xe xe3 = new Xe();
@@ -324,6 +340,7 @@ public class MockDatabase {
 		xe3.setSoCho(40);
 		xe3.setNhaXe(nhaXeDAO.getById(2));
 		xe3.setActive(true);
+		xe3.setViTris(generateViTri(40));
 		xeDAO.save(xe3);
 		
 		Xe xe4 = new Xe();
@@ -332,6 +349,7 @@ public class MockDatabase {
 		xe4.setSoCho(40);
 		xe4.setNhaXe(nhaXeDAO.getById(2));
 		xe4.setActive(true);
+		xe4.setViTris(generateViTri(40));
 		xeDAO.save(xe4);
 		
 		Xe xe5 = new Xe();
@@ -340,6 +358,7 @@ public class MockDatabase {
 		xe5.setSoCho(40);
 		xe5.setNhaXe(nhaXeDAO.getById(2));
 		xe5.setActive(true);
+		xe5.setViTris(generateViTri(40));
 		xeDAO.save(xe5);
 		
 		Xe xe6 = new Xe();
@@ -348,6 +367,7 @@ public class MockDatabase {
 		xe6.setSoCho(40);
 		xe6.setNhaXe(nhaXeDAO.getById(2));
 		xe6.setActive(true);
+		xe6.setViTris(generateViTri(40));
 		xeDAO.save(xe6);
 		
 		Xe xe7 = new Xe();
@@ -356,6 +376,7 @@ public class MockDatabase {
 		xe7.setSoCho(40);
 		xe7.setNhaXe(nhaXeDAO.getById(2));
 		xe7.setActive(true);
+		xe7.setViTris(generateViTri(40));
 		xeDAO.save(xe7);
 		
 		Xe xe8 = new Xe();
@@ -364,6 +385,7 @@ public class MockDatabase {
 		xe8.setSoCho(40);
 		xe8.setNhaXe(nhaXeDAO.getById(2));
 		xe8.setActive(true);
+		xe8.setViTris(generateViTri(40));
 		xeDAO.save(xe8);
 		
 		Xe xe9 = new Xe();
@@ -372,6 +394,7 @@ public class MockDatabase {
 		xe9.setSoCho(40);
 		xe9.setNhaXe(nhaXeDAO.getById(2));
 		xe9.setActive(true);
+		xe9.setViTris(generateViTri(40));
 		xeDAO.save(xe9);
 		
 		Xe xe10 = new Xe();
@@ -380,6 +403,7 @@ public class MockDatabase {
 		xe10.setSoCho(40);
 		xe10.setNhaXe(nhaXeDAO.getById(2));
 		xe10.setActive(true);
+		xe10.setViTris(generateViTri(40));
 		xeDAO.save(xe10);
 		
 		Xe xe11 = new Xe();
@@ -388,6 +412,7 @@ public class MockDatabase {
 		xe11.setSoCho(40);
 		xe11.setNhaXe(nhaXeDAO.getById(2));
 		xe11.setActive(true);
+		xe11.setViTris(generateViTri(40));
 		xeDAO.save(xe11);
 
 		// /////////////////////////////////////////////

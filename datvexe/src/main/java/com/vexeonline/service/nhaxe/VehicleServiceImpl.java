@@ -67,6 +67,15 @@ public class VehicleServiceImpl implements VehicleService {
 			}
 			
 			result.setSoCho(vehicleDTO.getSoCho());
+			
+			Set<String> viTris = new HashSet<String>();
+			for (int i=1; i<=vehicleDTO.getSoCho()/3; i++) {
+				viTris.add("A" + i);
+				viTris.add("B" + i);
+				viTris.add("C" + i);
+			}
+			result.setViTris(viTris);
+			
 			Set<TienIch> tienIchs = new HashSet<TienIch>();
 			for (TienIchDTO tienIch : vehicleDTO.getTienIchs()) {
 				tienIchs.add(TienIchDTO2TienIch(tienIch));

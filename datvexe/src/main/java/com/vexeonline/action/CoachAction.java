@@ -18,6 +18,7 @@ import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "default")
+@Result(name = "login", location = "login", type = "redirect")
 public class CoachAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
@@ -69,7 +70,7 @@ public class CoachAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Action(value = "book", results = @Result(name = "success", location = "coach.book", type = "tiles"))
+	/*@Action(value = "book", results = @Result(name = "success", location = "coach.book", type = "tiles"))
 	public String showTicketBookingPage() {
 		return SUCCESS;
 	}
@@ -87,7 +88,7 @@ public class CoachAction extends ActionSupport implements SessionAware {
 	@Action(value = "officeDetail", results = @Result(name = "success", location = "coach.officeDetail", type = "tiles"))
 	public String showOfficeDetailPage() {
 		return SUCCESS;
-	}
+	}*/
 
 	@Override
 	public void setSession(Map<String, Object> session) {
