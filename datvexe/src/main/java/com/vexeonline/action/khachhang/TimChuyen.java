@@ -38,7 +38,8 @@ public class TimChuyen extends ActionSupport {
 	public String getListChuyenXe() {
 		try {
 			logger.info(tinhDi + " " + tinhDen + " " + ngayDi);
-			list = khanhHangService.getListChuyenXe(tinhDi, tinhDen, ngayDi, soCho);
+			list = khanhHangService.getListChuyenXe(tinhDi, tinhDen, ngayDi,
+					soCho);
 			logger.info(list.size());
 		} catch (Exception e) {
 			logger.error("Error", e);
@@ -46,7 +47,7 @@ public class TimChuyen extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	public List<ThongTinChuyenXeDTO> getList() {
 		return list;
 	}

@@ -43,7 +43,7 @@ function getCurrentDate() {
 				<label for="tinhDi" >Tỉnh Đi</label>
 				<s:select name="tinhDi"
 					headerValue="--- Chọn ---" 
-					list="#{'Gia Lai' : 'Gia Lai', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
+					list="#{'Gia Lai' : 'Gia Lai', 'Quảng Nam':'Quảng Nam', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
 					'Cà Mau':'Cà Mau', 'Hà Nội':'Hà Nội', 'Đà Nằng':'Đà Nẵng', 'Nha Trang':'Nha Trang', 'Hải Phòng':'Hải Phòng'}" 
 					cssClass="form-control"
 					headerKey="" readonly="true" />
@@ -53,7 +53,7 @@ function getCurrentDate() {
 				<label for="tinhDen">Tỉnh Đến</label>
 				<s:select name="tinhDen"
 					headerValue="--- Chọn ---" 
-					list="#{'Gia Lai' : 'Gia Lai', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
+					list="#{'Gia Lai' : 'Gia Lai', 'Quảng Nam':'Quảng Nam', 'Hồ Chí Minh':'Hồ Chí Minh', 'Vũng Tàu':'Vũng Tàu', 'Bình Thuận':'Bình Thuận', 
 					'Cà Mau':'Cà Mau', 'Hà Nội':'Hà Nội', 'Đà Nằng':'Đà Nẵng', 'Nha Trang':'Nha Trang', 'Hải Phòng':'Hải Phòng'}" 
 					cssClass="form-control"
 					headerKey="" readonly="true" />

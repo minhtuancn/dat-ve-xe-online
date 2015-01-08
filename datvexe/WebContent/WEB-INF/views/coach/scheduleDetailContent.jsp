@@ -75,8 +75,10 @@ $(document).ready(function() {
 		$(this).parent('.price').remove();
 	});
 	
-	$('#prices').on('change', '.datepicker', function() {
-		
+	$('#prices').on('change', '.enddate', function() {
+		var date = moment($(this).val(), 'DD/MM/YYYY').add(1, 'day');
+		console.log($(this).next('.startdate').val());
+		console.log($('.startdate').length);
 	});
 });
 </script>
@@ -103,9 +105,9 @@ $(document).ready(function() {
 		<s:iterator value="schedule.prices" status="incr">
 			<hr>
 			<s:hidden name="schedule.prices[%{#incr.index}].id" />
-			<s:textfield name="schedule.prices[%{#incr.index}].giaVe" label="Giá vé" disabled="true" />
-			<s:textfield name="schedule.prices[%{#incr.index}].ngayBatDau" label="Từ ngày" disabled="true" />
-			<s:textfield cssClass="enddate" name="schedule.prices[%{#incr.index}].ngayKetThuc" label="Đến ngày" disabled="true" />
+			<s:textfield name="schedule.prices[%{#incr.index}].giaVe" label="Giá vé" readonly="true" />
+			<s:textfield name="schedule.prices[%{#incr.index}].ngayBatDau" label="Từ ngày" readonly="true" />
+			<s:textfield cssClass="enddate" name="schedule.prices[%{#incr.index}].ngayKetThuc" label="Đến ngày" readonly="true" />
 		</s:iterator>
 	</s:div>
 	<s:submit cssClass="btn btn-primary pull-right" />
@@ -114,7 +116,7 @@ $(document).ready(function() {
 			<hr>
 			<span class="remove-icon glyphicon glyphicon-remove-circle pull-right" aria-hidden="true"></span>
 			<s:hidden name="schedule.prices[##index##].id" />
-			<s:textfield name="schedule.prices[##index##].giaVe" value="%{null}" label="Giá vé"/>
+			<s:textfield name="schedule.prices[##index##].giaVe" value="%{null}" label="Giá vé" />
 			<s:textfield cssClass="datepicker startdate" name="schedule.prices[##index##].ngayBatDau" value="##enddate##" label="Từ ngày" disabled="true"/>
 			<s:textfield cssClass="datepicker enddate" name="schedule.prices[##index##].ngayKetThuc" label="Đến ngày" readonly="true"/>
 		</s:div>
