@@ -52,10 +52,10 @@ public class GuestAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 
-	@Action(value = "trips", results = @Result(name = "success", location = "trips", type = "tiles"))
+	/*@Action(value = "trips", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String showTripsPage() {
 		return SUCCESS;
-	}
+	}*/
 
 	@Override
 	public void setSession(Map<String, Object> session) {

@@ -17,7 +17,7 @@ public class AdminAction extends ActionSupport {
 	public String showAdminHomePage() {
 		return SUCCESS;
 	}
-	
+	/*
 	@Action(value = "routes", results = @Result(name = "success", location="admin.routes", type = "tiles"))
 	public String showRoutesPage() {
 		return SUCCESS;
@@ -26,5 +26,5 @@ public class AdminAction extends ActionSupport {
 	@Action(value = "newRoute", results = @Result(name = "success", location="admin.newRoute", type = "tiles"))
 	public String showNewRoutePage() {
 		return SUCCESS;
-	}
+	}*/
 }

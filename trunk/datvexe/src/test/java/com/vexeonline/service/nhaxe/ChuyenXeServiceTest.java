@@ -23,7 +23,7 @@ public class ChuyenXeServiceTest {
 	}
 	
 	public static void test001() throws Exception {
-		for (ChuyenXeDTO chuyenXe : service.getChuyenXes(1)) {
+		for (ChuyenXeDTO chuyenXe : service.getChuyenXes(2)) {
 			System.out.println(chuyenXe);
 		}
 	}
@@ -63,8 +63,8 @@ public class ChuyenXeServiceTest {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			test003();
-			test000();
+			//test003();
+			test001();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)

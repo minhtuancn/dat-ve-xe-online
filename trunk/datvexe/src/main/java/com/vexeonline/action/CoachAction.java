@@ -11,7 +11,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.action.khachhang.Logins;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.service.UserServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
@@ -23,7 +22,7 @@ public class CoachAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = Logger.getLogger(Logins.class);
+	private static Logger logger = Logger.getLogger(CoachAction.class);
 	
 	private Map<String, Object> session;
 

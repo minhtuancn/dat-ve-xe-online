@@ -14,7 +14,6 @@ import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
-import com.vexeonline.action.khachhang.Logins;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.service.UserServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
@@ -26,7 +25,7 @@ import com.vexeonline.utils.HibernateUtil;
 public class AuthenticationAction extends ActionSupport implements SessionAware {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = Logger.getLogger(Logins.class);
+	private static Logger logger = Logger.getLogger(AuthenticationAction.class);
 
 	private Map<String, Object> session;
 
