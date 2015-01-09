@@ -32,19 +32,21 @@ public class ChuyenXeDTO implements Serializable {
 
 	public ChuyenXeDTO(ChuyenXe chuyenXe, boolean includeScheduleInfo,
 			boolean includeTicketsInfo) {
-		this.id = chuyenXe.getIdChuyenXe();
-		this.departDate = chuyenXe.getNgayDi();
-		this.tickets = new ArrayList<TicketDTO>();
-		this.tenTaiXe = chuyenXe.getTaiXe();
-		this.trangThai = chuyenXe.getTrangThai();
-		
-		if (includeScheduleInfo) {
-			this.schedule = new ScheduleDTO(chuyenXe.getLichTuyen());
-		}
+		if (chuyenXe != null) {
+			this.id = chuyenXe.getIdChuyenXe();
+			this.departDate = chuyenXe.getNgayDi();
+			this.tickets = new ArrayList<TicketDTO>();
+			this.tenTaiXe = chuyenXe.getTaiXe();
+			this.trangThai = chuyenXe.getTrangThai();
+			
+			if (includeScheduleInfo) {
+				this.schedule = new ScheduleDTO(chuyenXe.getLichTuyen());
+			}
 
-		if (includeTicketsInfo) {
-			for (VeXe ticket : chuyenXe.getVeXes()) {
-				this.tickets.add(new TicketDTO(ticket));
+			if (includeTicketsInfo) {
+				for (VeXe ticket : chuyenXe.getVeXes()) {
+					this.tickets.add(new TicketDTO(ticket));
+				}
 			}
 		}
 	}

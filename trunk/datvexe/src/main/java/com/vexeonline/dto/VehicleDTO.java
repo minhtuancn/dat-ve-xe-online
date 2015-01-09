@@ -40,14 +40,16 @@ public class VehicleDTO implements Serializable {
 	}
 	
 	public VehicleDTO(Xe vehicle) {
-		this.id = vehicle.getIdXe();
-		this.idNhaXe = vehicle.getNhaXe().getIdNhaXe();
-		this.bienSo = vehicle.getBienSoXe();
-		this.loaiXe = vehicle.getLoaiXe();
-		this.soCho = vehicle.getSoCho();
-		this.active = vehicle.isActive();
-		for (TienIch tienIch : vehicle.getTienIchs()) {
-			this.tienIchs.add(new TienIchDTO(tienIch));
+		if (vehicle != null) {
+			this.id = vehicle.getIdXe();
+			this.idNhaXe = vehicle.getNhaXe().getIdNhaXe();
+			this.bienSo = vehicle.getBienSoXe();
+			this.loaiXe = vehicle.getLoaiXe();
+			this.soCho = vehicle.getSoCho();
+			this.active = vehicle.isActive();
+			for (TienIch tienIch : vehicle.getTienIchs()) {
+				this.tienIchs.add(new TienIchDTO(tienIch));
+			}
 		}
 	}
 	

@@ -11,6 +11,7 @@ import com.vexeonline.domain.VeXe;
 public class TicketDetailDTO implements Serializable {
 
 	private static final long serialVersionUID = -5282181709947490322L;
+	
 	private String maVe;
 	private Date ngayDi;
 	private Time gioDi;
@@ -99,5 +100,4 @@ public class TicketDetailDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 }

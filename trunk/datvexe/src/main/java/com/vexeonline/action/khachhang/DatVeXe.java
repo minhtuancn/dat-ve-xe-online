@@ -51,9 +51,11 @@ public class DatVeXe extends ActionSupport  {
 
 		return SUCCESS;
 	}
-
-	@Action(value = "chonchongoi", results = { @Result(name = "success", location = "book", type = "tiles")
-						, @Result(name = "input", location = "trips", type = "tiles")})
+	
+	@Action(value = "chonchongoi", results = {
+			@Result(name = "success", location = "book", type = "tiles"),
+			@Result(name = "input", location = "trips", type = "tiles")
+	})
 	public String chonChoNgoi() {
 		try {			
 			HttpServletRequest request = ServletActionContext.getRequest();

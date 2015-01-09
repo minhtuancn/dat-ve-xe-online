@@ -17,15 +17,19 @@ import com.vexeonline.service.admin.QuanLyTaiKhoanService;
 import com.vexeonline.service.admin.QuanLyTaiKhoanServiceImpl;
 
 @Namespace(value = "/admincp")
-@ParentPackage(value = "default")
+@ParentPackage(value = "admin")
 public class QuanLyUser extends ActionSupport implements ModelDriven<UserDTO> {
+
 	private static final long serialVersionUID = -2988194251552261356L;
+
 	private static Logger logger = Logger.getLogger(QuanLyUser.class);
+
+	private static QuanLyTaiKhoanService quanLyTaiKhoanService = new QuanLyTaiKhoanServiceImpl();
+
 	private UserDTO userDTO = new UserDTO();
 	private Integer idUser;
 	private List<UserDTO> listUser = new ArrayList<UserDTO>(0);
 	private List<NhaXeDTO> listTenNhaXe = new ArrayList<NhaXeDTO>(0);
-	private static QuanLyTaiKhoanService quanLyTaiKhoanService = new QuanLyTaiKhoanServiceImpl();
 
 	@Action(value = "users", results = @Result(name = "success", location = "admin.listuser", type = "tiles"))
 	public String listuser() {
@@ -38,7 +42,10 @@ public class QuanLyUser extends ActionSupport implements ModelDriven<UserDTO> {
 		return SUCCESS;
 	}
 
-	@Action(value = "user/*", params = { "idUser", "{1}" }, results = @Result(name = "success", location = "admin.user", type = "tiles"))
+	@Action(value = "user/*",
+			params = { "idUser", "{1}" },
+			results = @Result(name = "success", location = "admin.user", type = "tiles")
+	)
 	public String user() {
 		try {
 			logger.info(idUser);
@@ -54,7 +61,9 @@ public class QuanLyUser extends ActionSupport implements ModelDriven<UserDTO> {
 		return SUCCESS;
 	}
 
-	@Action(value = "user/neworupdate", results = { @Result(name = "success", location = "/admincp/users", type = "redirect") })
+	@Action(value = "user/neworupdate", results = {
+			@Result(name = "success", location = "/admincp/users", type = "redirect")
+	})
 	public String action() {
 		try {
 			logger.info(userDTO == null);
@@ -107,5 +116,4 @@ public class QuanLyUser extends ActionSupport implements ModelDriven<UserDTO> {
 	public UserDTO getModel() {
 		return userDTO;
 	}
-
 }

@@ -12,7 +12,10 @@ public class NhaXeDTO implements Serializable {
 	private String description;
 	private List<OfficeDTO> offices;
 	private boolean active;
-
+	
+	public NhaXeDTO() {
+	}
+	
 	public Integer getId() {
 		return id;
 	}

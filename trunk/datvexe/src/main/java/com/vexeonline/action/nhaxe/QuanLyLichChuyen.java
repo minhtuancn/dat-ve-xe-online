@@ -1,13 +1,11 @@
 package com.vexeonline.action.nhaxe;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
@@ -26,19 +24,19 @@ import com.vexeonline.service.nhaxe.ScheduleServiceImpl;
 import com.vexeonline.service.nhaxe.VehicleService;
 import com.vexeonline.service.nhaxe.VehicleServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
+import com.vexeonline.utils.UserAware;
 
 /**
  * @author Đặng Quang Hưng (hungdq58@gmail.com)
  *
  */
 @Namespace(value = "/coachcp")
-@ParentPackage(value = "default")
+@ParentPackage(value = "coach")
 @Conversion(conversions = {
 		@TypeConversion(key = "schedule.ngayTrongTuan", converter = "com.vexeonline.converter.DateOfWeekConverter"),
 		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter")
 })
-@Result(name = "login", location="login", type = "redirect")
-public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
+public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 
 	private static final long serialVersionUID = -7283156740983672101L;
 
@@ -46,22 +44,23 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 	private static final QuanLyBenXeService benXeService = new QuanLyBenXeServiceImpl();
 	private static final VehicleService vehicleService = new VehicleServiceImpl();
 
-	private Map<String, Object> session;
 	private ScheduleDTO schedule;
 	private List<ScheduleDTO> schedules;
 
 	private List<BenXeDTO> benXes;
 	private List<VehicleDTO> vehicles;
 
+	private UserDTO user;
+	
 	@SkipValidation
 	@Action(value = "schedule", results = {
 			@Result(name = "success", location = "coach.schedules", type = "tiles")
 	})
 	public String showSchedulesPage() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -81,10 +80,10 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			@Result(name = "success", location = "coach.newSchedule", type = "tiles")
 	})
 	public String showNewSchedulePage() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -106,10 +105,10 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			@Result(name = "error", location = "/coachcp/schedule", type = "redirect")
 	})
 	public String showScheduleDetailPage() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -140,10 +139,10 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			@Result(name = "input", location = "coach.newSchedule", type = "tiles")
 	})
 	public String saveSchedule() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -167,10 +166,10 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			@Result(name = "success", type = "json", params = {"wrapPrefix", "{\"benXes\":", "wrapSuffix", "}", "root", "benXes" })
 	})
 	public String benXes() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -190,10 +189,10 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			@Result(name = "success", type = "json", params = {"wrapPrefix", "{\"vehicles\":", "wrapSuffix", "}", "root","vehicles" })
 	})
 	public String vehicles() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -208,11 +207,6 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-
 	@VisitorFieldValidator(appendPrefix = true)
 	public ScheduleDTO getSchedule() {
 		return schedule;
@@ -246,6 +240,14 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 		this.vehicles = vehicles;
 	}
 
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
+	}
+
 	@Override
 	public void validate() {
 		super.validate();
@@ -254,7 +256,6 @@ public class QuanLyLichChuyen extends ActionSupport implements SessionAware {
 			try {
 				tx = HibernateUtil.getSessionFactory().getCurrentSession()
 						.beginTransaction();
-				UserDTO user = (UserDTO) session.get("user");
 				benXes = benXeService.listBenXe();
 				vehicles = vehicleService.getVehicles(user.getNhaXeId());
 				tx.commit();

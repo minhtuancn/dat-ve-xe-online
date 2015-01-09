@@ -24,23 +24,24 @@ public class OfficeDTO implements Serializable {
 	}
 	
 	public OfficeDTO(VanPhong office) {
-		
-		this.id = office.getIdVanPhong();
-		this.nhaXeId = office.getNhaXe().getIdNhaXe();
-		this.name = office.getTenVanPhong();
-		
-		if (office.getDiaChi() != null) {
-			this.address = new AddressDTO(office.getDiaChi());
-		}
-		
-		if (office.getSDTVanPhongs() != null) {
-			this.phoneNumber = new ArrayList<PhoneNumberDTO>();
-			for (SDTVanPhong phone : office.getSDTVanPhongs()) {
-				this.phoneNumber.add(new PhoneNumberDTO(phone));
+		if (office != null) {
+			this.id = office.getIdVanPhong();
+			this.nhaXeId = office.getNhaXe().getIdNhaXe();
+			this.name = office.getTenVanPhong();
+			
+			if (office.getDiaChi() != null) {
+				this.address = new AddressDTO(office.getDiaChi());
 			}
+			
+			if (office.getSDTVanPhongs() != null) {
+				this.phoneNumber = new ArrayList<PhoneNumberDTO>();
+				for (SDTVanPhong phone : office.getSDTVanPhongs()) {
+					this.phoneNumber.add(new PhoneNumberDTO(phone));
+				}
+			}
+			
+			this.active = office.isActive();
 		}
-		
-		this.active = office.isActive();
 	}
 	
 	public Integer getId() {

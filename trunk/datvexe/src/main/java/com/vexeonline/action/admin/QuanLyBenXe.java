@@ -15,15 +15,14 @@ import com.vexeonline.service.admin.QuanLyBenXeService;
 import com.vexeonline.service.admin.QuanLyBenXeServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
-/**
- * @author hungdq
- *
- */
 @Namespace(value = "/admincp")
-@ParentPackage(value = "default")
+@ParentPackage(value = "admin")
 public class QuanLyBenXe extends ActionSupport {
+	
 	private static Logger logger = Logger.getLogger(QuanLyBenXe.class);
+	
 	private static final long serialVersionUID = -3670407619096614673L;
+	
 	private static final QuanLyBenXeService benXeService = new QuanLyBenXeServiceImpl();
 	
 	private Integer id;
@@ -106,5 +105,4 @@ public class QuanLyBenXe extends ActionSupport {
 		}
 		return SUCCESS;
 	}
-
 }

@@ -23,11 +23,13 @@ public class TuyenXeDTO implements Serializable {
 	}
 
 	public TuyenXeDTO(TuyenXe tuyenXe) {
-		this.id = tuyenXe.getIdTuyenXe();
-		this.benDi = new BenXeDTO(tuyenXe.getBenDi());
-		this.benDen = new BenXeDTO(tuyenXe.getBenDen());
-		this.doDai = tuyenXe.getDoDai();
-		this.description = tuyenXe.getMoTa();
+		if (tuyenXe != null) {
+			this.id = tuyenXe.getIdTuyenXe();
+			this.benDi = new BenXeDTO(tuyenXe.getBenDi());
+			this.benDen = new BenXeDTO(tuyenXe.getBenDen());
+			this.doDai = tuyenXe.getDoDai();
+			this.description = tuyenXe.getMoTa();
+		}
 	}
 	
 	public Integer getId() {
@@ -72,6 +74,6 @@ public class TuyenXeDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return benDi.getProvince() + " - " + benDen.getProvince();
+		return  benDi.getName() + " (" + benDi.getProvince() + ") - " + benDen.getName() + " (" + benDen.getProvince() + ")";
 	}
 }

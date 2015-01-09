@@ -7,33 +7,41 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.convention.classes.reload" value="true" />
 	<constant name="struts.enable.SlashesInActionNames" value="true" />
-	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false" />
 	
-	<package name="default" extends="struts-default, json-default">
+	<package name="default" extends="tiles-default, json-default">
+		<!-- <default-action-ref name="home" /> -->
+		<global-results>
+			<result name="login" type="tiles">login</result>
+		</global-results>
+	</package>
 	
-	
-	
-		<result-types>
-			<result-type name="tiles"
-				class="org.apache.struts2.views.tiles.TilesResult" />
-		</result-types>
+	<package name="admin" namespace="/admincp" extends="tiles-default, json-default">
 		<interceptors>
-			<interceptor name="authentication"
-				class="com.vexeonline.utils.AuthenticationInterceptor"></interceptor>
-			<interceptor-stack name="authStack">
-				<interceptor-ref name="authentication"></interceptor-ref>
+			<interceptor name="adminAuthentication" class="com.vexeonline.utils.AdminAuthenticationInterceptor" />
+			<interceptor-stack name="adminStack">
+				<interceptor-ref name="adminAuthentication"></interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-	
-	<default-interceptor-ref name="authStack"></default-interceptor-ref>
-	
-		<default-action-ref name="home" />
-
+		<default-interceptor-ref name="adminStack" />
 		<global-results>
-			<result name="login" type="redirect">home</result>
+			<result name="login" type="redirect">login</result>
 		</global-results>
-		
 	</package>
-
+	
+	<package name="coach" namespace="/coachcp" extends="tiles-default, json-default">
+		<interceptors>
+			<interceptor name="coachAuthentication" class="com.vexeonline.utils.CoachAuthenticationInterceptor" />
+			<interceptor-stack name="coachStack">
+				<interceptor-ref name="coachAuthentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="coachStack" />
+		<global-results>
+			<result name="login" type="redirect">login</result>
+		</global-results>
+	</package>
+	
 </struts>

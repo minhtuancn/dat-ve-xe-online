@@ -27,10 +27,12 @@ public class PriceDTO implements Serializable {
 	}
 
 	public PriceDTO(GiaVe giaVe) {
-		this.id = giaVe.getIdGiaVe();
-		this.giaVe = giaVe.getGiaVe();
-		this.ngayBatDau = giaVe.getNgayBatDau();
-		this.ngayKetThuc = giaVe.getNgayKetThuc();
+		if (giaVe != null) {
+			this.id = giaVe.getIdGiaVe();
+			this.giaVe = giaVe.getGiaVe();
+			this.ngayBatDau = giaVe.getNgayBatDau();
+			this.ngayKetThuc = giaVe.getNgayKetThuc();
+		}
 	}
 	
 	public Integer getId() {
