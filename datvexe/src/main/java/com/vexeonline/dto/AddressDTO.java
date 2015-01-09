@@ -18,10 +18,12 @@ public class AddressDTO implements Serializable {
 	}
 	
 	public AddressDTO(DiaChi address) {
-		this.id = address.getIdDiaChi();
-		this.province = address.getTinh();
-		this.district = address.getHuyen();
-		this.detail = address.getChiTiet();
+		if (address != null) {
+			this.id = address.getIdDiaChi();
+			this.province = address.getTinh();
+			this.district = address.getHuyen();
+			this.detail = address.getChiTiet();
+		}
 	}
 	
 	public AddressDTO(String province, String district, String detail) {

@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ThongTinDanhGiaDTO implements Serializable {
+	
 	private static final long serialVersionUID = 3325712387902900722L;
+	
 	private String noiDung;
 	private String tenNguoiDanhGia;
 	private float diem;
@@ -50,5 +52,4 @@ public class ThongTinDanhGiaDTO implements Serializable {
 	public void setNgayDanhGia(Date ngayDanhGia) {
 		this.ngayDanhGia = ngayDanhGia;
 	}
-
 }

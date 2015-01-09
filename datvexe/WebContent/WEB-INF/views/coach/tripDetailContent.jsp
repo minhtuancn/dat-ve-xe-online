@@ -132,6 +132,7 @@ $(document).ready(function() {
 	<s:textfield name="chuyenXe.schedule.tuyenXe" label="Tuyến xe"
 		disabled="true" />
 	<s:textfield name="chuyenXe.departDate" label="Ngày đi" disabled="true" />
+	<s:textfield name="chuyenXe.schedule.gioChay" label="Giờ đi" disabled="true" />
 	<s:textfield name="chuyenXe.tenTaiXe" label="Tài xế" />
 	<s:select name="chuyenXe.trangThai"
 		list="@com.vexeonline.domain.TrangThaiChuyenXe@values()"

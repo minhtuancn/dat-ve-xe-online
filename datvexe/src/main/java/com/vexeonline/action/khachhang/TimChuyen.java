@@ -33,7 +33,7 @@ public class TimChuyen extends ActionSupport {
 	private String tinhDi;
 	private String tinhDen;
 	private Date ngayDi;
-
+	
 	@Action(value = "timchuyenxe", results = @Result(name = "success", location = "trips", type = "tiles"))
 	public String getListChuyenXe() {
 		try {

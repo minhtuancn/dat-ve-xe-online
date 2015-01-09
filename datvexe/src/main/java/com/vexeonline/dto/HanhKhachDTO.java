@@ -17,10 +17,12 @@ public class HanhKhachDTO implements Serializable {
 	}
 	
 	public HanhKhachDTO(HanhKhach customer) {
-		this.idHanhKhach = customer.getIdHanhKhach();
-		this.tenHanhKhach = customer.getTenHanhKhach();
-		this.soDienThoai = customer.getSdt();
-		this.email = customer.getEmail();
+		if (customer != null) {
+			this.idHanhKhach = customer.getIdHanhKhach();
+			this.tenHanhKhach = customer.getTenHanhKhach();
+			this.soDienThoai = customer.getSdt();
+			this.email = customer.getEmail();
+		}
 	}
 	
 	public HanhKhachDTO(String tenHanhKhach, String soDienThoai, String email) {

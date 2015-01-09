@@ -331,7 +331,7 @@
 
 	 $(document).on("click", ".openListDanhGia", function() {
 			var idNhaXe = $(this).data('id');
-			$('#table-listDanhGia').bootstrapTable({
+			var table = $('#table-listDanhGia').bootstrapTable({
 				method : 'get',
 				url : 'listdanhgia?idNhaXe=' + idNhaXe,
 				striped : true,
@@ -362,6 +362,10 @@
 					 $(".rateColumn").rating();
 				}
 			});
+			
+			table.bootstrapTable('refresh', {
+				url : 'listdanhgia?idNhaXe=' + idNhaXe
+		    });
 		});
 
 	 

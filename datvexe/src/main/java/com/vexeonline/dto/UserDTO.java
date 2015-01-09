@@ -22,12 +22,14 @@ public class UserDTO implements Serializable {
 	}
 
 	public UserDTO(User user) {
-		this.id = user.getIdUser();
-		this.nhaXeId = user.getNhaXe().getIdNhaXe();
-		this.userName = user.getUserName();
-		this.password = user.getPassword();
-		this.active = user.isActive();
-		this.role = user.getRole().toString();
+		if (user != null) {
+			this.id = user.getIdUser();
+			this.nhaXeId = user.getNhaXe().getIdNhaXe();
+			this.userName = user.getUserName();
+			this.password = user.getPassword();
+			this.active = user.isActive();
+			this.role = user.getRole().toString();
+		}
 	}
 
 	public UserDTO(Integer id, Integer nhaXeId, String userName,

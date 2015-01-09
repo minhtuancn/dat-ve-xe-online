@@ -28,28 +28,24 @@ public class ScheduleDTO implements Serializable {
 	}
 	
 	public ScheduleDTO(LichTuyen schedule) {
-		this.id = schedule.getIdLichTuyen();
-		this.ngayTrongTuan = schedule.getThu();
-		this.gioChay = schedule.getGioDi();
-		this.tuyenXe = new TuyenXeDTO(schedule.getTuyenXe());
-		this.tongThoiGian = schedule.getTongThoiGian();
-		this.vehicle = new VehicleDTO(schedule.getXe());
-		this.active = schedule.isActive();
+		this(schedule, false);
 	}
 	
 	public ScheduleDTO(LichTuyen schedule,boolean includePrices) {
-		this.id = schedule.getIdLichTuyen();
-		this.ngayTrongTuan = schedule.getThu();
-		this.gioChay = schedule.getGioDi();
-		this.tuyenXe = new TuyenXeDTO(schedule.getTuyenXe());
-		this.tongThoiGian = schedule.getTongThoiGian();
-		this.vehicle = new VehicleDTO(schedule.getXe());
-		this.active = schedule.isActive();
-		
-		if (includePrices) {
-			this.prices = new ArrayList<PriceDTO>();
-			for (GiaVe giaVe : schedule.getGiaVes()) {
-				prices.add(new PriceDTO(giaVe));
+		if (schedule != null) {
+			this.id = schedule.getIdLichTuyen();
+			this.ngayTrongTuan = schedule.getThu();
+			this.gioChay = schedule.getGioDi();
+			this.tuyenXe = new TuyenXeDTO(schedule.getTuyenXe());
+			this.tongThoiGian = schedule.getTongThoiGian();
+			this.vehicle = new VehicleDTO(schedule.getXe());
+			this.active = schedule.isActive();
+			
+			if (includePrices) {
+				this.prices = new ArrayList<PriceDTO>();
+				for (GiaVe giaVe : schedule.getGiaVes()) {
+					prices.add(new PriceDTO(giaVe));
+				}
 			}
 		}
 	}

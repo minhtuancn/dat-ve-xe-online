@@ -1,48 +1,37 @@
 package com.vexeonline.action;
 
-import java.util.Map;
-
-import org.apache.log4j.Logger;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
-import org.hibernate.Transaction;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.vexeonline.dto.UserDTO;
-import com.vexeonline.service.UserServiceImpl;
-import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/coachcp")
-@ParentPackage(value = "default")
-@Result(name = "login", location = "login", type = "redirect")
-public class CoachAction extends ActionSupport implements SessionAware {
+@ParentPackage(value = "coach")
+public class CoachAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = Logger.getLogger(CoachAction.class);
-	
-	private Map<String, Object> session;
-
-	private UserDTO user;
+	//private static Logger logger = Logger.getLogger(CoachAction.class);
 	
 	@Action(value = "home", results = {
-			@Result(name = "success", location = "coach.home", type = "tiles"),
-			@Result(name = "error", location = "home", type = "redirect")
+			@Result(name = "success", location = "coach.home", type = "tiles")
 	})
 	public String showAdminHomePage() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}
 		return SUCCESS;
 	}
 	
-	@Action(value = "login", results = @Result(name = "success", location = "login", type = "tiles"))
+	/*@Action(value = "login", results = {
+			@Result(name = "login", location = "login", type = "tiles"),
+			@Result(name = "success", location = "home", type = "redirect")
+	})
 	public String showLoginPage() {
-		return SUCCESS;
+		UserDTO user = (UserDTO) session.get("user");
+		if (user != null && user.getRole().equals("NHAXE")) {
+			return SUCCESS;
+		}
+		return LOGIN;
 	}
 	
 	@Action(value = "logging", results = {
@@ -67,38 +56,5 @@ public class CoachAction extends ActionSupport implements SessionAware {
 			logger.error("Error", e);
 		}
 		return SUCCESS;
-	}
-	
-	/*@Action(value = "book", results = @Result(name = "success", location = "coach.book", type = "tiles"))
-	public String showTicketBookingPage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "offices", results = @Result(name = "success", location = "coach.offices", type = "tiles"))
-	public String showOfficesPage() {
-		return SUCCESS;
-	}
-
-	@Action(value = "newOffice", results = @Result(name = "success", location = "coach.newOffice", type = "tiles"))
-	public String showNewOfficePage() {
-		return SUCCESS;
-	}
-	
-	@Action(value = "officeDetail", results = @Result(name = "success", location = "coach.officeDetail", type = "tiles"))
-	public String showOfficeDetailPage() {
-		return SUCCESS;
 	}*/
-
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
 }

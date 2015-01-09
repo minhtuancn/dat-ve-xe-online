@@ -17,14 +17,16 @@ import com.vexeonline.dto.UserDTO;
 @Namespace(value = "/")
 @ParentPackage(value = "default")
 public class GuestAction extends ActionSupport implements SessionAware {
+	
 	private static final long serialVersionUID = 1L;
 
 	private Map<String, Object> session;
 
 	@Action(value = "home", results = {
 			@Result(name = "user", location = "home", type = "tiles"),
-			@Result(name = "admin", location = "admin.home", type = "tiles"),
-			@Result(name = "coach", location = "coach.home", type = "tiles") })
+			@Result(name = "admin", location = "admincp/home", type = "redirect"),
+			@Result(name = "coach", location = "coachcp/home", type = "redirect")
+	})
 	public String showHomePage() {
 		String result = null;
 		RoleOfUser role = null;
@@ -51,11 +53,6 @@ public class GuestAction extends ActionSupport implements SessionAware {
 	public String showContactPage() {
 		return SUCCESS;
 	}
-
-	/*@Action(value = "trips", results = @Result(name = "success", location = "trips", type = "tiles"))
-	public String showTripsPage() {
-		return SUCCESS;
-	}*/
 
 	@Override
 	public void setSession(Map<String, Object> session) {

@@ -16,7 +16,7 @@ import com.vexeonline.service.admin.QuanLyTuyenXeService;
 import com.vexeonline.service.admin.QuanLyTuyenXeServiceImpl;
 
 @Namespace(value = "/admincp")
-@ParentPackage(value = "default")
+@ParentPackage(value = "admin")
 public class QuanLyTuyenXe extends ActionSupport implements ModelDriven<TuyenXeDTO>{
 	
 	private static final long serialVersionUID = -5890541323760076046L;

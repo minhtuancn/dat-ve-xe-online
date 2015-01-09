@@ -17,9 +17,11 @@ public class PhoneNumberDTO implements Serializable {
 	}
 	
 	public PhoneNumberDTO(SDTVanPhong phone) {
-		this.id = phone.getIdSDTVanPhong();
-		this.phoneNumber = phone.getSDT();
-		this.description = phone.getGhiChu();
+		if (phone != null) {
+			this.id = phone.getIdSDTVanPhong();
+			this.phoneNumber = phone.getSDT();
+			this.description = phone.getGhiChu();
+		}
 	}
 	
 	public PhoneNumberDTO(String phoneNumber, String description) {

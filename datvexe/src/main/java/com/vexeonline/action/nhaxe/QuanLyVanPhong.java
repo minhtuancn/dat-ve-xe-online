@@ -1,13 +1,11 @@
 package com.vexeonline.action.nhaxe;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.Transaction;
 
@@ -18,34 +16,34 @@ import com.vexeonline.dto.UserDTO;
 import com.vexeonline.service.nhaxe.QuanLyVanPhongService;
 import com.vexeonline.service.nhaxe.QuanLyVanPhongServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
+import com.vexeonline.utils.UserAware;
 
 /**
  * @author Đặng Quang Hưng (hungdq58@gmail.com)
  *
  */
-@Namespace("/coachcp")
-@ParentPackage("default")
-@Result(name = "login", location="login", type = "redirect")
-public class QuanLyVanPhong extends ActionSupport implements SessionAware {
+@Namespace(value = "/coachcp")
+@ParentPackage(value = "coach")
+public class QuanLyVanPhong extends ActionSupport  implements UserAware {
 	
 	private static final long serialVersionUID = 8271905482081857415L;
 	
 	private static final QuanLyVanPhongService officeService = new QuanLyVanPhongServiceImpl();
 	
-	private Map<String, Object> session;
-	
 	private List<OfficeDTO> offices;
 	private OfficeDTO office;
+	
+	private UserDTO user;
 	
 	@SkipValidation
 	@Action(value = "office", results = {
 			@Result(name = "success", location = "coach.offices", type = "tiles")
 	})
 	public String showOffices() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		return SUCCESS;
 	}
 	
@@ -56,19 +54,16 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}","root", "offices"})
 	})
 	public String getOfficesJson() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user != null && user.getRole().equals("NHAXE")) {
-			Transaction tx = null;
-			try {
-				tx = HibernateUtil.getSessionFactory().getCurrentSession()
-						.beginTransaction();
-				offices = officeService.getOffices(user.getNhaXeId());
-				tx.commit();
-			} catch (Exception e) {
-				if (tx != null)
-					tx.rollback();
-				e.printStackTrace();
-			}
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			offices = officeService.getOffices(user.getNhaXeId());
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
@@ -78,10 +73,10 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 			@Result(name = "success", location = "coach.officeDetail", type = "tiles")
 	})
 	public String showOfficeDetail() {
-		UserDTO user = (UserDTO) session.get("user");
+		/*UserDTO user = (UserDTO) session.get("user");
 		if (user == null || !user.getRole().equals("NHAXE")) {
 			return LOGIN;
-		}
+		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -103,10 +98,6 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 			@Result(name = "success", location = "coach.newOffice", type = "tiles")
 	})
 	public String newOffice() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}
 		return SUCCESS;
 	}
 	
@@ -115,10 +106,6 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		@Result(name = "input", location = "coach.newOffice", type = "tiles")
 	})
 	public String saveOffice() {
-		UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -138,11 +125,6 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-
 	public List<OfficeDTO> getOffices() {
 		return offices;
 	}
@@ -158,5 +140,13 @@ public class QuanLyVanPhong extends ActionSupport implements SessionAware {
 
 	public void setOffice(OfficeDTO office) {
 		this.office = office;
+	}
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 }

@@ -20,13 +20,15 @@ public class BenXeDTO implements Serializable {
 	}
 	
 	public BenXeDTO(BenXe benXe) {
-		this.id = benXe.getIdBenXe();
-		this.name = benXe.getTenBenXe();
-		this.description = benXe.getMoTa();
-		this.province = benXe.getDiaChi().getTinh();
-		this.district = benXe.getDiaChi().getHuyen();
-		this.detailAddress = benXe.getDiaChi().getChiTiet();
-		this.active = benXe.isActive();
+		if (benXe != null) {
+			this.id = benXe.getIdBenXe();
+			this.name = benXe.getTenBenXe();
+			this.description = benXe.getMoTa();
+			this.province = benXe.getDiaChi().getTinh();
+			this.district = benXe.getDiaChi().getHuyen();
+			this.detailAddress = benXe.getDiaChi().getChiTiet();
+			this.active = benXe.isActive();
+		}
 	}
 	
 	public Integer getId() {
