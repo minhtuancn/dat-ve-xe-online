@@ -40,10 +40,6 @@ public class QuanLyVanPhong extends ActionSupport  implements UserAware {
 			@Result(name = "success", location = "coach.offices", type = "tiles")
 	})
 	public String showOffices() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		return SUCCESS;
 	}
 	
@@ -73,10 +69,6 @@ public class QuanLyVanPhong extends ActionSupport  implements UserAware {
 			@Result(name = "success", location = "coach.officeDetail", type = "tiles")
 	})
 	public String showOfficeDetail() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()

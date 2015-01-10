@@ -21,9 +21,12 @@ public class KiemTraVe extends ActionSupport {
 	private static final long serialVersionUID = -9065358490206667897L;
 
 	private static Logger logger = Logger.getLogger(KiemTraVe.class);
+	
+	private KhachHangService khachHangService = new KhachHangServiceImpl();
+	
 	private String maVe;
 	private TicketDetailDTO ticket;
-	private KhachHangService khachHangService = new KhachHangServiceImpl();
+	
 
 	@SkipValidation
 	@Action(value = "ticketInfo", results = { @Result(name = "success", location = "ticketInfo", type = "tiles"), })

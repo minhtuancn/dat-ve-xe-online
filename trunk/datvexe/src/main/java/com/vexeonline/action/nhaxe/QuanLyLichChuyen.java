@@ -34,7 +34,8 @@ import com.vexeonline.utils.UserAware;
 @ParentPackage(value = "coach")
 @Conversion(conversions = {
 		@TypeConversion(key = "schedule.ngayTrongTuan", converter = "com.vexeonline.converter.DateOfWeekConverter"),
-		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter")
+		@TypeConversion(key = "schedule.gioChay", converter = "com.vexeonline.converter.TimeConverter"),
+		@TypeConversion(key = "schedule.tongThoiGian", converter = "com.vexeonline.converter.DoubleConverter")
 })
 public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 
@@ -57,10 +58,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", location = "coach.schedules", type = "tiles")
 	})
 	public String showSchedulesPage() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -80,10 +77,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", location = "coach.newSchedule", type = "tiles")
 	})
 	public String showNewSchedulePage() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -105,10 +98,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "error", location = "/coachcp/schedule", type = "redirect")
 	})
 	public String showScheduleDetailPage() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -139,10 +128,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "input", location = "coach.newSchedule", type = "tiles")
 	})
 	public String saveSchedule() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -166,10 +151,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", type = "json", params = {"wrapPrefix", "{\"benXes\":", "wrapSuffix", "}", "root", "benXes" })
 	})
 	public String benXes() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -189,10 +170,6 @@ public class QuanLyLichChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", type = "json", params = {"wrapPrefix", "{\"vehicles\":", "wrapSuffix", "}", "root","vehicles" })
 	})
 	public String vehicles() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()

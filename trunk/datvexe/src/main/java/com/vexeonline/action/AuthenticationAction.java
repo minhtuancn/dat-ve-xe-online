@@ -18,17 +18,26 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.dto.UserDTO;
+import com.vexeonline.service.UserService;
 import com.vexeonline.service.UserServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 
-@Namespaces({ @Namespace(value = "/"), @Namespace(value = "/admincp"),
-		@Namespace(value = "/coachcp") })
+@Namespaces({
+	@Namespace(value = "/"),
+	@Namespace(value = "/admincp"),
+	@Namespace(value = "/coachcp")
+})
 @ParentPackage(value = "default")
-@Results({ @Result(name = "input", type = "tiles"),
-		@Result(name = "success", location = "home", type = "redirect") })
+@Results({
+	@Result(name = "input", location="login", type = "tiles"),
+	@Result(name = "success", location = "home", type = "redirect")
+})
 public class AuthenticationAction extends ActionSupport implements SessionAware {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2184894294810852519L;
+
+	private static final UserService userService = new UserServiceImpl();
+	
 	private static Logger logger = Logger.getLogger(AuthenticationAction.class);
 
 	private Map<String, Object> session;
@@ -60,8 +69,7 @@ public class AuthenticationAction extends ActionSupport implements SessionAware 
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
 					.beginTransaction();
-			user = new UserServiceImpl().getUser(user.getUserName(),
-					user.getPassword());
+			user = userService.getUser(user.getUserName(), user.getPassword());
 			logger.info("Login: " + user);
 			tx.commit();
 			if (user != null) {

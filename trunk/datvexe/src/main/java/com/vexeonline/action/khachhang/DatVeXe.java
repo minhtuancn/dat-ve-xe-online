@@ -22,11 +22,13 @@ import com.vexeonline.service.KhachHangServiceImpl;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
-@InterceptorRef(value = "defaultStack", params = { "validation.excludeMethods",
-		"chonChoNgoi, datve, xacNhanVe" })
+@InterceptorRef(value = "defaultStack", params = {"validation.excludeMethods","chonChoNgoi, datve, xacNhanVe"})
 public class DatVeXe extends ActionSupport  {
+	
 	private static final long serialVersionUID = 6453306615485591423L;
+	
 	private static Logger logger = Logger.getLogger(DatVeXe.class);
+	
 	private static KhachHangService khachHangService = new KhachHangServiceImpl();
 	
 	@Action(value = "datve",results =  @Result(name = "success", location = "ketquadatve", type = "tiles"))

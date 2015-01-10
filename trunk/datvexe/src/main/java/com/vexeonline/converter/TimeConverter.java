@@ -11,6 +11,10 @@ import org.apache.struts2.util.StrutsTypeConverter;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class TimeConverter extends StrutsTypeConverter {
 	
 	private static final Logger logger = LogManager.getLogger(TimeConverter.class);

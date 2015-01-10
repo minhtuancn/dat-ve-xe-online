@@ -19,10 +19,15 @@ import com.vexeonline.service.KhachHangServiceImpl;
 @InterceptorRef(value = "defaultStack")
 @Results({ @Result(name = "input", location = "trips", type = "tiles") })
 public class LaySDTNhaXe extends ActionSupport {
+	
 	private static final long serialVersionUID = -4071189766079727799L;
+	
 	private static Logger logger = Logger.getLogger(LaySDTNhaXe.class);
+	
 	private static KhachHangService khachHangService = new KhachHangServiceImpl();
+	
 	private int idNhaXe;
+	
 	private List<SDTNhaXeDTO> list;
 
 	@Action(value = "listsdt", results = @Result(type = "json", name = SUCCESS, params = {"root", "list" }))
@@ -32,7 +37,6 @@ public class LaySDTNhaXe extends ActionSupport {
 		} catch (Exception e) {
 			logger.error("Error", e);
 		}
-
 		return SUCCESS;
 	}
 
@@ -51,5 +55,4 @@ public class LaySDTNhaXe extends ActionSupport {
 	public void setList(List<SDTNhaXeDTO> list) {
 		this.list = list;
 	}
-
 }

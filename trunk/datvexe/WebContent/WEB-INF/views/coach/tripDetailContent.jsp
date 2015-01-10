@@ -116,6 +116,8 @@ $(document).ready(function() {
     			}).success(function(data) {
     				if (data == 'error') {
     					bootbox.alert('Lỗi !');
+    				} else {
+    					$('#customers').dataTable()._fnAjaxUpdate();
     				}
     			}).error(function() {
     				

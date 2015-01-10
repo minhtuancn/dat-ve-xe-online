@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.log4j.Logger;
 
 public class EncodeMD5 {
+	
 	private static final Logger logger = Logger.getLogger(EncodeMD5.class);
 
 	/**

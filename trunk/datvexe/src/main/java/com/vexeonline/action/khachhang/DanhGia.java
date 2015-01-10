@@ -22,18 +22,22 @@ import com.vexeonline.service.KhachHangServiceImpl;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
-@InterceptorRef(value = "defaultStack", params = { "validation.excludeMethods",
-		"getListInfoDanhGia" })
+@InterceptorRef(value = "defaultStack", params = {"validation.excludeMethods","getListInfoDanhGia"})
 @Results({ @Result(name = "input", location = "trips", type = "tiles") })
 public class DanhGia extends ActionSupport {
+	
 	private static final long serialVersionUID = 8885262333443840202L;
+	
 	private static Logger logger = Logger.getLogger(DanhGia.class);
+	
 	private static KhachHangService khachHangService = new KhachHangServiceImpl();
+	
 	private Date ngayDi;
 	private String maVe;
 	private String noiDung;
 	private float diem;
 	private int idNhaXe;
+	
 	private List<ThongTinDanhGiaDTO> list;
 
 	@Action(value = "danhgia")
@@ -111,5 +115,4 @@ public class DanhGia extends ActionSupport {
 	public void setList(List<ThongTinDanhGiaDTO> list) {
 		this.list = list;
 	}
-
 }

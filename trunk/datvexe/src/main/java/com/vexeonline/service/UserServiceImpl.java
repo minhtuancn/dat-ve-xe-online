@@ -15,6 +15,7 @@ import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.domain.User;
 import com.vexeonline.dto.UserDTO;
+import com.vexeonline.utils.EncodeMD5;
 
 public class UserServiceImpl implements UserService {
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class); 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO getUser(String userName, String password) throws Exception {
 		UserDTO result = null;
 		User user = userDAO.get(userName);
-		if (user != null && user.getPassword().equals(password)) {
+		if (user != null && user.getPassword().equals(EncodeMD5.encodeMD5(password))) {
 			logger.info("ADMIN".equals(RoleOfUser.ADMIN.toString()));
 			if ( user.getRole().equals(RoleOfUser.ADMIN)) {
 				result = new UserDTO();

@@ -180,7 +180,7 @@ public class MockDatabase {
 
 		User user = new User();
 		user.setUserName("tung");
-		user.setPassword("123456");
+		user.setPassword(EncodeMD5.encodeMD5("tung"));
 		user.setRole(RoleOfUser.NHAXE);
 		user.setNhaXe(nhaXe);
 		session.save(user);
@@ -191,7 +191,7 @@ public class MockDatabase {
 		
 		User user2 = new User();
 		user2.setUserName("hungdq");
-		user2.setPassword("123456");
+		user2.setPassword(EncodeMD5.encodeMD5("hungdq"));
 		user2.setRole(RoleOfUser.NHAXE);
 		user2.setNhaXe(nhaXe2);
 		session.save(user2);

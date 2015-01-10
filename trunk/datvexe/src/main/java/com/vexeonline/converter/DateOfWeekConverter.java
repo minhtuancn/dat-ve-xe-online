@@ -11,6 +11,10 @@ import org.apache.struts2.util.StrutsTypeConverter;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 import com.vexeonline.domain.NgayCuaTuan;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class DateOfWeekConverter extends StrutsTypeConverter {
 
 	private static final Logger logger = LogManager.getLogger(DateOfWeekConverter.class);

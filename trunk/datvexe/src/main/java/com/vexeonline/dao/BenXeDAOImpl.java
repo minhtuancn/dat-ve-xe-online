@@ -55,5 +55,4 @@ public class BenXeDAOImpl implements BenXeDAO {
 				.createQuery("select b.idBenXe, b.tenBenXe from BenXe as b")
 				.list();
 	}
-
 }
