@@ -25,6 +25,10 @@ public interface KhachHangService {
 	 * @param soCho
 	 * @return List<TuyenXe>
 	 */
+	
+	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
+			Date ngayDi, int soCho, Integer nhaXeId);
+	
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi, String tinhDen,
 			Date ngayDi, int soCho);
 

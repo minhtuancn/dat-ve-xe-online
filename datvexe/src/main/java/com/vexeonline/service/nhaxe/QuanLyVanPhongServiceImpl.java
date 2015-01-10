@@ -21,6 +21,10 @@ import com.vexeonline.dto.NhaXeDTO;
 import com.vexeonline.dto.OfficeDTO;
 import com.vexeonline.dto.PhoneNumberDTO;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class QuanLyVanPhongServiceImpl implements QuanLyVanPhongService {
 
 	private static final VanPhongDAO officeDAO = new VanPhongDAOImpl();

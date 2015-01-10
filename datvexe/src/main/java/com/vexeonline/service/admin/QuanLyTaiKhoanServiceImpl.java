@@ -3,6 +3,7 @@ package com.vexeonline.service.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,6 +17,7 @@ import com.vexeonline.domain.RoleOfUser;
 import com.vexeonline.domain.User;
 import com.vexeonline.dto.NhaXeDTO;
 import com.vexeonline.dto.UserDTO;
+import com.vexeonline.utils.EncodeMD5;
 import com.vexeonline.utils.HibernateUtil;
 import com.vexeonline.utils.SendEmail;
 
@@ -62,8 +64,11 @@ public class QuanLyTaiKhoanServiceImpl implements QuanLyTaiKhoanService {
 	
 	@Override
 	public void addNew(UserDTO userDTO)  {
+		
 		Session session = null;
 		Transaction tx = null;
+		String newPassword = null;
+		
 		try {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
@@ -73,7 +78,8 @@ public class QuanLyTaiKhoanServiceImpl implements QuanLyTaiKhoanService {
 				user.setNhaXe((NhaXe) session.load(NhaXe.class, userDTO.getNhaXeId()));
 			}
 			user.setEmail(userDTO.getEmail());
-			user.setPassword("randompassword"); //TODO
+			newPassword = RandomStringUtils.random(8, true, true);
+			user.setPassword(EncodeMD5.encodeMD5(newPassword));
 			if (userDTO.getRole().equals("NHAXE")) {
 				user.setRole(RoleOfUser.NHAXE);
 			} else if (userDTO.getRole().equals("ADMIN")){
@@ -84,7 +90,7 @@ public class QuanLyTaiKhoanServiceImpl implements QuanLyTaiKhoanService {
 			
 			SendEmail.sendEmail(userDTO.getEmail(), "Mật khảu đăng nhập website datvexe online", 
 					"<h3>Hãy sử dụng mật khẩu bên dưới để đăng nhập vào website đặt vé xe online</h3>"
-					+ "<p>Mật khẩu của bạn là : </p>" + user.getPassword() + "<br/><i>Cảm ơn bạn!</i>");
+					+ "<p>Mật khẩu của bạn là : </p>" + newPassword + "<br/><i>Cảm ơn bạn!</i>");
 			
 			tx.commit();
 		} catch (Exception ex) {

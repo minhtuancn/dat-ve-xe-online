@@ -17,6 +17,7 @@ import com.vexeonline.utils.HibernateUtil;
 @Namespace("/admincp")
 @ParentPackage(value = "admin")
 public class QuanLyNhaXe extends ActionSupport {
+	
 	private static final long serialVersionUID = 4381814030611900241L;
 
 	private static final QuanLyNhaXeService coachService = new QuanLyNhaXeServiceImpl();

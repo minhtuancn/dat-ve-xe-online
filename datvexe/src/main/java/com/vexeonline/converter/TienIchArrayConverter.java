@@ -14,6 +14,10 @@ import com.google.gson.reflect.TypeToken;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 import com.vexeonline.dto.TienIchDTO;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class TienIchArrayConverter extends StrutsTypeConverter {
 	
 	private static final Logger logger = LogManager.getLogger(TienIchArrayConverter.class);

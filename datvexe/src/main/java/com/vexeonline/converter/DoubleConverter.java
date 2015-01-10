@@ -1,22 +1,17 @@
 package com.vexeonline.converter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
-
 /**
  * @author Đặng Quang Hưng (hungdq58@gmail.com)
  *
  */
-public class DateConverter extends StrutsTypeConverter {
+public class DoubleConverter extends StrutsTypeConverter {
 
-	private static final SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
@@ -25,18 +20,26 @@ public class DateConverter extends StrutsTypeConverter {
 		}
 		
 		try {
-			return df.parse(values[0]);
-		} catch (ParseException e) {
+			return Double.parseDouble(values[0]);
+		} catch (NumberFormatException e) {
 			throw new TypeConversionException(e);
-		} 
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
 	public String convertToString(Map context, Object o) {
-		if (o instanceof Date) {
-			return df.format(o);
+		if (o instanceof Double) {
+			return o.toString();
+		} else {
+			return null;
 		}
-		return null;
+	}
+	
+	public static void main(String[] args) {
+		StrutsTypeConverter c = new DoubleConverter();
+		
+		System.out.println(c.convertToString(null, 6.4));
+		System.out.println(c.convertFromString(null, new String[] {"1.234"}, Double.class));
 	}
 }

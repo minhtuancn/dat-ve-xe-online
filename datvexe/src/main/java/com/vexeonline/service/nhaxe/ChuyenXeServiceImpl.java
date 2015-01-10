@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import com.vexeonline.dao.ChuyenXeDAO;
 import com.vexeonline.dao.ChuyenXeDAOImpl;
@@ -24,6 +24,10 @@ import com.vexeonline.dto.ChuyenXeDTO;
 import com.vexeonline.dto.HanhKhachDTO;
 import com.vexeonline.dto.TicketDTO;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class ChuyenXeServiceImpl implements ChuyenXeService {
 
 	private static final ChuyenXeDAO chuyenXeDAO = new ChuyenXeDAOImpl();

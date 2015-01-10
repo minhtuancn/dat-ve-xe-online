@@ -26,6 +26,10 @@ import com.vexeonline.dto.BenXeDTO;
 import com.vexeonline.dto.PriceDTO;
 import com.vexeonline.dto.ScheduleDTO;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class ScheduleServiceImpl implements ScheduleService {
 
 	public static final ScheduleDAO scheduleDAO = new ScheduleDAOImpl();

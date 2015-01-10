@@ -13,7 +13,9 @@ public class AdminAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Action(value = "home", results = @Result(name = "success", location="admin.home", type = "tiles"))
+	@Action(value = "home", results = {
+			@Result(name = "success", location = "admin.home", type = "tiles")
+	})
 	public String showAdminHomePage() {
 		return SUCCESS;
 	}

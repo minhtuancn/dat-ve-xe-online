@@ -65,7 +65,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi,
 			String tinhDen, Date ngayDi, int soCho) {
-		List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(
+		/*List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(
 				0);
 		List<Object[]> list;
 		Transaction tx = null;
@@ -110,11 +110,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 					giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
 					temp.setGiaVe(giaVe);
 
-					/*
+					
 					 * When user book, they only choose date not hour and
 					 * minute, It not enough determined chuyenXe => more
 					 * parameter gioDi to determined soCho booked
-					 */
+					 
 					soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(
 							temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
 					if (temp.getSoCho() < (soChoDaDat + soCho)) {
@@ -131,7 +131,8 @@ public class KhachHangServiceImpl implements KhachHangService {
 				tx.rollback();
 			logger.error("Error", ex);
 		}
-		return listData;
+		return listData;*/
+		return this.getListChuyenXe(tinhDi, tinhDen, ngayDi, soCho, null);
 	}
 
 	public TicketDetailDTO kiemTraVe(String maVe) {
@@ -590,6 +591,82 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return date;
 	}
 
+	@Override
+	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi,
+			String tinhDen, Date ngayDi, int soCho, Integer nhaXeId) {
+		
+		List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>();
+		List<Object[]> list = null;
+		
+		Transaction tx = null;
+
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			logger.info(tinhDi + " " + tinhDen + " " + ngayDi + " "
+					+ dayOfWeek(ngayDi));
+			if (nhaXeId != null) {
+				list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi), nhaXeId);
+			} else {
+				list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi));
+			}
+
+			if (list != null) {
+				logger.info(list.size());
+
+				ThongTinChuyenXeDTO temp;
+				List<String> tenTienIchs = new ArrayList<String>(0);
+				
+				Double rating;
+				Integer giaVe;
+				Long soChoDaDat;
+				
+				for (Object[] row : list) {
+					temp = new ThongTinChuyenXeDTO();
+					temp.setIdLichTuyen((int) row[0]);
+					temp.setIdNhaXe((int) row[1]);
+					temp.setIdXe((int) row[2]);
+					temp.setTenNhaXe((String) row[3]);
+					temp.setLoaiXe((String) row[4]);
+					temp.setSoCho((int) row[5]);
+					temp.setTenBenDi((String) row[6]);
+					temp.setTenBenDen((String) row[7]);
+					temp.setGioDi((Time) row[8]);
+					temp.setTongThoiGian((double) row[9]);
+
+					tenTienIchs = tienIchDAO.getByXe(temp.getIdXe());
+					temp.setTienIchs(tenTienIchs);
+					logger.info(tenTienIchs.size());
+
+					rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
+					temp.setRating(rating);
+
+					giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
+					temp.setGiaVe(giaVe);
+
+					/*
+					 * When user book, they only choose date not hour and
+					 * minute, It not enough determined chuyenXe => more
+					 * parameter gioDi to determined soCho booked
+					 */
+					soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(
+							temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
+					if (temp.getSoCho() < (soChoDaDat + soCho)) {
+						continue;
+					}
+					temp.setSoChoConLai((temp.getSoCho() - soChoDaDat));
+
+					listData.add(temp);
+				}
+			}
+			tx.commit();
+		} catch (Exception ex) {
+			if (tx != null)
+				tx.rollback();
+			logger.error("Error", ex);
+		}
+		return listData;
+	}
 }
 
 class deleteVeXe extends TimerTask {

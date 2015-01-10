@@ -18,5 +18,6 @@ public interface ChuyenXeService {
 	public void updateChuyenXe(Integer nhaXeId,Integer chuyenXeId,String tenTaiXe,TrangThaiChuyenXe status) throws Exception;
 	
 	public void huyVeXe(Integer nhaXeId,Integer ticketId) throws Exception;
+	
 	public void daNhanXe(Integer nhaXeId,Integer ticketId) throws Exception;
 }

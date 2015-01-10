@@ -20,11 +20,16 @@ import com.vexeonline.service.nhaxe.ChuyenXeServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
 import com.vexeonline.utils.UserAware;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "coach")
 public class QuanLyChuyen extends ActionSupport implements UserAware {
 
 	private static final long serialVersionUID = 3504062148823438857L;
+	
 	private static final ChuyenXeService chuyenXeService = new ChuyenXeServiceImpl();
 
 	private List<ChuyenXeDTO> chuyenXes;
@@ -43,13 +48,13 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 	}
 
 	@SkipValidation
-	@Action(value = "trips_json", results = { @Result(name = "success", type = "json", params = {
-			"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "chuyenXes" }) })
+	@Action(value = "trips_json", results = {
+			@Result(name = "success",
+					type = "json",
+					params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "chuyenXes"}
+			)
+	})
 	public String getTripsJson() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -65,13 +70,15 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 	}
 
 	@SkipValidation
-	@Action(value = "tickets_json/*", params = { "chuyenXe.id", "{1}" }, results = { @Result(name = "success", type = "json", params = {
-			"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "tickets" }) })
+	@Action(value = "tickets_json/*",
+			params = { "chuyenXe.id", "{1}" },
+			results = {
+				@Result(name = "success",
+						type = "json",
+						params = {"wrapPrefix", "{\"data\":", "wrapSuffix", "}", "root", "tickets"}
+				)
+	})
 	public String getTicketsJson() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -92,10 +99,6 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", location = "coach.tripDetail", type = "tiles")
 	})
 	public String showTripDetailPage() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -113,10 +116,6 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 
 	@Action(value = "trip/save", results = { @Result(name = "success", location = "trip", type = "redirect") })
 	public String saveTrip() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			return LOGIN;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -139,11 +138,6 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", type = "stream")
 	})
 	public String huyVeXe() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			inputStream = new ByteArrayInputStream(LOGIN.getBytes());
-			return SUCCESS;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -164,11 +158,6 @@ public class QuanLyChuyen extends ActionSupport implements UserAware {
 			@Result(name = "success", type = "stream")
 	})
 	public String daNhanVe() {
-		/*UserDTO user = (UserDTO) session.get("user");
-		if (user == null || !user.getRole().equals("NHAXE")) {
-			inputStream = new ByteArrayInputStream(LOGIN.getBytes());
-			return SUCCESS;
-		}*/
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()

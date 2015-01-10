@@ -89,9 +89,9 @@ $(document).ready(function() {
 	<s:select id="aaaa"
 		list="#{'SUNDAY':'Chủ nhật', 'MONDAY':'Thứ hai', 'TUESDAY':'Thứ ba', 'WEDNESDAY':'Thứ tư', 'THURSDAY':'Thứ năm', 'FRIDAY':'Thứ sáu', 'SATUREDAY':'Thứ bảy'}"
 		name="schedule.ngayTrongTuan" label="Thứ" />
-	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDi.id" label="Bến đi" />
-	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDen.id" label="Bến đến" />
-	<s:select list="vehicles" listKey="id" name="schedule.vehicle.id" label="Xe" />		
+	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDi.id" label="Bến đi"/>
+	<s:select list="benXes" listKey="id" name="schedule.tuyenXe.benDen.id" label="Bến đến"/>
+	<s:select list="vehicles" listKey="id" name="schedule.vehicle.id" label="Xe"/>		
 	<s:textfield type="time" name="schedule.gioChay" label="Giờ xuất bến" />
 	<s:textfield name="schedule.tongThoiGian" label="Tổng thời gian" />
 	<s:checkbox name="schedule.active" label="Active" />

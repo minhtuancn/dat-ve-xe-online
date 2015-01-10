@@ -28,7 +28,8 @@ import com.vexeonline.utils.UserAware;
 @Namespace(value = "/coachcp")
 @ParentPackage(value = "coach")
 @Conversion(conversions = {
-		@TypeConversion(key = "vehicle.tienIchs", converter = "com.vexeonline.converter.TienIchArrayConverter")
+		@TypeConversion(key = "vehicle.tienIchs",
+				converter = "com.vexeonline.converter.TienIchArrayConverter")
 })
 public class QuanLyXe extends ActionSupport implements UserAware {
 	

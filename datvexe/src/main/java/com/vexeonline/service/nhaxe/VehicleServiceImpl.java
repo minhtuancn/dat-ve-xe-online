@@ -17,6 +17,10 @@ import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.VehicleDTO;
 
+/**
+ * @author Đặng Quang Hưng (hungdq58@gmail.com)
+ *
+ */
 public class VehicleServiceImpl implements VehicleService {
 	
 	private static XeDAO xeDAO = new XeDAOImpl();

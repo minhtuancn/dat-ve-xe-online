@@ -33,4 +33,6 @@ public interface ScheduleDAO {
 	 * @return
 	 */
 	public List<Object[]> getListInfo(String tinhDi, String tinhDen, NgayCuaTuan thu);
+	
+	public List<Object[]> getListInfo(String tinhDi, String tinhDen, NgayCuaTuan thu, Integer nhaXeId);
 }
