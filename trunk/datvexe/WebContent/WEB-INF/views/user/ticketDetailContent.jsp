@@ -35,9 +35,11 @@
 		</div>
 </div>
 <br>
-<div class="input-group" style="margin-left: auto; margin-right: auto; width: 100px;">
-			<a data-toggle="modal" data-target="#myModal" class="btn btn-danger">Hủy vé</a>
-</div>
+<s:if test="%{ticket.status.toString() != 'DALAYVE'}">
+	<div class="input-group" style="margin-left: auto; margin-right: auto; width: 100px;">
+		<a data-toggle="modal" data-target="#myModal" class="btn btn-danger">Hủy vé</a>
+	</div>
+</s:if>
 </s:if>
 <s:else>
 	<div style="margin-left: auto; margin-right: auto; width: 300px; margin-top: 100px; ">
