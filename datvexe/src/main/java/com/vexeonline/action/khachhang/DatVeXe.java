@@ -66,6 +66,7 @@ public class DatVeXe extends ActionSupport  {
 			logger.info(ngayDi);
 			Time gioDi = Time.valueOf(request.getParameter("gioDi"));
 			int idXe = Integer.parseInt(request.getParameter("idXe"));
+			
 			List<String> listA = new ArrayList<String>(0);
 			List<String> listB = new ArrayList<String>(0);
 			List<String> listC = new ArrayList<String>(0);

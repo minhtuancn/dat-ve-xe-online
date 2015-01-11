@@ -23,7 +23,7 @@ public class VeXeDAOImpl implements VeXeDAO {
 				"  g.giaVe,\r\n" + 
 				"  v.hanhKhach.tenHanhKhach,\r\n" + 
 				"  v.hanhKhach.sdt,\r\n" + 
-				"  v.hanhKhach.email     \r\n" + 
+				"  v.hanhKhach.email, v.trangThai\r\n" + 
 				" from\r\n" + 
 				"  VeXe as v \r\n" + 
 				" inner join\r\n" + 

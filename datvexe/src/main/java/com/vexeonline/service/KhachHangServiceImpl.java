@@ -2,13 +2,14 @@ package com.vexeonline.service;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -65,73 +66,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 	public List<ThongTinChuyenXeDTO> getListChuyenXe(String tinhDi,
 			String tinhDen, Date ngayDi, int soCho) {
-		/*List<ThongTinChuyenXeDTO> listData = new ArrayList<ThongTinChuyenXeDTO>(
-				0);
-		List<Object[]> list;
-		Transaction tx = null;
-
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			logger.info(tinhDi + " " + tinhDen + " " + ngayDi + " "
-					+ dayOfWeek(ngayDi));
-			list = lichTuyenDAO.getListInfo(tinhDi, tinhDen, dayOfWeek(ngayDi));
-
-			if (list != null) {
-				logger.info(list.size());
-
-				ThongTinChuyenXeDTO temp;
-				List<String> tenTienIchs = new ArrayList<String>(0);
-				
-				Double rating;
-				Integer giaVe;
-				Long soChoDaDat;
-				
-				for (Object[] row : list) {
-					temp = new ThongTinChuyenXeDTO();
-					temp.setIdLichTuyen((int) row[0]);
-					temp.setIdNhaXe((int) row[1]);
-					temp.setIdXe((int) row[2]);
-					temp.setTenNhaXe((String) row[3]);
-					temp.setLoaiXe((String) row[4]);
-					temp.setSoCho((int) row[5]);
-					temp.setTenBenDi((String) row[6]);
-					temp.setTenBenDen((String) row[7]);
-					temp.setGioDi((Time) row[8]);
-					temp.setTongThoiGian((double) row[9]);
-
-					tenTienIchs = tienIchDAO.getByXe(temp.getIdXe());
-					temp.setTienIchs(tenTienIchs);
-					logger.info(tenTienIchs.size());
-
-					rating = danhGiaDAO.ratingByNhaXe(temp.getIdNhaXe());
-					temp.setRating(rating);
-
-					giaVe = giaVeDAO.getGiaVe(temp.getIdLichTuyen(), ngayDi);
-					temp.setGiaVe(giaVe);
-
-					
-					 * When user book, they only choose date not hour and
-					 * minute, It not enough determined chuyenXe => more
-					 * parameter gioDi to determined soCho booked
-					 
-					soChoDaDat = veXeDAO.laySoVeXeTheoLichTuyenVaNgayDi(
-							temp.getIdLichTuyen(), ngayDi, temp.getGioDi());
-					if (temp.getSoCho() < (soChoDaDat + soCho)) {
-						continue;
-					}
-					temp.setSoChoConLai((temp.getSoCho() - soChoDaDat));
-
-					listData.add(temp);
-				}
-			}
-			tx.commit();
-		} catch (Exception ex) {
-			if (tx != null)
-				tx.rollback();
-			logger.error("Error", ex);
-		}
-		return listData;*/
 		return this.getListChuyenXe(tinhDi, tinhDen, ngayDi, soCho, null);
 	}
 
@@ -155,6 +89,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 				result.setTenHanhKhach((String) ticket[6]);
 				result.setSdt((String) ticket[7]);
 				result.setEmail((String) ticket[8]);
+				result.setStatus((TrangThaiVeXe)ticket[9]);
 			}
 			tx.commit();
 		} catch (Exception ex) {
@@ -167,14 +102,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 	}
 
 	public User login(String userName, String password) {
-		// password = EncodeMD5.encodeMD5(password);
 		User user = null;
 		Transaction tx = null;
 		try {
-
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			user = userDAO.get(userName);
 			if (user == null || !user.getPassword().equals(password)) {
 				user = null;
@@ -211,12 +142,13 @@ public class KhachHangServiceImpl implements KhachHangService {
 			ChuyenXe chuyenXe = chuyenXeDAO
 					.getChuyenXeIdLichTuyenAndNgayDiGioDi(idLichTuyen, ngayDi,
 							gioDi);
-			logger.info(idLichTuyen + " " + ngayDi + " " + gioDi + " "
-					+ ngayDi.getMonth());
+			
+			logger.info(idLichTuyen + " " + ngayDi + " " + gioDi + " " + ngayDi.getMonth());
+			
 			if (chuyenXe == null) {
+				
 				chuyenXe = new ChuyenXe();
-				chuyenXe.setLichTuyen((LichTuyen) session.load(LichTuyen.class,
-						idLichTuyen));
+				chuyenXe.setLichTuyen((LichTuyen) session.load(LichTuyen.class, idLichTuyen));
 
 				// Những tuyến ngắn thì 1 ngày có thể có nhiều lịch tuyến
 				Date ngayDiVaGioDi = ngayDi;
@@ -229,14 +161,18 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 			String body = "";
 			String[] listViTri = viTris.split(",");
+			
 			logger.info(listViTri);
+			
 			for (String viTri : listViTri) {
 				VeXe veXe = new VeXe();
 				veXe.setChoNgoi(viTri);
 				veXe.setChuyenXe(chuyenXe);
 				veXe.setHanhKhach(hanhKhach);
-				veXe.setMaVe(randomVeXe());
+				veXe.setMaVe(RandomStringUtils.random(8, true, true));
 				veXe.setTrangThai(TrangThaiVeXe.GIUCHO);
+				chuyenXe.getVeXes().add(veXe); // TODO test
+				
 				int idVeXe = (int) session.save(veXe);
 				body += "<p>Ghế "
 						+ viTri
@@ -251,11 +187,10 @@ public class KhachHangServiceImpl implements KhachHangService {
 						deleteVeXe task = new deleteVeXe();
 						task.setIdVeXe(idVeXe);
 						Timer timer = new Timer();
-						// timer.schedule(task, nextDate(new Date()));
-						// test
-						Date date = new Date();
-						date.setMinutes(date.getMinutes() + 1);
-						timer.schedule(task, date);
+						Calendar c = Calendar.getInstance();
+						c.setTime(new Date());
+						c.add(Calendar.DAY_OF_MONTH, 1);
+						timer.schedule(task, c.getTime());
 					}
 				};
 				new Thread(r).start();
@@ -414,7 +349,9 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 		List<String> viTris = new ArrayList<String>(0);
 		List<String> choDaDat = new ArrayList<String>(0);
+		
 		String soDoViTri = "";
+		
 		Transaction tx = null;
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession()
@@ -425,6 +362,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 			soDoViTri = xe.getHinhAnh();
 
 			logger.info(viTris.size() + " " + choDaDat.size());
+			
 			for (String viTri : viTris) {
 				if (choDaDat.contains(viTri)) {
 					continue;
@@ -441,6 +379,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 					listE.add(viTri);
 				}
 			}
+			
 			Collections.sort(listA);
 			Collections.sort(listB);
 			Collections.sort(listC);
@@ -500,7 +439,6 @@ public class KhachHangServiceImpl implements KhachHangService {
 	@SuppressWarnings("deprecation")
 	private NgayCuaTuan dayOfWeek(Date date) {
 		NgayCuaTuan day = null;
-
 		switch (date.getDay()) {
 		case 0:
 			day = NgayCuaTuan.SUNDAY;
@@ -527,68 +465,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return day;
 	}
 
-	private String randomVeXe() {
-		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		Random random = new Random();
-		String result = "";
-		for (int i = 0; i < 8; ++i) {
-			result += s.charAt(random.nextInt(s.length()));
-		}
-		return result;
-	}
-
-	@SuppressWarnings({ "deprecation" })
 	private Date previousDate(Date date) {
-		int[] dateOfMonth = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30 };
-		if (date.getDate() == 1) { // neu la ngay 1
-			if (date.getMonth() == 0) { // neu la thang 1
-				date.setDate(31);
-				date.setMonth(11);
-				date.setYear(date.getDate() - 1);
-			} else if (date.getMonth() == 2) { // neu la thang 3
-				if ((date.getYear() % 400 == 0)
-						|| (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { // neu
-																						// la
-																						// nam
-																						// nhuan
-					date.setDate(29);
-				} else {
-					date.setDate(28);
-				}
-			} else {
-				date.setDate(dateOfMonth[date.getMonth()]);
-				date.setMonth(date.getMonth() - 1);
-			}
-		} else {
-			date.setDate(date.getDate() - 1);
-		}
-		return date;
-	}
-
-	@SuppressWarnings({ "deprecation", "unused" })
-	private Date nextDate(Date date) {
-		int[] dateOfMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30 };
-		if ((date.getYear() % 400 == 0)
-				|| (date.getYear() % 4 == 0 && date.getYear() % 100 != 0)) { // neu
-																				// la
-																				// nam
-																				// nhuan
-			dateOfMonth[1] = 29;
-		}
-
-		if (date.getDate() == dateOfMonth[date.getMonth()]) { // neu la ngay
-																// cuoi thang
-			if (date.getMonth() == 11) { // neu la thang 12
-				date.setMonth(0);
-				date.setYear(date.getDate() + 1);
-			} else {
-				date.setMonth(date.getMonth() + 1);
-			}
-			date.setDate(1);
-		} else {
-			date.setDate(date.getDate() + 1);
-		}
-		return date;
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DAY_OF_MONTH, -1);		
+		return c.getTime();
 	}
 
 	@Override
@@ -670,6 +551,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 }
 
 class deleteVeXe extends TimerTask {
+	
 	private int idVeXe;
 
 	@Override
@@ -686,5 +568,4 @@ class deleteVeXe extends TimerTask {
 	public void setIdVeXe(int idVeXe) {
 		this.idVeXe = idVeXe;
 	}
-
 }

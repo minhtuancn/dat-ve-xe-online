@@ -65,7 +65,7 @@ $(document).ready(function() {
 			{'mData': null, 'mRender': function(o) {
 					if (o.status == 'DALAYVE') {
 						return "<button id='" + o.id + "' class='btn btn-default btn-xs btn-huyve'>Hủy vé</button>"
-					} else if (o.status == 'GIUCHO') {
+					} else if (o.status == 'GIUCHO' || o.status == 'DAKICHHOAT') {
 						return "<button id='" + o.id + "' class='btn btn-default btn-xs btn-huyve'>Hủy vé</button>&nbsp;" + 
 						"<button id='" + o.id + "' class='btn btn-default btn-xs btn-danhanve'>Đã nhận vé</button>";	
 					}

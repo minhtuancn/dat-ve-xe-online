@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.NotImplementedException;
 
+import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.VeXe;
 
 public class TicketDetailDTO implements Serializable {
@@ -21,6 +22,7 @@ public class TicketDetailDTO implements Serializable {
 	private String tenHanhKhach;
 	private String sdt;
 	private String email;
+	private TrangThaiVeXe status;
 	
 	public TicketDetailDTO() {
 	}
@@ -99,5 +101,13 @@ public class TicketDetailDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public TrangThaiVeXe getStatus() {
+		return status;
+	}
+
+	public void setStatus(TrangThaiVeXe status) {
+		this.status = status;
 	}
 }
