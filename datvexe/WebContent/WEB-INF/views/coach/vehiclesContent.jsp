@@ -45,8 +45,8 @@ $(document).ready(function() {
 				<tr>
 					<td><s:property value="id"/></td>
 					<td><s:property value="bienSo"/></td>
-					<td><s:property value="loaiXe"/></td>
-					<td><s:property value="soCho"/></td>
+					<td><s:property value="type.name"/></td>
+					<td><s:property value="type.seats"/></td>
 					
 					<s:if test="active">
 						<td>Hoạt động</td>

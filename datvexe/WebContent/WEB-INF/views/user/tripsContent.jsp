@@ -194,8 +194,12 @@
 							<td>
 								<div>
 									<div>
-										<s:property value="giaVe" />
-										VNĐ
+										<s:if test="%{giaVe != null}">
+											<s:property value="giaVe" /> VNĐ
+										</s:if>
+										<s:else>
+											Chưa có giá vé
+										</s:else>
 									</div>
 									<div>
 									

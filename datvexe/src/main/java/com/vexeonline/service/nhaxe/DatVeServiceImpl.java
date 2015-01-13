@@ -46,7 +46,8 @@ public class DatVeServiceImpl implements DatVeService{
 				chuyenXeDAO.insert(chuyenXe);
 				
 			}
-			int soCho = chuyenXe.getLichTuyen().getXe().getSoCho();
+			/*int soCho = chuyenXe.getLichTuyen().getXe().getSoCho();*/
+			int soCho = chuyenXe.getLichTuyen().getXe().getType().getSeats();
 			idChuyenXe = chuyenXe.getIdChuyenXe();
 			
 			for (int i = 0; i < soCho; ++i) {
@@ -87,7 +88,8 @@ public class DatVeServiceImpl implements DatVeService{
 				hanhKhach.setTenHanhKhach(tenHanhKhach);
 				hanhKhachDAO.insert(hanhKhach);
 			}
-			int soChoConLai = chuyenXe.getLichTuyen().getXe().getSoCho() - chuyenXe.getVeXes().size();
+			/*int soChoConLai = chuyenXe.getLichTuyen().getXe().getSoCho() - chuyenXe.getVeXes().size();*/
+			int soChoConLai = chuyenXe.getLichTuyen().getXe().getType().getSeats() - chuyenXe.getVeXes().size();
 			if (soChoConLai < seatings.length) {  //số chỗ không đủ
 				throw new Exception("Hiện tại chỉ có " + soChoConLai);
 			}

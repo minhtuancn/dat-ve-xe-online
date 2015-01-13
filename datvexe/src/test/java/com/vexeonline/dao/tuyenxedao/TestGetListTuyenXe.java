@@ -89,8 +89,8 @@ public class TestGetListTuyenXe {
 
 		Xe xe = new Xe();
 		xe.setBienSoXe("81-12345");
-		xe.setLoaiXe("Ghe Ngoi");
-		xe.setSoCho(45);
+		/*xe.setLoaiXe("Ghe Ngoi");
+		xe.setSoCho(45);*/
 		xe.setNhaXe(nhaXe);
 		session.save(xe);
 

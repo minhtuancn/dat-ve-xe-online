@@ -9,13 +9,17 @@ import com.vexeonline.dao.NhaXeDAO;
 import com.vexeonline.dao.NhaXeDAOImpl;
 import com.vexeonline.dao.TienIchDAO;
 import com.vexeonline.dao.TienIchDAOImpl;
+import com.vexeonline.dao.VehicleTypeDAO;
+import com.vexeonline.dao.VehicleTypeDAOImpl;
 import com.vexeonline.dao.XeDAO;
 import com.vexeonline.dao.XeDAOImpl;
 import com.vexeonline.domain.NhaXe;
 import com.vexeonline.domain.TienIch;
+import com.vexeonline.domain.VehicleType;
 import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.VehicleDTO;
+import com.vexeonline.dto.VehicleTypeDTO;
 
 /**
  * @author Đặng Quang Hưng (hungdq58@gmail.com)
@@ -24,6 +28,7 @@ import com.vexeonline.dto.VehicleDTO;
 public class VehicleServiceImpl implements VehicleService {
 	
 	private static XeDAO xeDAO = new XeDAOImpl();
+	private static VehicleTypeDAO vehicleTypeDAO = new VehicleTypeDAOImpl();
 	private static TienIchDAO tienIchDAO = new TienIchDAOImpl();
 	private static NhaXeDAO nhaXeDAO = new NhaXeDAOImpl();
 	
@@ -63,20 +68,37 @@ public class VehicleServiceImpl implements VehicleService {
 		if (result != null) {
 			result.setBienSoXe(vehicleDTO.getBienSo());
 			result.setActive(vehicleDTO.isActive());
-			result.setLoaiXe(vehicleDTO.getLoaiXe());
+			VehicleType type = vehicleTypeDAO.get(vehicleDTO.getType().getId());
+			result.setType(type);
+			/*result.setLoaiXe(vehicleDTO.getLoaiXe());*/
 			
 			NhaXe nhaXe = nhaXeDAO.getById(vehicleDTO.getIdNhaXe());
 			if (nhaXe != null) {
 				result.setNhaXe(nhaXe);
 			}
 			
-			result.setSoCho(vehicleDTO.getSoCho());
+			/*result.setSoCho(vehicleDTO.getSoCho());*/
 			
 			Set<String> viTris = new HashSet<String>();
-			for (int i=1; i<=vehicleDTO.getSoCho()/3; i++) {
-				viTris.add("A" + i);
-				viTris.add("B" + i);
-				viTris.add("C" + i);
+			if (type.getSeats() == 40) {
+				for (int i=0; i<6; i++) {
+					viTris.add("A" + (2*i+1));
+					viTris.add("B" + (2*i+1));
+					viTris.add("C" + (2*i+1));
+					viTris.add("A" + (2*i+2));
+					viTris.add("B" + (2*i+2));
+					viTris.add("C" + (2*i+2));
+				}
+				viTris.add("A13");
+				viTris.add("C13");
+				viTris.add("A14");
+				viTris.add("C14");
+			} else if (type.getSeats() == 45) {
+				for (int i=1; i<=22; i++) {
+					viTris.add("A" + i);
+					viTris.add("B" + i);
+				}
+				viTris.add("C1");
 			}
 			result.setViTris(viTris);
 			
@@ -130,6 +152,25 @@ public class VehicleServiceImpl implements VehicleService {
 		List<Xe> vehicles = xeDAO.listActive(nhaXeId);
 		for (Xe vehicle : vehicles) {
 			result.add(new VehicleDTO(vehicle));
+		}
+		return result;
+	}
+
+	@Override
+	public List<VehicleTypeDTO> getVehicleTypes() throws Exception {
+		List<VehicleTypeDTO> result = new ArrayList<VehicleTypeDTO>();
+		for (VehicleType type : vehicleTypeDAO.list()) {
+			result.add(new VehicleTypeDTO(type));
+		}
+		return result;
+	}
+
+	@Override
+	public VehicleDTO getVehicle(Integer vehicleId) throws Exception {
+		VehicleDTO result = null;
+		Xe vehicle = xeDAO.getById(vehicleId);
+		if (vehicle != null) {
+			result = new VehicleDTO(vehicle);
 		}
 		return result;
 	}

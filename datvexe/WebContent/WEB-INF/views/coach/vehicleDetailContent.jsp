@@ -21,8 +21,12 @@
 	theme="bootstrap" cssClass="form-horizontal" validate="true" label="Thông tin xe">
 		<s:hidden name="vehicle.id" />
 		<s:textfield name="vehicle.bienSo" label="Biển số" />
-		<s:textfield name="vehicle.loaiXe" label="Loại xe" />
-		<s:textfield type="numeric" name="vehicle.soCho" label="Số chỗ" />
+		<s:if test="%{vehicle.id != ''}">
+			<s:textfield name="vehicle.type" readonly="true" label="Loại xe" />
+		</s:if>
+		<s:else>
+			<s:select name="vehicle.type.id" list="vehicleTypes" listKey="id" label="Loại xe" />
+		</s:else>
 		<div class="form-group ">
 			<label class="col-sm-3 control-label">Tiện ích</label>
 			<div class="col-sm-9 controls">
