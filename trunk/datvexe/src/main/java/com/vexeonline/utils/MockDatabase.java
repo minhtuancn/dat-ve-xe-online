@@ -17,6 +17,8 @@ import com.vexeonline.dao.ScheduleDAO;
 import com.vexeonline.dao.ScheduleDAOImpl;
 import com.vexeonline.dao.TuyenXeDAO;
 import com.vexeonline.dao.TuyenXeDAOImpl;
+import com.vexeonline.dao.VehicleTypeDAO;
+import com.vexeonline.dao.VehicleTypeDAOImpl;
 import com.vexeonline.dao.XeDAO;
 import com.vexeonline.dao.XeDAOImpl;
 import com.vexeonline.domain.BenXe;
@@ -37,6 +39,7 @@ import com.vexeonline.domain.TuyenXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VanPhong;
 import com.vexeonline.domain.VeXe;
+import com.vexeonline.domain.VehicleType;
 import com.vexeonline.domain.Xe;
 
 public class MockDatabase {
@@ -44,6 +47,12 @@ public class MockDatabase {
 	public static void mockData() throws ParseException {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		VehicleType vehicleType1 = new VehicleType("Giường nằm", 40);
+		session.save(vehicleType1);
+		
+		VehicleType vehicleType2 = new VehicleType("Ghế ngồi", 45);
+		session.save(vehicleType2);
 		
 		DiaChi diaChi1 = new DiaChi();
 		diaChi1.setTinh("Gia Lai");
@@ -90,18 +99,8 @@ public class MockDatabase {
 
 		Xe xe = new Xe();
 		xe.setBienSoXe("81E-11110");
-		xe.setLoaiXe("Ghế Ngồi");
-		xe.setSoCho(45);
 		xe.setNhaXe(nhaXe);
-		xe.setHinhAnh("GheNgoi45Cho.png");
-		Set<String> viTris = new HashSet<String>(0);
-		viTris.add("A1");
-		viTris.add("A2");
-		viTris.add("B1");
-		viTris.add("B2");
-		viTris.add("C1");
-		viTris.add("C2");
-		xe.setViTris(viTris);
+		xe.setType(vehicleType1);
 		session.save(xe);
 
 		LichTuyen lichTuyen = new LichTuyen();
@@ -198,16 +197,28 @@ public class MockDatabase {
 	}
 	
 	private static Set<String> generateViTri(int socho) {
-		Set<String> vt = new HashSet<String>();
-		for (int i=1; i<=socho/3; i++) {
-			vt.add("A" + i);
-			vt.add("B" + i);
-			vt.add("C" + i);
+		Set<String> viTris = new HashSet<String>();
+		if (socho == 40) {
+			for (int i=0; i<6; i++) {
+				viTris.add("A" + (2*i+1));
+				viTris.add("B" + (2*i+1));
+				viTris.add("C" + (2*i+1));
+				viTris.add("A" + (2*i+2));
+				viTris.add("B" + (2*i+2));
+				viTris.add("C" + (2*i+2));
+			}
+			viTris.add("A13");
+			viTris.add("C13");
+			viTris.add("A14");
+			viTris.add("C14");
+		} else if (socho == 45) {
+			for (int i=1; i<=22; i++) {
+				viTris.add("A" + i);
+				viTris.add("B" + i);
+			}
+			viTris.add("C1");
 		}
-		for (int i=1; i<=socho%3; i++) {
-			vt.add("D" + i);
-		}
-		return vt;
+		return viTris;
 	}
 	
 	public static void generateMockData() throws Exception {
@@ -306,11 +317,14 @@ public class MockDatabase {
 		// /////////////////////////////////////////////
 
 		XeDAO xeDAO = new XeDAOImpl();
+		VehicleTypeDAO vehicleTypeDAO = new VehicleTypeDAOImpl();
+		
+		VehicleType vehicleType1 = vehicleTypeDAO.get(1);
+		/*VehicleType vehicleType2 = vehicleTypeDAO.get(2);*/
 		
 		Xe xe0 = new Xe();
 		xe0.setBienSoXe("81C-11111");
-		xe0.setLoaiXe("Giường nằm");
-		xe0.setSoCho(40);
+		xe0.setType(vehicleType1);
 		xe0.setNhaXe(nhaXeDAO.getById(1));
 		xe0.setActive(true);
 		xe0.setViTris(generateViTri(40));
@@ -318,8 +332,7 @@ public class MockDatabase {
 		
 		Xe xe1 = new Xe();
 		xe1.setBienSoXe("81B-11112");
-		xe1.setLoaiXe("Giường nằm");
-		xe1.setSoCho(40);
+		xe1.setType(vehicleType1);
 		xe1.setNhaXe(nhaXeDAO.getById(1));
 		xe1.setActive(true);
 		xe1.setViTris(generateViTri(40));
@@ -327,8 +340,7 @@ public class MockDatabase {
 
 		Xe xe2 = new Xe();
 		xe2.setBienSoXe("81A-11113");
-		xe2.setLoaiXe("Giường nằm");
-		xe2.setSoCho(40);
+		xe2.setType(vehicleType1);
 		xe2.setNhaXe(nhaXeDAO.getById(1));
 		xe2.setActive(true);
 		xe2.setViTris(generateViTri(40));
@@ -336,8 +348,7 @@ public class MockDatabase {
 		
 		Xe xe3 = new Xe();
 		xe3.setBienSoXe("92H-11111");
-		xe3.setLoaiXe("Giường nằm");
-		xe3.setSoCho(40);
+		xe3.setType(vehicleType1);
 		xe3.setNhaXe(nhaXeDAO.getById(2));
 		xe3.setActive(true);
 		xe3.setViTris(generateViTri(40));
@@ -345,8 +356,7 @@ public class MockDatabase {
 		
 		Xe xe4 = new Xe();
 		xe4.setBienSoXe("92H-11112");
-		xe4.setLoaiXe("Giường nằm");
-		xe4.setSoCho(40);
+		xe4.setType(vehicleType1);
 		xe4.setNhaXe(nhaXeDAO.getById(2));
 		xe4.setActive(true);
 		xe4.setViTris(generateViTri(40));
@@ -354,8 +364,7 @@ public class MockDatabase {
 		
 		Xe xe5 = new Xe();
 		xe5.setBienSoXe("92H-11113");
-		xe5.setLoaiXe("Giường nằm");
-		xe5.setSoCho(40);
+		xe5.setType(vehicleType1);
 		xe5.setNhaXe(nhaXeDAO.getById(2));
 		xe5.setActive(true);
 		xe5.setViTris(generateViTri(40));
@@ -363,8 +372,7 @@ public class MockDatabase {
 		
 		Xe xe6 = new Xe();
 		xe6.setBienSoXe("92H-11114");
-		xe6.setLoaiXe("Giường nằm");
-		xe6.setSoCho(40);
+		xe6.setType(vehicleType1);
 		xe6.setNhaXe(nhaXeDAO.getById(2));
 		xe6.setActive(true);
 		xe6.setViTris(generateViTri(40));
@@ -372,8 +380,7 @@ public class MockDatabase {
 		
 		Xe xe7 = new Xe();
 		xe7.setBienSoXe("92H-11115");
-		xe7.setLoaiXe("Giường nằm");
-		xe7.setSoCho(40);
+		xe7.setType(vehicleType1);
 		xe7.setNhaXe(nhaXeDAO.getById(2));
 		xe7.setActive(true);
 		xe7.setViTris(generateViTri(40));
@@ -381,8 +388,7 @@ public class MockDatabase {
 		
 		Xe xe8 = new Xe();
 		xe8.setBienSoXe("92H-11116");
-		xe8.setLoaiXe("Giường nằm");
-		xe8.setSoCho(40);
+		xe8.setType(vehicleType1);
 		xe8.setNhaXe(nhaXeDAO.getById(2));
 		xe8.setActive(true);
 		xe8.setViTris(generateViTri(40));
@@ -390,8 +396,7 @@ public class MockDatabase {
 		
 		Xe xe9 = new Xe();
 		xe9.setBienSoXe("92H-11117");
-		xe9.setLoaiXe("Giường nằm");
-		xe9.setSoCho(40);
+		xe9.setType(vehicleType1);
 		xe9.setNhaXe(nhaXeDAO.getById(2));
 		xe9.setActive(true);
 		xe9.setViTris(generateViTri(40));
@@ -399,8 +404,7 @@ public class MockDatabase {
 		
 		Xe xe10 = new Xe();
 		xe10.setBienSoXe("92H-11118");
-		xe10.setLoaiXe("Giường nằm");
-		xe10.setSoCho(40);
+		xe10.setType(vehicleType1);
 		xe10.setNhaXe(nhaXeDAO.getById(2));
 		xe10.setActive(true);
 		xe10.setViTris(generateViTri(40));
@@ -408,8 +412,7 @@ public class MockDatabase {
 		
 		Xe xe11 = new Xe();
 		xe11.setBienSoXe("92H-11119");
-		xe11.setLoaiXe("Giường nằm");
-		xe11.setSoCho(40);
+		xe11.setType(vehicleType1);
 		xe11.setNhaXe(nhaXeDAO.getById(2));
 		xe11.setActive(true);
 		xe11.setViTris(generateViTri(40));

@@ -15,17 +15,42 @@
 </style>
 <script>
 
+	var selected = new Set();
+
 	$(document).ready(function() {
-		$("#e1").select2( {
+		/* $("#e1").select2( {
 			placeholder: "Hãy chọn chỗ",
 			maximumSelectionSize: 4,
 			closeOnSelect : false,
 			width : "300px"
-		});
+		}); */
 		
 		document.getElementById("gioDi").innerHTML = formatTime('<s:property value="#parameters.gioDi"/>');
 		
+		var emptySeats = ${emptySeats};
+		console.log(JSON.stringify(emptySeats));
 		
+		$('.seat').each(function(index, element) {
+			var id = $(element).attr('id');
+			if (emptySeats.indexOf(id) == -1) {
+				$(this).addClass('seat-full');
+				$(this).removeClass('seat-empty');
+			}
+        });
+		
+        $('#vehicle').on('click', '.seat-empty', function(e) {
+            $(this).removeClass('seat-empty');
+            $(this).addClass('seat-busy');
+            selected.add($(this).attr('id'));
+            console.log(selected);  
+        });
+        
+        $('#vehicle').on('click', '.seat-busy', function(e) {
+            $(this).removeClass('seat-busy');
+            $(this).addClass('seat-empty');
+            selected.delete($(this).attr('id'));
+            console.log(selected);  
+        });
 	});
 	
 	function format(state) {
@@ -40,21 +65,22 @@
 	}
 	
 	function check() {
-		viTris = $("#e1").select2("val");
-		if (viTris === "") {
+		if (selected.size < 1) {
 			$("#myModal").modal('show');
 			return false;
 		} else {
-			document.getElementById("viTris").value = $("#e1").select2("val");
+			var tmp = [];
+			for(var value of selected) {
+				tmp.push(value);
+			}
+			document.getElementById("viTris").value = tmp.join(',');
+			return true;
 		}
-		
-		return true;
 	}
-	
 </script>
 <form class="form-inline" method="post" id="formdatve" action="datve" onsubmit="return check();">
 	<div class="container-fluid" style="margin-left: auto; margin-right: auto; width: 1024px; ">
-		<div class="row" >
+		<%-- <div class="row" >
 			<div class="col-md-12" style="text-align: center;">
 				<fieldset>
 					<legend>Chọn chỗ</legend>
@@ -65,7 +91,7 @@
 					<div class="input-group" style="margin-left: auto; margin-right: auto; width: 200px;">
 						<select id="e1"  class="form-control" multiple="multiple">
 							<optgroup label="Dãy A">
-								<s:iterator value="#request.listA">
+								<s:iterator value="#request.emptySeats">
 									<option><s:property/> </option>
 								</s:iterator>
 							</optgroup>
@@ -90,15 +116,14 @@
 								</s:iterator>
 							</optgroup>
 						</select>
-						<input type="hidden" id="viTris" name="chonCho">
 						<br/>
 						<i style="font-size: 10px;">Hãy gõ vị trí để chọn nhanh hơn, bạn có thể chọn tối đa 4 chỗ</i>
 					</div>
 				</fieldset>
 			</div>
-		</div>
+		</div> --%>
 	
-		<div class="row">
+		<div class="row" style="margin-top: 50px;">
 			<div class="col-md-6">
 				<fieldset>
 					<legend>Thông tin chuyến</legend>
@@ -130,12 +155,7 @@
 						
 					</table>
 				</fieldset>
-			</div>
-			<input type="hidden" name="idLichTuyen" value="<s:property value="#parameters.idLichTuyen"/>">
-			<input type="hidden" name="ngayDi" value="<s:property value="#parameters.ngayDi"/>">
-			<input type="hidden" name="gioDi" value="<s:property value="#parameters.gioDi"/>">
-			
-			<div class="col-md-6">
+				<br>
 				<fieldset>
 					<legend>Thông tin khách hàng</legend>
 					<table>
@@ -154,15 +174,26 @@
 						
 					</table>
 				</fieldset>
-				<br/>
-				<br/>
-				
+				<fieldset style="width: 90%; margin-top: 10px" >
+					<input type="hidden" id="viTris" name="chonCho">
+					<input type="submit"  class="btn btn-success"  value="Giữ chỗ"
+						style="margin-left: auto; margin-right: auto; width : 500px; text-align: center;">
+				</fieldset>
 			</div>
 			
-		</div>
-		<div class="col-md-12" style="text-align: center;">
-			<input type="submit"  class="btn btn-success"  value="Giữ chỗ"
-				style="margin-left: auto; margin-right: auto; width : 500px; text-align: center;">
+			<input type="hidden" name="idLichTuyen" value="<s:property value="#parameters.idLichTuyen"/>">
+			<input type="hidden" name="ngayDi" value="<s:property value="#parameters.ngayDi"/>">
+			<input type="hidden" name="gioDi" value="<s:property value="#parameters.gioDi"/>">
+			
+			<div class="col-md-6">
+				<s:if test="%{#request.seats == 40}">
+					<s:include value="/WEB-INF/views/template/giuongnam40.jsp" />
+				</s:if>
+				<s:elseif test="%{#request.seats == 45">
+					<s:include value="/WEB-INF/views/template/ghengoi45.jsp" />
+				</s:elseif>
+			</div>
+			
 		</div>
 	</div>
 </form>

@@ -15,10 +15,16 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.hibernate.Transaction;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
+import com.vexeonline.dto.VehicleDTO;
 import com.vexeonline.service.KhachHangService;
 import com.vexeonline.service.KhachHangServiceImpl;
+import com.vexeonline.service.nhaxe.VehicleService;
+import com.vexeonline.service.nhaxe.VehicleServiceImpl;
+import com.vexeonline.utils.HibernateUtil;
 
 @Namespace(value = "/")
 @ParentPackage(value = "default")
@@ -59,7 +65,9 @@ public class DatVeXe extends ActionSupport  {
 			@Result(name = "input", location = "trips", type = "tiles")
 	})
 	public String chonChoNgoi() {
+		Transaction tx = null;
 		try {			
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			HttpServletRequest request = ServletActionContext.getRequest();
 			int idLichTuyen = Integer.parseInt(request.getParameter("idLichTuyen"));
 			Date ngayDi = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy").parse(request.getParameter("ngayDi"));
@@ -73,18 +81,37 @@ public class DatVeXe extends ActionSupport  {
 			List<String> listD = new ArrayList<String>(0);
 			List<String> listE = new ArrayList<String>(0);
 			
-			String soDo = khachHangService.listChoByXe(idXe, idLichTuyen, ngayDi, gioDi, listA, listB, listC, listD, listE);
+			/*String soDo = khachHangService.listChoByXe(idXe, idLichTuyen, ngayDi, gioDi, listA, listB, listC, listD, listE);*/
+			khachHangService.listChoByXe(idXe, idLichTuyen, ngayDi, gioDi, listA, listB, listC, listD, listE);
 			
-			logger.info(listA.size() + " " + listB.size());
+			
+			/*logger.info(listA.size() + " " + listB.size());
 			request.setAttribute("listA", listA);
 			request.setAttribute("listB", listB);
 			request.setAttribute("listC", listC);
 			request.setAttribute("listD", listD);
-			request.setAttribute("listE", listE);
-			request.setAttribute("soDoViTri", soDo);
+			request.setAttribute("listE", listE);*/
 			
+			VehicleService vehicleService = new VehicleServiceImpl();
+			VehicleDTO vehicle = vehicleService.getVehicle(idXe);
+			if (vehicle != null) {
+				request.setAttribute("seats", vehicle.getType().getSeats());
+			}
+			
+			List<String> emptySeats = new ArrayList<String>();
+			emptySeats.addAll(listA);
+			emptySeats.addAll(listB);
+			emptySeats.addAll(listC);
+			emptySeats.addAll(listD);
+			emptySeats.addAll(listE);
+			Gson gson = new Gson();
+			request.setAttribute("emptySeats", gson.toJson(emptySeats));
+			
+			/*request.setAttribute("soDoViTri", soDo);*/
+			tx.commit();
 			return SUCCESS;
 		} catch (Exception e) {
+			if (tx != null) tx.rollback();
 			logger.error("Error", e);
 			return INPUT;
 		}

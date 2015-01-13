@@ -10,7 +10,7 @@
 	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false" />
 	
 	<package name="default" extends="tiles-default, json-default">
-		<!-- <default-action-ref name="home" /> -->
+		<default-action-ref name="home" />
 		<global-results>
 			<result name="login" type="tiles">login</result>
 		</global-results>

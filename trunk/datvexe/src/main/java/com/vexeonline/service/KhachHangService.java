@@ -96,7 +96,7 @@ public interface KhachHangService {
 	 * @param listD
 	 * @param listE
 	 */
-	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
+	public void listChoByXe(int idXe, int idLichTuyen, Date ngayDi, Time gioDi, List<String> listA, 
 			List<String> listB, List<String> listC, List<String> listD, List<String> listE);
 	
 	public boolean xacNhanVe(String maVe);

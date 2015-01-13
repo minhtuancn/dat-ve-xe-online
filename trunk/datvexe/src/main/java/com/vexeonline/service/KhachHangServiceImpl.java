@@ -42,7 +42,6 @@ import com.vexeonline.domain.TrangThaiChuyenXe;
 import com.vexeonline.domain.TrangThaiVeXe;
 import com.vexeonline.domain.User;
 import com.vexeonline.domain.VeXe;
-import com.vexeonline.domain.Xe;
 import com.vexeonline.dto.SDTNhaXeDTO;
 import com.vexeonline.dto.ThongTinChuyenXeDTO;
 import com.vexeonline.dto.ThongTinDanhGiaDTO;
@@ -343,57 +342,40 @@ public class KhachHangServiceImpl implements KhachHangService {
 		return listSDTNhaXe;
 	}
 
-	public String listChoByXe(int idXe, int idLichTuyen, Date ngayDi,
+	public void listChoByXe(int idXe, int idLichTuyen, Date ngayDi,
 			Time gioDi, List<String> listA, List<String> listB,
 			List<String> listC, List<String> listD, List<String> listE) {
 
 		List<String> viTris = new ArrayList<String>(0);
 		List<String> choDaDat = new ArrayList<String>(0);
 		
-		String soDoViTri = "";
+		viTris = xeDAO.getListChoByidXe(idXe);
+		choDaDat = veXeDAO.getListSeated(idLichTuyen, ngayDi, gioDi);
+
+		logger.info(viTris.size() + " " + choDaDat.size());
 		
-		Transaction tx = null;
-		try {
-			tx = HibernateUtil.getSessionFactory().getCurrentSession()
-					.beginTransaction();
-			viTris = xeDAO.getListChoByidXe(idXe);
-			choDaDat = veXeDAO.getListSeated(idLichTuyen, ngayDi, gioDi);
-			Xe xe = xeDAO.getById(idXe);
-			soDoViTri = xe.getHinhAnh();
-
-			logger.info(viTris.size() + " " + choDaDat.size());
-			
-			for (String viTri : viTris) {
-				if (choDaDat.contains(viTri)) {
-					continue;
-				}
-				if (viTri.indexOf("A") != -1) {
-					listA.add(viTri);
-				} else if (viTri.indexOf("B") != -1) {
-					listB.add(viTri);
-				} else if (viTri.indexOf("C") != -1) {
-					listC.add(viTri);
-				} else if (viTri.indexOf("D") != -1) {
-					listD.add(viTri);
-				} else if (viTri.indexOf("E") != -1) {
-					listE.add(viTri);
-				}
+		for (String viTri : viTris) {
+			if (choDaDat.contains(viTri)) {
+				continue;
 			}
-			
-			Collections.sort(listA);
-			Collections.sort(listB);
-			Collections.sort(listC);
-			Collections.sort(listD);
-			Collections.sort(listE);
-
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null) {
-				tx.rollback();
+			if (viTri.indexOf("A") != -1) {
+				listA.add(viTri);
+			} else if (viTri.indexOf("B") != -1) {
+				listB.add(viTri);
+			} else if (viTri.indexOf("C") != -1) {
+				listC.add(viTri);
+			} else if (viTri.indexOf("D") != -1) {
+				listD.add(viTri);
+			} else if (viTri.indexOf("E") != -1) {
+				listE.add(viTri);
 			}
-			logger.error(e);
 		}
-		return soDoViTri;
+		
+		Collections.sort(listA);
+		Collections.sort(listB);
+		Collections.sort(listC);
+		Collections.sort(listD);
+		Collections.sort(listE);
 	}
 
 	@Override

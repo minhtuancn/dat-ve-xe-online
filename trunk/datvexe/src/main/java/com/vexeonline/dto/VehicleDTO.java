@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.vexeonline.domain.TienIch;
 import com.vexeonline.domain.Xe;
@@ -17,8 +15,9 @@ public class VehicleDTO implements Serializable {
 	private Integer id;
 	private Integer idNhaXe;
 	private String bienSo;
-	private String loaiXe;
-	private Integer soCho;
+	/*private String loaiXe;
+	private Integer soCho;*/
+	private VehicleTypeDTO type;
 	private boolean active;
 	private List<TienIchDTO> tienIchs = new ArrayList<TienIchDTO>();
 
@@ -29,12 +28,12 @@ public class VehicleDTO implements Serializable {
 		this.id = id;
 	}
 
-	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,String loaiXe,Integer soCho,boolean active,List<TienIchDTO> tienIchs) {
+	public VehicleDTO(Integer id,Integer idNhaXe,String bienSo,boolean active,List<TienIchDTO> tienIchs) {
 		this.id = id;
 		this.idNhaXe = idNhaXe;
 		this.bienSo = bienSo;
-		this.loaiXe = loaiXe;
-		this.soCho = soCho;
+		/*this.loaiXe = loaiXe;
+		this.soCho = soCho;*/
 		this.active = active;
 		this.tienIchs = tienIchs;
 	}
@@ -44,8 +43,9 @@ public class VehicleDTO implements Serializable {
 			this.id = vehicle.getIdXe();
 			this.idNhaXe = vehicle.getNhaXe().getIdNhaXe();
 			this.bienSo = vehicle.getBienSoXe();
-			this.loaiXe = vehicle.getLoaiXe();
-			this.soCho = vehicle.getSoCho();
+			/*this.loaiXe = vehicle.getLoaiXe();
+			this.soCho = vehicle.getSoCho();*/
+			this.type = new VehicleTypeDTO(vehicle.getType());
 			this.active = vehicle.isActive();
 			for (TienIch tienIch : vehicle.getTienIchs()) {
 				this.tienIchs.add(new TienIchDTO(tienIch));
@@ -78,7 +78,7 @@ public class VehicleDTO implements Serializable {
 		this.bienSo = bienSo;
 	}
 	
-	@RequiredStringValidator(trim = true, key = "vehicle.require.loaixe")
+	/*@RequiredStringValidator(trim = true, key = "vehicle.require.loaixe")
 	public String getLoaiXe() {
 		return loaiXe;
 	}
@@ -95,10 +95,18 @@ public class VehicleDTO implements Serializable {
 
 	public void setSoCho(Integer soCho) {
 		this.soCho = soCho;
-	}
+	}*/
 
 	public boolean isActive() {
 		return active;
+	}
+
+	public VehicleTypeDTO getType() {
+		return type;
+	}
+
+	public void setType(VehicleTypeDTO type) {
+		this.type = type;
 	}
 
 	public void setActive(boolean active) {
@@ -115,6 +123,6 @@ public class VehicleDTO implements Serializable {
 	
 	@Override
 	public String toString() {
-		return bienSo + " - " + loaiXe + " - " + soCho;
+		return bienSo + " - " + type;
 	}
 }

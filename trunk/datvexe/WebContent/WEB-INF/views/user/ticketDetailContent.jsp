@@ -65,7 +65,7 @@
 			</div>
 			<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button onclick="save();" class="btn btn-danger">Save changes</button>
+                <button onclick="save();" class="btn btn-danger">Lưu</button>
             </div>
 		</div>
 		

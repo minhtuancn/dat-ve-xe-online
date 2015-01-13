@@ -16,6 +16,7 @@ import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import com.vexeonline.dto.TienIchDTO;
 import com.vexeonline.dto.UserDTO;
 import com.vexeonline.dto.VehicleDTO;
+import com.vexeonline.dto.VehicleTypeDTO;
 import com.vexeonline.service.nhaxe.VehicleService;
 import com.vexeonline.service.nhaxe.VehicleServiceImpl;
 import com.vexeonline.utils.HibernateUtil;
@@ -40,6 +41,7 @@ public class QuanLyXe extends ActionSupport implements UserAware {
 	private List<VehicleDTO> vehicles = null;
 	private VehicleDTO vehicle = null;
 	
+	private List<VehicleTypeDTO> vehicleTypes;
 	private List<TienIchDTO> tienIchs;
 	
 	private UserDTO user;
@@ -66,6 +68,15 @@ public class QuanLyXe extends ActionSupport implements UserAware {
 			@Result(name = "success", location = "coach.newVehicle", type = "tiles")	
 	})
 	public String showNewVehiclePage() {
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
+			vehicleTypes = vehicleService.getVehicleTypes();
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null) tx.rollback();
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 	
@@ -100,6 +111,7 @@ public class QuanLyXe extends ActionSupport implements UserAware {
 		try {
 			tx = HibernateUtil.getSessionFactory().getCurrentSession().beginTransaction();
 			vehicle = vehicleService.getVehicle(user.getNhaXeId(), vehicle.getId());
+			vehicleTypes = vehicleService.getVehicleTypes();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null) tx.rollback();
@@ -163,6 +175,14 @@ public class QuanLyXe extends ActionSupport implements UserAware {
 		this.vehicle = vehicle;
 	}
 	
+	public List<VehicleTypeDTO> getVehicleTypes() {
+		return vehicleTypes;
+	}
+
+	public void setVehicleTypes(List<VehicleTypeDTO> vehicleTypes) {
+		this.vehicleTypes = vehicleTypes;
+	}
+
 	public List<TienIchDTO> getTienIchs() {
 		return tienIchs;
 	}

@@ -19,8 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.opensymphony.xwork2.validator.annotations.IntRangeFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 /**
@@ -39,15 +37,18 @@ public class Xe implements Serializable {
 	@Column(nullable = false, unique = true, length = 10)
 	private String bienSoXe;
 
-	@Column(nullable = false, length = 20)
+/*	@Column(nullable = false, length = 20)
 	private String loaiXe;
 
 	@Column(nullable = false)
 	private int soCho;
 
 	@Column(length = 50)
-	private String hinhAnh;
+	private String hinhAnh;*/
 
+	@ManyToOne
+	private VehicleType type;
+	
 	@ElementCollection
 	@CollectionTable(joinColumns = @JoinColumn(name = "idXe"))
 	@Column(length = 3)
@@ -87,7 +88,7 @@ public class Xe implements Serializable {
 		this.bienSoXe = bienSoXe;
 	}
 
-	@RequiredStringValidator(key = "require.loaiXe", trim = true)
+	/*@RequiredStringValidator(key = "require.loaiXe", trim = true)
 	public String getLoaiXe() {
 		return loaiXe;
 	}
@@ -112,6 +113,14 @@ public class Xe implements Serializable {
 
 	public void setHinhAnh(String hinhAnh) {
 		this.hinhAnh = hinhAnh;
+	}*/
+
+	public VehicleType getType() {
+		return type;
+	}
+
+	public void setType(VehicleType type) {
+		this.type = type;
 	}
 
 	public boolean isActive() {
@@ -144,13 +153,5 @@ public class Xe implements Serializable {
 
 	public void setViTris(Set<String> viTris) {
 		this.viTris = viTris;
-	}
-
-	@Override
-	public String toString() {
-		return "Xe [idXe=" + idXe + ", bienSoXe=" + bienSoXe + ", loaiXe="
-				+ loaiXe + ", soCho=" + soCho + ", hinhAnh=" + hinhAnh
-				+ ", isActive=" + isActive + ", nhaXe=" + nhaXe + ", tienIchs="
-				+ tienIchs + "]";
 	}
 }
