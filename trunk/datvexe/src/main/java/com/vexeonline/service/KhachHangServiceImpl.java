@@ -530,6 +530,11 @@ public class KhachHangServiceImpl implements KhachHangService {
 		}
 		return listData;
 	}
+	
+	public static void main(String[] args) {
+		TicketDetailDTO ticket = new KhachHangServiceImpl().kiemTraVe("EHVFRM5C");
+		System.out.println(ticket);
+	}
 }
 
 class deleteVeXe extends TimerTask {
