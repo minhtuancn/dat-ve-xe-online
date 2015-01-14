@@ -187,7 +187,7 @@
 									<a href="" style="font-size: small; text-decoration: underline; color: orange;" 
 										data-toggle="modal" class="openListDanhGia" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listDanhGia">Xem đánh giá</a>
 									<br/>
-									<button type="button" class="btn btn-primary openFormDanhGia"
+									<button type="button" class="btn btn-primary btn-sm openFormDanhGia"
 										data-toggle="modal" data-id='<s:property value="idNhaXe" />' data-target="#myModal">Viết đánh giá</button>
 								</div>
 							</td>
@@ -202,14 +202,14 @@
 										</s:else>
 									</div>
 									<div>
-									
-										<a class="btn btn-info"  onclick='datve(<s:property value="idLichTuyen"/>,
+										<s:if test="%{giaVe != null}">
+											<a class="btn btn-info btn-sm"  onclick='datve(<s:property value="idLichTuyen"/>,
 											"<s:property value="gioDi"/>" ,"<s:property value="tenBenDi"/>", 
 											"<s:property value="tenBenDen"/>", "<s:property value="tongThoiGian"/>", 
-											"<s:property value="giaVe"/>", "<s:property value="idXe"/>")'>Đặt vé</a>
-										
+											"<s:property value="giaVe"/>", "<s:property value="idXe"/>")'>Đặt vé</a>	
+										</s:if>
 										<a href="" data-toggle="modal" 
-										class="btn btn-info openListSdt" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</a>
+										class="btn btn-info btn-sm openListSdt" data-id='<s:property value="idNhaXe" />' data-target="#myModal_listSdt">Số điện thoại</a>
 									</div>
 								</div>
 							</td>

@@ -88,6 +88,7 @@ public class MockDatabase {
 		vanPhong.setDiaChi(diaChi1);
 		vanPhong.setNhaXe(nhaXe);
 		vanPhong.setTenVanPhong("Văn phòng An Khê");
+		vanPhong.setActive(true);
 		session.save(vanPhong);
 
 		SDTVanPhong sdtVanPhong = new SDTVanPhong();
@@ -101,6 +102,7 @@ public class MockDatabase {
 		xe.setBienSoXe("81E-11110");
 		xe.setNhaXe(nhaXe);
 		xe.setType(vehicleType1);
+		xe.setViTris(generateViTri(40));
 		session.save(xe);
 
 		LichTuyen lichTuyen = new LichTuyen();
