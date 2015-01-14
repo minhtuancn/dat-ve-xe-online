@@ -110,4 +110,12 @@ public class TicketDetailDTO implements Serializable {
 	public void setStatus(TrangThaiVeXe status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "TicketDetailDTO [maVe=" + maVe + ", ngayDi=" + ngayDi
+				+ ", gioDi=" + gioDi + ", soGhe=" + soGhe + ", giaVe=" + giaVe
+				+ ", tenHanhKhach=" + tenHanhKhach + ", sdt=" + sdt
+				+ ", email=" + email + ", status=" + status + "]";
+	}
 }

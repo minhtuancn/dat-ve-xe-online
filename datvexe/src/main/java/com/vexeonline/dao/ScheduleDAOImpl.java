@@ -76,8 +76,8 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 					"		  l.xe.nhaXe.idNhaXe,\r\n" + 
 					"		  l.xe.idXe,\r\n" + 
 					"		  l.xe.nhaXe.tenNhaXe,\r\n" + 
-					"		  l.xe.loaiXe,\r\n" + 
-					"		  l.xe.soCho,\r\n" + 
+					"		  l.xe.type.name,\r\n" + 
+					"		  l.xe.type.seats,\r\n" + 
 					"		  l.tuyenXe.benDi.tenBenXe,\r\n" + 
 					"		  l.tuyenXe.benDen.tenBenXe,\r\n" + 
 					"		  l.gioDi,\r\n" + 

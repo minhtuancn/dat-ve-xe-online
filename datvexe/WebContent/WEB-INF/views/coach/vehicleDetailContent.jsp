@@ -21,12 +21,14 @@
 	theme="bootstrap" cssClass="form-horizontal" validate="true" label="Thông tin xe">
 		<s:hidden name="vehicle.id" />
 		<s:textfield name="vehicle.bienSo" label="Biển số" />
-		<s:if test="%{vehicle.id != ''}">
+		<%-- <s:if test="%{vehicle.id != ''}">
+			<s:hidden name="vehicle.type.id" />
 			<s:textfield name="vehicle.type" readonly="true" label="Loại xe" />
 		</s:if>
 		<s:else>
 			<s:select name="vehicle.type.id" list="vehicleTypes" listKey="id" label="Loại xe" />
-		</s:else>
+		</s:else> --%>
+		<s:select name="vehicle.type.id" list="vehicleTypes" listKey="id" label="Loại xe" />
 		<div class="form-group ">
 			<label class="col-sm-3 control-label">Tiện ích</label>
 			<div class="col-sm-9 controls">

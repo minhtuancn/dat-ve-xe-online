@@ -18,7 +18,7 @@ public class VeXeDAOImpl implements VeXeDAO {
 				"  v.maVe,\r\n" + 
 				"  DATE(v.chuyenXe.ngayDi),\r\n" + 
 				"  TIme(v.chuyenXe.ngayDi),\r\n" + 
-				"  v.chuyenXe.lichTuyen.xe.loaiXe,\r\n" + 
+				"  v.chuyenXe.lichTuyen.xe.type.name,\r\n" + 
 				"  v.choNgoi,\r\n" + 
 				"  g.giaVe,\r\n" + 
 				"  v.hanhKhach.tenHanhKhach,\r\n" + 
