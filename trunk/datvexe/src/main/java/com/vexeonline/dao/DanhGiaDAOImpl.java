@@ -2,6 +2,8 @@ package com.vexeonline.dao;
 
 import java.util.List;
 
+import org.hibernate.Transaction;
+
 import com.vexeonline.domain.DanhGia;
 import com.vexeonline.utils.HibernateUtil;
 
@@ -53,7 +55,7 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 						+ " from NhaXe as n "
 						+ "left join  n.vanPhongs as v "
 						+ "left join v.SDTVanPhongs as s "
-						+ "where n.idNhaXe = :idNhaXe")
+						+ "where v.isActive = true and n.idNhaXe = :idNhaXe")
 						.setInteger("idNhaXe", idNhaXe)
 						.list();
 	}
@@ -68,5 +70,22 @@ public class DanhGiaDAOImpl implements DanhGiaDAO {
 							"  d.nhaXe.idNhaXe = :idNhaXe")
 				.setInteger("idNhaXe", idNhaXe)
 				.uniqueResult();
+	}
+	
+	public static void main(String[] args) {
+		Transaction tx = null;
+		try {
+			tx = HibernateUtil.getSessionFactory().getCurrentSession()
+					.beginTransaction();
+			List<Object[]> list = new DanhGiaDAOImpl().getListSDTNhaXe(2);
+			System.out.println(list.size());
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			HibernateUtil.close();
+		}
 	}
 }

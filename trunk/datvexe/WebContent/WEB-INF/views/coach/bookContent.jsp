@@ -189,7 +189,7 @@
 				<s:if test="%{#request.seats == 40}">
 					<s:include value="/WEB-INF/views/template/giuongnam40.jsp" />
 				</s:if>
-				<s:elseif test="%{#request.seats == 45">
+				<s:elseif test="%{#request.seats == 45}">
 					<s:include value="/WEB-INF/views/template/ghengoi45.jsp" />
 				</s:elseif>
 			</div>
