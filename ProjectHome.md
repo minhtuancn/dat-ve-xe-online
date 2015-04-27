@@ -1,0 +1,1 @@
+project use framework struts2, hibernate
